@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,11 +31,11 @@ public class Theme {
     @NonNull
     private String description;
 
-    @OneToMany(mappedBy = "theme")
-    private Set<Article> article = new HashSet<>();
+//    @OneToMany(mappedBy = "theme")
+//    private List<Article> articles;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
-    private Set<User> users = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
+//    private List<User> users;
 
 
 }

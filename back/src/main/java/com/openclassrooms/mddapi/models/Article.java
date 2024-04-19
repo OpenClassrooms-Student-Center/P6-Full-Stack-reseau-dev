@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
@@ -44,11 +45,11 @@ public class Article {
     @JoinColumn(name = "theme_id", referencedColumnName="theme_id")
     private Theme theme;
 
-    @ElementCollection(targetClass=String.class)
-    private List<String> commentaires;
+    @OneToMany(mappedBy = "article")
+    private List<Comment> commentaires;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "articles")
-    private Set<User> users = new HashSet<>();
-
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName="user_id")
+    private User user;
 
 }

@@ -18,4 +18,15 @@ export class HomeComponent implements OnInit {
   enregistrement() {
     this.router.navigate(['/register'])
   }
+
+  theme() {
+    this.router.navigate(['/theme'])
+  }
+
+  user() {
+    this.router.navigate(['/detail'])
+  }
+  edit() {
+    this.router.navigate(['/edit'])
+  }
 }

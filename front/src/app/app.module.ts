@@ -10,24 +10,37 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ThemeComponent } from './pages/theme/component/theme/theme.component';
+import { ArticleComponent } from './pages/article/component/article/article.component';
+import { UserComponent } from './pages/user/components/detail/user.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { EditComponent } from './pages/user/components/edit/edit.component';
 
 const materialModule = [
   MatButtonModule,
   MatCardModule,
   MatIconModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSnackBarModule,
+  MatFormFieldModule,
+  MatInputModule
 ]
 
 @NgModule({
   declarations: [
     AppComponent, 
-    HomeComponent,],
+    HomeComponent, ThemeComponent, ArticleComponent, UserComponent, EditComponent,],
 
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     ... materialModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],

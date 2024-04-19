@@ -47,18 +47,16 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        boolean isAdmin = false;
-        User user = this.userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-        if (user != null) {
-            isAdmin = user.isAdmin();
-        }
+//        boolean isAdmin = false;
+        // User user = this.userRepository.findByEmailOrFirstName(userDetails.getUsername()).orElse(null);
+//        if (user != null) {
+//            isAdmin = user.isAdmin();
+//        }
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getFirstName(),
-                userDetails.getLastName(),
-                isAdmin));
+                userDetails.getFirstName()));
     }
 
     @PostMapping("/register")
@@ -66,15 +64,13 @@ public class AuthController {
         if (userRepository.existsByEmail(registRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already taken!"));
+                    .body(new MessageResponse("Error: Email/Username is already taken!"));
         }
 
         // Create new user's account
         User user = new User(registRequest.getEmail(),
-                registRequest.getLastName(),
                 registRequest.getFirstName(),
-                passwordEncoder.encode(registRequest.getPassword()),
-                false);
+                passwordEncoder.encode(registRequest.getPassword()));
 
         userRepository.save(user);
 

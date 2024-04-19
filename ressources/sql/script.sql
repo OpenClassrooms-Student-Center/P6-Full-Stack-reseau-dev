@@ -22,13 +22,17 @@ CREATE TABLE `ARTICLES` (
 
 CREATE TABLE `USERS` (
   `user_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `last_name` VARCHAR(40),
   `first_name` VARCHAR(40),
-  `admin` BOOLEAN NOT NULL DEFAULT false,
   `email` VARCHAR(255),
   `password` VARCHAR(255),
-  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `COMMENTS` (
+  `comment_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `commentaire` VARCHAR(40),
+  `user_id` int,
+  `article_id` int
 );
 
 create table `article_like` (
@@ -41,13 +45,15 @@ create table `theme_like` (
 
 ALTER TABLE `ARTICLES` ADD FOREIGN KEY (`theme_id`) REFERENCES `THEMES` (`theme_id`);
 
+ALTER TABLE `COMMENTS` ADD FOREIGN KEY (`article_id`) REFERENCES `ARTICLES` (`article_id`);
+
 INSERT INTO THEMES (titre, description)
 VALUES ('Titre du thème', 'lorem ipsum is simply dummy text of the printing and typesetting industry...'),
        ('Hélène', 'THIERCELIN');
 
 
-INSERT INTO USERS (first_name, last_name, admin, email, password)
-VALUES ('Admin', 'Admin', true, 'user@mdd.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'); 
+INSERT INTO USERS (first_name, email, password)
+VALUES ('Admin', 'user@mdd.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'); 
 
 INSERT INTO ARTICLES (titre, auteur, contenu, commentaires)
 VALUES ('Titre', 'Auteur', 'description', ''); 

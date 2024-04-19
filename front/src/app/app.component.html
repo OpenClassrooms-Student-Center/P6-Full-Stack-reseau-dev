@@ -1,17 +1,17 @@
 <div class="app">
     <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-      <span>Rental app</span>
-      <!-- <div *ngIf="$isLogged() | async; else notLogged">
-        <span routerLink="rentals" class="link">Rentals</span>
-        <span routerLink="me" class="link">Account</span>
-        <span (click)="logout()" class="link">Logout</span>
-      </div> -->
-      <!-- <ng-template #notLogged>
+      <img src="/assets/logo_p6.png" alt="logo" />
+      <div *ngIf="$isLogged() | async; else notLogged">
+        <span routerLink="theme" class="link">Themes</span>
+        <span routerLink="detail" class="link">Account</span>
+        <span routerLink="edit" class="link">Edit account</span>
+      </div> 
+       <ng-template #notLogged>
         <div>
           <span routerLink="login" class="link">Login</span>
           <span routerLink="register" class="link">Register</span>
         </div>
-      </ng-template> -->
+      </ng-template>
     </mat-toolbar>
     <div>
       <router-outlet></router-outlet>

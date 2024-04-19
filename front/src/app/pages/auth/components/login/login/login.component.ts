@@ -4,6 +4,10 @@ import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../../interfaces/interfaces/loginRequest.interface';
 import { AuthSuccess } from '../../../interfaces/interfaces/authSuccess.interface';
+import { UserService } from 'src/app/pages/user/service/user.service';
+import { User } from 'src/app/pages/user/interface/user.interface';
+import { SessionService } from 'src/app/services/session.service';
+import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
 
 @Component({
   selector: 'app-login',
@@ -17,27 +21,23 @@ export class LoginComponent {
 
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.min(3)]]
+    password: ['', [Validators.required, Validators.min(8)]]
   });
 
   constructor(private authService: AuthService, 
     private fb: FormBuilder, 
-    private router: Router) { }
+    private router: Router,
+    private sessionService: SessionService) { }
 
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe(
-      (response: AuthSuccess) => {
-        localStorage.setItem('token', response.token);
-        // this.authService.me().subscribe((user: User) => {
-        //   this.sessionService.logIn(user);
-        //   this.router.navigate(['/rentals']
-        //)
-        //});
-        this.router.navigate(['/'])
+    this.authService.login(loginRequest).subscribe({
+      next: (response: SessionInformation) => {
+        this.sessionService.logIn(response);
+        this.router.navigate(['/home']);
       },
-      error => this.onError = true
-    );
+      error: error => this.onError = true,
+    });
   }
 
 }

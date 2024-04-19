@@ -28,14 +28,6 @@ export class RegisterComponent {
         Validators.max(20)
       ]
     ],
-    lastName: [
-      '',
-      [
-        Validators.required,
-        Validators.min(3),
-        Validators.max(20)
-      ]
-    ],
     password: [
       '',
       [

@@ -23,10 +23,6 @@ public class UserDetailsImpl implements UserDetails {
 
   private String firstName;
 
-  private String lastName;
-
-  private Boolean admin;
-
   @JsonIgnore
   private String password;  
   

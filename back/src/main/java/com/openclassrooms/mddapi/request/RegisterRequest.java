@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
@@ -18,10 +19,7 @@ public class RegisterRequest {
   private String firstName;
 
   @NotBlank
-  @Size(min = 3, max = 20)
-  private String lastName;
-
-  @NotBlank
-  @Size(min = 6, max = 40)
+  @Size(min = 8, max = 40)
+  @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
   private String password;
 }
