@@ -4,7 +4,7 @@
         <div fxLayout="row" fxLayoutAlign="start center">
           <button mat-icon-button (click)="back()">
           </button>
-          <h1>User information</h1>
+          <h1>Profil utilisateur</h1>
         </div>
       </mat-card-title>
       <mat-card-content>
@@ -14,4 +14,15 @@
         </div>
       </mat-card-content>
     </mat-card>
+        <h1>Abonnements</h1>
+          <mat-card class="item" *ngFor="let theme of themes$" fxFlex>
+            <mat-card-header>
+              <mat-card-title>
+                {{ theme.titre}}
+              </mat-card-title>
+              <mat-card-subtitle>
+                {{ theme.description}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            </mat-card>
   </div>

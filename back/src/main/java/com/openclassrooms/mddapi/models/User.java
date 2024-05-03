@@ -54,12 +54,12 @@ public class User {
   @Column(name = "created_at", updatable = false)
   private LocalDateTime createdAt;
 
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(
-          name = "article_like",
-          joinColumns = @JoinColumn(name = "user_id"),
-          inverseJoinColumns = @JoinColumn(name = "article_id"))
-  private Set<Article> articles= new HashSet<>();
+//  @ManyToMany(fetch = FetchType.EAGER)
+//  @JoinTable(
+//          name = "article_like",
+//          joinColumns = @JoinColumn(name = "user_id"),
+//          inverseJoinColumns = @JoinColumn(name = "article_id"))
+//  private Set<Article> articles= new HashSet<>();
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(

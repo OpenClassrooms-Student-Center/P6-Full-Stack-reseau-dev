@@ -45,7 +45,7 @@ public class Article {
     @JoinColumn(name = "theme_id", referencedColumnName="theme_id")
     private Theme theme;
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany
     private List<Comment> commentaires;
 
     @ManyToOne

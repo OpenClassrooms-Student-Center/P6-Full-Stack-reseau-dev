@@ -34,9 +34,11 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: (response: SessionInformation) => {
         this.sessionService.logIn(response);
+        console.log(this.sessionService.sessionInformation?.token);
         this.router.navigate(['/home']);
       },
-      error: error => this.onError = true,
+      error: error => {this.onError = true,
+      console.log(error)}
     });
   }
 

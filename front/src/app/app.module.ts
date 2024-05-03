@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { EditComponent } from './pages/user/components/edit/edit.component';
+import { MatOptionModule } from '@angular/material/core';
 
 const materialModule = [
   MatButtonModule,
@@ -26,7 +27,8 @@ const materialModule = [
   MatToolbarModule,
   MatSnackBarModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatOptionModule
 ]
 
 @NgModule({

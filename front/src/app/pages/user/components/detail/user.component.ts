@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../../interface/user.interface';
 import { UserService } from '../../service/user.service';
+import { Theme } from 'src/app/pages/theme/interface/theme';
+import { ThemeService } from 'src/app/pages/theme/service/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +16,8 @@ import { UserService } from '../../service/user.service';
 })
 export class UserComponent implements OnInit {
   public user: User | undefined;
+
+  public themes$: Theme[] | undefined;
 
   public editUserForm: FormGroup | undefined;
 
@@ -28,7 +33,12 @@ export class UserComponent implements OnInit {
   public ngOnInit(): void {
     this.userService
       .getById(this.sessionService.sessionInformation!.id.toString())
-      .subscribe((user: User) => this.user = user);
+      .subscribe((user: User) => {
+        this.user = user, 
+        this.themes$ =  this.user?.themes
+      });
+
+    //this.themes$ =  this.user?.themes;
   }
 
   public back(): void {

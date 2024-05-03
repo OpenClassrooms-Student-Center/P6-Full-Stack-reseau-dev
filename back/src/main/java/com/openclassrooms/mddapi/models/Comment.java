@@ -25,7 +25,7 @@ public class Comment {
     @NonNull
     private String commentaire;
 
-    @ManyToOne
-    @JoinColumn(name= "article_id", referencedColumnName = "article_id")
-    private Article article;
+//    @ManyToOne
+//    @JoinColumn(name= "article_id", referencedColumnName = "article_id")
+//    private Article article;
 }

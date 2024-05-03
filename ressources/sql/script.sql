@@ -31,8 +31,7 @@ CREATE TABLE `USERS` (
 CREATE TABLE `COMMENTS` (
   `comment_id` INT PRIMARY KEY AUTO_INCREMENT,
   `commentaire` VARCHAR(40),
-  `user_id` int,
-  `article_id` int
+  `user_id` int
 );
 
 create table `article_like` (
@@ -45,8 +44,6 @@ create table `theme_like` (
 
 ALTER TABLE `ARTICLES` ADD FOREIGN KEY (`theme_id`) REFERENCES `THEMES` (`theme_id`);
 
-ALTER TABLE `COMMENTS` ADD FOREIGN KEY (`article_id`) REFERENCES `ARTICLES` (`article_id`);
-
 INSERT INTO THEMES (titre, description)
 VALUES ('Titre du thème', 'lorem ipsum is simply dummy text of the printing and typesetting industry...'),
        ('Hélène', 'THIERCELIN');
@@ -54,6 +51,8 @@ VALUES ('Titre du thème', 'lorem ipsum is simply dummy text of the printing and
 
 INSERT INTO USERS (first_name, email, password)
 VALUES ('Admin', 'user@mdd.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'); 
+
+INSERT INTO THEME_LIKE (user_id, theme_id) VALUES (1,1);
 
 INSERT INTO ARTICLES (titre, auteur, contenu, commentaires)
 VALUES ('Titre', 'Auteur', 'description', ''); 

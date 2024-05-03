@@ -5,9 +5,6 @@ import lombok.experimental.Accessors;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "THEMES")
@@ -23,7 +20,8 @@ public class Theme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long theme_id;
+    @Column(name = "theme_id")
+    private Long themeId;
 
     @NonNull
     private String titre;
@@ -36,6 +34,5 @@ public class Theme {
 
 //    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
 //    private List<User> users;
-
 
 }

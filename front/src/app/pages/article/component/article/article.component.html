@@ -1,1 +1,37 @@
-<p>article works!</p>
+<div class="create m3">
+    <mat-card>
+      <mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <button mat-icon-button routerLink="/articles">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+      </mat-card-title>
+      <mat-card-content *ngIf="articleForm">
+        <form class="mt2" fxLayout="column" [formGroup]="articleForm" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Theme</mat-label>
+                <mat-select ngDefaultControl formControlName="theme_id">
+                  <mat-option *ngFor="let theme of themes$ | async" [value]="theme.theme_id">
+                    {{theme.titre}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="outline" class="" fxFlex>
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Contenu</mat-label>
+            <input matInput formControlName="contenu">
+          </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <button mat-raised-button color="primary" type="submit" [disabled]="articleForm.invalid">
+              Save
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

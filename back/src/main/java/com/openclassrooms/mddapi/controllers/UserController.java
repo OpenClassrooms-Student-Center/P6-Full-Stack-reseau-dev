@@ -66,4 +66,26 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PostMapping("{themeId}/follow/{userId}")
+    public ResponseEntity<?> follow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId) {
+        try {
+            this.userService.follow(Long.parseLong(themeId), Long.parseLong(userId));
+
+            return ResponseEntity.ok().build();
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("{themeId}/follow/{userId}")
+    public ResponseEntity<?> unFollow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId) {
+        try {
+            this.userService.unFollow(Long.parseLong(themeId), Long.parseLong(userId));
+
+            return ResponseEntity.ok().build();
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

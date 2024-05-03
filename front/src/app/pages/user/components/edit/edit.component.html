@@ -23,8 +23,9 @@
           </mat-form-field>
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-raised-button color="primary" type="submit" [disabled]="editUserForm.invalid">
-              Save
+              Sauvegarder
             </button>
+            <button mat-raised-button color="primary" (click)="logout()">Se deconnecter</button>
           </div>
         </form>
       </mat-card-content>
