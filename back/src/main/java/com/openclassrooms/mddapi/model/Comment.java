@@ -1,29 +1,44 @@
 package com.openclassrooms.mddapi.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
+@Data
+@Accessors(chain = true)
+@EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(of = {"id"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comment_id")
 	private Long id;
-	
-	// TODO : to finish...
 
-	public Long getId() {
-		return id;
-	}
+	@ManyToOne
+	@JoinColumn(name = "post_id", nullable = false)
+	private Post post;
 
-	public void setId(Long id) {
-		this.id = id;
-	}	
-	
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private MddUser author;
+
+	@CreatedDate
+	@Column(name = "created_at", updatable = false)
+	private LocalDateTime createdAt;
+
+	@UpdateTimestamp
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 }

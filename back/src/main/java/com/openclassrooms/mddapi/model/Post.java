@@ -1,16 +1,25 @@
 package com.openclassrooms.mddapi.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
+@Data
+@Accessors(chain = true)
+@EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(of = {"id"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Post {
 
 	@Id
@@ -19,26 +28,26 @@ public class Post {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "topic_id")
+	@JoinColumn(name = "topic_id", nullable = false)
 	private Topic topic;
-	
-	// TODO : to finish...
 
-	public Long getId() {
-		return id;
-	}
+	@Column(name = "article", nullable = false)
+	private String article;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private MddUser author;
 
-	public Topic getTopic() {
-		return topic;
-	}
+	@OneToMany
+	private List<Comment> comments;
 
-	public void setTopic(Topic topic) {
-		this.topic = topic;
-	}
-		
+
+	@CreatedDate
+	@Column(name = "created_at", updatable = false)
+	private LocalDateTime createdAt;
+
+	@UpdateTimestamp
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 	
 }
