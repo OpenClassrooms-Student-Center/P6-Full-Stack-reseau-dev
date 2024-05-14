@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.mappers;
 
 import com.openclassrooms.mddapi.dtos.CommentDto;
-import com.openclassrooms.mddapi.dtos.MddUserDto;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Post;
