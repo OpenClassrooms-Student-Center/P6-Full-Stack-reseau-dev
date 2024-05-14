@@ -7,6 +7,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +22,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 @Transactional
-public class MddUserService {
+public class MddUserService implements UserDetailsService {
 
     MddUserRepository mddUserRepository;
 
@@ -43,6 +47,17 @@ public class MddUserService {
                     .orElseThrow(() -> new RuntimeException("User not found"));
         } catch (Exception e) {
             log.error("We could not find user: " + id, e.getMessage());
+            throw new RuntimeException("We could not find your user");
+        }
+    }
+
+    public MddUser findUserByUsername(String username) {
+        try {
+            log.info("findUserByUsername - username: " + username);
+            return mddUserRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+        } catch (Exception e) {
+            log.error("We could not find user: " + username, e.getMessage());
             throw new RuntimeException("We could not find your user");
         }
     }
@@ -90,5 +105,12 @@ public class MddUserService {
             log.error("Failed to delete user: ", e.getMessage());
             throw new RuntimeException("Failed to delete user");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        MddUser user = mddUserRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No user with this username"));
+        List<SimpleGrantedAuthority> authi = new ArrayList<>();
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authi);
     }
 }
