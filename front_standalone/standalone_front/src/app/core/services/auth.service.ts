@@ -46,6 +46,20 @@ export class AuthService {
       }));
   }
 
+  refreshToken(){
+    return this.http
+      .post<any>(`/refreshToken`, {token: this.refreshTokenService.getRefreshToken()},
+        {
+          headers: new HttpHeaders(
+            {
+            } ),
+          observe: 'response'
+        })
+      .pipe(tap((r) => {
+        this.refreshSession(r.body);
+      }));
+  }
+
   register ({username, email, password, firstname, lastname}: {username : string, email : string, password : string, firstname : string, lastname : string}){
     return this.apiService.putNoAuth(`/register`,
       {
@@ -78,6 +92,11 @@ export class AuthService {
       this.currentUserSubject.next(authUser);
       this.isAuthenticatedSubject.next(true);
     }
+  }
+
+  refreshSession(token: string | null){
+    if (token == null){return;}
+    this.jwt.saveUser(token);
   }
 
   saveRefreshToken(refreshToken: string){

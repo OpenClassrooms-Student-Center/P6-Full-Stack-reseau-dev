@@ -5,13 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class RefreshTokenService {
 
-  constructor( ) {
-    this.rememberMe = localStorage.getItem(this.rememberMe_key) ? true : false;
-  }
-
   token_key = 'mdd_refresh_token_key';
   rememberMe_key = 'mdd_rememberMe_key';
   private rememberMe: boolean = false;
+  private refreshToken: string | null = null;
+
+
+  constructor( ) {
+    this.rememberMe = !!localStorage.getItem(this.rememberMe_key);
+    this.refreshToken = localStorage.getItem(this.token_key) ? localStorage.getItem(this.token_key) : null;
+  }
+
 
   saveRefreshToken(token: string) {
     localStorage.setItem(this.token_key, token);
@@ -33,6 +37,10 @@ export class RefreshTokenService {
   deactivateRememberMe() {
     this.rememberMe = false;
     localStorage.removeItem(this.rememberMe_key);
+  }
+
+  hasRefreshToken(){
+    return !!this.refreshToken;
   }
 
 }
