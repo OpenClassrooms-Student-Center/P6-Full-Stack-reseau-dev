@@ -1,7 +1,43 @@
 {
-  "generic" : {
-    "title": "title",
-    "categogry": "category",
-    "text": "text_texttexttexttexttexttexttexttext_text_texttexttexttexttexttexttexttext_text_texttexttexttexttexttexttexttext_text_texttexttexttexttexttexttexttext_text_texttexttexttexttexttexttexttext_text_texttexttexttexttexttexttexttext_text_texttexttexttexttexttexttexttext_text_texttexttexttexttexttexttexttext_"
+  "home-unauth": {
+    "login": "se connecter",
+    "signin": "s'inscrire"
+  },
+  "signin": {
+    "register": "Inscription",
+    "username": "Nom d'utilisateur",
+    "mail": "Adresse e-mail",
+    "password": "Mot de passe",
+    "signin": "S'inscrire"
+  },
+  "login": {
+    "login": "Se connecter",
+    "mail-or-username": "E-mail ou nom d'utilisateur",
+    "password": "Mot de passe"
+  },
+  "articles": {
+    "create-article": "Créer un article",
+    "sort-by": "Trier par"
+  },
+  "header": {
+    "articles": "Articles",
+    "themes": "Thèmes"
+  },
+  "article": {
+    "comments": "Commentaires",
+    "write-comment-here": "Écrivez ici votre commentaire"
+  },
+  "new-article": {
+    "create-new-article": "Créer un nouvel article",
+    "select-theme": "Sélectionner un thème",
+    "article-title": "Titre de l'article",
+    "article-content": "Contenu de l'article",
+    "create": "Créer"
+  },
+  "user-profile": {
+    "user-profile": "Profil utilisateur",
+    "save": "Sauvegarder",
+    "subscriptions": "Abonnements",
+    "unsubscribe": "Se désabonner"
   }
 }
