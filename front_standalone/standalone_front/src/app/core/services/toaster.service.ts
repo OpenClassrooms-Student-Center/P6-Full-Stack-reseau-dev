@@ -33,4 +33,14 @@ export class ToasterService {
     }
     this.toaster.success(message);
   }
+
+  public handleWarning(msg: string) {
+    let message: string;
+    if (msg) {
+      message = `Warning : ${msg}`;
+    } else {
+      message = `Warning !`;
+    }
+    this.toaster.warning(message);
+  }
 }
