@@ -1,0 +1,13 @@
+.flag-icon {
+  width: 20px;
+  height: 15px;
+  margin-right: 8px;
+}
+
+mat-form-field {
+  @media screen and (max-width: 1049px) {
+    width: 100%;
+  }
+
+  width: 117px;
+}

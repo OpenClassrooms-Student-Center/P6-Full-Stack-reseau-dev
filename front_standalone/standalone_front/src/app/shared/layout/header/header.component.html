@@ -1,1 +1,18 @@
-<p>header works!</p>
+<mat-toolbar>
+  <a routerLink="/home" title="articles">
+    <img *ngIf="!router.isActive('/welcome', true)" src="/assets/images/logos/logo.png" alt="logo">
+  </a>
+  <div class="link-group" *ngIf="(router.isActive('/welcome', true) && router.isActive('/login', true) && router.isActive('/register', true))">
+    <a class="header-link" [routerLinkActive]="['active']" routerLink="/home">{{ "header.articles" | transloco }}</a>
+    <a class="header-link" [routerLinkActive]="['active']" routerLink="/themes">{{ "header.themes" | transloco }}</a>
+  </div>
+  <div class="control-group">
+    <app-language-switcher />
+  </div>
+  <div class="mobile-group">
+    <button class="header-menu-btn" mat-mini-fab color="white" (click)="toggleSidenav()">
+      <mat-icon aria-hidden="false" fontIcon="home" />
+      <img class="img-fluid" src="/assets/images/icons/hamburger_menu_icon.svg" alt="hamburger_icon">
+    </button>
+  </div>
+</mat-toolbar>

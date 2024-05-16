@@ -1,0 +1,21 @@
+mat-sidenav-content {
+  height: calc(100vh - 138px);
+  padding: 24px;
+
+  @media screen and (max-width: 1049px) {
+    height: calc(100vh - 114px);
+    padding: 12px;
+  }
+}
+
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0;
+
+  a {
+    padding-right: 48px;
+  }
+}

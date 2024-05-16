@@ -1,1 +1,17 @@
-<p>unauthenticated works!</p>
+<ng-container>
+  <div class="welcome-layout">
+    <a routerLink="/home" title="articles">
+      <img src="../../../assets/images/logos/logo.png" alt="logo">
+    </a>
+
+    <div class="button-layout">
+      <button mat-raised-button color="accent" class="welcome-button" (click)="goToSignin()"> {{ "home-unauth.signin" | transloco }} </button>
+
+
+      <button mat-raised-button color="accent" class="welcome-button" (click)="goToSignup()"> {{ "home-unauth.signup" | transloco }} </button>
+    </div>
+
+  </div>
+
+
+</ng-container>

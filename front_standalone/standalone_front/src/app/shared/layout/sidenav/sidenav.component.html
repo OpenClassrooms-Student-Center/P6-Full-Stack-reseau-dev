@@ -1,1 +1,14 @@
-<p>sidenav works!</p>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="push" [autoFocus]="false" position="end">
+    <mat-nav-list>
+      <div>
+        <a mat-list-item routerLink="/home">{{ "header.articles" | transloco }}</a>
+        <a mat-list-item routerLink="/themes">{{ "header.themes" | transloco }}</a>
+      </div>
+      <app-language-switcher/>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

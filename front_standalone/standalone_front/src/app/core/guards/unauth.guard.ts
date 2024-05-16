@@ -1,17 +1,18 @@
 import {inject, Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from "@angular/router";
-import { SessionService } from "../services/session.service";
+import {AuthService} from "../services/auth.service";
+
 
 @Injectable({providedIn: 'root'})
 class NoPermissionsGuard {
 
   constructor(
     private router: Router,
-    private sessionService: SessionService,
+    private authService: AuthService,
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.sessionService.isLogged) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['home']);
       return false;
     }

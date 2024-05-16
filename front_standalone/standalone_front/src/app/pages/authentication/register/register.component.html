@@ -1,1 +1,50 @@
-<p>register works!</p>
+<div class="register-layout">
+
+  <h1 class="mat-h1">{{ "signup.sign-up" | transloco }}</h1>
+
+  <form class="form-layout" [formGroup]="registerForm" (ngSubmit)="register()">
+
+    <mat-form-field >
+      <mat-label>{{ "signup.username" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="username"
+        (change)="handleChange()"
+      >
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>{{ "signup.mail" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="email"
+        (change)="handleChange()"
+      >
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>{{ "signup.password" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="password"
+        (change)="handleChange()"
+      >
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>{{ "signup.confirm-password" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="passwordMatch"
+        (change)="handleChange()"
+      >
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" class="register-button" type="submit"> {{ "signup.sign-up" | transloco }} </button>
+
+  </form>
+</div>

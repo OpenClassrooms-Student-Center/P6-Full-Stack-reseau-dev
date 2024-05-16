@@ -1,0 +1,31 @@
+.form-layout{
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 80vw;
+  height: 30vh;
+}
+
+.register-layout{
+  margin-top: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media screen and (max-width: 1049px) {
+
+    flex-direction: column;
+    height: 50vh;
+    width: 80vw;
+    align-items: center;
+  }
+}
+
+.form-field{
+  width: 60vw;
+}
+
+.register-button{
+  width: 150px;
+}

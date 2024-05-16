@@ -1,0 +1,115 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$primary: #397FF3;
+$secondary: #7F59D9;
+$success: #198754;
+$warning: #ffc107;
+$danger: #dc3545;
+$grey: #CCC;
+$light-grey-bg: #F4F4F4;
+$light-blue-bg: #F2F6FE;
+
+:root {
+  --primary: #{mat-color($primary)};
+  --secondary: #{mat-color($secondary)};
+  --success: #{mat-color($success)};
+  --warning: #{mat-color($warning)};
+  --danger: #{mat-color($danger)};
+  --grey: #{mat-color($grey)};
+  --light-grey-bg: #{mat-color($light-grey-bg)};
+  --light-blue-bg: #{mat-color($light-blue-bg)};
+}
+
+$primary-palette: (
+  50: #E7F0FE,
+  100: #C4D9FB,
+  200: #9CBFF9,
+  300: #74A5F7,
+  400: #5792F5,
+  500: $primary,
+  600: #3377F1,
+  700: #2C6CEF,
+  800: #2462ED,
+  900: #174FEA,
+  contrast: (50: rgba(#000, 0.87),
+    100: rgba(#000, 0.87),
+    200: rgba(#000, 0.87),
+    300: rgba(#000, 0.87),
+    400: rgba(#000, 0.87),
+    500: #FFF,
+    600: #FFF,
+    700: #FFF,
+    800: #FFF,
+    900: #FFF,
+  )
+);
+
+$accent-palette: (
+  50: #F0EBF7,
+  100: #D9CCEA,
+  200: #BFABDC,
+  300: #A589CE,
+  400: #926FC4,
+  500: $secondary,
+  600: #774FB2,
+  700: #6C45AA,
+  800: #623CA2,
+  900: #4F2B93,
+  contrast: (50: rgba(#000, 0.87),
+    100: rgba(#000, 0.87),
+    200: rgba(#000, 0.87),
+    300: rgba(#000, 0.87),
+    400: rgba(#000, 0.87),
+    500: #FFF,
+    600: #FFF,
+    700: #FFF,
+    800: #FFF,
+    900: #FFF,
+  )
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$MDD-primary: mat.define-palette($primary-palette, 500, 400, 900);
+$MDD-accent: mat.define-palette($accent-palette, 500, 400, 900);
+$MDD-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$MDD-theme: mat.define-light-theme((color: (primary: $MDD-primary,
+        accent: $MDD-accent,
+        warn: $MDD-warn,
+      )));
+
+$MDD-theme-dark: mat.define-dark-theme((color: (primary: $MDD-primary,
+        accent: $MDD-accent,
+        warn: $MDD-warn,
+      )));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($MDD-theme);
+
+body.dark-theme {
+  @include mat.all-component-colors($MDD-theme-dark);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}

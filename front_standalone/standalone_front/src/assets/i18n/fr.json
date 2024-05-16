@@ -1,17 +1,18 @@
 {
   "home-unauth": {
-    "login": "se connecter",
-    "signin": "s'inscrire"
+    "signin": "se connecter",
+    "signup": "s'inscrire"
   },
-  "signin": {
+  "signup": {
     "register": "Inscription",
     "username": "Nom d'utilisateur",
     "mail": "Adresse e-mail",
     "password": "Mot de passe",
-    "signin": "S'inscrire"
+    "confirm-password": "Confirmer mot de passe",
+    "sign-up": "S'inscrire"
   },
   "login": {
-    "login": "Se connecter",
+    "signin": "Se connecter",
     "mail-or-username": "E-mail ou nom d'utilisateur",
     "password": "Mot de passe"
   },

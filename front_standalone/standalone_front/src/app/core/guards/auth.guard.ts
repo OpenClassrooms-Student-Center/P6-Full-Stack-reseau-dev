@@ -1,6 +1,7 @@
 import {inject, Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from "@angular/router";
-import { SessionService } from "../services/session.service";
+import {AuthService} from "../services/auth.service";
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +10,12 @@ class PermissionsGuard {
 
   constructor(
     private router: Router,
-    private sessionService: SessionService,
+    private authService: AuthService,
     ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (!this.sessionService.isLogged) {
-      this.router.navigate(['login']);
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['welcome']);
       return false;
     }
     return true;

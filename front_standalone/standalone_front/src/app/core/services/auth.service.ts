@@ -60,14 +60,12 @@ export class AuthService {
       }));
   }
 
-  register ({username, email, password, firstname, lastname}: {username : string, email : string, password : string, firstname : string, lastname : string}){
+  register ({username, email, password}: {username : string, email : string, password : string}){
     return this.apiService.putNoAuth(`/register`,
       {
         username : username,
         mail : email,
         password : password,
-        firstname : firstname,
-        lastname : lastname
       })
   }
 

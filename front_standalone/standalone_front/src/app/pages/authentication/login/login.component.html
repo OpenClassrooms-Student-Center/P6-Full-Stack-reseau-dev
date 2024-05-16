@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="login-layout">
+
+  <h1 class="mat-h1">{{ "login.signin" | transloco }}</h1>
+
+  <form class="form-layout" [formGroup]="loginForm" (ngSubmit)="login()">
+
+    <mat-form-field >
+      <mat-label>{{ "login.mail-or-username" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="username"
+        (change)="handleChange()"
+      >
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>{{ "login.password" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="password"
+        (change)="handleChange()"
+      >
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" class="login-button" type="submit"> {{ "login.signin" | transloco }} </button>
+
+  </form>
+</div>

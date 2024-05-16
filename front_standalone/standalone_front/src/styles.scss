@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/scss/material-theme";
+
+#language-switcher {
+  @media screen and (min-width: 1050px) {
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled),
+    .mat-mdc-form-field-focus-overlay {
+      background-color: transparent !important;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after,
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+      border-bottom: 0px;
+    }
+
+    .mat-mdc-select-value,
+    .mat-mdc-select-arrow svg {
+      color: #FFF;
+    }
+  }
+}
