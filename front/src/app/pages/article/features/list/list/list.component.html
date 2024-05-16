@@ -1,0 +1,25 @@
+<div>
+    <button type="button" class="btn btn-primary" (click)="create()">
+        Créer un article
+      </button>
+</div>
+<div class="list">
+    <mat-card>
+    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+      <mat-card class="item" *ngFor="let article of (articles$ | async)" fxFlex>
+        <mat-card-header>
+          <mat-card-title>
+            {{ article.titre }}
+        </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <p>
+            {{ article.createdAt | date: 'longDate' }}
+            {{ article.auteur }}
+        </p>
+        <p>
+            {{ article.description }}
+        </p>
+        </mat-card-content>
+      </mat-card>
+      </div>

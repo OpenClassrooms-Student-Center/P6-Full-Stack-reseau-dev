@@ -13,10 +13,10 @@ export class UnauthGuard implements CanActivate {
   }
 
   public canActivate(): boolean {
-    // if (this.sessionService.isLogged) {
-    //   this.router.navigate(['/home']);
-    //   return false;
-    // }
+    if (this.sessionService.isLogged) {
+      this.router.navigate(['/home']);
+      return false;
+    }
     return true;
   }
 }

@@ -1,7 +1,8 @@
 export interface Theme {
-    theme_id?: number;
+    themeId?: number;
     titre: string;
     description: string;
+    follow : boolean;
     articles: [];
     users : [];
 }

@@ -46,13 +46,11 @@ ALTER TABLE `ARTICLES` ADD FOREIGN KEY (`theme_id`) REFERENCES `THEMES` (`theme_
 
 INSERT INTO THEMES (titre, description)
 VALUES ('Titre du thème', 'lorem ipsum is simply dummy text of the printing and typesetting industry...'),
-       ('Hélène', 'THIERCELIN');
+       ('Titre', 'lorem ipsum is simply dummy text of the printing and typesetting industry...');
 
 
 INSERT INTO USERS (first_name, email, password)
 VALUES ('Admin', 'user@mdd.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'); 
-
-INSERT INTO THEME_LIKE (user_id, theme_id) VALUES (1,1);
 
 INSERT INTO ARTICLES (titre, auteur, contenu, commentaires)
 VALUES ('Titre', 'Auteur', 'description', ''); 

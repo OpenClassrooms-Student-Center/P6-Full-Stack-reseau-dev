@@ -1,9 +1,7 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.ThemeDto;
-import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.models.Theme;
-import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.ThemeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,7 @@ public class ThemeController {
 
         for(Theme theme : themeList) {
             ThemeDto themeDto= new ThemeDto();
+            themeDto.setThemeId(theme.getThemeId());
             themeDto.setDescription(theme.getDescription());
             themeDto.setTitre(theme.getTitre());
             themeListDto.add(themeDto);

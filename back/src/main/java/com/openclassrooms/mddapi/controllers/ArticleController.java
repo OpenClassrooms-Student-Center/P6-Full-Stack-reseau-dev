@@ -13,8 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -39,14 +43,17 @@ public class ArticleController {
 
         for(Article article : articleList) {
             ArticleDto articleDto= new ArticleDto();
-
+            articleDto.setTitre(article.getTitre());
+            articleDto.setDate(article.getCreatedAt());
+            articleDto.setDescription(article.getContenu());
+            articleDto.setAuteur(article.getAuteur());
             articleDtoList.add(articleDto);
         }
 
         return ResponseEntity.ok().body(articleDtoList);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody ArticleDto articleDto ) {
 
         Article article = new Article();
@@ -55,17 +62,22 @@ public class ArticleController {
 
         Theme theme = new Theme();
         if( articleDto.getTheme_id() != null) {
-            theme= themeService.findById(articleDto.getTheme_id());
+            theme= themeService.findById(Long.parseLong(articleDto.getTheme_id()));
         }
 
+
         article.setTheme(theme);
-        article.setCreatedAt(articleDto.getDate());
+        //article.setCreatedAt(articleDto.getDate());
 
         User user = new User();
         if( articleDto.getUser_id() != null) {
             user = userService.findById(articleDto.getUser_id());
         }
         article.setAuteur(user.getFirstName());
+        article.setUser(user);
+        article.setCreatedAt(new Date());
+
+        articleService.addArticle(article);
 
         return ResponseEntity.ok().body(article);
     }

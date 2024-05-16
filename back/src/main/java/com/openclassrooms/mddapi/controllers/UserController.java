@@ -85,6 +85,7 @@ public class UserController {
 
             return ResponseEntity.ok().build();
         } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }

@@ -1,7 +1,7 @@
 export interface Article {
     id?: number;
-    title: string;
-    contenu: string;
+    titre: string;
+    description: string;
     auteur: string;
     theme_id: number;
     user_id: number;

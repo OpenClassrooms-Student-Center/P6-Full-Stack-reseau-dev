@@ -5,21 +5,20 @@
     <mat-card-header>
       <mat-card-title>{{ theme.titre }}</mat-card-title>
     </mat-card-header>
-
     <mat-card-content>
       <p>
         {{ theme.description }}
       </p>
     </mat-card-content>
-    <div>
-      <button *ngIf="!isFollow" mat-raised-button color="primary" (click)="follow()">
+    <mat-card-actions>
+      <!-- <button *ngIf="isParticipate" mat-raised-button color="primary" (click)="follow(theme.themeId)">
         <mat-icon>person_add</mat-icon>
         <span class="ml1">S'abonner</span>
-      </button>
-      <button *ngIf="isFollow" mat-raised-button color="warn" (click)="unFollow()">
+      </button> -->
+      <button *ngIf="!isParticipate" mat-raised-button color="warn" (click)="unFollow(theme.themeId)">
         <mat-icon>person_remove</mat-icon>
         <span class="ml1">Se desabonner</span>
       </button>
-    </div>
+  </mat-card-actions>
   </mat-card>
   </div>

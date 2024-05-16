@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -15,17 +16,15 @@ import java.util.Date;
 @AllArgsConstructor
 public class ArticleDto {
 
-    @NotBlank
-    @Size(max = 50)
     private String titre;
 
-    @NotNull
-    private Long theme_id;
+    private String theme_id;
 
-    @NotBlank
     private String description;
 
-    private LocalDateTime date;
+    private Date date;
 
     private Long user_id;
+
+    private String auteur;
 }

@@ -16,13 +16,13 @@ export class AppComponent {
     private sessionService: SessionService) {
   }
 
-  // public $isLogged(): Observable<boolean> {
-  //   return this.sessionService.$isLogged();
-  // }
+  public $isLogged(): Observable<boolean> {
+    return this.sessionService.$isLogged();
+  }
 
-  // public logout(): void {
-  //   this.sessionService.logOut();
-  //   this.router.navigate([''])
-  // }
+  public logout(): void {
+    this.sessionService.logOut();
+    this.router.navigate([''])
+  }
 
 }

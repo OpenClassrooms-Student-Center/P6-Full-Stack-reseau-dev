@@ -13,7 +13,11 @@ export class ArticleService {
   constructor(private httpClient : HttpClient) { 
   }
 
+  public all(): Observable<Article[]> {
+    return this.httpClient.get<Article[]>(this.pathService);
+  }
+
   public create(article : Article): Observable<Article> {
-    return this.httpClient.post<Article>(`${this.pathService}`, article);
+    return this.httpClient.post<Article>(this.pathService, article);
   }
 }
