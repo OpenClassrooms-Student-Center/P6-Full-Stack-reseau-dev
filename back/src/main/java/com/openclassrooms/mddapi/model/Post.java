@@ -34,6 +34,9 @@ public class Post {
 	@Column(name = "article", nullable = false)
 	private String article;
 
+	@Column(name = "title", nullable = false)
+	private String title;
+
 	@ManyToOne
 	@JoinColumn(name = "author_id")
 	private MddUser author;

@@ -19,6 +19,9 @@ public class PostDto {
     @NotNull
     private String article;
 
+    @NotNull
+    private String title;
+
     private Long authorId;
 
     private List<Long> commentIds;
