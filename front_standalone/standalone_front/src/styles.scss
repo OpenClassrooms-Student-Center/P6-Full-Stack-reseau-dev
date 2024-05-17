@@ -20,3 +20,28 @@
     }
   }
 }
+
+.card-list{
+  margin-left: 7vw;
+  margin-right: 7vw;
+  width: 86vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @media screen and (max-width: 1049px) {
+    margin-left: 3vw;
+    margin-right: 3vw;
+    width: 94vw;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.card{
+  width: 41vw;
+
+  @media screen and (max-width: 1049px) {
+    width: 94vw;
+  }
+}

@@ -18,7 +18,12 @@
   },
   "articles": {
     "create-article": "Créer un article",
-    "sort-by": "Trier par"
+    "sort-by": "Trier par",
+    "sorting": {
+      "date": "Date",
+      "title": "Titre",
+      "theme": "Thème"
+    }
   },
   "header": {
     "articles": "Articles",

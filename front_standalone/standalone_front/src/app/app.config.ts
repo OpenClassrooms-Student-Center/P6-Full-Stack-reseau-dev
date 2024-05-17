@@ -7,6 +7,8 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {TranslocoHttpLoader} from "./transloco-loader";
 import {provideHttpClient} from "@angular/common/http";
 import {provideTransloco} from "@jsverse/transloco";
+import {provideToastr} from "ngx-toastr";
+import {provideAnimations} from "@angular/platform-browser/animations";
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimationsAsync(), {provide: LocationStrategy, useClass: HashLocationStrategy}, provideHttpClient(), provideTransloco({
@@ -18,5 +20,11 @@ export const appConfig: ApplicationConfig = {
       prodMode: !isDevMode(),
     },
     loader: TranslocoHttpLoader
-  })]
+  }),
+    provideAnimations(), // required animations providers
+    provideToastr({
+      timeOut: 2000,
+      positionClass: "toast-bottom-right",
+    }), // Toastr providers
+  ]
 };

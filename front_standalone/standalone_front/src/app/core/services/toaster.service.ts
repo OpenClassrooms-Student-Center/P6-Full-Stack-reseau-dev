@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import {ToastrService} from "ngx-toastr";
+import {ToastrModule, ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToasterService {
   constructor(
     private toaster: ToastrService,
-  ) { }
+  ) {
+  }
 
   public handleError(err: HttpErrorResponse) {
     let errorMessage: string;
