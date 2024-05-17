@@ -4,4 +4,7 @@
 
 .card{
   margin-bottom: 3vh;
+  &:hover{
+    cursor: pointer;
+  }
 }

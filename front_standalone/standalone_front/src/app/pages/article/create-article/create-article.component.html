@@ -1,1 +1,48 @@
-<p>create-article works!</p>
+<div class="creation-layout">
+
+  <h1 class="mat-h1">{{ "new-article.create-new-article" | transloco }}</h1>
+
+  <form class="form-layout" [formGroup]="creationForm" (ngSubmit)="createArticle()">
+
+    <mat-form-field id="topics-switcher" appearance="fill" subscriptSizing="dynamic">
+      <!-- subscriptSizing: to remove the bottom bar on the field -->
+      <mat-label>{{ "new-article.select-theme" | transloco }}</mat-label>
+      <mat-select formControlName="topic" panelClass="topunit">
+        <!-- Custom the selected value in the select input -->
+        <mat-select-trigger>
+          <ng-container *ngIf="themeControl.value">
+            <span>{{ themeControl.value.name }}</span>
+          </ng-container>
+        </mat-select-trigger>
+        <!-- Loop through the topics array to display the options -->
+        <mat-option *ngFor="let topic of topics" [value]="topic">
+          <span>{{ topic.name }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>{{ "new-article.article-title" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="title"
+        (change)="handleChange()"
+      >
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>{{ "new-article.article-content" | transloco }}</mat-label>
+      <textarea
+        class="form-field"
+        matInput
+        formControlName="content"
+        (change)="handleChange()"
+      ></textarea>
+    </mat-form-field>
+
+
+    <button mat-raised-button color="accent" class="creation-button" type="submit"> {{ "new-article.create" | transloco }} </button>
+
+  </form>
+</div>

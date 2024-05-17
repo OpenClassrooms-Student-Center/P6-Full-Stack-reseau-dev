@@ -3,8 +3,8 @@ export interface Post {
     topicId: number;
     article: string;
     title: string;
-    authorId: number;
+    authorId: number | null;
     commentIds: number[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Date | null;
+    updatedAt: Date | null;
 }

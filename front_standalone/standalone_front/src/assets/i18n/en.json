@@ -45,5 +45,8 @@
     "save": "Save",
     "subscriptions": "Subscriptions",
     "unsubscribe": "Unsubscribe"
+  },
+  "themes": {
+    "subscribe": "Subscribe"
   }
 }

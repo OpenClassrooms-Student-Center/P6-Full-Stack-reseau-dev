@@ -19,10 +19,10 @@ export const routes: Routes = [
     path: 'profile', component: ProfileComponent,
   },
   {
-    path: 'article/:id', component: ArticleComponent,
+    path: 'article/create', component: CreateArticleComponent,
   },
   {
-    path: 'article/create', component: CreateArticleComponent,
+    path: 'article/:id', component: ArticleComponent,
   },
   {
     path: 'article/update/:id', component: CreateArticleComponent,
