@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-@RequestMapping("users/user")
+@RequestMapping("comments/comment")
 public class CommentController {
 
     @Autowired
