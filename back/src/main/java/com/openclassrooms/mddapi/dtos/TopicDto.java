@@ -14,6 +14,8 @@ public class TopicDto {
 
     private String name;
 
+    private String description;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

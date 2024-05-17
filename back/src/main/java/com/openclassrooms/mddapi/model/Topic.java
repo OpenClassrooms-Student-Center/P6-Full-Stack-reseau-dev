@@ -30,8 +30,11 @@ public class Topic {
     private Long id;
 
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "name")
     private String name;
+
+    @Column(nullable = false, name = "description")
+    private String description;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
