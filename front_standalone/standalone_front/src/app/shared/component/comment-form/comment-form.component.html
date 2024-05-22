@@ -1,0 +1,9 @@
+
+  <mat-form-field >
+    <mat-label>{{ "article.write-comment-here" | transloco }}</mat-label>
+    <textarea
+      class="article-comment-new"
+      matInput
+      [formControl]="commentFormControl"
+    ></textarea>
+  </mat-form-field>
