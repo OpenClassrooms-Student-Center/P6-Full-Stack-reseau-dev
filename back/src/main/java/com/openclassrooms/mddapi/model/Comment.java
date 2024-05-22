@@ -26,6 +26,9 @@ public class Comment {
 	@Column(name = "comment_id")
 	private Long id;
 
+	@Column(name = "text")
+	private String text;
+
 	@ManyToOne
 	@JoinColumn(name = "post_id", nullable = false)
 	private Post post;

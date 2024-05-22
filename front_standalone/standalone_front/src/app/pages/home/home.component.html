@@ -24,7 +24,7 @@
   <mat-card *ngFor="let post of postsTest" class="card" (click)="selectArticle(post.id)">
     <mat-card-title>{{post.title}}</mat-card-title>
     <mat-card-subtitle>{{post.updatedAt}} -- {{post.authorId}} </mat-card-subtitle>
-    <mat-card-content>{{post.article}}</mat-card-content>
+    <mat-card-content class="article-preview">{{post.article}}</mat-card-content>
   </mat-card>
 
 

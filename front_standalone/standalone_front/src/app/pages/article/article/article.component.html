@@ -1,1 +1,20 @@
-<p>article works!</p>
+<div>
+  <h1><span class="back-arrow" (click)="goBack()">&#8592;</span>  {{post.title}}</h1>
+  <div class="article-structure">
+    <div class="article-details">
+      <div> {{post.createdAt}}</div>
+      <div> {{post.authorId ? (mddUserService.getUserById(post.authorId) | async) : "Author"}}</div>
+      <div> {{post.topicId ? (topicService.getTopic(post.topicId) | async) : "Topic"}}</div>
+    </div>
+    <p class="article-body">
+      {{post.article}}
+    </p>
+
+    <div class="article-line"><hr /></div>
+    <div>Commentaires</div>
+    <div class="article-comment" *ngFor="let comment of comments">
+      <div>{{comment.authorId ? (mddUserService.getUserById(comment.authorId) | async) : "Author"}}</div>
+      <div>{{comment.text}}</div>
+    </div>
+  </div>
+</div>

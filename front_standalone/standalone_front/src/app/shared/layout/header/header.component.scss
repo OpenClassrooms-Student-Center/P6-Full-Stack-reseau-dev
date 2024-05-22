@@ -44,7 +44,7 @@ mat-toolbar {
 
   .link-group {
     display: flex;
-    align-items: center;
+    align-items: end;
     gap: 60px;
 
     @media screen and (max-width: 1400px) {

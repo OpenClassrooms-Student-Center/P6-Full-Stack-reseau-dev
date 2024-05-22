@@ -1,0 +1,37 @@
+.back-arrow{
+  margin-right: 1vw;
+  cursor: pointer;
+  width: 3vw;
+}
+
+.article-details{
+  display: flex;
+  flex-direction: row;
+  align-content: start;
+}
+
+.article-details-element{
+  margin-right: 2vw;
+  min-width: fit-content;
+}
+
+.article-structure{
+  margin-left: 4vw;
+}
+
+.article-line{
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
+.article-comment{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding-right: 3vw;
+  padding-left: 3vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
