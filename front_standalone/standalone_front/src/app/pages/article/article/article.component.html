@@ -11,10 +11,15 @@
     </p>
 
     <div class="article-line"><hr /></div>
-    <div>Commentaires</div>
+    <div>{{ "article.comments" | transloco }}</div>
+    <br/>
     <div class="article-comment" *ngFor="let comment of comments">
-      <div>{{comment.authorId ? (mddUserService.getUserById(comment.authorId) | async) : "Author"}}</div>
-      <div>{{comment.text}}</div>
+      <div class="article-comment-author">{{"Author"}}</div>
+      <mat-card >
+        <mat-card-content class="article-comment-text" >{{comment.text}}</mat-card-content>
+      </mat-card>
     </div>
   </div>
+
+  <app-comment-form [commentFormControl]="commentTextFormControl"></app-comment-form>
 </div>

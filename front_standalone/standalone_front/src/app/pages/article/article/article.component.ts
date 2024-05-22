@@ -7,13 +7,16 @@ import {Comment} from "../../../core/models/comment";
 import {MddUserService} from "../../../core/services/mdd-user.service";
 import {TopicService} from "../../../core/services/topic.service";
 import {CommonModule} from "@angular/common";
+import {MatCard, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
+import {CommentFormComponent} from "../../../shared/component/comment-form/comment-form.component";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-article',
   standalone: true,
-    imports: [
-        TranslocoPipe, CommonModule
-    ],
+  imports: [
+    TranslocoPipe, CommonModule, MatCard, MatCardContent, MatCardSubtitle, MatCardTitle, CommentFormComponent
+  ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss'
 })
@@ -41,6 +44,10 @@ export class ArticleComponent implements OnInit{
     {id: 6, topicId: 7, article: 'test7', title: 'test7', authorId: 7, commentIds: [], createdAt: new Date(), updatedAt: new Date()}
   ];
 
+  commentTextFormControl = new FormControl('', Validators.required);
+  commentForm = new FormGroup({
+    password: this.commentTextFormControl,
+  });
   constructor(
     private router: Router,
     private route: ActivatedRoute,
