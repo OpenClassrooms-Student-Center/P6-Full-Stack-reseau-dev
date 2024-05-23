@@ -39,13 +39,8 @@ const routes: Routes = [
   {
     path: 'article',
     canActivate: [AuthGuard],
-    component: ArticleComponent
-  },
-  {
-    path: 'list',
-    canActivate: [AuthGuard],
-    component: ListComponent
-  },
+    loadChildren: () => import('./pages/article/articles.module').then(m => m.ArticleModule)
+  }
 ];
 
 @NgModule({

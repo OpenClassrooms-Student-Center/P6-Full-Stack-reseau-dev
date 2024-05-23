@@ -7,11 +7,9 @@
     <mat-card>
     <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
       <mat-card class="item" *ngFor="let article of (articles$ | async)" fxFlex>
-        <mat-card-header>
-          <mat-card-title>
+          <mat-card-title [routerLink]="['/article/detail',article.articleId]">
             {{ article.titre }}
         </mat-card-title>
-        </mat-card-header>
         <mat-card-content>
         <p>
             {{ article.createdAt | date: 'longDate' }}

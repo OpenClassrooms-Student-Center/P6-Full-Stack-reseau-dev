@@ -20,4 +20,8 @@ export class ArticleService {
   public create(article : Article): Observable<Article> {
     return this.httpClient.post<Article>(this.pathService, article);
   }
+
+  public getById(id: string): Observable<Article> {
+    return this.httpClient.get<Article>(`${this.pathService}/${id}`);
+  }
 }

@@ -48,7 +48,7 @@ export class ArticleComponent implements OnInit {
         [Validators.required]
       ],
       theme_id: [
-        article ? article.theme_id : '',
+        article ? article.themeId : '',
         [Validators.required]
       ],
       description: [
@@ -72,6 +72,6 @@ export class ArticleComponent implements OnInit {
 
   private exitPage(message: string): void {
     this.matSnackBar.open(message, 'Close', { duration: 3000 });
-    this.router.navigate(['/theme']);
+    this.router.navigate(['article/list']);
   }
 }

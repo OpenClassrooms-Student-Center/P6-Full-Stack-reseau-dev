@@ -1,9 +1,12 @@
+import { Theme } from "../../theme/interface/theme";
+
 export interface Article {
-    id?: number;
+    articleId: number;
     titre: string;
     description: string;
     auteur: string;
-    theme_id: number;
+    themeId: number;
     user_id: number;
     createdAt?: Date;
+    theme : Theme;
 }

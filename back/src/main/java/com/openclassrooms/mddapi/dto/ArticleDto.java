@@ -16,6 +16,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class ArticleDto {
 
+    private Long articleId;
+
     private String titre;
 
     private String theme_id;

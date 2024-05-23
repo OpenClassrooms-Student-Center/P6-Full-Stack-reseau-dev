@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
-public class ThemeDto {
+public class ThemeUpdateDto {
 
     private Long themeId;
 
@@ -10,12 +10,12 @@ public class ThemeDto {
 
     private Boolean follow;
 
-    public Boolean getFollow() {
-        return follow;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFollow(Boolean follow) {
-        this.follow = follow;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getThemeId() {
@@ -34,11 +34,11 @@ public class ThemeDto {
         this.titre = titre;
     }
 
-    public String getDescription() {
-        return description;
+    public Boolean getFollow() {
+        return follow;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFollow(Boolean follow) {
+        this.follow = follow;
     }
 }

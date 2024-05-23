@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Theme } from '../../interface/theme';
-import { Observable, mergeMap, of } from 'rxjs';
+import { Observable, mergeMap, of, take } from 'rxjs';
 import { ThemeService } from '../../service/theme.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/pages/user/service/user.service';
@@ -21,13 +21,15 @@ export class ThemeComponent implements OnInit {
 
   public theme! : Theme;
 
-  public themes$: Observable<Theme[]> = this.themeService.all();;
+  public themes= this.themeService.all();
 
   public themesByUser$ : Observable<Theme[]> | undefined ;
 
   private userId: string;
   
-  public isParticipate= false;
+  public isParticipate : boolean | undefined;
+
+  public isFollow! : boolean;
 
   constructor(
     private themeService : ThemeService,
@@ -35,44 +37,46 @@ export class ThemeComponent implements OnInit {
     private userService : UserService,
     private sessionService : SessionService
     ) { 
-      //this.themeId="1";
       this.userId = this.sessionService.sessionInformation!.id.toString();
-
-      console.log(this.themes$);
     }
   ngOnInit(): void {
 
-    this.themes$!.forEach(theme_array => {
-        theme_array.forEach(theme => {
-          this.fetchTheme(theme.themeId);
-      })
-    });
+    // this.themes$!.forEach(theme_array => {
+    //     theme_array.forEach(theme => {
+    //       console.log(theme.themeId);
+    //       this.fetchTheme(theme.themeId);
+    //   })
+    // });
 
+    // const themes= this.themeService.all().pipe(take(1));
+    // const  user = this.userService.getById(this.userId).pipe(take(1));
       // faire une requette au back pour recuperer le user avec les themes associés
-      // this.userService
-      // .getById(this.userId)
-      // .subscribe((user: User) => 
-      //   {
-      //     this.user = user;
-      //     this.themes$!.forEach(theme_array => {
-      //       theme_array.forEach(theme => {
-      //         console.log(this.user);
-      //         this.user?.themes.forEach(themeByUser => {
-      //           console.log(theme.themeId);
-      //           console.log(themeByUser.themeId);
-      //           console.log(theme.follow);
-      //           if(theme.themeId === themeByUser.themeId) {
-      //             console.log(themeByUser);
-      //             theme.follow=true;
-      //             console.log(theme.follow);
-      //           } else {
-      //             theme.follow=false;
-      //             console.log(theme.follow);
-      //           }
-      //         })
-      //       })
-      //     });
-      //   });
+      this.userService
+      .getById(this.userId)
+      .subscribe((user: User) => 
+        {
+          this.user = user;
+          this.themes!.forEach(theme_array => {
+            theme_array.forEach(theme => {
+              console.log(this.user);
+              this.user?.themes.forEach(themeByUser => {
+                console.log(theme.themeId);
+                console.log(themeByUser.themeId);
+                console.log(theme.follow);
+                if(theme.themeId === themeByUser.themeId) {
+                  console.log(themeByUser);
+                  theme.follow=true;
+                  this.isFollow=true;
+                  console.log(theme.follow);
+                } else {
+                  theme.follow=false;
+                  this.isFollow=false;
+                  console.log(theme.follow);
+                }
+              })
+            })
+          });
+        });
 
       // parcourrir la liste de tous les themes 
       // si le theme est egalement dans la liste des themes du user alors mettre l'attribut follow à true
@@ -90,21 +94,34 @@ export class ThemeComponent implements OnInit {
     }
 
   
-    private fetchTheme(themeId : any): void {
+    private fetchTheme(themeId : any,): void {
       this.userService.getById(this.userId)
       .subscribe((user: User) => {
         this.user= user;
-        this.user?.themes.forEach(themeByUser => {
-          console.log(themeByUser.themeId);
-          if(themeId === themeByUser.themeId) {
-            console.log(themeByUser);
-            this.isParticipate=true;
-            console.log(this.isParticipate);
-          } else {
-            this.isParticipate=false;
-          }
-        })
-        //this.isParticipate = theme.users.some(u => u === this.sessionService.sessionInformation!.id.toString());
+        // this.user?.themes.forEach(themeByUser => {
+        //   console.log(themeByUser.themeId);
+        //   if(themeId === themeByUser.themeId) {
+        //     console.log(themeByUser);
+        //     this.isParticipate = user.themes.some(u => u === themeId);
+        //     // if( this.isParticipate === true) {
+        //     // this.themeService.getById(themeId).subscribe( theme => { 
+        //     //   // if(theme.follow=true) {
+        //     //     this.isFollow = "true", console.log(theme.follow)
+        //     //   // } else {
+
+        //     //   // }
+        //     //   })
+        //     // }
+        //     // console.log();
+        //   } else {
+        //     // this.themeService.getById(themeId).subscribe( theme => 
+        //     //   this.isFollow="false")
+        //     this.isParticipate = false;
+        //   }
+        // })
+        console.log(themeId)
+        // this.isParticipate = user.themes.some(u => u.themeId === themeId);
+        console.log(this.isParticipate);
         this.themeService.getById
           (themeId)
           .subscribe((theme: Theme) => this.theme = theme);

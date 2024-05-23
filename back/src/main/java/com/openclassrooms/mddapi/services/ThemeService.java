@@ -28,4 +28,9 @@ public class ThemeService {
     public Theme findById(Long themeId) {
         return this.themeRepository.findById(themeId).orElse(null);
     }
+
+    public Theme update(Long theme_id, Theme theme) {
+        theme.setThemeId(theme_id);
+        return themeRepository.save(theme);
+    }
 }

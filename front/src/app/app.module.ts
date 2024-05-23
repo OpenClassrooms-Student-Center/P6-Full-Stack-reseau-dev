@@ -11,7 +11,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ThemeComponent } from './pages/theme/component/theme/theme.component';
-import { ArticleComponent } from './pages/article/features/form/form.component';
 import { UserComponent } from './pages/user/components/detail/user.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 import { EditComponent } from './pages/user/components/edit/edit.component';
 import { MatOptionModule } from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ListComponent } from './pages/article/features/list/list/list.component';
 import { DatePipe } from '@angular/common';
 
 const materialModule = [
@@ -37,7 +35,7 @@ const materialModule = [
 @NgModule({
   declarations: [
     AppComponent, 
-    HomeComponent, ThemeComponent, ArticleComponent, UserComponent, EditComponent, ListComponent,],
+    HomeComponent, ThemeComponent, UserComponent, EditComponent],
 
   imports: [
     BrowserModule,

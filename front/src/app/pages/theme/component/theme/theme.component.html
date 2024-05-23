@@ -1,24 +1,23 @@
 <div class="list">
 <mat-card>
 <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-  <mat-card class="item" *ngFor="let theme of (themes$ | async)" fxFlex>
+  <mat-card class="item" *ngFor="let theme of (themes | async)" fxFlex>
     <mat-card-header>
-      <mat-card-title>{{ theme.titre }}</mat-card-title>
+      <mat-card-title>{{ theme.titre }}
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <p>
         {{ theme.description }}
       </p>
     </mat-card-content>
-    <mat-card-actions>
-      <!-- <button *ngIf="isParticipate" mat-raised-button color="primary" (click)="follow(theme.themeId)">
-        <mat-icon>person_add</mat-icon>
-        <span class="ml1">S'abonner</span>
-      </button> -->
-      <button *ngIf="!isParticipate" mat-raised-button color="warn" (click)="unFollow(theme.themeId)">
-        <mat-icon>person_remove</mat-icon>
-        <span class="ml1">Se desabonner</span>
-      </button>
-  </mat-card-actions>
+    <button *ngIf="!theme.follow" mat-raised-button color="primary" (click)="follow(theme.themeId)">
+      <mat-icon>person_add</mat-icon>
+      <span class="ml1">S'abonner</span>
+    </button>
+    <button *ngIf="theme.follow" mat-raised-button color="warn" (click)="unFollow(theme.themeId)">
+      <mat-icon>person_remove</mat-icon>
+      <span class="ml1">Se desabonner</span>
+    </button>
   </mat-card>
   </div>

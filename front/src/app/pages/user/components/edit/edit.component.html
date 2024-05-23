@@ -30,4 +30,15 @@
         </form>
       </mat-card-content>
     </mat-card>
+    <h1>Abonnements</h1>
+    <mat-card class="item" *ngFor="let theme of themes$" fxFlex>
+      <mat-card-header>
+        <mat-card-title>
+          {{ theme.titre}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ theme.description}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      </mat-card>
   </div>

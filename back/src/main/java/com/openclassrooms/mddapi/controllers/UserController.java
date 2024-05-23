@@ -61,16 +61,17 @@ public class UserController {
             userDto.setFirstName(user.getFirstName());
             userDto.setThemes(new ArrayList<>(user.getThemes()));
 
+
             return ResponseEntity.ok().body(userDto);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @PostMapping("{themeId}/follow/{userId}")
-    public ResponseEntity<?> follow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId) {
+    @PostMapping("{themeId}/follow/{userId}/{follow}")
+    public ResponseEntity<?> follow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId, @PathVariable("follow") String follow) {
         try {
-            this.userService.follow(Long.parseLong(themeId), Long.parseLong(userId));
+            this.userService.follow(Long.parseLong(themeId), Long.parseLong(userId), Boolean.getBoolean(follow));
 
             return ResponseEntity.ok().build();
         } catch (NumberFormatException e) {
@@ -78,10 +79,10 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("{themeId}/follow/{userId}")
-    public ResponseEntity<?> unFollow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId) {
+    @DeleteMapping("{themeId}/follow/{userId}/{follow}")
+    public ResponseEntity<?> unFollow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId, @PathVariable("follow") String follow) {
         try {
-            this.userService.unFollow(Long.parseLong(themeId), Long.parseLong(userId));
+            this.userService.unFollow(Long.parseLong(themeId), Long.parseLong(userId), Boolean.getBoolean(follow));
 
             return ResponseEntity.ok().build();
         } catch (NumberFormatException e) {

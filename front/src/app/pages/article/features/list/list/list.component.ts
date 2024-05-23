@@ -3,6 +3,10 @@ import { Article } from '../../../interface/article';
 import { Observable } from 'rxjs';
 import { ArticleService } from '../../../service/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommentService } from 'src/app/pages/comment/service/comment.service';
+import { Comment } from 'src/app/pages/comment/interface/comment.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -12,6 +16,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ListComponent implements OnInit {
 
   public articles$: Observable<Article[]> = this.articleService.all();
+
+  public commentForm: FormGroup | undefined;
 
   constructor(
     private articleService : ArticleService,
@@ -23,7 +29,7 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigateByUrl('/article');
+    this.router.navigateByUrl('article/create');
   }
 
 }

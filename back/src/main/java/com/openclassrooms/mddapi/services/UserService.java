@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.models.Theme;
@@ -20,7 +21,7 @@ public class UserService {
     private ThemeRepository themeRepository;
 
     public User update(Long user_id, User user) {
-        user.setUser_id(user_id);
+        user.setUserId(user_id);
         return userRepository.save(user);
     }
 
@@ -28,7 +29,7 @@ public class UserService {
         return this.userRepository.findById(id).orElse(null);
     }
 
-    public void follow(Long themeId, Long userId) {
+    public void follow(Long themeId, Long userId, Boolean follow) {
         Theme theme = this.themeRepository.findById(themeId).orElse(null);
         User user = this.userRepository.findById(userId).orElse(null);
         if (theme == null || user == null) {
@@ -40,24 +41,31 @@ public class UserService {
             throw new BadRequestException();
         }
 
+        theme.setFollow(follow);
+        themeRepository.save(theme);
+
         user.getThemes().add(theme);
 
         this.userRepository.save(user);
     }
 
-    public void unFollow(Long id, Long userId) {
+    public void unFollow(Long themeId, Long userId, Boolean follow) {
         User user = this.userRepository.findById(userId).orElse(null);
+        Theme theme = this.themeRepository.findById(themeId).orElse(null);
 
-        if (user == null) {
+        if (user == null || theme == null) {
             throw new NotFoundException();
         }
 
-        boolean alreadyFollow = user.getThemes().stream().anyMatch(o -> o.getThemeId().equals(id));
+        boolean alreadyFollow = user.getThemes().stream().anyMatch(o -> o.getThemeId().equals(themeId));
         if(!alreadyFollow) {
             throw new BadRequestException();
         }
 
-        user.setThemes(user.getThemes().stream().filter(theme -> !theme.getThemeId().equals(id)).collect(Collectors.toSet()));
+
+        theme.setFollow(follow);
+        themeRepository.save(theme);
+        user.setThemes(user.getThemes().stream().filter(themeUp -> !themeUp.getThemeId().equals(themeId)).collect(Collectors.toSet()));
 
         this.userRepository.save(user);
     }

@@ -1,6 +1,9 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
+import com.openclassrooms.mddapi.dto.ThemeDto;
+import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.dto.UserUpdateDto;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
@@ -39,10 +42,11 @@ public class ArticleController {
     @GetMapping()
     public ResponseEntity<?> findAll() {
         List<Article> articleList = this.articleService.findAll();
-        List<ArticleDto> articleDtoList= new ArrayList<>();
+        List<ArticleDto> articleDtoList = new ArrayList<>();
 
-        for(Article article : articleList) {
-            ArticleDto articleDto= new ArticleDto();
+        for (Article article : articleList) {
+            ArticleDto articleDto = new ArticleDto();
+            articleDto.setArticleId(article.getArticleId());
             articleDto.setTitre(article.getTitre());
             articleDto.setDate(article.getCreatedAt());
             articleDto.setDescription(article.getContenu());
@@ -53,16 +57,30 @@ public class ArticleController {
         return ResponseEntity.ok().body(articleDtoList);
     }
 
+    @GetMapping("/{article_id}")
+    public ResponseEntity<?> findById(@PathVariable("article_id") String id) {
+        try {
+            Article article = this.articleService.findById(Long.valueOf(id));
+            if (article == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok().body(article);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping()
-    public ResponseEntity<?> create(@Valid @RequestBody ArticleDto articleDto ) {
+    public ResponseEntity<?> create(@Valid @RequestBody ArticleDto articleDto) {
 
         Article article = new Article();
         article.setTitre(articleDto.getTitre());
         article.setContenu(articleDto.getDescription());
 
         Theme theme = new Theme();
-        if( articleDto.getTheme_id() != null) {
-            theme= themeService.findById(Long.parseLong(articleDto.getTheme_id()));
+        if (articleDto.getTheme_id() != null) {
+            theme = themeService.findById(Long.parseLong(articleDto.getTheme_id()));
         }
 
 
@@ -70,7 +88,7 @@ public class ArticleController {
         //article.setCreatedAt(articleDto.getDate());
 
         User user = new User();
-        if( articleDto.getUser_id() != null) {
+        if (articleDto.getUser_id() != null) {
             user = userService.findById(articleDto.getUser_id());
         }
         article.setAuteur(user.getFirstName());

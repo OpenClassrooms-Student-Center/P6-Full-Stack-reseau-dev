@@ -18,7 +18,11 @@ export class ThemeService {
     return this.httpClient.get<Theme[]>(this.pathService);
   }
 
-  public getById(id: string): Observable<Theme> {
-    return this.httpClient.get<Theme>(`${this.pathService}/${id}`);
+  public getById(themeId: string): Observable<Theme> {
+    return this.httpClient.get<Theme>(`${this.pathService}/${themeId}`);
+  }
+
+  public update(id: string, theme: Theme): Observable<Theme> {
+    return this.httpClient.put<Theme>(`${this.pathService}/${id}`, theme);
   }
 }

@@ -6,6 +6,7 @@ export interface User {
     firstName: string;
     password: string;
     createdAt: Date;
+    follow: boolean,
     themes : Theme[];
     articles : [];
 }

@@ -6,6 +6,7 @@ CREATE TABLE `THEMES` (
   `theme_id` INT PRIMARY KEY AUTO_INCREMENT,
   `titre` VARCHAR(40),
   `description` VARCHAR(2000),
+  `follow` boolean,
   `user_id` int
 );
 
@@ -15,7 +16,6 @@ CREATE TABLE `ARTICLES` (
   `auteur` VARCHAR(50),
   `contenu` VARCHAR(2000),
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `commentaires` VARCHAR(2000),
   `theme_id` int,
   `user_id` int
 );
@@ -31,7 +31,8 @@ CREATE TABLE `USERS` (
 CREATE TABLE `COMMENTS` (
   `comment_id` INT PRIMARY KEY AUTO_INCREMENT,
   `commentaire` VARCHAR(40),
-  `user_id` int
+  `user_id` int,
+  `article_id` int
 );
 
 create table `article_like` (
@@ -50,8 +51,8 @@ VALUES ('Titre du thème', 'lorem ipsum is simply dummy text of the printing and
 
 
 INSERT INTO USERS (first_name, email, password)
-VALUES ('Admin', 'user@mdd.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'); 
+VALUES ('Admin', 'user@mdd.com', '$2a$10$9BFwaEZcQyHmVUwMTFriQO7qikeOMANIe9f9PvQeZFSedeDfPXlQq'); 
 
-INSERT INTO ARTICLES (titre, auteur, contenu, commentaires)
-VALUES ('Titre', 'Auteur', 'description', ''); 
+INSERT INTO ARTICLES (titre, auteur, contenu)
+VALUES ('Titre', 'Auteur', 'description'); 
 

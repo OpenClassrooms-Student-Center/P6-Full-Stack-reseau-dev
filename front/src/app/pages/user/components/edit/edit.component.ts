@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
 import { UserService } from '../../service/user.service';
 import { User } from '../../interface/user.interface';
+import { Theme } from 'src/app/pages/theme/interface/theme';
 
 @Component({
   selector: 'app-edit',
@@ -16,6 +17,10 @@ export class EditComponent implements OnInit {
   private id: string | undefined;
 
   public editUserForm: FormGroup | undefined;
+
+  public user: User | undefined;
+
+  public themes$: Theme[] | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +37,13 @@ export class EditComponent implements OnInit {
     this.userService
       .getById(this.sessionService.sessionInformation!.id.toString())
       .subscribe((user: User) => this.initForm(user));
+
+    this.userService
+      .getById(this.sessionService.sessionInformation!.id.toString())
+      .subscribe((user: User) => {
+        this.user = user, 
+        this.themes$ =  this.user?.themes
+      });
   }
 
   public back(): void {

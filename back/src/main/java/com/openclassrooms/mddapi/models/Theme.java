@@ -29,6 +29,9 @@ public class Theme {
     @NonNull
     private String description;
 
+    private Boolean follow;
+
+
 //    @OneToMany(mappedBy = "theme")
 //    private List<Article> articles;
 

@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.models;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -30,7 +29,8 @@ import java.util.Set;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long user_id;
+  @Column(name = "user_id")
+  private Long userId;
 
   @NonNull
   @Size(max = 50)
@@ -46,9 +46,6 @@ public class User {
   @Size(min= 8, max = 120)
   @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
   private String password;
-
-//  @NonNull
-//  private boolean admin;
 
   @CreatedDate
   @Column(name = "created_at", updatable = false)
