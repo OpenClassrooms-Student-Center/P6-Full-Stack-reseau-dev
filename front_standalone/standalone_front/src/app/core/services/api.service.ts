@@ -19,8 +19,9 @@ export class ApiService {
   }
 
   get(path: string): Observable<any> {
+    console.log('GET : ', `/api${path}`)
     return this.http
-      .get(`${path}`,
+      .get(`/api${path}`,
 {
       })
       .pipe(catchError(this.formatErrors));
@@ -28,7 +29,7 @@ export class ApiService {
 
   getNoAuth(path: string): Observable<any> {
     return this.http
-      .get(`${path}`,
+      .get(`/api${path}`,
         {
         })
       .pipe(catchError(this.formatErrors));
@@ -37,21 +38,7 @@ export class ApiService {
   put(path: string, body: Object = {}): Observable<any> {
     return this.http
       .put(
-        `${path}`,
-        JSON.stringify(body),
-        {
-          headers: new HttpHeaders(
-            {
-              'content-type': 'application/json',
-            })
-        })
-      .pipe(catchError(this.formatErrors));
-  }
-
-  putNoAuth(path: string, body: Object = {}): Observable<any> {
-    return this.http
-      .put(
-        `${path}`,
+        `/api${path}`,
         JSON.stringify(body),
         {
           headers: new HttpHeaders(
@@ -65,7 +52,7 @@ export class ApiService {
   post(path: string, body: Object = {}): Observable<any> {
     return this.http
       .post(
-        `${path}`,
+        `/api${path}`,
         JSON.stringify(body),
         {
           headers: new HttpHeaders(
@@ -78,7 +65,7 @@ export class ApiService {
 
   delete(path: string): Observable<any> {
     return this.http
-      .delete(`${path}`)
+      .delete(`/api${path}`)
       .pipe(catchError(this.formatErrors));
   }
 

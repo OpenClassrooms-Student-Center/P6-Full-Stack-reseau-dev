@@ -2,11 +2,9 @@
   <!-- subscriptSizing: to remove the bottom bar on the field -->
   <mat-select [formControl]="formLanguage" panelClass="topunit">
     <!-- Custom the selected value in the select input -->
-    <mat-select-trigger>
-      <ng-container *ngIf="formLanguage.value">
+    <mat-select-trigger *ngIf="formLanguage.value">
         <img class="flag-icon" [src]="formLanguage.value.flag" alt="Flag {{formLanguage.value.lang}}" />
         <span>{{formLanguage.value.lang}}</span>
-      </ng-container>
     </mat-select-trigger>
     <!-- Loop through the languages array to display the options -->
     <mat-option *ngFor="let language of languages" [value]="language">

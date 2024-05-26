@@ -1,0 +1,9 @@
+<div class="card-list">
+  <mat-card *ngFor="let topic of topics" class="card" >
+    <mat-card-title>{{topic.name}}</mat-card-title>
+    <mat-card-content>{{topic.description}}</mat-card-content>
+    <mat-card-actions class="themes-card-buttons">
+      <button mat-raised-button color="accent"  (click)="clickAction(topic.id)"> {{ buttonText }} </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

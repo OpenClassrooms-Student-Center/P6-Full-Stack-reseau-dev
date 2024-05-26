@@ -15,7 +15,7 @@
           </ng-container>
         </mat-select-trigger>
         <!-- Loop through the topics array to display the options -->
-        <mat-option *ngFor="let topic of topics" [value]="topic">
+        <mat-option *ngFor="let topic of topics">
           <span>{{ topic.name }}</span>
         </mat-option>
       </mat-select>

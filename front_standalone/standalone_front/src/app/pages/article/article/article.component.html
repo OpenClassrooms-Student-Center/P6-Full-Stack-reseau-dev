@@ -3,8 +3,8 @@
   <div class="article-structure">
     <div class="article-details">
       <div> {{post.createdAt}}</div>
-      <div> {{post.authorId ? (mddUserService.getUserById(post.authorId) | async) : "Author"}}</div>
-      <div> {{post.topicId ? (topicService.getTopic(post.topicId) | async) : "Topic"}}</div>
+      <div> {{authorName}}</div>
+      <div> {{topicName}}</div>
     </div>
     <p class="article-body">
       {{post.article}}
@@ -13,13 +13,14 @@
     <div class="article-line"><hr /></div>
     <div>{{ "article.comments" | transloco }}</div>
     <br/>
-    <div class="article-comment" *ngFor="let comment of comments">
-      <div class="article-comment-author">{{"Author"}}</div>
-      <mat-card >
-        <mat-card-content class="article-comment-text" >{{comment.text}}</mat-card-content>
-      </mat-card>
+    <div  *ngFor="let comment of comments">
+      <app-comment class="article-comment" [comment]="comment"></app-comment>
     </div>
+    <form class="article-comment-form" [formGroup]="commentForm" (ngSubmit)="SendComment()">
+      <app-comment-form  [commentFormControl]="commentTextFormControl"></app-comment-form>
+      <button class="article-comment-send" mat-icon-button type="submit">
+        <img src="/assets/images/icons/send.svg" alt="send" class="article-comment-send-icon">
+      </button>
+    </form>
   </div>
-
-  <app-comment-form [commentFormControl]="commentTextFormControl"></app-comment-form>
 </div>

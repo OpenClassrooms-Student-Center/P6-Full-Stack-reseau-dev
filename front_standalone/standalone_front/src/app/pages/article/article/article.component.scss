@@ -36,11 +36,22 @@
   margin-bottom: 1vh;
 }
 
-.article-comment-author{
-  width: 20vw;
+
+
+.article-comment-form{
+  margin-top: 2vh;
+  margin-left: 3vw;
+  width: 70vw;
+  display: flex;
 }
 
-.article-comment-text{
-  width: 70vw;
-  min-height: 100px;
+.article-comment-send{
+  display: inline-block;
+  align-self: flex-end;
 }
+
+.article-comment-send-icon{
+  max-width:120px;
+  height:auto;
+}
+

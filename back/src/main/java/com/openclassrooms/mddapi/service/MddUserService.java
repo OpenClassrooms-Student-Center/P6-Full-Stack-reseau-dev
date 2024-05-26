@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,8 @@ public class MddUserService implements UserDetailsService {
         try {
             log.info("createUser");
             user.setId(null);
+            user.setCreatedAt(LocalDateTime.now());
+            user.setUpdatedAt(LocalDateTime.now());
             return mddUserRepository.save(user);
         } catch (Exception e) {
             log.error("Failed to create user: ", e.getMessage());

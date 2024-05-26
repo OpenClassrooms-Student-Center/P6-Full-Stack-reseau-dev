@@ -7,8 +7,6 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-public class AuthInfo {
-
+public class AuthRefreshResponse {
     String token;
-    String refreshToken;
 }

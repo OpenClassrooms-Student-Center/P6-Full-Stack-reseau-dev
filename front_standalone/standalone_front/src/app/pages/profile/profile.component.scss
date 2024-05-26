@@ -1,0 +1,42 @@
+.profile-line{
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
+.click-dangerous{
+  cursor: pointer;
+  color: #dc3545;
+}
+
+.form-layout{
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 80vw;
+  height: 30vh;
+}
+
+.profile-layout{
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media screen and (max-width: 1049px) {
+
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.form-field{
+  width: 60vw;
+}
+
+.login-button{
+  width: 150px;
+}
+

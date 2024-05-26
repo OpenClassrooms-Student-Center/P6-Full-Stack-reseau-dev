@@ -1,4 +1,4 @@
-@import '../../../../assets/scss/material-theme';
+
 
 mat-toolbar {
   @media screen and (max-width: 1049px) {
@@ -23,7 +23,6 @@ mat-toolbar {
     @media screen and (max-width: 1049px) {
       display: none;
     }
-    color: black;
     display: block;
     padding: 5px;
     width: 100px;
@@ -38,7 +37,7 @@ mat-toolbar {
     &:active,
     &:hover {
       text-decoration: none;
-      border-bottom: 5px solid black;
+
     }
   }
 
@@ -77,23 +76,5 @@ mat-toolbar {
       width: max-content;
       display: none;
     }
-  }
-
-  .mat-mdc-unelevated-button.mat-white:hover,
-  .mat-mdc-raised-button.mat-white:hover {
-    color: #8E59EF;
-    background-color: #f0fff3;
-  }
-
-  .mat-mdc-unelevated-button:not(:disabled, :hover).mat-white,
-  .mat-mdc-raised-button.mat-white,
-  .mat-mdc-fab.mat-white,
-  .mat-mdc-mini-fab.mat-white {
-    color: #8E59EF;
-    background-color: #f0fff3;
-  }
-
-  .mat-mdc-icon-button.mat-white {
-    color: #f0fff3;
   }
 }

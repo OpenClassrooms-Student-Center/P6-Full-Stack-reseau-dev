@@ -51,6 +51,9 @@ public class MddUser {
     @OneToMany
     private List<Post> posts;
 
+    @ManyToMany
+    private List<Topic> topics;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

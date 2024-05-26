@@ -32,7 +32,7 @@ export class AuthService {
   login({ username, password }: { username: string; password: string }) {
 
     return this.http
-      .post<any>(`/token`, null,
+      .post<any>(`/api/token`, null,
         {
           headers: new HttpHeaders(
             {
@@ -41,14 +41,15 @@ export class AuthService {
           observe: 'response'
         })
       .pipe(tap((r) => {
-        this.createSession(r.body.get('token'));
-        this.saveRefreshToken(r.body.get('refreshToken'))
+        console.log('Body : ', r.body);
+        this.createSession(r.body.token);
+        this.saveRefreshToken(r.body.refreshToken)
       }));
   }
 
   refreshToken(){
     return this.http
-      .post<any>(`/refreshToken`, {token: this.refreshTokenService.getRefreshToken()},
+      .post<any>(`/api/refreshtoken`, {token: this.refreshTokenService.getRefreshToken()},
         {
           headers: new HttpHeaders(
             {
@@ -56,12 +57,14 @@ export class AuthService {
           observe: 'response'
         })
       .pipe(tap((r) => {
-        this.refreshSession(r.body);
+        console.log("refreshgot:", r.body.token)
+        this.refreshSession(r.body.token);
       }));
   }
 
   register ({username, email, password}: {username : string, email : string, password : string}){
-    return this.apiService.putNoAuth(`/register`,
+    return this.http
+      .post<any>(`/api/register`,
       {
         username : username,
         mail : email,
@@ -91,6 +94,7 @@ export class AuthService {
       this.isAuthenticatedSubject.next(true);
     }
   }
+
 
   refreshSession(token: string | null){
     if (token == null){return;}

@@ -3,13 +3,25 @@
     <img *ngIf="!router.isActive('/welcome', true)" src="/assets/images/logos/logo.png" alt="logo" style="max-width:120px; height:auto;">
   </a>
 
-  <div class="link-group" *ngIf="!(router.isActive('/welcome', true) || router.isActive('/login', true) || router.isActive('/register', true))">
-    <a class="header-link" [routerLinkActive]="['active']" routerLink="/home">{{ "header.articles" | transloco }}</a>
-    <a class="header-link" [routerLinkActive]="['active']" routerLink="/themes">{{ "header.themes" | transloco }}</a>
-  </div>
-
   <div class="control-group">
-    <app-language-switcher />
+    <div class="link-group" *ngIf="!(router.isActive('/welcome', true) || router.isActive('/login', true) || router.isActive('/register', true))">
+
+      <a mat-button class="header-link" [routerLinkActive]="['active']" routerLink="/home">{{ "header.articles" | transloco }}</a>
+
+      <a mat-button class="header-link" [routerLinkActive]="['active']" routerLink="/themes">{{ "header.themes" | transloco }}</a>
+
+
+      <a *ngIf="!router.isActive('/profile', true)" routerLink="/profile" title="profile">
+        <img src="/assets/images/icons/account_circle.svg" alt="profile" style="max-width:120px; height:auto;">
+      </a>
+      <a *ngIf="router.isActive('/profile', true)" routerLink="/profile" title="profile">
+        <img src="/assets/images/icons/account_circle_active.svg" alt="profile" >
+      </a>
+    </div>
+
+    <div class="control-group">
+      <app-language-switcher />
+    </div>
   </div>
 
   <div class="mobile-group">

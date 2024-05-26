@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * The Topic class represents a topic in the forum.
@@ -35,6 +36,9 @@ public class Topic {
 
     @Column(nullable = false, name = "description")
     private String description;
+
+    @ManyToMany
+    private List<MddUser> users;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

@@ -1,15 +1,17 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.MddUserDto;
+import com.openclassrooms.mddapi.dtos.responses.UserInfoResponse;
+import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.mappers.MddUserMapper;
 import com.openclassrooms.mddapi.service.MddUserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,7 +44,7 @@ public class MddUserController {
         return ResponseEntity.ok(mddUserMapper.toDto(mddUserService.createUser(mddUserMapper.toEntity(mddUserDto))));
     }
 
-    @PostMapping("update")
+    @PostMapping("/update")
     public ResponseEntity<MddUserDto> update(@RequestBody MddUserDto mddUserDto) {
         return ResponseEntity.ok(mddUserMapper.toDto(mddUserService.updateUser(mddUserMapper.toEntity(mddUserDto))));
     }
@@ -50,5 +52,16 @@ public class MddUserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(mddUserService.deleteUser(id));
+    }
+
+    @GetMapping("/contactinfo")
+    public ResponseEntity<UserInfoResponse> me(Authentication authentication){
+        MddUser mddUser = mddUserService.findUserByUsername(authentication.getName());
+        UserInfoResponse userInfoResponse = new UserInfoResponse();
+        userInfoResponse.setUsername(mddUser.getUsername());
+        userInfoResponse.setEmail(mddUser.getEmail());
+        log.info("Call for myInfo");
+        System.out.println("Me info request for :" + authentication);
+        return ResponseEntity.ok(userInfoResponse);
     }
 }

@@ -6,7 +6,7 @@ import {AuthUser} from '../models/auth.model';
 })
 export class JWTService {
 
-  jwtToken?: string | null;
+  jwtToken: string ="";
   constructor() {}
 
 
@@ -20,6 +20,7 @@ export class JWTService {
   }
 
   saveToken(token: string){
+    console.log('saved token : ', token)
     this.jwtToken = token
   }
 
@@ -28,7 +29,7 @@ export class JWTService {
   }
 
   deleteToken(){
-    this.jwtToken = null;
+    this.jwtToken = "";
   }
 
   saveUser(token: string): AuthUser | null {
@@ -55,10 +56,7 @@ export class JWTService {
   }
 
   hasValidToken() {
-    const authUser = this.getUserFromToken();
-    if (authUser && authUser.role && authUser.username && authUser.exp) {
-      return Date.now() <= authUser.exp * 1000;
-    }
-    return false;
+    console.log('checkValid : ', this.getToken())
+    return this.getToken() != "";
   }
 }

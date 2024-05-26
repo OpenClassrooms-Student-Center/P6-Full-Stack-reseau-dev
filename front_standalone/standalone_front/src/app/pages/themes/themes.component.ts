@@ -11,6 +11,7 @@ import {TopicService} from "../../core/services/topic.service";
 import {Router} from "@angular/router";
 import {ToasterService} from "../../core/services/toaster.service";
 import {MatActionList} from "@angular/material/list";
+import {ThemeLayoutComponent} from "../../shared/component/theme-layout/theme-layout.component";
 
 @Component({
   selector: 'app-themes',
@@ -30,7 +31,8 @@ import {MatActionList} from "@angular/material/list";
     NgIf,
     TranslocoPipe,
     MatActionList,
-    MatCardActions
+    MatCardActions,
+    ThemeLayoutComponent
   ],
   templateUrl: './themes.component.html',
   styleUrl: './themes.component.scss'

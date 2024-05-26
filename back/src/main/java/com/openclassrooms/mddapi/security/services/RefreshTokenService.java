@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.security.services;
 
+import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.RefreshToken;
-import com.openclassrooms.mddapi.repository.MddUserRepository;
 import com.openclassrooms.mddapi.repository.RefreshTokenRepository;
 import com.openclassrooms.mddapi.service.MddUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +23,11 @@ public class RefreshTokenService {
     MddUserService userService;
 
     public RefreshToken createRefreshToken(String username){
+        MddUser user = userService.findUserByUsername(username);
+        refreshTokenRepository.findByUserInfoId(user.getId()).ifPresent(refreshToken
+                -> refreshTokenRepository.deleteById(refreshToken.getId()));
         RefreshToken refreshToken = RefreshToken.builder()
-                .userInfo(userService.findUserByUsername(username))
+                .userInfo(user)
                 .token(UUID.randomUUID().toString())
                 .expiryDate(Instant.now().plusSeconds(86400)) // set expiry of refresh token to 10 minutes
                 .build();
@@ -44,6 +47,10 @@ public class RefreshTokenService {
             throw new RuntimeException(token.getToken() + " Refresh token is expired. Please make a new login..!");
         }
         return token;
+    }
+
+    private void deleteRefreshToken(Long id){
+        refreshTokenRepository.deleteById(id);
     }
 
 }

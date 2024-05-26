@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { MddUser } from '../models/mddUser';
+import {UserData} from "../models/userInfo";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class MddUserService {
 
     deleteUser(id: number): Observable<void> {
         return this.apiService.delete(`/users/user/${id}`);
+    }
+
+    getMe(): Observable<UserData> {
+      return this.apiService.get(`/users/user/contactinfo`)
     }
 
 }

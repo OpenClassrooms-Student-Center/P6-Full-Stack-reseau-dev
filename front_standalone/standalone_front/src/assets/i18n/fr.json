@@ -44,7 +44,10 @@
     "user-profile": "Profil utilisateur",
     "save": "Sauvegarder",
     "subscriptions": "Abonnements",
-    "unsubscribe": "Se désabonner"
+    "unsubscribe": "Se désabonner",
+    "logout": "Se déconnecter",
+    "username": "Nom d'utilisateur",
+    "mail": "Adresse e-mail"
   },
   "themes": {
     "subscribe": "S'abonner"

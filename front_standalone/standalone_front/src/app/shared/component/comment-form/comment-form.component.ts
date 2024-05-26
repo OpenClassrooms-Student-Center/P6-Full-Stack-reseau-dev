@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {TranslocoPipe} from "@jsverse/transloco";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 
 @Component({
   selector: 'app-comment-form',
@@ -11,7 +12,8 @@ import {TranslocoPipe} from "@jsverse/transloco";
     MatLabel,
     MatFormField,
     ReactiveFormsModule,
-    TranslocoPipe
+    TranslocoPipe,
+    CdkTextareaAutosize
   ],
   templateUrl: './comment-form.component.html',
   styleUrl: './comment-form.component.scss'

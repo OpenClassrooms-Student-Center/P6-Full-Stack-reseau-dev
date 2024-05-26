@@ -1,12 +1,11 @@
+<div class="margin-for-top">
+  <app-theme-layout
 
-<div class="card-list margin-for-top">
-  <mat-card *ngFor="let topic of topicsTest" class="card" >
-    <mat-card-title>{{topic.name}}</mat-card-title>
-    <mat-card-content>{{topic.description}}</mat-card-content>
-    <mat-card-actions class="themes-card-buttons">
-      <button mat-raised-button color="accent"  (click)="subscribeToTopic(topic.id)"> {{ "themes.subscribe" | transloco }} </button>
-    </mat-card-actions>
-  </mat-card>
+    [topics]="topicsTest"
+    [buttonText]="'themes.subscribe' | transloco"
+    (clickEvent)="subscribeToTopic($event)"
+  >
 
 
+  </app-theme-layout>
 </div>

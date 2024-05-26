@@ -41,7 +41,7 @@ public class CommentController {
         return ResponseEntity.ok(commentMapper.toDto(commentService.createComment(commentMapper.toEntity(commentDto))));
     }
 
-    @PostMapping("update")
+    @PostMapping("/update")
     public ResponseEntity<CommentDto> update(@RequestBody CommentDto commentDto) {
         return ResponseEntity.ok(commentMapper.toDto(commentService.updateComment(commentMapper.toEntity(commentDto))));
     }

@@ -11,23 +11,23 @@ export class PostService {
   constructor(private apiService: ApiService) { }
 
   getPosts(): Observable<Post[]> {
-    return this.apiService.get('posts/post/posts');
+    return this.apiService.get('/posts/post/posts');
   }
 
   getPostById(id: number): Observable<Post> {
-    return this.apiService.get(`posts/post/${id}`);
+    return this.apiService.get(`/posts/post/${id}`);
   }
 
   createPost(post: Post): Observable<Post> {
-    return this.apiService.put('posts/post/create', post);
+    return this.apiService.put('/posts/post/create', post);
   }
 
   updatePost(post: Post): Observable<Post> {
-    return this.apiService.post('posts/post/update', post);
+    return this.apiService.post('/posts/post/update', post);
   }
 
   deletePost(id: number): Observable<string> {
-    return this.apiService.delete(`posts/post/${id}`);
+    return this.apiService.delete(`/posts/post/${id}`);
   }
 
 }

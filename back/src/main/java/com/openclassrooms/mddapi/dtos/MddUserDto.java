@@ -27,6 +27,8 @@ public class MddUserDto {
 
       private List<Long> postIds;
 
+      private List<Long> topicIds;
+
       private LocalDateTime createdAt;
 
       private LocalDateTime updatedAt;
