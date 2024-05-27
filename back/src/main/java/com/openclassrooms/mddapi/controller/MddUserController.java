@@ -4,7 +4,9 @@ import com.openclassrooms.mddapi.dtos.MddUserDto;
 import com.openclassrooms.mddapi.dtos.responses.UserInfoResponse;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.mappers.MddUserMapper;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.service.MddUserService;
+import com.openclassrooms.mddapi.service.TopicService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -28,6 +31,9 @@ public class MddUserController {
 
     @Autowired
     private MddUserMapper mddUserMapper;
+
+    @Autowired
+    TopicService topicService;
 
     @GetMapping("/users")
     public ResponseEntity<List<MddUserDto>> getUsers() {
@@ -60,8 +66,9 @@ public class MddUserController {
         UserInfoResponse userInfoResponse = new UserInfoResponse();
         userInfoResponse.setUsername(mddUser.getUsername());
         userInfoResponse.setEmail(mddUser.getEmail());
+        userInfoResponse.setTopicsIds(topicService.mySubscriptions(mddUser));
         log.info("Call for myInfo");
-        System.out.println("Me info request for :" + authentication);
+        System.out.println("Me info request for :" + authentication + userInfoResponse);
         return ResponseEntity.ok(userInfoResponse);
     }
 }

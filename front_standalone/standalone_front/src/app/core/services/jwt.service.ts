@@ -56,7 +56,7 @@ export class JWTService {
   }
 
   hasValidToken() {
-    console.log('checkValid : ', this.getToken())
-    return this.getToken() != "";
+    console.log('checkValid : ', this.getToken() !== "" && this.getToken())
+    return this.getToken() !== "" && this.getToken();
   }
 }

@@ -13,12 +13,17 @@
     .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
       border-bottom: 0px;
     }
-
-    .mat-mdc-select-value,
-    .mat-mdc-select-arrow svg {
-      color: #FFF;
-    }
   }
+}
+
+mat-form-field{
+  width: 100%;
+
+
+}
+
+.single-word{
+  width: 23vw;
 }
 
 .card-list{

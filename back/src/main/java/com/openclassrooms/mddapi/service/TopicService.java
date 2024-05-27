@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import lombok.AccessLevel;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -83,5 +87,33 @@ public class TopicService {
             log.error("Failed to delete topic: ", e.getMessage());
             throw new RuntimeException("Failed to delete topic");
         }
+    }
+
+    public String subscribe(Long topicId, MddUser mddUser){
+        log.info("User(id) : " + mddUser.getId() + "subscribe to topic(id) : " + topicId);
+        Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new RuntimeException("Topic not found"));
+        if (topic.getUsers() == null) {
+            topic.setUsers(new HashSet<>());
+        }
+        topic.getUsers().add(mddUser);
+        topicRepository.save(topic);
+        return "Subscribed successfully";
+    }
+
+    public String unsubscribe(Long topicId, MddUser mddUser){
+        log.info("User(id) : " + mddUser.getId() + "unsubscribe from topic(id) : " + topicId);
+        Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new RuntimeException("Topic not found"));
+        if (topic.getUsers() != null) {
+            topic.getUsers().remove(mddUser);
+        }
+        topicRepository.save(topic);
+        return "Unsubscribed successfully";
+    }
+
+    public Set<Topic> mySubscriptions(MddUser mddUser){
+        log.info("Get my subscriptions for user(id) : " + mddUser.getId());
+        return new HashSet<>(topicRepository.findTopicsByUsersId(mddUser.getId()));
     }
 }

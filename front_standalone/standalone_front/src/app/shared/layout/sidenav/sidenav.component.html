@@ -5,7 +5,15 @@
         <a mat-list-item routerLink="/home">{{ "header.articles" | transloco }}</a>
         <a mat-list-item routerLink="/themes">{{ "header.themes" | transloco }}</a>
       </div>
-      <app-language-switcher/>
+      <div>
+        <a *ngIf="!router.isActive('/profile', true)" routerLink="/profile" title="profile">
+          <img src="/assets/images/icons/account_circle.svg" alt="profile" class="profile-button">
+        </a>
+        <a *ngIf="router.isActive('/profile', true)" routerLink="/profile" title="profile">
+          <img src="/assets/images/icons/account_circle_active.svg" alt="profile" >
+        </a>
+        <app-language-switcher/>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

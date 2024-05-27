@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
             console.log('Called api')
           this.usernameControl.setValue(info.username);
           this.mailControl.setValue(info.email);
+          this.myTopicsSubscriptions = info.topicsIds;
           this.isloaded = true;
         }})
     }
@@ -71,7 +72,13 @@ export class ProfileComponent implements OnInit {
 
 
   unsubscribeFromTopic(topicId: number){
-
+    this.topicService.unsubscribeTopic(topicId).subscribe({
+      next: res =>
+        { this.mddUserService.getMe().subscribe({
+          next: info => {
+            this.myTopicsSubscriptions = info.topicsIds;
+        }})}
+    });
   }
 
   logout(){

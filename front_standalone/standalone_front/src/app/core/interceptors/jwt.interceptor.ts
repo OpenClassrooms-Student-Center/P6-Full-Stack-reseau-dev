@@ -82,6 +82,8 @@ export class JwtInterceptor implements HttpInterceptor {
             return throwError(() => error);
           })
         );
+      } else {
+        this.router.navigate(['/login']);
       }
     }
 

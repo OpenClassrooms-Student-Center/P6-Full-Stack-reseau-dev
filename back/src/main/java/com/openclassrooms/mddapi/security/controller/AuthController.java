@@ -39,11 +39,10 @@ public class AuthController {
 
     @PostMapping("/token")
     public ResponseEntity<AuthInfoResponse> token(Authentication authentication) {
-        log.debug("Token requested for user : " + authentication.getName());
+        log.info("Token requested for user : " + authentication.getName());
         String token = tokenService.generateTokenFromAuthentication(authentication);
         String refreshToken = refreshTokenService.createRefreshToken(authentication.getName()).getToken();
-        log.debug("Token granted ");
-        System.out.println("Token request for :" + authentication);
+        log.info("Token granted ");
 
         return ResponseEntity.ok(new AuthInfoResponse(token, refreshToken));
     }
@@ -54,12 +53,11 @@ public class AuthController {
                 .orElseThrow(() ->new RuntimeException("Refresh Token is not in DB..!!"));
 
         MddUser user = refreshToken.getUserInfo();
-        log.debug("Token refreshment requested for user : " + user.getUsername());
+        log.info("Token refreshment requested for user : " + user.getUsername());
 
         refreshTokenService.verifyExpiration(refreshToken);
         String token = tokenService.generateTokenFromUsername(user.getUsername());
-        log.debug("Token refreshment granted ");
-        System.out.println("RefreshToken request for :" + user);
+        log.info("Token refreshment granted ");
         return ResponseEntity.ok(new AuthRefreshResponse(token));
     }
 
@@ -70,8 +68,7 @@ public class AuthController {
         mddUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         mddUser.setUsername(registerRequest.getUsername());
         MddUser user = userService.createUser(mddUser);
-        log.debug("User registered with user name: " + user.getUsername());
-        System.out.println("Register request for :" + user);
+        log.info("User registered with user name: " + user.getUsername());
         return ResponseEntity.ok(user);
     }
 }

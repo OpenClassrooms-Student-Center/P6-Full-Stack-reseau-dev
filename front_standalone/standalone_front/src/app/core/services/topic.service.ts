@@ -11,22 +11,31 @@ export class TopicService {
   constructor(private apiService: ApiService) { }
 
   getTopics(): Observable<Topic[]> {
-    return this.apiService.get('/topics');
+    return this.apiService.get('/topic/topics');
   }
 
   getTopic(id: number): Observable<Topic> {
-    return this.apiService.get(`/topics/${id}`);
+    return this.apiService.get(`/topic/${id}`);
   }
 
   createTopic(topic: Topic): Observable<Topic> {
-    return this.apiService.put('/create', topic);
+    return this.apiService.post('/topic/create', topic);
   }
 
   updateTopic(topic: Topic): Observable<Topic> {
-    return this.apiService.post('/update', topic);
+    return this.apiService.put('/topic/update', topic);
   }
 
   deleteTopic(id: number): Observable<string> {
-    return this.apiService.delete(`/topics/${id}`);
+    return this.apiService.delete(`/topic/${id}`);
   }
+
+  unsubscribeTopic(id: number): Observable<void> {
+    return this.apiService.put(`/topic/unsubscribe/${id}`);
+  }
+
+  subscribeTopic(id: number): Observable<void> {
+    return this.apiService.put(`/topic/subscribe/${id}`);
+  }
+
 }

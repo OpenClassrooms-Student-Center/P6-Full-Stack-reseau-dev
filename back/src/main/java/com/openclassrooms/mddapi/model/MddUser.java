@@ -12,6 +12,7 @@ import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "mdd_users", uniqueConstraints = {
@@ -51,8 +52,8 @@ public class MddUser {
     @OneToMany
     private List<Post> posts;
 
-    @ManyToMany
-    private List<Topic> topics;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Topic> topics;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

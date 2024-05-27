@@ -15,3 +15,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden !important;
 }
+
+.sort-selector{
+  width: 137px;
+
+  @media screen and (max-width: 1049px) {
+    margin-top: 2vh;
+    width: 100%;
+  }
+}

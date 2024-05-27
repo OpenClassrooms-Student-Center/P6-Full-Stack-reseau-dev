@@ -2,15 +2,19 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
+import com.openclassrooms.mddapi.model.MddUser;
+import com.openclassrooms.mddapi.service.MddUserService;
 import com.openclassrooms.mddapi.service.TopicService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -24,6 +28,9 @@ public class TopicController {
     @Autowired
     private TopicMapper topicMapper;
 
+    @Autowired
+    private MddUserService mddUserService;
+
     @GetMapping("/topics")
     public ResponseEntity<List<TopicDto>> getTopics() {
         return ResponseEntity.ok(topicMapper.toDto(topicService.findAllTopics()));
@@ -34,12 +41,12 @@ public class TopicController {
         return ResponseEntity.ok(topicMapper.toDto(topicService.findTopicById(id)));
     }
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<TopicDto> create(@RequestBody TopicDto topicDto) {
         return ResponseEntity.ok(topicMapper.toDto(topicService.createTopic(topicMapper.toEntity(topicDto))));
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<TopicDto> update(@RequestBody TopicDto topicDto) {
         return ResponseEntity.ok(topicMapper.toDto(topicService.updateTopic(topicMapper.toEntity(topicDto))));
     }
@@ -47,5 +54,15 @@ public class TopicController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(topicService.deleteTopic(id));
+    }
+
+    @PutMapping("/subscribe/{id}")
+    public ResponseEntity<String> subscribe(@PathVariable("id") Long id, Authentication authentication) {
+        return ResponseEntity.ok(topicService.subscribe(id, mddUserService.findUserByUsername(authentication.getName())));
+    }
+
+    @PutMapping("/unsubscribe/{id}")
+    public ResponseEntity<String> unsubscribe(@PathVariable("id") Long id, Authentication authentication) {
+        return ResponseEntity.ok(topicService.unsubscribe(id, mddUserService.findUserByUsername(authentication.getName())));
     }
 }

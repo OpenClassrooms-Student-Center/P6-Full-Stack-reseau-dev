@@ -4,7 +4,7 @@
 
   <form class="form-layout" [formGroup]="registerForm" (ngSubmit)="register()">
 
-    <mat-form-field >
+    <mat-form-field class="single-word" >
       <mat-label>{{ "signup.username" | transloco }}</mat-label>
       <input
         class="form-field"
@@ -14,7 +14,7 @@
       >
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field class="single-word" >
       <mat-label>{{ "signup.mail" | transloco }}</mat-label>
       <input
         class="form-field"
@@ -24,22 +24,24 @@
       >
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field  class="single-word">
       <mat-label>{{ "signup.password" | transloco }}</mat-label>
       <input
         class="form-field"
         matInput
         formControlName="password"
+        type="password"
         (change)="handleChange()"
       >
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field  class="single-word">
       <mat-label>{{ "signup.confirm-password" | transloco }}</mat-label>
       <input
         class="form-field"
         matInput
         formControlName="passwordMatch"
+        type="password"
         (change)="handleChange()"
       >
     </mat-form-field>

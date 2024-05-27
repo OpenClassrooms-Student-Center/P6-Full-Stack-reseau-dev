@@ -41,14 +41,6 @@ export class ThemesComponent implements OnInit {
 
   public topics: Topic[]=[];
 
-  topicsTest: Topic[] = [
-    {id: 1, name: 'Topic 1', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 2, name: 'Topic 2', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 3, name: 'Topic 3', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 4, name: 'Topic 4', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 5, name: 'Topic 5', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 6, name: 'Topic 6', description: "description", createdAt: new Date(), updatedAt: new Date()},
-];
 
   constructor(
     private topicService: TopicService,
@@ -59,12 +51,13 @@ export class ThemesComponent implements OnInit {
 
   ngOnInit(): void {
     this.topicService.getTopics().subscribe({
-      next: res => {this.topics = this.topicsTest},
+      next: res => {this.topics = res;
+        console.log(res)},
       error: err => {this.toasterService.handleError(err)}
     })
   }
 
   subscribeToTopic(articleId: number | null) {
-    // todo
+    if(articleId) this.topicService.subscribeTopic(articleId).subscribe();
   }
 }

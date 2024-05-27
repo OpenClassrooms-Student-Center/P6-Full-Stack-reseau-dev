@@ -13,31 +13,31 @@ import {NoAuthGuard} from "./core/guards/unauth.guard";
 
 export const routes: Routes = [
   {
-    path: 'themes', component: ThemesComponent,
+    path: 'themes', component: ThemesComponent, canActivate: [AuthGuard],
   },
   {
-    path: 'profile', component: ProfileComponent,
+    path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],
   },
   {
-    path: 'article/create', component: CreateArticleComponent,
+    path: 'article/create', component: CreateArticleComponent, canActivate: [AuthGuard],
   },
   {
-    path: 'article/:id', component: ArticleComponent,
+    path: 'article/:id', component: ArticleComponent, canActivate: [AuthGuard],
   },
   {
-    path: 'article/update/:id', component: CreateArticleComponent,
+    path: 'article/update/:id', component: CreateArticleComponent, canActivate: [AuthGuard],
   },
   {
-    path: 'welcome', component: UnauthenticatedComponent,
+    path: 'welcome', component: UnauthenticatedComponent, canActivate: [NoAuthGuard],
   },
   {
-    path: 'login', component: LoginComponent,
+    path: 'login', component: LoginComponent, canActivate: [NoAuthGuard],
   },
   {
-    path: 'register', component: RegisterComponent,
+    path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard],
   },
   {
-    path: 'home', component: HomeComponent,
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard],
   },
   {
     path: '', redirectTo: '/home', pathMatch: 'full'

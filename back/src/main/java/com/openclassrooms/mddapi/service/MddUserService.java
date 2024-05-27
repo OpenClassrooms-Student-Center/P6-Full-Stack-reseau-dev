@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
 import com.openclassrooms.mddapi.model.MddUser;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.repository.MddUserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

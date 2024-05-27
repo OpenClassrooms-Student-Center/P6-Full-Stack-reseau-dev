@@ -17,8 +17,6 @@ public class TopicDto {
 
     private String description;
 
-    private List<Long> userIds;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

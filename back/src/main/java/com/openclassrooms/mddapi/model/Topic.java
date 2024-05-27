@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The Topic class represents a topic in the forum.
@@ -38,7 +39,7 @@ public class Topic {
     private String description;
 
     @ManyToMany
-    private List<MddUser> users;
+    private Set<MddUser> users;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
