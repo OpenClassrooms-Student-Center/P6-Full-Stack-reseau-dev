@@ -5,9 +5,11 @@ import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.service.CommentService;
 import com.openclassrooms.mddapi.service.MddUserService;
 import com.openclassrooms.mddapi.service.PostService;
+import com.openclassrooms.mddapi.service.TopicService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -20,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-@Mapper(componentModel = "spring", uses = {PostService.class}, imports = {Arrays.class, Collectors.class, Comment.class, Post.class, MddUser.class, Collections.class, Optional.class})
+@Mapper(componentModel = "spring", uses = {PostService.class}, imports = {Arrays.class, Collectors.class, Comment.class, Topic.class, Post.class, MddUser.class, Collections.class, Optional.class})
 public abstract class PostMapper implements EntityMapper<PostDto, Post> {
 
     @Autowired
@@ -29,13 +31,18 @@ public abstract class PostMapper implements EntityMapper<PostDto, Post> {
     @Autowired
     protected CommentService commentService;
 
+    @Autowired
+    protected TopicService topicService;
+
 
     @Mappings({
+            @Mapping(target = "topic", expression = "java(this.topicService.findTopicById(postDto.getTopicId()))"),
             @Mapping(target = "author", expression = "java(this.mddUserService.findUserById(postDto.getAuthorId()))"),
             @Mapping(target = "comments", expression = "java(this.commentService.findAllByIds(postDto.getCommentIds()))"),
     })
     public abstract Post toEntity(PostDto postDto);
     @Mappings({
+            @Mapping(target = "topicId", source = "topic.id"),
             @Mapping(target = "authorId", source = "author.id"),
             @Mapping(target = "commentIds", expression = "java(Optional.ofNullable(post.getComments()).orElseGet(Collections::emptyList).stream().map(u -> u.getId()).collect(Collectors.toList()))"),
     })

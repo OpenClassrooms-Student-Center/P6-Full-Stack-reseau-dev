@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.TopicDto;
+import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
 import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.service.MddUserService;
@@ -52,17 +53,17 @@ public class TopicController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(topicService.deleteTopic(id));
+    public ResponseEntity<MessageResponse> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(new MessageResponse(topicService.deleteTopic(id)));
     }
 
     @PutMapping("/subscribe/{id}")
-    public ResponseEntity<String> subscribe(@PathVariable("id") Long id, Authentication authentication) {
-        return ResponseEntity.ok(topicService.subscribe(id, mddUserService.findUserByUsername(authentication.getName())));
+    public ResponseEntity<MessageResponse> subscribe(@PathVariable("id") Long id, Authentication authentication) {
+        return ResponseEntity.ok(new MessageResponse(topicService.subscribe(id, mddUserService.findUserByUsername(authentication.getName()))));
     }
 
     @PutMapping("/unsubscribe/{id}")
-    public ResponseEntity<String> unsubscribe(@PathVariable("id") Long id, Authentication authentication) {
-        return ResponseEntity.ok(topicService.unsubscribe(id, mddUserService.findUserByUsername(authentication.getName())));
+    public ResponseEntity<MessageResponse> unsubscribe(@PathVariable("id") Long id, Authentication authentication) {
+        return ResponseEntity.ok(new MessageResponse(topicService.unsubscribe(id, mddUserService.findUserByUsername(authentication.getName()))));
     }
 }

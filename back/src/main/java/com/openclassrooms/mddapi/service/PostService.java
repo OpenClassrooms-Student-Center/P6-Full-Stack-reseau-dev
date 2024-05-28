@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class PostService {
         try {
             log.info("createPost");
             post.setId(null);
+            post.setCreatedAt(LocalDateTime.now());
+            post.setUpdatedAt(LocalDateTime.now());
             post = postRepository.save(post);
             return post;
         } catch (Exception e) {
@@ -79,6 +82,7 @@ public class PostService {
             existingPost.setTopic(post.getTopic());
             existingPost.setArticle(post.getArticle());
             existingPost.setAuthor(post.getAuthor());
+            existingPost.setUpdatedAt(LocalDateTime.now());
             postRepository.save(existingPost);
             return existingPost;
         } catch (Exception e) {

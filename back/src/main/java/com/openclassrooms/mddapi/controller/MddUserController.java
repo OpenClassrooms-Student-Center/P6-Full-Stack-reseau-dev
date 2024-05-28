@@ -1,6 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.MddUserDto;
+import com.openclassrooms.mddapi.dtos.requests.NewUserInfoRequest;
+import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
 import com.openclassrooms.mddapi.dtos.responses.UserInfoResponse;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.mappers.MddUserMapper;
@@ -45,19 +47,19 @@ public class MddUserController {
         return ResponseEntity.ok(mddUserMapper.toDto(mddUserService.findUserById(id)));
     }
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<MddUserDto> create(@RequestBody MddUserDto mddUserDto) {
         return ResponseEntity.ok(mddUserMapper.toDto(mddUserService.createUser(mddUserMapper.toEntity(mddUserDto))));
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<MddUserDto> update(@RequestBody MddUserDto mddUserDto) {
         return ResponseEntity.ok(mddUserMapper.toDto(mddUserService.updateUser(mddUserMapper.toEntity(mddUserDto))));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(mddUserService.deleteUser(id));
+    public ResponseEntity<MessageResponse> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(new MessageResponse(mddUserService.deleteUser(id)));
     }
 
     @GetMapping("/contactinfo")
@@ -70,5 +72,14 @@ public class MddUserController {
         log.info("Call for myInfo");
         System.out.println("Me info request for :" + authentication + userInfoResponse);
         return ResponseEntity.ok(userInfoResponse);
+    }
+
+    @PutMapping("newinfo")
+    public ResponseEntity<MessageResponse> newInfo(@RequestBody NewUserInfoRequest userInfoRequest, Authentication authentication){
+        MddUser mddUser = mddUserService.findUserByUsername(authentication.getName());
+        mddUser.setUsername(userInfoRequest.getUsername());
+        mddUser.setEmail(userInfoRequest.getEmail());
+        mddUserService.updateUser(mddUser);
+        return ResponseEntity.ok(new MessageResponse("User information updated successfully"));
     }
 }
