@@ -53,7 +53,7 @@ export class LoginComponent {
         username: this.username ? this.username : '',
         password: this.password ? this.password : '',
       }).subscribe({
-        next:(r) => {console.log("RESULT : ", r); this.handleAuthSuccess()},
+        next:(r) => {this.handleAuthSuccess()},
         error:(err) => this.handleAuthError(err)}
       );
     }
@@ -73,7 +73,6 @@ export class LoginComponent {
 
   handleAuthError(err: any) {
     this.hasAuthError = true;
-    console.log("LOG ERROR : ", err);
   }
 
   handleAuthSuccess() {

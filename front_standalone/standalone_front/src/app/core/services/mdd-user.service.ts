@@ -20,11 +20,11 @@ export class MddUserService {
     }
 
     createUser(user: MddUser): Observable<MddUser> {
-        return this.apiService.put('/users/user/create', user);
+        return this.apiService.post('/users/user/create', user);
     }
 
     updateUser(user: MddUser): Observable<MddUser> {
-        return this.apiService.post('/users/user/update', user);
+        return this.apiService.put('/users/user/update', user);
     }
 
     deleteUser(id: number): Observable<void> {

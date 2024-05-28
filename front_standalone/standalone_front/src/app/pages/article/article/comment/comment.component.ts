@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MddUserService} from "../../../../core/services/mdd-user.service";
-import {Comment} from "../../../../core/models/comment";
+import {Comment, CommentToDisplay} from "../../../../core/models/comment";
 
 @Component({
   selector: 'app-comment',
@@ -13,9 +13,9 @@ import {Comment} from "../../../../core/models/comment";
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss'
 })
-export class CommentComponent implements OnInit{
+export class CommentComponent{
 
-  @Input() comment!: Comment;
+  @Input() comment!: CommentToDisplay;
 
   author = ""
 
@@ -26,8 +26,4 @@ export class CommentComponent implements OnInit{
 
   }
 
-
-  ngOnInit(): void {
-    this.mddUserService.getUserById(this.comment.authorId).subscribe({next: res => this.author =  res.username})
-  }
 }

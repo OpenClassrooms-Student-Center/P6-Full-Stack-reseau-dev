@@ -10,7 +10,7 @@ import {TopicService} from "../../../core/services/topic.service";
 import {PostService} from "../../../core/services/post.service";
 import {Topic} from "../../../core/models/topic";
 import {ToasterService} from "../../../core/services/toaster.service";
-import {Post} from "../../../core/models/post";
+import {NewPostRequestBody, Post} from "../../../core/models/post";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect, MatSelectTrigger} from "@angular/material/select";
 import {NgForOf, NgIf} from "@angular/common";
@@ -39,18 +39,9 @@ export class CreateArticleComponent implements OnInit{
 
   public topics: Topic[]=[];
 
-  topicsTest: Topic[] = [
-    {id: 1, name: 'Topic 1', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 2, name: 'Topic 2', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 3, name: 'Topic 3', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 4, name: 'Topic 4', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 5, name: 'Topic 5', description: "description", createdAt: new Date(), updatedAt: new Date()},
-    {id: 6, name: 'Topic 6', description: "description", createdAt: new Date(), updatedAt: new Date()},
-  ];
-
-  themeControl = new FormControl(this.topicsTest[0], Validators.required);
-  titleControl = new FormControl('', [Validators.required]);
-  contentControl = new FormControl('', Validators.required);
+  themeControl = new FormControl(this.topics[0], Validators.required);
+  titleControl = new FormControl(null, [Validators.required]);
+  contentControl = new FormControl(null, Validators.required);
 
   submitted: boolean = false;
   creationForm = new FormGroup({
@@ -71,8 +62,7 @@ export class CreateArticleComponent implements OnInit{
 
   ngOnInit(): void {
     this.topicService.getTopics().subscribe({
-      next: res => {this.topics = this.topicsTest;
-          this.themeControl.setValue(this.topics[0])
+      next: res => {this.topics = res;
         },
       error: err => {this.toasterService.handleError(err)}
     })
@@ -80,20 +70,15 @@ export class CreateArticleComponent implements OnInit{
 
   createArticle() {
     if (this.creationForm.valid && this.topic && this.title && this.content) {
-      const post: Post = {
-        id: null,
+      const newPost: NewPostRequestBody = {
         topicId: this.topic.id,
         title: this.title,
-        article: this.content,
-        authorId: null,
-        commentIds: [],
-        createdAt: null,
-        updatedAt: null
+        content: this.content,
       };
-      this.postService.createPost(post).subscribe({
+      this.postService.newPost(newPost).subscribe({
         next: res => {
-          this.toasterService.handleSuccess('Article created successfully');
-          this.router.navigate(['/articles']);
+          this.toasterService.handleSuccess(res.message);
+          this.router.navigate(['/home']);
         },
         error: err => {
           this.toasterService.handleError(err);

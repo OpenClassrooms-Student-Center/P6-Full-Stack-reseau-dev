@@ -1,5 +1,5 @@
-<div>
-  <h1><span class="back-arrow" (click)="goBack()">&#8592;</span>  {{post.title}}</h1>
+<div *ngIf="loadedData">
+  <h1><span class="back-arrow" (click)="goBack()">&#8592;</span>  {{postTitle}}</h1>
   <div class="article-structure">
     <div class="article-details">
       <div> {{post.createdAt}}</div>

@@ -6,3 +6,12 @@ export interface Comment {
     createdAt: Date;
     updatedAt: Date;
 }
+
+
+export interface CommentToDisplay{
+  id: number;
+  text: string;
+  authorName: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

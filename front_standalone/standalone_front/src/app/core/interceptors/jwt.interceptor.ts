@@ -25,9 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
               ) {}
 
   public intercept(request: HttpRequest<any>, next: HttpHandler) {
-    console.log('Interceptor')
     if (this.jwtService.hasValidToken()) {
-      console.log('Valid')
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${this.jwtService.getToken()}`,
@@ -35,7 +33,6 @@ export class JwtInterceptor implements HttpInterceptor {
       });
 
     }
-    console.log('after check valid token', request)
     return next.handle(request).pipe(
       catchError((error) => {
         if (
@@ -57,12 +54,10 @@ export class JwtInterceptor implements HttpInterceptor {
       this.isRefreshing = true;
 
       if (this.refreshTokenService.hasRefreshToken()) {
-        console.log('Refresh')
         return this.authService.refreshToken().pipe(
           switchMap(() => {
             this.isRefreshing = false;
             if (this.jwtService.hasValidToken()) {
-              console.log('Valid')
               request = request.clone({
                 setHeaders: {
                   Authorization: `Bearer ${this.jwtService.getToken()}`,

@@ -9,13 +9,11 @@
       <mat-label>{{ "new-article.select-theme" | transloco }}</mat-label>
       <mat-select formControlName="topic" panelClass="topunit">
         <!-- Custom the selected value in the select input -->
-        <mat-select-trigger>
-          <ng-container *ngIf="themeControl.value">
+        <mat-select-trigger *ngIf="themeControl.value">
             <span>{{ themeControl.value.name }}</span>
-          </ng-container>
         </mat-select-trigger>
         <!-- Loop through the topics array to display the options -->
-        <mat-option *ngFor="let topic of topics">
+        <mat-option *ngFor="let topic of topics" [value]="topic">
           <span>{{ topic.name }}</span>
         </mat-option>
       </mat-select>
@@ -34,7 +32,7 @@
     <mat-form-field >
       <mat-label>{{ "new-article.article-content" | transloco }}</mat-label>
       <textarea
-        class="form-field"
+        class="form-field text-content"
         matInput
         formControlName="content"
         (change)="handleChange()"

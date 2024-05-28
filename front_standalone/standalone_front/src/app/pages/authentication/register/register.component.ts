@@ -71,7 +71,6 @@ export class RegisterComponent {
 
   handleAuthError(err: any) {
     this.hasRegisterError = true;
-    console.log("LOG ERROR : ", err);
   }
 
   goToHome(){

@@ -52,9 +52,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Init')
         this.mddUserService.getMe().subscribe({next: info => {
-            console.log('Called api')
           this.usernameControl.setValue(info.username);
           this.mailControl.setValue(info.email);
           this.myTopicsSubscriptions = info.topicsIds;

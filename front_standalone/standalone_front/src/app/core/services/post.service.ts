@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { Post } from '../models/post';
+import {NewPostRequestBody, Post, PostToDisplay} from '../models/post';
+import {MessageResponse} from "../models/messages";
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +20,23 @@ export class PostService {
   }
 
   createPost(post: Post): Observable<Post> {
-    return this.apiService.put('/posts/post/create', post);
+    return this.apiService.post('/posts/post/create', post);
   }
 
   updatePost(post: Post): Observable<Post> {
-    return this.apiService.post('/posts/post/update', post);
+    return this.apiService.put('/posts/post/update', post);
   }
 
   deletePost(id: number): Observable<string> {
     return this.apiService.delete(`/posts/post/${id}`);
+  }
+
+  newPost(newPost: NewPostRequestBody): Observable<MessageResponse> {
+    return this.apiService.post('/posts/post/newpost', newPost);
+  }
+
+  getAllPosts(): Observable<PostToDisplay[]> {
+    return  this.apiService.get(`/posts/post/allposts`)
   }
 
 }

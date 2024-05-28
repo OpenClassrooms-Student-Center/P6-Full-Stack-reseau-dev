@@ -51,8 +51,7 @@ export class ThemesComponent implements OnInit {
 
   ngOnInit(): void {
     this.topicService.getTopics().subscribe({
-      next: res => {this.topics = res;
-        console.log(res)},
+      next: res => {this.topics = res;},
       error: err => {this.toasterService.handleError(err)}
     })
   }

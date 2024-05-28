@@ -15,6 +15,7 @@ export class TopicService {
   }
 
   getTopic(id: number): Observable<Topic> {
+    console.log('SENT')
     return this.apiService.get(`/topic/${id}`);
   }
 

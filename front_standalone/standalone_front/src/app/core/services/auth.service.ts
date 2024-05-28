@@ -41,7 +41,6 @@ export class AuthService {
           observe: 'response'
         })
       .pipe(tap((r) => {
-        console.log('Body : ', r.body);
         this.createSession(r.body.token);
         this.saveRefreshToken(r.body.refreshToken)
       }));
@@ -57,7 +56,6 @@ export class AuthService {
           observe: 'response'
         })
       .pipe(tap((r) => {
-        console.log("refreshgot:", r.body.token)
         this.refreshSession(r.body.token);
       }));
   }

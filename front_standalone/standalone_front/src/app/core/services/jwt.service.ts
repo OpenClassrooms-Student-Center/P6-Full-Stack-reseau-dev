@@ -20,7 +20,6 @@ export class JWTService {
   }
 
   saveToken(token: string){
-    console.log('saved token : ', token)
     this.jwtToken = token
   }
 
@@ -45,7 +44,6 @@ export class JWTService {
     const token = this.getToken();
     if (token) {
       const decoded = this.decodeToken(token);
-      console.log("Decode : ", decoded );
       return {
         role: decoded.scope as string,
         username: decoded.sub as string,
@@ -56,7 +54,6 @@ export class JWTService {
   }
 
   hasValidToken() {
-    console.log('checkValid : ', this.getToken() !== "" && this.getToken())
     return this.getToken() !== "" && this.getToken();
   }
 }
