@@ -10,3 +10,9 @@ export interface UserData {
   email: string,
   topicsIds: Topic[],
 }
+
+
+export interface NewInfo {
+  username: string,
+  email: string,
+}

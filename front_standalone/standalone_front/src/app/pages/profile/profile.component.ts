@@ -65,7 +65,13 @@ export class ProfileComponent implements OnInit {
   }
 
   newUserInfo(){
-
+    if(!this.userForm.valid || !this.userForm.value.mail || !this.userForm.value.username) return
+    this.mddUserService.newInfo(
+      {
+        email: this.userForm.value.mail,
+        username: this.userForm.value.username
+      }
+    ).subscribe()
   }
 
 

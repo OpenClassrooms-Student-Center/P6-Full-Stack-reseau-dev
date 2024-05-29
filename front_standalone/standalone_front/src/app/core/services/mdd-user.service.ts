@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { MddUser } from '../models/mddUser';
-import {UserData} from "../models/userInfo";
+import {NewInfo, UserData} from "../models/userInfo";
+import {MessageResponse} from "../models/messages";
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +36,7 @@ export class MddUserService {
       return this.apiService.get(`/users/user/contactinfo`)
     }
 
+  newInfo(newInfo: NewInfo): Observable<MessageResponse> {
+    return this.apiService.put('/users/user/newinfo', newInfo);
+  }
 }
