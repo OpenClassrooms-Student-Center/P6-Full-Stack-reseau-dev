@@ -3,7 +3,7 @@ import {TranslocoPipe} from "@jsverse/transloco";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../../../core/models/post";
 import {PostService} from "../../../core/services/post.service";
-import {Comment, CommentToDisplay} from "../../../core/models/comment";
+import {Comment, CommentToDisplay, NewComment} from "../../../core/models/comment";
 import {MddUserService} from "../../../core/services/mdd-user.service";
 import {TopicService} from "../../../core/services/topic.service";
 import {CommonModule} from "@angular/common";
@@ -38,7 +38,7 @@ export class ArticleComponent implements OnInit{
 
   postTitle = "Title"
 
-  loadedData = true;
+  loadedData = false;
 
 
   commentTextFormControl = new FormControl('', Validators.required);
@@ -74,27 +74,31 @@ export class ArticleComponent implements OnInit{
         }
       }
     })
-    this.commentService.commentByPost(postId).subscribe({
-      next: comments => {
-        this.comments = comments;
-      }
-    })
+    this.getComments(postId);
   }
   goBack(){
     this.router.navigate(['/home'])
   }
 
+  getComments(postId: number){
+    this.commentService.commentByPost(postId).subscribe({
+      next: comments => {
+        console.log("Comments : ", comments)
+        this.comments = comments;
+      }
+    })
+  }
+
   SendComment(){
-    const newComment: Comment = {
-      id: 0,
-      text: this.commentForm.controls.commentText.value ? this.commentForm.controls.commentText.value : "",
+    const newComment: NewComment = {
+
+      comment: this.commentForm.controls.commentText.value ? this.commentForm.controls.commentText.value : "",
       postId: this.post.id ? this.post.id : -1,
-      authorId: 0,
-      createdAt:  new Date(Date.now()),
-      updatedAt: new Date(Date.now()),
     }
     console.log("New comment : ", newComment)
-    this.commentService.createComment(newComment)
+    this.commentService.newComment(newComment).subscribe({
+      next: message => { this.getComments(this.post.id ? this.post.id : -1) }
+    })
   }
 
 

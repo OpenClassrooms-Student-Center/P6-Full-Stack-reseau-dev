@@ -1,0 +1,31 @@
+<div class="card-list">
+  <button mat-raised-button color="accent" class="welcome-button" (click)="createPost()"> {{ "articles.create-article" | transloco }} </button>
+
+  <mat-form-field id="sorting-switcher" appearance="fill" subscriptSizing="dynamic" class="sort-selector">
+    <!-- subscriptSizing: to remove the bottom bar on the field -->
+    <mat-label></mat-label>
+    <mat-select [formControl]="formSorting" panelClass="topunit">
+      <!-- Custom the selected value in the select input -->
+      <mat-select-trigger>
+        <ng-container *ngIf="formSorting.value">
+          <span>{{("articles.sort-by") | transloco }}</span>
+        </ng-container>
+      </mat-select-trigger>
+      <!-- Loop through the languages array to display the options -->
+      <mat-option *ngFor="let sorting of sortings" [value]="sorting">
+        <span>{{("articles.sorting." + sorting) | transloco}}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+<div class="card-list margin-for-top">
+  <mat-card *ngFor="let post of posts" class="card" (click)="selectArticle(post.id)">
+    <mat-card-title>{{post.title}}</mat-card-title>
+    <mat-card-subtitle>{{post.updatedAt}} -- {{post.authorName}} </mat-card-subtitle>
+    <mat-card-content class="article-preview">{{post.article}}</mat-card-content>
+  </mat-card>
+
+
+</div>

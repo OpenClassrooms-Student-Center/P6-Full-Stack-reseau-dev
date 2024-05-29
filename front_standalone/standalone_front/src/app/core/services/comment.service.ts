@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Comment, CommentToDisplay} from '../models/comment';
+import {Comment, CommentToDisplay, NewComment} from '../models/comment';
 import { ApiService } from './api.service';
+import {MessageResponse} from "../models/messages";
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class CommentService {
 
   commentByPost(postId: number): Observable<CommentToDisplay[]> {
     return this.apiService.get(this.apiUrl + `/bypost/${postId}`);
+  }
+
+  newComment(newComment: NewComment): Observable<MessageResponse> {
+    return this.apiService.post(this.apiUrl + '/new', newComment);
   }
 }

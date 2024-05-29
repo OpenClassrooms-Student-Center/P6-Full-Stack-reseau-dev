@@ -97,4 +97,15 @@ public class CommentService {
             throw new RuntimeException("Failed to delete comment");
         }
     }
+
+    public List<Comment> findCommentsByPostId(Long postId) {
+        try {
+            log.info("findCommentsByPostId - postId: " + postId);
+            List<Comment> comments = commentRepository.findCommentsByPostId(postId);
+            return comments;
+        } catch (Exception e) {
+            log.error("We could not find comments for post: " + postId, e.getMessage());
+            throw new RuntimeException("We could not find comments for the post");
+        }
+    }
 }

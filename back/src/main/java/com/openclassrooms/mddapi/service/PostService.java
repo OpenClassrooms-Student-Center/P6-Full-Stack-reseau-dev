@@ -52,8 +52,8 @@ public class PostService {
 	public List<Post> findAllByIds(List<Long> ids){
 		try {
 			log.info("findAllByIds - ids: " + ids);
-			List<Post> comments = postRepository.findAllById(ids);
-			return comments;
+			List<Post> posts = postRepository.findAllById(ids);
+			return posts;
 		} catch (Exception e) {
 			log.error("We could not find posts: " + ids, e.getMessage());
 			throw new RuntimeException("We could not find your posts");
@@ -101,6 +101,17 @@ public class PostService {
         } catch (Exception e) {
             log.error("Failed to delete post: ", e.getMessage());
             throw new RuntimeException("Failed to delete post");
+        }
+    }
+
+    public  List<Post> findPostsByUserSubscriptions (Long mddUserId){
+        try {
+            log.info("findAllByUserSubscriptions - userId: " + mddUserId);
+            List<Post> posts = postRepository.findPostsByTopic_UsersId(mddUserId);
+            return posts;
+        } catch (Exception e) {
+            log.error("We could not find posts with Topic subscription for user(id) : " + mddUserId, e.getMessage());
+            throw new RuntimeException("We could not find your posts");
         }
     }
 }

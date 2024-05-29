@@ -39,4 +39,7 @@ export class PostService {
     return  this.apiService.get(`/posts/post/allposts`)
   }
 
+  getAllSubscribedTopicPosts(): Observable<PostToDisplay[]> {
+    return  this.apiService.get(`/posts/post/subscribedtopicposts`)
+  }
 }

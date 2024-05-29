@@ -1,9 +1,11 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.CommentDto;
+import com.openclassrooms.mddapi.dtos.requests.NewCommentRequest;
 import com.openclassrooms.mddapi.dtos.responses.CommentToDisplayResponse;
 import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
 import com.openclassrooms.mddapi.mappers.CommentMapper;
+import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.service.CommentService;
 import com.openclassrooms.mddapi.service.MddUserService;
 import com.openclassrooms.mddapi.service.PostService;
@@ -13,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -65,7 +68,9 @@ public class CommentController {
 
     @GetMapping("/bypost/{id}")
     public ResponseEntity<List<CommentToDisplayResponse>> commentByPost(@PathVariable("id") Long id){
-        return ResponseEntity.ok(postService.findPostById(id).getComments().stream().map(comment ->
+        System.out.println(commentService.findCommentsByPostId(id));
+
+        return ResponseEntity.ok(commentService.findCommentsByPostId(id).stream().map(comment ->
                 CommentToDisplayResponse.builder()
                         .text(comment.getText())
                         .authorName(comment.getAuthor().getUsername())
@@ -74,5 +79,16 @@ public class CommentController {
                         .createdAt(comment.getCreatedAt())
                         .build()).collect(Collectors.toList())
         );
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<MessageResponse> newComment(@RequestBody NewCommentRequest newCommentRequest, Authentication authentication){
+        Comment newComment = Comment.builder()
+                .author(mddUserService.findUserByUsername(authentication.getName()))
+                .post(postService.findPostById(newCommentRequest.getPostId()))
+                .text(newCommentRequest.getComment())
+                .build();
+        commentService.createComment(newComment);
+        return ResponseEntity.ok(new MessageResponse("Comment added"));
     }
 }

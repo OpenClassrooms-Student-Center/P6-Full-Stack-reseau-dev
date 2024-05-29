@@ -15,3 +15,8 @@ export interface CommentToDisplay{
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface NewComment {
+  comment: string;
+  postId: number;
+}

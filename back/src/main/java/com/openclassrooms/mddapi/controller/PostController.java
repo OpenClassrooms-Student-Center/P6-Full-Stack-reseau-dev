@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.dtos.requests.NewPostRequest;
 import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
 import com.openclassrooms.mddapi.dtos.responses.PostToDisplayResponse;
 import com.openclassrooms.mddapi.mappers.PostMapper;
+import com.openclassrooms.mddapi.mappers.ResponsesMapper;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.service.MddUserService;
@@ -42,6 +43,9 @@ public class PostController {
     @Autowired
     private TopicService topicService;
 
+    @Autowired
+    private ResponsesMapper responsesMapper;
+
     @GetMapping("/posts")
     public ResponseEntity<List<PostDto>> getPosts() {
         return ResponseEntity.ok(postMapper.toDto(postService.findAllPosts()));
@@ -78,17 +82,12 @@ public class PostController {
     @GetMapping("allposts")
     public ResponseEntity<List<PostToDisplayResponse>> allposts(){
         List<Post> posts = postService.findAllPosts();
-        List<PostToDisplayResponse> postResponses = posts.stream()
-                .map(post -> PostToDisplayResponse.builder()
-                        .id(post.getId())
-                        .title(post.getTitle())
-                        .article(post.getArticle())
-                        .authorName(post.getAuthor().getUsername())
-                        .topicName(post.getTopic().getName())
-                        .createdAt(post.getCreatedAt())
-                        .updatedAt(post.getUpdatedAt())
-                        .build())
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(postResponses);
+        return ResponseEntity.ok(responsesMapper.postsToPostDisplayResponses(posts));
+    }
+
+    @GetMapping("/subscribedtopicposts")
+    public ResponseEntity<List<PostToDisplayResponse>> getPostsBySubscription(Authentication authentication) {
+        MddUser user = mddUserService.findUserByUsername(authentication.getName());
+        return ResponseEntity.ok(responsesMapper.postsToPostDisplayResponses(postService.findPostsByUserSubscriptions(user.getId())));
     }
 }

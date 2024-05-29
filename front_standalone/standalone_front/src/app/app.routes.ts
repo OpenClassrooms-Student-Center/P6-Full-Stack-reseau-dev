@@ -10,6 +10,7 @@ import {ThemesComponent} from "./pages/themes/themes.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {AuthGuard} from "./core/guards/auth.guard";
 import {NoAuthGuard} from "./core/guards/unauth.guard";
+import {AllArticlesComponent} from "./pages/article/all-articles/all-articles.component";
 
 export const routes: Routes = [
   {
@@ -17,6 +18,9 @@ export const routes: Routes = [
   },
   {
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],
+  },
+  {
+    path: 'articles', component: AllArticlesComponent, canActivate: [AuthGuard],
   },
   {
     path: 'article/create', component: CreateArticleComponent, canActivate: [AuthGuard],

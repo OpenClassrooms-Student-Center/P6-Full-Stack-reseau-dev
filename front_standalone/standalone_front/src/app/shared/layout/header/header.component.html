@@ -6,7 +6,7 @@
   <div class="control-group">
     <div class="link-group" *ngIf="!(router.isActive('/welcome', true) || router.isActive('/login', true) || router.isActive('/register', true))">
 
-      <a mat-button class="header-link" [routerLinkActive]="['active']" routerLink="/home">{{ "header.articles" | transloco }}</a>
+      <a mat-button class="header-link" [routerLinkActive]="['active']" routerLink="/articles">{{ "header.articles" | transloco }}</a>
 
       <a mat-button class="header-link" [routerLinkActive]="['active']" routerLink="/themes">{{ "header.themes" | transloco }}</a>
 
