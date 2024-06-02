@@ -25,6 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
               ) {}
 
   public intercept(request: HttpRequest<any>, next: HttpHandler) {
+    console.log("isRefreshing : ", this.isRefreshing)
     if (this.jwtService.hasValidToken()) {
       request = request.clone({
         setHeaders: {
@@ -71,6 +72,7 @@ export class JwtInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
 
             if (error.status == '403') {
+              this.authService.logout();
               this.router.navigate(['/login'])
             }
 

@@ -22,8 +22,8 @@
 
 <div class="card-list margin-for-top">
   <mat-card *ngFor="let post of posts" class="card" (click)="selectArticle(post.id)">
-    <mat-card-title>{{post.title}}</mat-card-title>
-    <mat-card-subtitle>{{post.updatedAt}} -- {{post.authorName}} </mat-card-subtitle>
+    <mat-card-title><h4 class="article-title">{{post.title}}</h4></mat-card-title>
+    <mat-card-subtitle class="article-subtitle">{{post.updatedAt}} -- {{post.authorName}} </mat-card-subtitle>
     <mat-card-content class="article-preview">{{post.article}}</mat-card-content>
   </mat-card>
 

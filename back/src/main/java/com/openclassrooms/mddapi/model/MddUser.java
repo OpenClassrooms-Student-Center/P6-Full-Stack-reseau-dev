@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "mdd_users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
+        @UniqueConstraint(columnNames = {"email", "username"})
 })
 @Data
 @Accessors(chain = true)

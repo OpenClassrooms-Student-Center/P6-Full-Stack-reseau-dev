@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.mappers;
 
 import com.openclassrooms.mddapi.dtos.MddUserDto;
+import com.openclassrooms.mddapi.dtos.PostDto;
 import com.openclassrooms.mddapi.dtos.TopicDto;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.MddUser;
@@ -22,5 +23,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", uses = {PostService.class}, imports = {Arrays.class, Collectors.class, Post.class, MddUser.class, Collections.class, Optional.class})
 public abstract class   TopicMapper implements EntityMapper<TopicDto, Topic> {
 
+    public abstract Topic toEntity(TopicDto topicDto);
 
+    public abstract TopicDto toDto(Topic topic);
 }
