@@ -31,7 +31,8 @@ public class Post {
 	@JoinColumn(name = "topic_id", nullable = false)
 	private Topic topic;
 
-	@Column(name = "article", nullable = false)
+	@Lob
+	@Column(name = "article", nullable = false, length = 65536)
 	private String article;
 
 	@Column(name = "title", nullable = false)

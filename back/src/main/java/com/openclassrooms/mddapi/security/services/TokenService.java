@@ -41,7 +41,7 @@ public class TokenService {
 
     private String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
         Instant now = Instant.now();
-        long expiry = 180L;
+        long expiry = 10L;
         String scope = authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));

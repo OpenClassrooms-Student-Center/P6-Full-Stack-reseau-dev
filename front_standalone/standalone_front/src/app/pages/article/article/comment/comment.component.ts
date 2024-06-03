@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MddUserService} from "../../../../core/services/mdd-user.service";
 import {Comment, CommentToDisplay} from "../../../../core/models/comment";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-comment',
@@ -21,6 +22,7 @@ export class CommentComponent{
 
   constructor(
     private mddUserService: MddUserService,
+    public sanitizer: DomSanitizer
   ) {
 
 

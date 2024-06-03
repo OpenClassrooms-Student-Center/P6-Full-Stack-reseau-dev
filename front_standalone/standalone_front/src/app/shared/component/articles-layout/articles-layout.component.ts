@@ -4,11 +4,12 @@ import {MatCard, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/m
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect, MatSelectTrigger} from "@angular/material/select";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {TranslocoPipe} from "@jsverse/transloco";
 import {PostToDisplay} from "../../../core/models/post";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-articles-layout',
@@ -27,7 +28,8 @@ import {Router} from "@angular/router";
     NgForOf,
     NgIf,
     TranslocoPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DatePipe
   ],
   templateUrl: './articles-layout.component.html',
   styleUrl: './articles-layout.component.scss'
@@ -42,12 +44,15 @@ export class ArticlesLayoutComponent implements OnInit{
 
   constructor(
     private router: Router,
+    public sanitizer: DomSanitizer
     ) {
   }
 
   ngOnInit(): void {
+
     this.sortPosts();
     this.formSorting.valueChanges.subscribe(val => {
+      console.log(this.posts)
       this.sortPosts();
     });
   }

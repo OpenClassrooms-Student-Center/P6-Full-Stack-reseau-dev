@@ -2,12 +2,12 @@
   <h1><span class="back-arrow" (click)="goBack()">&#8592;</span>  {{postTitle}}</h1>
   <div class="article-structure">
     <div class="article-details">
-      <div> {{post.createdAt}}</div>
-      <div> {{authorName}}</div>
-      <div> {{topicName}}</div>
+      <div> {{post.createdAt | date: 'longDate'}} -</div>
+      <div>-  {{authorName}} -</div>
+      <div>- {{topicName}}</div>
     </div>
-    <p class="article-body">
-      {{post.article}}
+    <p class="article-body" [innerHTML]="sanitizer.bypassSecurityTrustHtml(post.article)">
+
     </p>
 
     <div class="article-line"><hr /></div>

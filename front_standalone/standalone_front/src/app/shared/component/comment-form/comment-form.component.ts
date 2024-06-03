@@ -22,5 +22,6 @@ export class CommentFormComponent {
 
   @Input() commentFormControl!: FormControl;
 
-  //todo: output event
+  constructor() {
+  }
 }

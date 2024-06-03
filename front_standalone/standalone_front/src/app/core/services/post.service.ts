@@ -11,6 +11,10 @@ export class PostService {
 
   constructor(private apiService: ApiService) { }
 
+
+  swapEndOfLineForHtmlTag(text: string): string {
+    return text.split("\n").join("<br>")
+  }
   getPosts(): Observable<Post[]> {
     return this.apiService.get('/posts/post/posts');
   }

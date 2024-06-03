@@ -16,6 +16,7 @@ import {MatIconButton} from "@angular/material/button";
 import {MatSuffix} from "@angular/material/form-field";
 import {CommentComponent} from "./comment/comment.component";
 import {forkJoin} from "rxjs";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-article',
@@ -36,12 +37,12 @@ export class ArticleComponent implements OnInit{
 
   topicName = "Topic"
 
-  postTitle = "Title"
+  postTitle = "Titl"
 
   loadedData = false;
 
 
-  commentTextFormControl = new FormControl('', Validators.required);
+  commentTextFormControl = new FormControl('', [Validators.required, Validators.maxLength(144)]);
   commentForm = new FormGroup({
     commentText: this.commentTextFormControl,
   });
@@ -52,6 +53,7 @@ export class ArticleComponent implements OnInit{
     public mddUserService: MddUserService,
     public topicService: TopicService,
     private commentService: CommentService,
+    public sanitizer: DomSanitizer
   ) {
   }
   ngOnInit(): void {
@@ -85,17 +87,18 @@ export class ArticleComponent implements OnInit{
       next: comments => {
         console.log("Comments : ", comments)
         this.comments = comments;
-      }
+      },
+      error: err => {
+        console.log('comments error : ', err)}
     })
   }
 
   SendComment(){
     const newComment: NewComment = {
 
-      comment: this.commentForm.controls.commentText.value ? this.commentForm.controls.commentText.value : "",
+      comment: this.commentForm.controls.commentText.value ? this.postService.swapEndOfLineForHtmlTag(this.commentForm.controls.commentText.value) : "",
       postId: this.post.id ? this.post.id : -1,
     }
-    console.log("New comment : ", newComment)
     this.commentService.newComment(newComment).subscribe({
       next: message => { this.getComments(this.post.id ? this.post.id : -1) }
     })

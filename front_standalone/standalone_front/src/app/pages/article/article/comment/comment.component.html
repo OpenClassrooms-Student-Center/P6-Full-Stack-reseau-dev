@@ -1,4 +1,4 @@
 <div class="article-comment-author">{{comment.authorName}}</div>
 <mat-card >
-  <mat-card-content class="article-comment-text" >{{comment.text}}</mat-card-content>
+  <mat-card-content class="article-comment-text" [innerHTML]="sanitizer.bypassSecurityTrustHtml(comment.text)"></mat-card-content>
 </mat-card>

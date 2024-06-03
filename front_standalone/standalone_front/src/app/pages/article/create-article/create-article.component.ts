@@ -14,6 +14,7 @@ import {NewPostRequestBody, Post} from "../../../core/models/post";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect, MatSelectTrigger} from "@angular/material/select";
 import {NgForOf, NgIf} from "@angular/common";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-create-article',
@@ -56,6 +57,7 @@ export class CreateArticleComponent implements OnInit{
     private topicService: TopicService,
     private postService: PostService,
     private toasterService: ToasterService,
+    private sanitizer: DomSanitizer
   ) {}
 
 
@@ -73,12 +75,12 @@ export class CreateArticleComponent implements OnInit{
       const newPost: NewPostRequestBody = {
         topicId: this.topic.id,
         title: this.title,
-        content: this.content,
+        content: this.postService.swapEndOfLineForHtmlTag(this.content).toString(),
       };
       this.postService.newPost(newPost).subscribe({
         next: res => {
           this.toasterService.handleSuccess(res.message);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/articles']);
         },
         error: err => {
           this.toasterService.handleError(err);
@@ -108,4 +110,6 @@ export class CreateArticleComponent implements OnInit{
   get content() {
     return this.creationForm.get('content')?.value;
   }
+
+
 }
