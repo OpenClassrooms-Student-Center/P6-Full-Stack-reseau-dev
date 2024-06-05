@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/scss/material-theme";
+@import 'ngx-toastr/toastr';
 
 #language-switcher {
   @media screen and (min-width: 1050px) {
@@ -24,6 +25,9 @@ mat-form-field{
 
 .single-word{
   width: 23vw;
+  @media screen and (max-width: 1049px) {
+    width: 60vw;
+  }
 }
 
 .card-list{

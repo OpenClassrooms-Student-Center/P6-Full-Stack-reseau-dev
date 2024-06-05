@@ -23,7 +23,7 @@ public class RefreshTokenService {
     MddUserService userService;
 
     public RefreshToken createRefreshToken(String username){
-        MddUser user = userService.findUserByUsername(username);
+        MddUser user = userService.findUserByEmail(username);
         refreshTokenRepository.findByUserInfoId(user.getId()).ifPresent(refreshToken
                 -> refreshTokenRepository.deleteById(refreshToken.getId()));
         RefreshToken refreshToken = RefreshToken.builder()

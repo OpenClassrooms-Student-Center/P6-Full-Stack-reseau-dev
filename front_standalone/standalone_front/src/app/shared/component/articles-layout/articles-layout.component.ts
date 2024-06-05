@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatCard, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
@@ -10,6 +10,7 @@ import {PostToDisplay} from "../../../core/models/post";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-articles-layout',
@@ -34,13 +35,15 @@ import {DomSanitizer} from "@angular/platform-browser";
   templateUrl: './articles-layout.component.html',
   styleUrl: './articles-layout.component.scss'
 })
-export class ArticlesLayoutComponent implements OnInit{
+export class ArticlesLayoutComponent implements OnInit, OnDestroy{
 
   @Input() posts: PostToDisplay[] = [];
 
   sortings = ["date", "title", "theme"];
 
   formSorting = new FormControl('date');
+
+  subscriptions: Subscription[] = []
 
   constructor(
     private router: Router,
@@ -51,10 +54,9 @@ export class ArticlesLayoutComponent implements OnInit{
   ngOnInit(): void {
 
     this.sortPosts();
-    this.formSorting.valueChanges.subscribe(val => {
-      console.log(this.posts)
+    this.subscriptions.push( this.formSorting.valueChanges.subscribe(val => {
       this.sortPosts();
-    });
+    }));
   }
 
   selectArticle(articleId: number | null) {
@@ -76,7 +78,7 @@ export class ArticlesLayoutComponent implements OnInit{
     this.posts.sort((a, b) => {
       switch (this.formSorting.value) {
         case 'date':
-          return a.createdAt.getTime() - b.createdAt.getTime();
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         case 'title':
           return a.title.localeCompare(b.title);
         case 'theme':
@@ -85,5 +87,9 @@ export class ArticlesLayoutComponent implements OnInit{
           throw new Error(`Unknown sorting method "${this.formSorting.value}"`);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe())
   }
 }

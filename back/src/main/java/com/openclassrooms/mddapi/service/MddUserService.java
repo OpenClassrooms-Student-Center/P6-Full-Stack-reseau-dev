@@ -64,6 +64,17 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
+    public MddUser findUserByEmail(String mail) {
+        try {
+            log.info("findUserByEmail - email: " + mail);
+            return mddUserRepository.findByEmail(mail)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+        } catch (Exception e) {
+            log.error("We could not find user: " + mail, e.getMessage());
+            throw new RuntimeException("We could not find your user");
+        }
+    }
+
     public MddUser createUser(MddUser user) {
         try {
             log.info("createUser");
@@ -112,9 +123,9 @@ public class MddUserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MddUser user = mddUserRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No user with this username"));
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        MddUser user = mddUserRepository.findByEmail(mail).orElseThrow(() -> new UsernameNotFoundException("No user with this email address"));
         List<SimpleGrantedAuthority> authi = new ArrayList<>();
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authi);
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authi);
     }
 }

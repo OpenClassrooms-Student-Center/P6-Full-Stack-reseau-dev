@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.MddUserDto;
+import com.openclassrooms.mddapi.dtos.requests.NewPasswordRequest;
 import com.openclassrooms.mddapi.dtos.requests.NewUserInfoRequest;
 import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
 import com.openclassrooms.mddapi.dtos.responses.UserInfoResponse;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +38,9 @@ public class MddUserController {
 
     @Autowired
     TopicService topicService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/users")
     public ResponseEntity<List<MddUserDto>> getUsers() {
@@ -64,7 +69,7 @@ public class MddUserController {
 
     @GetMapping("/contactinfo")
     public ResponseEntity<UserInfoResponse> me(Authentication authentication){
-        MddUser mddUser = mddUserService.findUserByUsername(authentication.getName());
+        MddUser mddUser = mddUserService.findUserByEmail(authentication.getName());
         UserInfoResponse userInfoResponse = new UserInfoResponse();
         userInfoResponse.setUsername(mddUser.getUsername());
         userInfoResponse.setEmail(mddUser.getEmail());
@@ -75,11 +80,19 @@ public class MddUserController {
     }
 
     @PutMapping("newinfo")
-    public ResponseEntity<MessageResponse> newInfo(@RequestBody NewUserInfoRequest userInfoRequest, Authentication authentication){
-        MddUser mddUser = mddUserService.findUserByUsername(authentication.getName());
-        mddUser.setUsername(userInfoRequest.getUsername());
-        mddUser.setEmail(userInfoRequest.getEmail());
+    public ResponseEntity<MessageResponse> newInfo(@RequestBody NewUserInfoRequest newUserInfoRequest, Authentication authentication){
+        MddUser mddUser = mddUserService.findUserByEmail(authentication.getName());
+        mddUser.setUsername(newUserInfoRequest.getUsername());
+        mddUser.setEmail(newUserInfoRequest.getEmail());
         mddUserService.updateUser(mddUser);
         return ResponseEntity.ok(new MessageResponse("User information updated successfully"));
+    }
+
+    @PutMapping("newpass")
+    public ResponseEntity<MessageResponse> newPassword(@RequestBody NewPasswordRequest newPasswordRequest, Authentication authentication){
+        MddUser mddUser = mddUserService.findUserByEmail(authentication.getName());
+        mddUser.setPassword(passwordEncoder.encode(newPasswordRequest.getNewPass()));
+        mddUserService.updateUser(mddUser);
+        return ResponseEntity.ok(new MessageResponse("Password updated successfully"));
     }
 }

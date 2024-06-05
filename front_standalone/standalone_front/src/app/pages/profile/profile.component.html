@@ -1,6 +1,7 @@
 <div class="profile-layout">
 
   <h1 class="mat-h1">{{ "user-profile.user-profile" | transloco }}</h1>
+  <h3 (click)="logout()" class="click-dangerous">{{'user-profile.logout' | transloco}}</h3>
 
   <form *ngIf="true" class="form-layout" [formGroup]="userForm" (ngSubmit)="newUserInfo()">
 
@@ -28,7 +29,37 @@
 
     <button mat-raised-button color="accent" class="login-button" type="submit" [disabled]="!userForm.valid"> {{ "user-profile.save" | transloco }} </button>
 
-    <h3 (click)="logout()" class="click-dangerous">{{'user-profile.logout' | transloco}}</h3>
+  </form>
+</div>
+
+<div class="profile-line"><hr /></div>
+
+<div class="profile-layout">
+  <form class="form-layout" [formGroup]="newPasswordForm">
+
+    <mat-form-field  class="single-word">
+      <mat-label>{{ "signup.password" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="password"
+        type="password"
+        (change)="handlePasswordTouched()"
+      >
+    </mat-form-field>
+
+    <mat-form-field  class="single-word">
+      <mat-label>{{ "signup.confirm-password" | transloco }}</mat-label>
+      <input
+        class="form-field"
+        matInput
+        formControlName="passwordMatch"
+        type="password"
+        (change)="handlePasswordTouched()"
+      >
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" class="register-button" [disabled]="!isPasswordValid()" (click)="newPassword()"> {{ "user-profile.save" | transloco }} </button>
 
   </form>
 </div>

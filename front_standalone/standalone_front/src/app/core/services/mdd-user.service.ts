@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { MddUser } from '../models/mddUser';
-import {NewInfo, UserData} from "../models/userInfo";
+import {NewInfo, NewPassword, UserData} from "../models/userInfo";
 import {MessageResponse} from "../models/messages";
 
 @Injectable({
@@ -38,5 +38,9 @@ export class MddUserService {
 
   newInfo(newInfo: NewInfo): Observable<MessageResponse> {
     return this.apiService.put('/users/user/newinfo', newInfo);
+  }
+
+  newPassword(newPassword: NewPassword): Observable<MessageResponse> {
+    return this.apiService.put('/users/user/newpass', newPassword);
   }
 }

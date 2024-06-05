@@ -21,8 +21,16 @@
 
     flex-direction: column;
     height: 50vh;
-    width: 80vw;
+    width: 100%;
     align-items: center;
+  }
+}
+
+.welcome-logo{
+  @media screen and (max-width: 1049px) {
+    height:auto;
+    width: 100%;
+
   }
 }
 

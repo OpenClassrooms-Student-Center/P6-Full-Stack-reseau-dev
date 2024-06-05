@@ -17,7 +17,7 @@
       <app-comment class="article-comment" [comment]="comment"></app-comment>
     </div>
     <form class="article-comment-form" [formGroup]="commentForm" (ngSubmit)="SendComment()">
-      <app-comment-form  [commentFormControl]="commentTextFormControl"></app-comment-form>
+      <app-comment-form  [commentFormControl]="commentTextFormControl" [errorMessage]="'article.commentError' | transloco"></app-comment-form>
       <button class="article-comment-send" mat-icon-button type="submit">
         <img src="/assets/images/icons/send.svg" alt="send" class="article-comment-send-icon">
       </button>

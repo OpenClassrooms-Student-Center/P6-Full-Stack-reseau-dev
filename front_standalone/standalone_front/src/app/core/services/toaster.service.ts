@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ToastrModule, ToastrService} from "ngx-toastr";
+import { ToastrService } from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({

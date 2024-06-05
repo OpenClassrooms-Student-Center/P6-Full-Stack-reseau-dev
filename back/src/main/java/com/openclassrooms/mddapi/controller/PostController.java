@@ -73,7 +73,7 @@ public class PostController {
 
     @PostMapping("/newpost")
     public ResponseEntity<MessageResponse> newPost(@RequestBody NewPostRequest newPostRequest, Authentication authentication){
-        Post post = Post.builder().build().setArticle(newPostRequest.getContent()).setAuthor(mddUserService.findUserByUsername(authentication.getName()))
+        Post post = Post.builder().build().setArticle(newPostRequest.getContent()).setAuthor(mddUserService.findUserByEmail(authentication.getName()))
                         .setTitle(newPostRequest.getTitle()).setTopic(topicService.findTopicById(newPostRequest.getTopicId()));
         postService.createPost(post);
         return ResponseEntity.ok(new MessageResponse());
@@ -87,7 +87,7 @@ public class PostController {
 
     @GetMapping("/subscribedtopicposts")
     public ResponseEntity<List<PostToDisplayResponse>> getPostsBySubscription(Authentication authentication) {
-        MddUser user = mddUserService.findUserByUsername(authentication.getName());
+        MddUser user = mddUserService.findUserByEmail(authentication.getName());
         return ResponseEntity.ok(responsesMapper.postsToPostDisplayResponses(postService.findPostsByUserSubscriptions(user.getId())));
     }
 }

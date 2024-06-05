@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface MddUserRepository  extends JpaRepository<MddUser, Long> {
     Optional<MddUser> findByUsername(String username);
+
+    Optional<MddUser> findByEmail(String username);
 }

@@ -6,7 +6,7 @@ import {PostService} from "../../../core/services/post.service";
 import {Comment, CommentToDisplay, NewComment} from "../../../core/models/comment";
 import {MddUserService} from "../../../core/services/mdd-user.service";
 import {TopicService} from "../../../core/services/topic.service";
-import {CommonModule} from "@angular/common";
+import {CommonModule, Location} from "@angular/common";
 import {MatCard, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
 import {CommentFormComponent} from "../../../shared/component/comment-form/comment-form.component";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -17,6 +17,7 @@ import {MatSuffix} from "@angular/material/form-field";
 import {CommentComponent} from "./comment/comment.component";
 import {forkJoin} from "rxjs";
 import {DomSanitizer} from "@angular/platform-browser";
+import {ToasterService} from "../../../core/services/toaster.service";
 
 @Component({
   selector: 'app-article',
@@ -53,7 +54,9 @@ export class ArticleComponent implements OnInit{
     public mddUserService: MddUserService,
     public topicService: TopicService,
     private commentService: CommentService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private location: Location,
+    private toasterService: ToasterService,
   ) {
   }
   ngOnInit(): void {
@@ -70,26 +73,27 @@ export class ArticleComponent implements OnInit{
                 this.authorName = res[0].username;
                 this.topicName = res[1].name;
                 this.loadedData = true;
+              },
+              error: err => {
+                this.toasterService.handleError(err);
               }
             })
-          this.mddUserService.getUserById(this.post.authorId).subscribe()
         }
+        this.getComments(postId);
       }
     })
-    this.getComments(postId);
   }
   goBack(){
-    this.router.navigate(['/home'])
+    this.location.back();
   }
 
   getComments(postId: number){
     this.commentService.commentByPost(postId).subscribe({
       next: comments => {
-        console.log("Comments : ", comments)
         this.comments = comments;
       },
       error: err => {
-        console.log('comments error : ', err)}
+        this.toasterService.handleError(err)}
     })
   }
 
@@ -99,9 +103,17 @@ export class ArticleComponent implements OnInit{
       comment: this.commentForm.controls.commentText.value ? this.postService.swapEndOfLineForHtmlTag(this.commentForm.controls.commentText.value) : "",
       postId: this.post.id ? this.post.id : -1,
     }
-    this.commentService.newComment(newComment).subscribe({
-      next: message => { this.getComments(this.post.id ? this.post.id : -1) }
-    })
+    if(this.commentForm.valid) {
+      this.commentService.newComment(newComment).subscribe({
+        next: message => {
+          this.getComments(this.post.id ? this.post.id : -1)
+          this.toasterService.handleSuccess(message.message)
+        },
+        error: err => {
+          this.toasterService.handleError(err);
+        }
+      })
+    }
   }
 
 

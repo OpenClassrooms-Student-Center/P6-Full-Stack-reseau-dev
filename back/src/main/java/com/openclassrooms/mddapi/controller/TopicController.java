@@ -59,11 +59,11 @@ public class TopicController {
 
     @PutMapping("/subscribe/{id}")
     public ResponseEntity<MessageResponse> subscribe(@PathVariable("id") Long id, Authentication authentication) {
-        return ResponseEntity.ok(new MessageResponse(topicService.subscribe(id, mddUserService.findUserByUsername(authentication.getName()))));
+        return ResponseEntity.ok(new MessageResponse(topicService.subscribe(id, mddUserService.findUserByEmail(authentication.getName()))));
     }
 
     @PutMapping("/unsubscribe/{id}")
     public ResponseEntity<MessageResponse> unsubscribe(@PathVariable("id") Long id, Authentication authentication) {
-        return ResponseEntity.ok(new MessageResponse(topicService.unsubscribe(id, mddUserService.findUserByUsername(authentication.getName()))));
+        return ResponseEntity.ok(new MessageResponse(topicService.unsubscribe(id, mddUserService.findUserByEmail(authentication.getName()))));
     }
 }

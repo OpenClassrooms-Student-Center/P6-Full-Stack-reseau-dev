@@ -16,3 +16,7 @@ export interface NewInfo {
   username: string,
   email: string,
 }
+
+export interface NewPassword {
+  newPass: string,
+}

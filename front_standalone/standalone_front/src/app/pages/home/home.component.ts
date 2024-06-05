@@ -30,7 +30,7 @@ import {ArticlesLayoutComponent} from "../../shared/component/articles-layout/ar
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    ArticlesLayoutComponent
+    ArticlesLayoutComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -48,6 +48,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getAllSubscribedTopicPosts().subscribe({
       next: res => {
+        console.log('toaster ?')
+        this.toasterService.handleSuccess('Yeahhhy');
+        this.toasterService.handleWarning('noooyooo')
         this.posts = res;
       },
       error: err => {this.toasterService.handleError(err)}

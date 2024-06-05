@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslocoPipe} from "@jsverse/transloco";
 import {MddUserService} from "../../core/services/mdd-user.service";
 import {Topic} from "../../core/models/topic";
@@ -11,6 +11,7 @@ import {TopicService} from "../../core/services/topic.service";
 import {AuthService} from "../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {NgIf} from "@angular/common";
+import {ToasterService} from "../../core/services/toaster.service";
 
 @Component({
   selector: 'app-profile',
@@ -38,6 +39,18 @@ export class ProfileComponent implements OnInit {
     mail: this.mailControl,
   });
 
+  passwordControl = new FormControl('', Validators.required);
+  passwordMatchControl = new FormControl('', [Validators.required]);
+
+  submittedPassword: boolean = false;
+  newPasswordForm = new FormGroup({
+    password: this.passwordControl,
+    passwordMatch: this.passwordMatchControl,
+  });
+  hasNewPasswordError:boolean = false;
+
+
+
   myTopicsSubscriptions: Topic[] = [];
   isloaded = false
 
@@ -46,6 +59,7 @@ export class ProfileComponent implements OnInit {
     private topicService: TopicService,
     private authService: AuthService,
     private router: Router,
+    private toasterService: ToasterService,
   ) {
 
 
@@ -81,7 +95,14 @@ export class ProfileComponent implements OnInit {
         { this.mddUserService.getMe().subscribe({
           next: info => {
             this.myTopicsSubscriptions = info.topicsIds;
-        }})}
+        },
+        error : err => {
+            this.toasterService.handleError(err)
+        }
+        })},
+      error: err => {
+        this.toasterService.handleError(err)
+      }
     });
   }
 
@@ -89,4 +110,47 @@ export class ProfileComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/welcome'])
   }
+
+  newPassword(){
+    this.submittedPassword = true;
+    if (this.isPasswordValid()) {
+      this.mddUserService.newPassword({
+        newPass: this.password ? this.password : '',
+      }).subscribe({
+        next:(r) => {this.handleNewPassword(r.message)},
+        error:(err) => this.handleNewPasswordError(err)}
+      );
+    } else {
+      this.toasterService.handleWarning("Passwords tipingd don't match");
+    }
+  }
+
+  isPasswordValid() {
+    return this.newPasswordForm.valid && this.matches(this.newPasswordForm);
+  }
+
+  matches(form: AbstractControl){
+    return form.get('password')?.value === form.get('passwordMatch')?.value;
+  }
+
+  get password() {
+    return this.newPasswordForm.get('password')?.value;
+  }
+
+  handleNewPassword(message: string) {
+    this.newPasswordForm.get('password')?.setValue('');
+    this.newPasswordForm.get('passwordMatch')?.setValue('');
+    this.newPasswordForm.reset();
+    this.toasterService.handleSuccess(message);
+  }
+
+  handleNewPasswordError(err: any) {
+    this.toasterService.handleError(err)
+  }
+
+  handlePasswordTouched() {
+    this.hasNewPasswordError = false;
+    this.submittedPassword = false;
+  }
+
 }

@@ -53,10 +53,10 @@ public class AuthController {
                 .orElseThrow(() ->new RuntimeException("Refresh Token is not in DB..!!"));
 
         MddUser user = refreshToken.getUserInfo();
-        log.info("Token refreshment requested for user : " + user.getUsername());
+        log.info("Token refreshment requested for user : " + user.getEmail());
 
         refreshTokenService.verifyExpiration(refreshToken);
-        String token = tokenService.generateTokenFromUsername(user.getUsername());
+        String token = tokenService.generateTokenFromUsername(user.getEmail());
         log.info("Token refreshment granted ");
         return ResponseEntity.ok(new AuthRefreshResponse(token));
     }

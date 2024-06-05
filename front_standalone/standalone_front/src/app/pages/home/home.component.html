@@ -1,3 +1,8 @@
 <app-articles-layout [posts]="posts">
 
 </app-articles-layout>
+
+<div class="profile-layout" *ngIf="posts.length == 0">
+  <hr />
+  <h5 class="">{{'articles.no-subscription' | transloco}}</h5>
+</div>

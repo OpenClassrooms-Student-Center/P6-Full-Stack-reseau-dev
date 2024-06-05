@@ -15,6 +15,7 @@ export class ApiService {
               private jwtSerice: JWTService) {}
 
   private formatErrors(error: any) {
+
     return throwError(error.error);
   }
 

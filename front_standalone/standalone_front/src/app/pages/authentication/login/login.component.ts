@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import {ToasterService} from "../../../core/services/toaster.service";
 
 @Component({
   selector: 'app-login',
@@ -36,6 +37,7 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private toasterService: ToasterService,
   ) {
   }
 
@@ -73,6 +75,7 @@ export class LoginComponent {
 
   handleAuthError(err: any) {
     this.hasAuthError = true;
+    this.toasterService.handleWarning(('login.error-login'))
   }
 
   handleAuthSuccess() {

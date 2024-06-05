@@ -13,8 +13,9 @@
   },
   "login": {
     "signin": "Se connecter",
-    "mail-or-username": "E-mail ou nom d'utilisateur",
-    "password": "Mot de passe"
+    "mail": "Adresse e-mail",
+    "password": "Mot de passe",
+    "error-login": "Erreur : email ou mot de passe incorrect"
   },
   "articles": {
     "create-article": "Créer un article",
@@ -23,7 +24,8 @@
       "date": "Date",
       "title": "Titre",
       "theme": "Thème"
-    }
+    },
+    "no-subscription": "Aucun abonnement à des thèmes"
   },
   "header": {
     "articles": "Articles",
@@ -31,7 +33,8 @@
   },
   "article": {
     "comments": "Commentaires",
-    "write-comment-here": "Écrivez ici votre commentaire"
+    "write-comment-here": "Écrivez ici votre commentaire",
+    "commentError": "144 caractères maximum"
   },
   "new-article": {
     "create-new-article": "Créer un nouvel article",

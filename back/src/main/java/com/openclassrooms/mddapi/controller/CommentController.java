@@ -84,7 +84,7 @@ public class CommentController {
     @PostMapping("/new")
     public ResponseEntity<MessageResponse> newComment(@RequestBody NewCommentRequest newCommentRequest, Authentication authentication){
         Comment newComment = Comment.builder()
-                .author(mddUserService.findUserByUsername(authentication.getName()))
+                .author(mddUserService.findUserByEmail(authentication.getName()))
                 .post(postService.findPostById(newCommentRequest.getPostId()))
                 .text(newCommentRequest.getComment())
                 .build();

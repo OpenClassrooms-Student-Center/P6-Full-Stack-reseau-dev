@@ -6,6 +6,7 @@ import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators
 import {TranslocoModule} from "@jsverse/transloco";
 import {AuthService} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
+import {ToasterService} from "../../../core/services/toaster.service";
 
 @Component({
   selector: 'app-register',
@@ -41,6 +42,7 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private toasterService: ToasterService,
   ) {}
 
   register(){
@@ -55,7 +57,7 @@ export class RegisterComponent {
         error:(err) => this.handleAuthError(err)}
       );
     } else {
-      // Todo: toaster = match password
+      this.toasterService.handleWarning("Passwords tipingd don't match");
     }
   }
 
@@ -66,10 +68,12 @@ export class RegisterComponent {
 
   handleAuthSuccess() {
     this.hasRegisterError = false;
+    this.toasterService.handleSuccess('Registered successfully')
     this.router.navigate(['login']);
   }
 
   handleAuthError(err: any) {
+    this.toasterService.handleError(err)
     this.hasRegisterError = true;
   }
 

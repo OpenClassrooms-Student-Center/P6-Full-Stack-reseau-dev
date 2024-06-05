@@ -2,8 +2,8 @@ import {inject, Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {RefreshTokenService} from "../services/refresh-token.service";
-import {catchError} from "rxjs/operators";
-import {throwError} from "rxjs";
+import {catchError, switchMap} from "rxjs/operators";
+import {tap, throwError} from "rxjs";
 
 
 @Injectable({providedIn: 'root'})
@@ -23,21 +23,28 @@ class NoPermissionsGuard {
       return false;
     }
     if (this.refreshTokenService.hasRefreshToken()) {
-      let outcome = false;
-      this.authService.refreshToken().pipe(
-        catchError((error) => {
+      let outcome = true;
+      console.log('refresh')
+      this.authService.refreshToken().subscribe({
+        next: (body) => {
+          console.log('refresh success')
+          this.router.navigate(['/home'])
+          outcome = false;
+          console.log('outcome : ', outcome)
+          return outcome;
+        },
+        error: (error) => {
           if (error.status == '401') {
-            console.log('LOGOUT guard')
+            console.log('refresh unsuccess')
             this.authService.logout();
-            this.router.navigate(['/welcome'])
           }
           console.log('return error')
           outcome = true;
-          return throwError(() => error);
-        })
-      );
-      console.log('goes to home anyway,  outcome : ', outcome)
-      return outcome;
+          console.log('outcome : ', outcome)
+          return outcome;
+        }
+    });
+
     }
     return true;
   }

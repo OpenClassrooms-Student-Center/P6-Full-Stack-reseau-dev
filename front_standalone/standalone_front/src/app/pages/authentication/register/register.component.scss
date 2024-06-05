@@ -14,10 +14,8 @@
   flex-direction: column;
   align-items: center;
   @media screen and (max-width: 1049px) {
-
     flex-direction: column;
-    height: 50vh;
-    width: 80vw;
+    width: 100%;
     align-items: center;
   }
 }

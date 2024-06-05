@@ -33,7 +33,7 @@ export const appConfig: ApplicationConfig = {
   }),
     provideAnimations(), // required animations providers
     provideToastr({
-      timeOut: 2000,
+      timeOut: 3000,
       positionClass: "toast-bottom-right",
     }), // Toastr providers
   ]

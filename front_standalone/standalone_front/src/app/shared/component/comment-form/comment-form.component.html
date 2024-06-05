@@ -6,4 +6,9 @@
       matInput
       [formControl]="commentFormControl"
     ></textarea>
+
+    @if (!commentFormControl.valid) {
+      <mat-error>{{errorMessage}}</mat-error>
+    }
+
   </mat-form-field>

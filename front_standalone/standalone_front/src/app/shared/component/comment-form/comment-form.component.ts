@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
+import { MatInput, MatLabel} from "@angular/material/input";
 import {TranslocoPipe} from "@jsverse/transloco";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-comment-form',
@@ -10,7 +11,7 @@ import {CdkTextareaAutosize} from "@angular/cdk/text-field";
   imports: [
     MatInput,
     MatLabel,
-    MatFormField,
+    MatFormFieldModule,
     ReactiveFormsModule,
     TranslocoPipe,
     CdkTextareaAutosize
@@ -21,6 +22,7 @@ import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 export class CommentFormComponent {
 
   @Input() commentFormControl!: FormControl;
+  @Input() errorMessage = "error message"
 
   constructor() {
   }
