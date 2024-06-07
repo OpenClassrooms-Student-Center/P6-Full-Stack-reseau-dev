@@ -20,6 +20,10 @@ import { EditComponent } from './pages/user/components/edit/edit.component';
 import { MatOptionModule } from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DatePipe } from '@angular/common';
+import { LoginComponent } from './pages/auth/components/login/login/login.component';
+import { RegisterComponent } from './pages/auth/components/register/register/register.component';
+import { AuthModule } from './pages/auth/auth.module';
+import { AuthRoutingModule } from './pages/auth/auth-routing.module';
 
 const materialModule = [
   MatButtonModule,
@@ -45,6 +49,7 @@ const materialModule = [
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    AuthModule,
     ... materialModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }, DatePipe],

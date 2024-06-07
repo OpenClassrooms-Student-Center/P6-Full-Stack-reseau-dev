@@ -1,5 +1,5 @@
 export interface Theme {
-    themeId?: number;
+    themeId: number;
     titre: string;
     description: string;
     follow : boolean;

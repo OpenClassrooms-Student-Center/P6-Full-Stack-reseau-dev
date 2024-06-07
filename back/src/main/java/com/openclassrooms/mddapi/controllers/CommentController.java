@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
 import com.openclassrooms.mddapi.dto.CommentDto;
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.User;
@@ -32,24 +33,23 @@ public class CommentController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/{articleId}")
-    public ResponseEntity<?> create(@Valid @RequestBody CommentDto comment ) {
-
-
+    @PostMapping()
+    public ResponseEntity<?> create(@Valid @RequestBody CommentDto comment) {
 
         Article article = new Article();
         if(comment.getArticleId() != null) {
-            articleService.findById(Long.parseLong(comment.getArticleId()));
+            article = articleService.findById(Long.parseLong(comment.getArticleId()));
         }
 
         User user = new User();
         if(comment.getUserId() != null) {
-            userService.findById(Long.parseLong(comment.getUserId()));
+            user = userService.findById(Long.parseLong(comment.getUserId()));
         }
         Comment newComment = new Comment();
         newComment.setCommentaire(comment.getCommentaire());
         newComment.setArticle(article);
         newComment.setUser(user);
+        newComment.setAuteur(user.getFirstName());
 
         commentService.addComment(newComment);
 

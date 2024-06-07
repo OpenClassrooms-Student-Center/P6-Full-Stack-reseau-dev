@@ -1,21 +1,22 @@
+
 <div class="app">
-    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+    <div *ngIf="$isLogged() | async; else notLogged">
+      <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
       <img src="/assets/logo_p6.png" alt="logo" />
-      <div *ngIf="$isLogged() | async; else notLogged">
-        <span routerLink="theme" class="link">Themes</span>
-        <span routerLink="detail" class="link">Account</span>
-        <span routerLink="edit" class="link">Edit account</span>
-        <span routerLink="article/create" class="link">Articles</span>
-        <span routerLink="article/list" class="link">Articles List</span>
-      </div> 
-       <ng-template #notLogged>
-        <div>
-          <span routerLink="login" class="link">Login</span>
-          <span routerLink="register" class="link">Register</span>
-        </div>
-      </ng-template>
+      <span routerLink="article/list" class="link">Articles</span>
+      <span routerLink="theme" class="link">Thèmes</span>
+      <span routerLink="edit" class="link">   <mat-icon>
+        person
+      </mat-icon></span>
     </mat-toolbar>
-    <div>
-      <router-outlet></router-outlet>
     </div>
+    <ng-template #notLogged>
+      <div>
+        <!-- <span routerLink="login" class="link">Login</span>
+        <span routerLink="register" class="link">Register</span> -->
+      </div>
+    </ng-template>
+  <div>
+    <router-outlet></router-outlet>
   </div>
+</div>

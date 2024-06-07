@@ -29,7 +29,7 @@ public class UserService {
         return this.userRepository.findById(id).orElse(null);
     }
 
-    public void follow(Long themeId, Long userId, Boolean follow) {
+    public void follow(Long themeId, Long userId) {
         Theme theme = this.themeRepository.findById(themeId).orElse(null);
         User user = this.userRepository.findById(userId).orElse(null);
         if (theme == null || user == null) {
@@ -41,7 +41,7 @@ public class UserService {
             throw new BadRequestException();
         }
 
-        theme.setFollow(follow);
+        theme.setFollow(true);
         themeRepository.save(theme);
 
         user.getThemes().add(theme);
@@ -49,7 +49,7 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    public void unFollow(Long themeId, Long userId, Boolean follow) {
+    public void unFollow(Long themeId, Long userId) {
         User user = this.userRepository.findById(userId).orElse(null);
         Theme theme = this.themeRepository.findById(themeId).orElse(null);
 
@@ -63,7 +63,7 @@ public class UserService {
         }
 
 
-        theme.setFollow(follow);
+        theme.setFollow(false);
         themeRepository.save(theme);
         user.setThemes(user.getThemes().stream().filter(themeUp -> !themeUp.getThemeId().equals(themeId)).collect(Collectors.toSet()));
 

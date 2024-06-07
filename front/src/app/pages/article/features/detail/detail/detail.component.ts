@@ -9,6 +9,8 @@ import { Article } from '../../../interface/article';
 import { Theme } from 'src/app/pages/theme/interface/theme';
 import { ThemeService } from 'src/app/pages/theme/service/theme.service';
 import { SessionService } from 'src/app/services/session.service';
+import { UserService } from 'src/app/pages/user/service/user.service';
+import { User } from 'src/app/pages/user/interface/user.interface';
 
 @Component({
   selector: 'app-detail',
@@ -25,7 +27,11 @@ export class DetailComponent implements OnInit {
 
   public userId!: string;
 
-  public article! : Article;
+  public article : Article | undefined;
+
+  public user : User | undefined;
+
+  public comments: Comment[] | undefined;
 
   public themeByArticle : Theme | undefined;
 
@@ -33,6 +39,7 @@ export class DetailComponent implements OnInit {
     private articleService: ArticleService, 
     private commentService : CommentService,
     private sessionService : SessionService,
+    private userService : UserService,
     private matSnackBar: MatSnackBar,
     private fb: FormBuilder,
     private router : Router,
@@ -42,16 +49,14 @@ export class DetailComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    console.log(this.articleId);
-    this.articleService.getById(this.articleId).subscribe((article: Article) => 
-    { this.article = article
-    // this.themeService.getById(article.themeId).subscribe((theme : Theme) => 
-    // this.themeByArticle = theme ) 
-  });
-  // this.themeService.getById(this.themeId).subscribe((theme : Theme) => 
-  //   this.themeByArticle = theme); 
+    this.articleService.getById(this.articleId).subscribe((article: Article) => {
+      this.article = article;
+      this.comments = article.commentaires;
+    });
+    this.userService.getById(this.sessionService.sessionInformation!.id.toString()).subscribe((user : User) => {
+      this.user = user;
+    })
     this.initForm();
-    
   }
 
 
@@ -64,19 +69,19 @@ export class DetailComponent implements OnInit {
   public submit(): void {
     const commentaire = {
       commentaire: this.commentForm?.value.commentaire,
+      auteur: this.user?.firstName,
       articleId: this.articleId,
       userId: this.sessionService.sessionInformation?.id.toString()
     } as Comment;
     // const comment = this.commentForm?.value as Comment;
       this.commentService
-        .create(commentaire, this.articleId)
-        .subscribe((comment: Comment) => {this.exitPage('Commentaire ajouté !'), console.log(comment.commentaire)});
-  
+        .create(commentaire)
+        .subscribe((comment: Comment) => {this.exitPage('Commentaire ajouté !'), console.log(comment.userId)});
       }
 
   private exitPage(message: string): void {
     this.matSnackBar.open(message, 'Close', { duration: 3000 });
-    this.router.navigate(['article/articles']);
+    this.router.navigate(['article/list']);
   }
   
 }

@@ -1,9 +1,10 @@
 <div class="center">
-  <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="connexion()">Se connecter</button>
-  <button mat-raised-button color="primary" (click)="enregistrement()">S'inscrire</button>
-  <button mat-raised-button color="primary" (click)="theme()">Theme Component</button>
+  <img mat-card-image src="/assets/logo_p6.png" alt="logo" [width]="412" [height]="238" priority/>
+  <mat-card-actions class="flex">
+    <a routerLink="/login" mat-raised-button>Se connecter</a>
+    <a routerLink="/register" mat-raised-button>S'inscrire</a>
+  <!-- <button mat-raised-button color="primary" (click)="theme()">Theme Component</button>
   <button mat-raised-button color="primary" (click)="user()">User Component</button>
-  <button mat-raised-button color="primary" (click)="edit()">Edit User Component</button>
+  <button mat-raised-button color="primary" (click)="edit()">Edit User Component</button> -->
+</mat-card-actions>
 </div>

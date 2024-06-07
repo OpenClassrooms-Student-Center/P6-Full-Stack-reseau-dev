@@ -1,4 +1,4 @@
-<div>
+<div class="d-grid gap-2 d-md-block">
     <button type="button" class="btn btn-primary" (click)="create()">
         Créer un article
       </button>
@@ -6,8 +6,8 @@
 <div class="list">
     <mat-card>
     <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-      <mat-card class="item" *ngFor="let article of (articles$ | async)" fxFlex>
-          <mat-card-title [routerLink]="['/article/detail',article.articleId]">
+      <mat-card class="item" *ngFor="let article of (articles$ | async)" [routerLink]="['/article/detail',article.articleId]" fxFlex>
+          <mat-card-title>
             {{ article.titre }}
         </mat-card-title>
         <mat-card-content>

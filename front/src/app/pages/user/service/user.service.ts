@@ -25,11 +25,11 @@ export class UserService {
 
   
   public follow(themeId: string, userId: string): Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/${themeId}/follow/${userId}/true`, null);
+    return this.httpClient.post<void>(`${this.pathService}/${themeId}/follow/${userId}`, null);
   }
 
   public unFollow(themeId: string, userId: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.pathService}/${themeId}/follow/${userId}/false`);
+    return this.httpClient.delete<void>(`${this.pathService}/${themeId}/follow/${userId}`);
   }
 
 }

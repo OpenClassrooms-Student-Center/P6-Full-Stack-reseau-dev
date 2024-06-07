@@ -14,7 +14,11 @@ export class CommentService {
 
   }
 
-  public create(comment : Comment, article_id : string): Observable<Comment> {
-    return this.httpClient.post<Comment>(`${this.pathService}/${article_id}`, comment);
+  public create(comment : Comment): Observable<Comment> {
+    return this.httpClient.post<Comment>(`${this.pathService}`, comment);
+  }
+
+  public getByArticleId(id: string): Observable<Comment> {
+    return this.httpClient.get<Comment>(`${this.pathService}/${id}`);
   }
 }

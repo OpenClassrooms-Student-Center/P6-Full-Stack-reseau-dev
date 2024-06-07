@@ -31,6 +31,7 @@ CREATE TABLE `USERS` (
 CREATE TABLE `COMMENTS` (
   `comment_id` INT PRIMARY KEY AUTO_INCREMENT,
   `commentaire` VARCHAR(40),
+  `auteur` VARCHAR(40),
   `user_id` int,
   `article_id` int
 );
@@ -53,6 +54,9 @@ VALUES ('Titre du thème', 'lorem ipsum is simply dummy text of the printing and
 INSERT INTO USERS (first_name, email, password)
 VALUES ('Admin', 'user@mdd.com', '$2a$10$9BFwaEZcQyHmVUwMTFriQO7qikeOMANIe9f9PvQeZFSedeDfPXlQq'); 
 
-INSERT INTO ARTICLES (titre, auteur, contenu)
-VALUES ('Titre', 'Auteur', 'description'); 
+INSERT INTO ARTICLE_LIKE (user_id, article_id)
+VALUES(1,1);
+
+INSERT INTO ARTICLES (titre, auteur, contenu, theme_id, user_id)
+VALUES ('Titre', 'Auteur', 'description',1,1); 
 

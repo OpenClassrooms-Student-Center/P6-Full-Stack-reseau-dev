@@ -1,3 +1,4 @@
+import { Article } from "../../article/interface/article";
 import { Theme } from "../../theme/interface/theme";
 
 export interface User {
@@ -8,5 +9,5 @@ export interface User {
     createdAt: Date;
     follow: boolean,
     themes : Theme[];
-    articles : [];
+    articles : Article[];
 }

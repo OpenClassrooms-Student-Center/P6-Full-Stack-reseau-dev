@@ -1,3 +1,4 @@
+import { Comment } from "../../comment/interface/comment.interface";
 import { Theme } from "../../theme/interface/theme";
 
 export interface Article {
@@ -9,4 +10,5 @@ export interface Article {
     user_id: number;
     createdAt?: Date;
     theme : Theme;
+    commentaires : Comment [];
 }

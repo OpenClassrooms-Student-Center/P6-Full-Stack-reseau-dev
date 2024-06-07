@@ -68,10 +68,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("{themeId}/follow/{userId}/{follow}")
-    public ResponseEntity<?> follow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId, @PathVariable("follow") String follow) {
+    @PostMapping("{themeId}/follow/{userId}")
+    public ResponseEntity<?> follow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId) {
         try {
-            this.userService.follow(Long.parseLong(themeId), Long.parseLong(userId), Boolean.getBoolean(follow));
+            this.userService.follow(Long.parseLong(themeId), Long.parseLong(userId));
 
             return ResponseEntity.ok().build();
         } catch (NumberFormatException e) {
@@ -79,10 +79,10 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("{themeId}/follow/{userId}/{follow}")
-    public ResponseEntity<?> unFollow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId, @PathVariable("follow") String follow) {
+    @DeleteMapping("{themeId}/follow/{userId}")
+    public ResponseEntity<?> unFollow(@PathVariable("themeId") String themeId, @PathVariable("userId") String userId) {
         try {
-            this.userService.unFollow(Long.parseLong(themeId), Long.parseLong(userId), Boolean.getBoolean(follow));
+            this.userService.unFollow(Long.parseLong(themeId), Long.parseLong(userId));
 
             return ResponseEntity.ok().build();
         } catch (NumberFormatException e) {

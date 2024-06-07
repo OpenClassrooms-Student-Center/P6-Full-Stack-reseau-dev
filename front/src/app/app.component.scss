@@ -1,0 +1,22 @@
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .app {
+    .link {
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .link + .link {
+        margin-left: 10px;
+    }
+}

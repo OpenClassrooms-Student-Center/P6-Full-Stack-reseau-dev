@@ -3,28 +3,34 @@
         <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
             <mat-card class="item" fxFlex>
                 <mat-card-title>
-                    {{ article.titre }}
+                    {{ article?.titre }}
                 </mat-card-title>
                 <mat-card-content>
                     <!-- <div fxLayout="column" fxLayoutAlign="start center"> -->
                         <p>
-                            {{ article.auteur }}
-                            {{ article.theme.titre}}
-                            {{ article.createdAt | date: 'longDate' }}
+                            {{ article?.createdAt | date: 'longDate' }}
+                            {{ article?.auteur }}
+                            {{ article?.theme?.titre}}
                         </p>
                         <p>
-                            {{ article.description }}
+                            {{ article?.description }}
                         </p>
                     <!-- </div> -->
                 </mat-card-content>
             </mat-card>
-            <mat-card class="mt2">
+            <mat-card>
                 <mat-card-title>
-                    <h2>Ajoutez un commentaire</h2>
+                    <h2>Commentaires</h2>
                 </mat-card-title>
-                <mat-card-content>
+                <mat-card-subtitle *ngFor="let comment of comments ">
+                    <p>
+                        {{comment.auteur }}
+                        {{comment.commentaire }}
+                    </p>
+                </mat-card-subtitle>
+                    <mat-card-content>
                     <form [formGroup]="commentForm" (ngSubmit)="submit()" fxLayout="column">
-                        <textarea matInput placeholder="" rows="6" formControlName="commentaire"></textarea>
+                        <textarea matInput placeholder="Ajoutez un commentaire" rows="6" formControlName="commentaire"></textarea>
                         <div fxLayout="row" fxLayoutAlign="end center" class="mt2">
                             <button mat-raised-button color="primary" type="submit"
                                 [disabled]="commentForm.invalid">Send</button>
