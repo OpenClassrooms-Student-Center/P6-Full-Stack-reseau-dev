@@ -50,7 +50,9 @@
     "unsubscribe": "Se désabonner",
     "logout": "Se déconnecter",
     "username": "Nom d'utilisateur",
-    "mail": "Adresse e-mail"
+    "mail": "Adresse e-mail",
+    "password-matching": "Les deux champs de mot de passe doivent être identiques",
+    "new-password": "Nouveau mot de passe"
   },
   "themes": {
     "subscribe": "S'abonner"

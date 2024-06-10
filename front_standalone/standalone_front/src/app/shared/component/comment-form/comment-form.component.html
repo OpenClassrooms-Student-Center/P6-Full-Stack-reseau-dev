@@ -7,7 +7,7 @@
       [formControl]="commentFormControl"
     ></textarea>
 
-    @if (!commentFormControl.valid) {
+    @if (!commentFormControl.valid && commentFormControl.touched) {
       <mat-error>{{errorMessage}}</mat-error>
     }
 

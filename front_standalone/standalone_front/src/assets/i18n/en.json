@@ -50,7 +50,9 @@
     "unsubscribe": "Unsubscribe",
     "logout": "Logout",
     "username": "Username",
-    "mail": "Email address"
+    "mail": "Email address",
+    "password-matching": "Both password fields have to match",
+    "new-password": "New password"
   },
   "themes": {
     "subscribe": "Subscribe"

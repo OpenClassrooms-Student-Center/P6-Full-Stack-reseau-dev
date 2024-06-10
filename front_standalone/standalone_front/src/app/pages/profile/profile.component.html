@@ -38,7 +38,7 @@
   <form class="form-layout" [formGroup]="newPasswordForm">
 
     <mat-form-field  class="single-word">
-      <mat-label>{{ "signup.password" | transloco }}</mat-label>
+      <mat-label>{{ "user-profile.new-password" | transloco }}</mat-label>
       <input
         class="form-field"
         matInput
@@ -57,9 +57,12 @@
         type="password"
         (change)="handlePasswordTouched()"
       >
+      <mat-error *ngIf="!newPasswordForm.valid">{{'user-profile.password-matching' | transloco}}</mat-error>
+
     </mat-form-field>
 
-    <button mat-raised-button color="accent" class="register-button" [disabled]="!isPasswordValid()" (click)="newPassword()"> {{ "user-profile.save" | transloco }} </button>
+
+    <button mat-raised-button color="accent" class="register-button" [disabled]="!newPasswordForm.valid" (click)="newPassword()"> {{ "user-profile.save" | transloco }} </button>
 
   </form>
 </div>

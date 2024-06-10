@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslocoPipe} from "@jsverse/transloco";
@@ -12,6 +12,7 @@ import {AuthService} from "../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {NgIf} from "@angular/common";
 import {ToasterService} from "../../core/services/toaster.service";
+import {matchValidator} from "../../shared/validators/validators.functions";
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,8 @@ import {ToasterService} from "../../core/services/toaster.service";
     ReactiveFormsModule,
     TranslocoPipe,
     ThemeLayoutComponent,
-    NgIf
+    NgIf,
+    MatError
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
@@ -40,7 +42,7 @@ export class ProfileComponent implements OnInit {
   });
 
   passwordControl = new FormControl('', Validators.required);
-  passwordMatchControl = new FormControl('', [Validators.required]);
+  passwordMatchControl = new FormControl('', [Validators.required, matchValidator(this.passwordControl)]);
 
   submittedPassword: boolean = false;
   newPasswordForm = new FormGroup({
@@ -48,6 +50,7 @@ export class ProfileComponent implements OnInit {
     passwordMatch: this.passwordMatchControl,
   });
   hasNewPasswordError:boolean = false;
+
 
 
 
@@ -138,8 +141,6 @@ export class ProfileComponent implements OnInit {
   }
 
   handleNewPassword(message: string) {
-    this.newPasswordForm.get('password')?.setValue('');
-    this.newPasswordForm.get('passwordMatch')?.setValue('');
     this.newPasswordForm.reset();
     this.toasterService.handleSuccess(message);
   }

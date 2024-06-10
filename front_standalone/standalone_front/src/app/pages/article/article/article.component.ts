@@ -43,7 +43,7 @@ export class ArticleComponent implements OnInit{
   loadedData = false;
 
 
-  commentTextFormControl = new FormControl('', [Validators.required, Validators.maxLength(144)]);
+  commentTextFormControl = new FormControl('', [Validators.maxLength(144)]);
   commentForm = new FormGroup({
     commentText: this.commentTextFormControl,
   });
@@ -107,6 +107,7 @@ export class ArticleComponent implements OnInit{
       this.commentService.newComment(newComment).subscribe({
         next: message => {
           this.getComments(this.post.id ? this.post.id : -1)
+          this.commentForm.controls.commentText.reset()
           this.toasterService.handleSuccess(message.message)
         },
         error: err => {

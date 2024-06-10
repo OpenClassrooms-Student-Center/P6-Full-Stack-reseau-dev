@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.repository.MddUserRepository;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -78,13 +79,16 @@ public class MddUserService implements UserDetailsService {
     public MddUser createUser(MddUser user) {
         try {
             log.info("createUser");
+            mddUserRepository.findByEmail(user.getEmail()).ifPresent(
+                    val -> {throw  new RuntimeException("User with this email already exists");}
+            );
             user.setId(null);
             user.setCreatedAt(LocalDateTime.now());
             user.setUpdatedAt(LocalDateTime.now());
             return mddUserRepository.save(user);
         } catch (Exception e) {
             log.error("Failed to create user: ", e.getMessage());
-            throw new RuntimeException("Failed to create user");
+            throw new RuntimeException("Failed to create user : " + e.getMessage());
         }
     }
 
