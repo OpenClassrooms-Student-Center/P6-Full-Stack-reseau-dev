@@ -77,11 +77,16 @@ public class MddUserService implements UserDetailsService {
     }
 
     public MddUser createUser(MddUser user) {
+
+        mddUserRepository.findByEmail(user.getEmail()).ifPresent(
+                val -> {
+                    log.warn("User with this email alreay exists");
+                    throw  new RuntimeException("User with this email already exists");
+                }
+        );
+
         try {
             log.info("createUser");
-            mddUserRepository.findByEmail(user.getEmail()).ifPresent(
-                    val -> {throw  new RuntimeException("User with this email already exists");}
-            );
             user.setId(null);
             user.setCreatedAt(LocalDateTime.now());
             user.setUpdatedAt(LocalDateTime.now());
