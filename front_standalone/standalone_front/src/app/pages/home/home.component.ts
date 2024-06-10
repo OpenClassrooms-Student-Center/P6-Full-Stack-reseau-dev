@@ -49,8 +49,6 @@ export class HomeComponent implements OnInit {
     this.postService.getAllSubscribedTopicPosts().subscribe({
       next: res => {
         console.log('toaster ?')
-        this.toasterService.handleSuccess('Yeahhhy');
-        this.toasterService.handleWarning('noooyooo')
         this.posts = res;
       },
       error: err => {this.toasterService.handleError(err)}
