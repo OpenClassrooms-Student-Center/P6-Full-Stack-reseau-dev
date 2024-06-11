@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.exceptions.BadRequestExceptionHandler;
+import com.openclassrooms.mddapi.exceptions.NotFoundExceptionHandler;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.repository.TopicRepository;
@@ -34,7 +36,7 @@ public class TopicService {
             return topicList;
         } catch (Exception e) {
             log.error("We could not find all topics: " + e.getMessage());
-            throw new RuntimeException("We could not find any topics");
+            throw new NotFoundExceptionHandler("We could not find any topics");
         }
     }
 
@@ -42,11 +44,11 @@ public class TopicService {
         try {
             log.info("findTopicById - id: " + id);
             Topic topic = topicRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Topic not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Topic not found"));
             return topic;
         } catch (Exception e) {
             log.error("We could not find topic: " + id, e.getMessage());
-            throw new RuntimeException("We could not find your topic");
+            throw new NotFoundExceptionHandler("We could not find your topic");
         }
     }
 
@@ -58,7 +60,7 @@ public class TopicService {
             return topic;
         } catch (Exception e) {
             log.error("Failed to create topic: ", e.getMessage());
-            throw new RuntimeException("Failed to create topic");
+            throw new BadRequestExceptionHandler("Failed to create topic");
         }
     }
 
@@ -66,13 +68,13 @@ public class TopicService {
         try {
             log.info("updateTopic - id: " + topic.getId());
             Topic existingTopic = topicRepository.findById(topic.getId())
-                    .orElseThrow(() -> new RuntimeException("Topic not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Topic not found"));
             existingTopic.setName(topic.getName());
             topicRepository.save(existingTopic);
             return existingTopic;
         } catch (Exception e) {
             log.error("Failed to update topic: ", e.getMessage());
-            throw new RuntimeException("Failed to update topic");
+            throw new BadRequestExceptionHandler("Failed to update topic");
         }
     }
 
@@ -80,40 +82,55 @@ public class TopicService {
         try {
             log.info("deleteTopic - id: " + id);
             Topic topic = topicRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Topic not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Topic not found"));
             topicRepository.delete(topic);
             return "Topic deleted";
         } catch (Exception e) {
             log.error("Failed to delete topic: ", e.getMessage());
-            throw new RuntimeException("Failed to delete topic");
+            throw new BadRequestExceptionHandler("Failed to delete topic");
         }
     }
 
     public String subscribe(Long topicId, MddUser mddUser){
-        log.info("User(id) : " + mddUser.getId() + "subscribe to topic(id) : " + topicId);
-        Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new RuntimeException("Topic not found"));
-        if (topic.getUsers() == null) {
-            topic.setUsers(new HashSet<>());
+        try {
+            log.info("User(id) : " + mddUser.getId() + "subscribe to topic(id) : " + topicId);
+            Topic topic = topicRepository.findById(topicId)
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Topic not found"));
+            if (topic.getUsers() == null) {
+                topic.setUsers(new HashSet<>());
+            }
+            topic.getUsers().add(mddUser);
+            topicRepository.save(topic);
+            return "Subscribed successfully";
+        } catch(Exception e) {
+            log.error("Failed to subscribe user(id) : " + mddUser.getId() + " to topic(id) : " + topicId, e.getMessage());
+            throw new BadRequestExceptionHandler("Failed to subscribe to topic");
         }
-        topic.getUsers().add(mddUser);
-        topicRepository.save(topic);
-        return "Subscribed successfully";
     }
 
     public String unsubscribe(Long topicId, MddUser mddUser){
-        log.info("User(id) : " + mddUser.getId() + "unsubscribe from topic(id) : " + topicId);
-        Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new RuntimeException("Topic not found"));
-        if (topic.getUsers() != null) {
-            topic.getUsers().remove(mddUser);
+        try {
+            log.info("User(id) : " + mddUser.getId() + "unsubscribe from topic(id) : " + topicId);
+            Topic topic = topicRepository.findById(topicId)
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Topic not found"));
+            if (topic.getUsers() != null) {
+                topic.getUsers().remove(mddUser);
+            }
+            topicRepository.save(topic);
+            return "Unsubscribed successfully";
+        } catch(Exception e) {
+            log.error("Failed to unsubscribe user(id) : " + mddUser.getId() + " from topic(id) : " + topicId, e.getMessage());
+            throw new BadRequestExceptionHandler("Failed to unsubscribe from topic");
         }
-        topicRepository.save(topic);
-        return "Unsubscribed successfully";
     }
 
     public Set<Topic> mySubscriptions(MddUser mddUser){
-        log.info("Get my subscriptions for user(id) : " + mddUser.getId());
-        return new HashSet<>(topicRepository.findTopicsByUsersId(mddUser.getId()));
+        try {
+            log.info("Get my subscriptions for user(id) : " + mddUser.getId());
+            return new HashSet<>(topicRepository.findTopicsByUsersId(mddUser.getId()));
+        } catch (Exception e) {
+            log.error("Failed to fetch subscriptions for user(id) : " + mddUser.getId(), e.getMessage());
+            throw new NotFoundExceptionHandler("Failed to get your subscriptions");
+        }
     }
 }

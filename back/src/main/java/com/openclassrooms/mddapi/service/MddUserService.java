@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.exceptions.BadRequestExceptionHandler;
+import com.openclassrooms.mddapi.exceptions.NotFoundExceptionHandler;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.repository.MddUserRepository;
@@ -37,7 +39,7 @@ public class MddUserService implements UserDetailsService {
             return userList;
         } catch (Exception e) {
             log.error("We could not find all users: " + e.getMessage());
-            throw new RuntimeException("We could not find any users");
+            throw new NotFoundExceptionHandler("We could not find any users");
         }
     }
 
@@ -47,10 +49,10 @@ public class MddUserService implements UserDetailsService {
         try {
             log.info("findUserById - id: " + id);
             return mddUserRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("User not found"));
         } catch (Exception e) {
             log.error("We could not find user: " + id, e.getMessage());
-            throw new RuntimeException("We could not find your user");
+            throw new NotFoundExceptionHandler("We could not find your user");
         }
     }
 
@@ -58,10 +60,10 @@ public class MddUserService implements UserDetailsService {
         try {
             log.info("findUserByUsername - username: " + username);
             return mddUserRepository.findByUsername(username)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("User not found"));
         } catch (Exception e) {
             log.error("We could not find user: " + username, e.getMessage());
-            throw new RuntimeException("We could not find your user");
+            throw new NotFoundExceptionHandler("We could not find your user");
         }
     }
 
@@ -69,10 +71,10 @@ public class MddUserService implements UserDetailsService {
         try {
             log.info("findUserByEmail - email: " + mail);
             return mddUserRepository.findByEmail(mail)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("User not found"));
         } catch (Exception e) {
             log.error("We could not find user: " + mail, e.getMessage());
-            throw new RuntimeException("We could not find your user");
+            throw new NotFoundExceptionHandler("We could not find your user");
         }
     }
 
@@ -81,7 +83,7 @@ public class MddUserService implements UserDetailsService {
         mddUserRepository.findByEmail(user.getEmail()).ifPresent(
                 val -> {
                     log.warn("User with this email alreay exists");
-                    throw  new RuntimeException("User with this email already exists");
+                    throw  new BadRequestExceptionHandler("User with this email already exists");
                 }
         );
 
@@ -93,7 +95,7 @@ public class MddUserService implements UserDetailsService {
             return mddUserRepository.save(user);
         } catch (Exception e) {
             log.error("Failed to create user: ", e.getMessage());
-            throw new RuntimeException("Failed to create user : " + e.getMessage());
+            throw new BadRequestExceptionHandler("Failed to create user : " + e.getMessage());
         }
     }
 
@@ -101,7 +103,7 @@ public class MddUserService implements UserDetailsService {
         try {
             log.info("updateUser - id: " + user.getId());
             MddUser existingUser = mddUserRepository.findById(user.getId())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("User not found"));
 
             existingUser.setUsername(user.getUsername());
             existingUser.setEmail(user.getEmail());
@@ -113,7 +115,7 @@ public class MddUserService implements UserDetailsService {
             return existingUser;
         } catch (Exception e) {
             log.error("Failed to update user: ", e.getMessage());
-            throw new RuntimeException("Failed to update user");
+            throw new BadRequestExceptionHandler("Failed to update user");
         }
     }
 
@@ -121,13 +123,13 @@ public class MddUserService implements UserDetailsService {
         try {
             log.info("deleteUser - id: " + id);
             MddUser user = mddUserRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("User not found"));
 
             mddUserRepository.delete(user);
             return "User deleted";
         } catch (Exception e) {
             log.error("Failed to delete user: ", e.getMessage());
-            throw new RuntimeException("Failed to delete user");
+            throw new BadRequestExceptionHandler("Failed to delete user");
         }
     }
 

@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.exceptions.BadRequestExceptionHandler;
+import com.openclassrooms.mddapi.exceptions.NotFoundExceptionHandler;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.Post;
@@ -32,7 +34,7 @@ public class CommentService {
             return commentList;
         } catch (Exception e) {
             log.error("We could not find all comments: " + e.getMessage());
-            throw new RuntimeException("We could not find any comments");
+            throw new NotFoundExceptionHandler("We could not find any comments");
         }
     }
 
@@ -40,11 +42,11 @@ public class CommentService {
         try {
             log.info("findCommentById - id: " + id);
             Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new NotFoundExceptionHandler("Comment not found"));
             return comment;
         } catch (Exception e) {
             log.error("We could not find comment: " + id, e.getMessage());
-            throw new RuntimeException("We could not find your comment");
+            throw new NotFoundExceptionHandler("We could not find your comment");
         }
     }
 
@@ -55,7 +57,7 @@ public class CommentService {
             return comments;
         } catch (Exception e) {
             log.error("We could not find comments: " + ids, e.getMessage());
-            throw new RuntimeException("We could not find your comments");
+            throw new NotFoundExceptionHandler("We could not find your comments");
         }
     }
     public Comment createComment(Comment comment) {
@@ -66,7 +68,7 @@ public class CommentService {
             return comment;
         } catch (Exception e) {
             log.error("Failed to create comment: ", e.getMessage());
-            throw new RuntimeException("Failed to create comment");
+            throw new BadRequestExceptionHandler("Failed to create comment");
         }
     }
 
@@ -74,14 +76,14 @@ public class CommentService {
         try {
             log.info("updateComment - id: " + comment.getId());
             Comment existingComment = commentRepository.findById(comment.getId())
-                    .orElseThrow(() -> new RuntimeException("Comment not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Comment not found"));
             existingComment.setPost(comment.getPost());
             existingComment.setAuthor(comment.getAuthor());
             commentRepository.save(existingComment);
             return existingComment;
         } catch (Exception e) {
             log.error("Failed to update comment: ", e.getMessage());
-            throw new RuntimeException("Failed to update comment");
+            throw new BadRequestExceptionHandler("Failed to update comment");
         }
     }
 
@@ -89,12 +91,12 @@ public class CommentService {
         try {
             log.info("deleteComment - id: " + id);
             Comment comment = commentRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Comment not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Comment not found"));
             commentRepository.delete(comment);
             return "Comment deleted";
         } catch (Exception e) {
             log.error("Failed to delete comment: ", e.getMessage());
-            throw new RuntimeException("Failed to delete comment");
+            throw new BadRequestExceptionHandler("Failed to delete comment");
         }
     }
 
@@ -105,7 +107,7 @@ public class CommentService {
             return comments;
         } catch (Exception e) {
             log.error("We could not find comments for post: " + postId, e.getMessage());
-            throw new RuntimeException("We could not find comments for the post");
+            throw new NotFoundExceptionHandler("We could not find comments for the post");
         }
     }
 }

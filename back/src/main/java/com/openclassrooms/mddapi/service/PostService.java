@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.exceptions.BadRequestExceptionHandler;
+import com.openclassrooms.mddapi.exceptions.NotFoundExceptionHandler;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.repository.PostRepository;
@@ -32,7 +34,7 @@ public class PostService {
             return postList;
         } catch (Exception e) {
             log.error("We could not find all posts: " + e.getMessage());
-            throw new RuntimeException("We could not find any posts");
+            throw new NotFoundExceptionHandler("We could not find any posts");
         }
     }
 
@@ -45,7 +47,7 @@ public class PostService {
             return post;
         } catch (Exception e) {
             log.error("We could not find post: " + id, e.getMessage());
-            throw new RuntimeException("We could not find your post");
+            throw new NotFoundExceptionHandler("We could not find your post");
         }
     }
 
@@ -56,7 +58,7 @@ public class PostService {
 			return posts;
 		} catch (Exception e) {
 			log.error("We could not find posts: " + ids, e.getMessage());
-			throw new RuntimeException("We could not find your posts");
+			throw new NotFoundExceptionHandler("We could not find your posts");
 		}
 	}
 
@@ -70,7 +72,7 @@ public class PostService {
             return post;
         } catch (Exception e) {
             log.error("Failed to create post: ", e.getMessage());
-            throw new RuntimeException("Failed to create post");
+            throw new BadRequestExceptionHandler("Failed to create post");
         }
     }
 
@@ -78,7 +80,7 @@ public class PostService {
         try {
             log.info("updatePost - id: " + post.getId());
             Post existingPost = postRepository.findById(post.getId())
-                    .orElseThrow(() -> new RuntimeException("Post not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Post not found"));
             existingPost.setTopic(post.getTopic());
             existingPost.setArticle(post.getArticle());
             existingPost.setAuthor(post.getAuthor());
@@ -87,7 +89,7 @@ public class PostService {
             return existingPost;
         } catch (Exception e) {
             log.error("Failed to update post: ", e.getMessage());
-            throw new RuntimeException("Failed to update post");
+            throw new BadRequestExceptionHandler("Failed to update post");
         }
     }
 
@@ -95,12 +97,12 @@ public class PostService {
         try {
             log.info("deletePost - id: " + id);
             Post post = postRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Post not found"));
+                    .orElseThrow(() -> new NotFoundExceptionHandler("Post not found"));
             postRepository.delete(post);
             return "Post deleted";
         } catch (Exception e) {
             log.error("Failed to delete post: ", e.getMessage());
-            throw new RuntimeException("Failed to delete post");
+            throw new BadRequestExceptionHandler("Failed to delete post");
         }
     }
 
@@ -111,7 +113,7 @@ public class PostService {
             return posts;
         } catch (Exception e) {
             log.error("We could not find posts with Topic subscription for user(id) : " + mddUserId, e.getMessage());
-            throw new RuntimeException("We could not find your posts");
+            throw new NotFoundExceptionHandler("We could not find your posts");
         }
     }
 }
