@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.security.services;
 
+import com.openclassrooms.mddapi.exceptions.ForbidenExceptionHandler;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.RefreshToken;
 import com.openclassrooms.mddapi.repository.RefreshTokenRepository;
@@ -23,15 +24,20 @@ public class RefreshTokenService {
     MddUserService userService;
 
     public RefreshToken createRefreshToken(String username){
-        MddUser user = userService.findUserByEmail(username);
-        refreshTokenRepository.findByUserInfoId(user.getId()).ifPresent(refreshToken
-                -> refreshTokenRepository.deleteById(refreshToken.getId()));
-        RefreshToken refreshToken = RefreshToken.builder()
-                .userInfo(user)
-                .token(UUID.randomUUID().toString())
-                .expiryDate(Instant.now().plusSeconds(86400)) // set expiry of refresh token to 10 minutes
-                .build();
-        return refreshTokenRepository.save(refreshToken);
+        try {
+            MddUser user = userService.findUserByEmail(username);
+            refreshTokenRepository.findByUserInfoId(user.getId()).ifPresent(refreshToken
+                    -> refreshTokenRepository.deleteById(refreshToken.getId()));
+            RefreshToken refreshToken = RefreshToken.builder()
+                    .userInfo(user)
+                    .token(UUID.randomUUID().toString())
+                    .expiryDate(Instant.now().plusSeconds(604800)) // set expiry of refresh token to 7 days
+                    .build();
+            return refreshTokenRepository.save(refreshToken);
+        } catch (Exception e) {
+            log.error("Error occurred while creating refresh token for user: " + username, e);
+            throw new ForbidenExceptionHandler("Error occurred while creating refresh token.", e);
+        }
     }
 
 
@@ -44,7 +50,7 @@ public class RefreshTokenService {
         if(token.getExpiryDate().compareTo(Instant.now())<0){
             refreshTokenRepository.delete(token);
             log.info("Refresh token is expired for user : " + token.getUserInfo().getUsername());
-            throw new RuntimeException(token.getToken() + " Refresh token is expired. Please make a new login..!");
+            throw new ForbidenExceptionHandler(token.getToken() + " Refresh token is expired. Please make a new login..!");
         }
         return token;
     }

@@ -1,6 +1,9 @@
 package com.openclassrooms.mddapi.security.services;
 
+import com.openclassrooms.mddapi.exceptions.BadRequestExceptionHandler;
+import com.openclassrooms.mddapi.exceptions.ForbidenExceptionHandler;
 import com.openclassrooms.mddapi.service.MddUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +18,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class TokenService {
     private final JwtEncoder encoder;
     private final JwtDecoder decoder;
@@ -27,32 +31,55 @@ public class TokenService {
     }
 
     public String generateTokenFromAuthentication(Authentication authentication) {
-        return generateToken(authentication.getName(), authentication.getAuthorities());
+        log.info("Generating token from authentication");
+        try {
+            return generateToken(authentication.getName(), authentication.getAuthorities());
+        } catch (Exception e) {
+            log.error("Error generating token from authentication", e);
+            throw new ForbidenExceptionHandler("Error generating token from authentication", e);
+        }
     }
 
     public String generateTokenFromUsername(String username) {
-        UserDetails userDetails = mddUserService.loadUserByUsername(username);
-        return generateToken(userDetails.getUsername(), userDetails.getAuthorities());
+        log.info("Generating token from username");
+        try {
+            UserDetails userDetails = mddUserService.loadUserByUsername(username);
+            return generateToken(userDetails.getUsername(), userDetails.getAuthorities());
+        } catch (Exception e) {
+            log.error("Error generating token from username", e);
+            throw new ForbidenExceptionHandler("Error generating token from username", e);
+        }
     }
 
     public String decodeTokenUsername(String token) {
-        return this.decoder.decode(token.substring(7)).getSubject();
+        log.info("Decoding token username");
+        try {
+            return this.decoder.decode(token.substring(7)).getSubject();
+        } catch (Exception e) {
+            log.error("Error decoding token username", e);
+            throw new BadRequestExceptionHandler("Error decoding token username", e);
+        }
     }
 
     private String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
-        Instant now = Instant.now();
-        long expiry = 10L;
-        String scope = authorities.stream()
+        log.info("Generating token");
+        try {
+            Instant now = Instant.now();
+            long expiry = 10L;
+            String scope = authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
-        JwtClaimsSet claims = JwtClaimsSet.builder()
+            JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
                 .subject(username)
                 .claim("scope", scope)
                 .build();
-        return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+            return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        } catch (Exception e) {
+            log.error("Error generating token", e);
+            throw new ForbidenExceptionHandler("Error generating token", e);
+        }
     }
-
 }

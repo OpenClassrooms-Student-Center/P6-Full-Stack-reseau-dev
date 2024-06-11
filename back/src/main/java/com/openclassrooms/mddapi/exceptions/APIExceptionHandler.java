@@ -13,7 +13,6 @@ public class APIExceptionHandler {
     public ResponseEntity<Object> handleAPIBadRequestException(BadRequestExceptionHandler e) {
         APIException exception = new APIException(
                 e.getMessage(),
-                e,
                 HttpStatus.BAD_REQUEST,
                 LocalDateTime.now()
         );
@@ -25,7 +24,6 @@ public class APIExceptionHandler {
     public ResponseEntity<Object> handleAPINotFoundException(NotFoundExceptionHandler e) {
         APIException exception = new APIException(
                 e.getMessage(),
-                e,
                 HttpStatus.NOT_FOUND,
                 LocalDateTime.now()
         );
@@ -37,7 +35,6 @@ public class APIExceptionHandler {
     public ResponseEntity<Object> handleAPIForbidenException(ForbidenExceptionHandler e) {
         APIException exception = new APIException(
                 e.getMessage(),
-                e,
                 HttpStatus.FORBIDDEN,
                 LocalDateTime.now()
         );
@@ -49,7 +46,6 @@ public class APIExceptionHandler {
     public ResponseEntity<Object> handleAPIUnauthorizedException(UnauthorizedExceptionHandler e) {
         APIException exception = new APIException(
                 e.getMessage(),
-                e,
                 HttpStatus.UNAUTHORIZED,
                 LocalDateTime.now()
         );

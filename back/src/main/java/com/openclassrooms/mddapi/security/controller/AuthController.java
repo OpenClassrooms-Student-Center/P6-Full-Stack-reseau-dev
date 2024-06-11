@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.dtos.requests.RefreshTokenRequest;
 import com.openclassrooms.mddapi.dtos.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dtos.responses.AuthInfoResponse;
 import com.openclassrooms.mddapi.dtos.responses.AuthRefreshResponse;
+import com.openclassrooms.mddapi.exceptions.ForbidenExceptionHandler;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.RefreshToken;
 import com.openclassrooms.mddapi.security.services.RefreshTokenService;
@@ -50,7 +51,7 @@ public class AuthController {
     @PostMapping("/refreshtoken")
     public ResponseEntity<AuthRefreshResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         RefreshToken refreshToken = refreshTokenService.findByToken(refreshTokenRequest.getToken())
-                .orElseThrow(() ->new RuntimeException("Refresh Token is not in DB..!!"));
+                .orElseThrow(() ->new ForbidenExceptionHandler("No Refresh Token"));
 
         MddUser user = refreshToken.getUserInfo();
         log.info("Token refreshment requested for user : " + user.getEmail());

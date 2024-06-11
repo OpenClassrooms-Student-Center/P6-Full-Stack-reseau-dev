@@ -80,6 +80,9 @@ export class ArticleComponent implements OnInit{
             })
         }
         this.getComments(postId);
+      },
+      error: err => {
+        this.toasterService.handleError(err);
       }
     })
   }

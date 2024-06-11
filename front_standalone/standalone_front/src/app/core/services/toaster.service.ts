@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ApiError} from "../models/api.error.model";
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +12,11 @@ export class ToasterService {
   ) {
   }
 
-  public handleError(err: HttpErrorResponse) {
-    let errorMessage: string;
-    if (err.error instanceof ErrorEvent) {
+  public handleError(err: HttpErrorResponse | ApiError) {
+    let errorMessage = "";
+    if (err.message) {
       // A client-side or network error occurred.
-      errorMessage = `An error occurred: ${err.error.message}`;
+      errorMessage = `An error occurred: ${err.message}`;
     } else {
       // The backend returned an unsuccessful response.
       errorMessage = `Something went wrong`;

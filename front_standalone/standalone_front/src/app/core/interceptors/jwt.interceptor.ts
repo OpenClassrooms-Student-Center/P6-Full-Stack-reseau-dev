@@ -13,6 +13,7 @@ import {RefreshTokenService} from "../services/refresh-token.service";
 import {Router} from "@angular/router";
 import {catchError, filter, switchMap, take} from "rxjs/operators";
 import {BehaviorSubject, Observable, Subject, throwError} from "rxjs";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Injectable({ providedIn: 'root' })
 export class JwtInterceptor implements HttpInterceptor, OnDestroy {
@@ -75,6 +76,7 @@ export class JwtInterceptor implements HttpInterceptor, OnDestroy {
           error.status === 401
         ) {
           return this.handle401Error(request, next);
+          console.log(error)
         }
 
         return throwError(() => error);
@@ -103,14 +105,14 @@ export class JwtInterceptor implements HttpInterceptor, OnDestroy {
             return next.handle(request);
           }),
           catchError((error) => {
-            this.isRefreshing = false;
 
-            if (error.status == '401') {
+            console.log("REFRESH ERROR: ", error)
+            if (error.status == '403') {
               console.log('LOGOUT')
               this.authService.logout();
               this.router.navigate(['/welcome'])
             }
-
+            this.isRefreshing = false;
             return throwError(() => error);
           })
         );
