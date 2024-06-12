@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/mdd?serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password: admin
+    username: ${MDD_DB_USER}
+    password: ${MDD_DB_PASS}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
