@@ -9,6 +9,7 @@ import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.service.CommentService;
 import com.openclassrooms.mddapi.service.MddUserService;
 import com.openclassrooms.mddapi.service.PostService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 @RequestMapping("comments/comment")
+@SecurityRequirement(name = "Authorization")
 public class CommentController {
 
     @Autowired

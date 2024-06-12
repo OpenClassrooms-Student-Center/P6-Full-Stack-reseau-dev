@@ -7,6 +7,9 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.properties.RsaKeyProperties;
 import com.openclassrooms.mddapi.service.MddUserService;
 import com.openclassrooms.mddapi.service.TopicService;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +24,7 @@ import java.util.List;
 
 @EnableConfigurationProperties(RsaKeyProperties.class)
 @SpringBootApplication
+@SecurityScheme(name = "Authorization", description = "Get your token from <b>/api/token</b> and give it valid credentials to get a jwt token. <br> Enter your bearer token in the field " , scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class MddApiApplication {
 
 	public static void main(String[] args) {

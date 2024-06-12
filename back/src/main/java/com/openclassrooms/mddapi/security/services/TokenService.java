@@ -65,7 +65,7 @@ public class TokenService {
         log.info("Generating token");
         try {
             Instant now = Instant.now();
-            long expiry = 10L;
+            long expiry = 300L;
             String scope = authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));

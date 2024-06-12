@@ -10,6 +10,7 @@ import com.openclassrooms.mddapi.mappers.MddUserMapper;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.service.MddUserService;
 import com.openclassrooms.mddapi.service.TopicService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 @RequestMapping("users/user")
+@SecurityRequirement(name = "Authorization")
 public class MddUserController {
 
     @Autowired

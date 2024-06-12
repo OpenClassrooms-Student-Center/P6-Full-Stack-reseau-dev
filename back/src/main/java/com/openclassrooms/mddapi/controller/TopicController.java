@@ -6,6 +6,7 @@ import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.service.MddUserService;
 import com.openclassrooms.mddapi.service.TopicService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/topic")
+@SecurityRequirement(name = "Authorization")
 public class TopicController {
 
     @Autowired

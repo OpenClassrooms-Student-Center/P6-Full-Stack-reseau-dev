@@ -4,12 +4,17 @@ import com.openclassrooms.mddapi.dtos.requests.RefreshTokenRequest;
 import com.openclassrooms.mddapi.dtos.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dtos.responses.AuthInfoResponse;
 import com.openclassrooms.mddapi.dtos.responses.AuthRefreshResponse;
+import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
 import com.openclassrooms.mddapi.exceptions.ForbidenExceptionHandler;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.RefreshToken;
 import com.openclassrooms.mddapi.security.services.RefreshTokenService;
 import com.openclassrooms.mddapi.security.services.TokenService;
 import com.openclassrooms.mddapi.service.MddUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
+@SecurityScheme(
+        name = "basicAuth", // can be set to anything
+        type = SecuritySchemeType.HTTP,
+        scheme = "basic"
+)
 public class AuthController {
 
     private final TokenService tokenService;
@@ -38,6 +48,8 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Get JWT token", description = "Get JWT token")
+    @SecurityRequirement(name = "basicAuth")
     @PostMapping("/token")
     public ResponseEntity<AuthInfoResponse> token(Authentication authentication) {
         log.info("Token requested for user : " + authentication.getName());
@@ -63,13 +75,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<MddUser> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<MessageResponse> register(@RequestBody RegisterRequest registerRequest) {
         MddUser mddUser = new MddUser();
         mddUser.setEmail(registerRequest.getMail());
         mddUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         mddUser.setUsername(registerRequest.getUsername());
         MddUser user = userService.createUser(mddUser);
         log.info("User registered with user name: " + user.getUsername());
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new MessageResponse("User registered successfully"));
     }
 }
