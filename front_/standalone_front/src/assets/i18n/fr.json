@@ -52,7 +52,8 @@
     "username": "Nom d'utilisateur",
     "mail": "Adresse e-mail",
     "password-matching": "Les deux champs de mot de passe doivent être identiques",
-    "new-password": "Nouveau mot de passe"
+    "new-password": "Nouveau mot de passe",
+    "password-composition": "Au moins 8 caractères - 1 chiffre, lettre minuscule, lettre majuscule, caractère spécial"
   },
   "themes": {
     "subscribe": "S'abonner"

@@ -12,7 +12,7 @@ import {AuthService} from "../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {NgIf} from "@angular/common";
 import {ToasterService} from "../../core/services/toaster.service";
-import {matchValidator} from "../../shared/validators/validators.functions";
+import {matchValidator, passwordValidator} from "../../shared/validators/validators.functions";
 
 @Component({
   selector: 'app-profile',
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
     mail: this.mailControl,
   });
 
-  passwordControl = new FormControl('', Validators.required);
+  passwordControl = new FormControl('', [Validators.required, passwordValidator()]);
   passwordMatchControl = new FormControl('', [Validators.required, matchValidator(this.passwordControl)]);
 
   submittedPassword: boolean = false;

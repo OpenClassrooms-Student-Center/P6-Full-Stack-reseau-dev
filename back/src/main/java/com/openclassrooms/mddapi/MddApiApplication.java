@@ -38,7 +38,7 @@ public class MddApiApplication {
 
             // Test values
             user.setId(1L);
-            user.setEmail("testEmail@test.com");
+            user.setEmail("mail@mail");
             user.setUsername("username");
             user.setPassword(encoder.encode("123"));
             user.setComments(new ArrayList<Comment>());

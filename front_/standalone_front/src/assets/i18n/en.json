@@ -52,7 +52,8 @@
     "username": "Username",
     "mail": "Email address",
     "password-matching": "Both password fields have to match",
-    "new-password": "New password"
+    "new-password": "New password",
+    "password-composition": "At least 8 characters- 1 didgit, letter, capital letter, special character"
   },
   "themes": {
     "subscribe": "Subscribe"

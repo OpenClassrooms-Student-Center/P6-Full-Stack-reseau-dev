@@ -33,6 +33,7 @@
         type="password"
         (change)="handleChange()"
       >
+      <mat-error *ngIf="!registerForm.valid">{{'user-profile.password-composition' | transloco}}</mat-error>
     </mat-form-field>
 
     <mat-form-field  class="single-word">
@@ -44,6 +45,7 @@
         type="password"
         (change)="handleChange()"
       >
+      <mat-error *ngIf="!registerForm.valid">{{'user-profile.password-matching' | transloco}}</mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="accent" class="register-button" type="submit"> {{ "signup.sign-up" | transloco }} </button>

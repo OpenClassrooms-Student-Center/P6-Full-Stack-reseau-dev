@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.dtos.requests.RegisterRequest;
 import com.openclassrooms.mddapi.dtos.responses.AuthInfoResponse;
 import com.openclassrooms.mddapi.dtos.responses.AuthRefreshResponse;
 import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
+import com.openclassrooms.mddapi.exceptions.BadRequestExceptionHandler;
 import com.openclassrooms.mddapi.exceptions.ForbidenExceptionHandler;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.model.RefreshToken;
@@ -23,6 +24,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.regex.Pattern;
+
+import static com.openclassrooms.mddapi.helper.PasswordValidation.validatePassword;
 
 /**
  * API controller for handling authentication requests.
@@ -57,6 +62,7 @@ public class AuthController {
         this.refreshTokenService = refreshTokenService;
         this.userService = userService;
     }
+
 
     /**
      * Endpoint for generating a JWT token.
@@ -104,8 +110,12 @@ public class AuthController {
      */
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> register(@RequestBody RegisterRequest registerRequest) {
+        if (!validatePassword(registerRequest.getPassword())) {
+          throw new BadRequestExceptionHandler("The password is not valid");
+        }
         MddUser mddUser = new MddUser();
         mddUser.setEmail(registerRequest.getMail());
+
         mddUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         mddUser.setUsername(registerRequest.getUsername());
         MddUser user = userService.createUser(mddUser);

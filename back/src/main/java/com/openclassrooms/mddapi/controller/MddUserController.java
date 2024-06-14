@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.dtos.requests.NewPasswordRequest;
 import com.openclassrooms.mddapi.dtos.requests.NewUserInfoRequest;
 import com.openclassrooms.mddapi.dtos.responses.MessageResponse;
 import com.openclassrooms.mddapi.dtos.responses.UserInfoResponse;
+import com.openclassrooms.mddapi.exceptions.BadRequestExceptionHandler;
 import com.openclassrooms.mddapi.model.MddUser;
 import com.openclassrooms.mddapi.mappers.MddUserMapper;
 import com.openclassrooms.mddapi.model.Topic;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.openclassrooms.mddapi.helper.PasswordValidation.validatePassword;
 
 /**
  * API Controller for user management: includes operations for fetching, creating, updating and deleting users.
@@ -146,6 +149,9 @@ public class MddUserController {
     @PutMapping("newpass")
     public ResponseEntity<MessageResponse> newPassword(@RequestBody NewPasswordRequest newPasswordRequest, Authentication authentication){
         MddUser mddUser = mddUserService.findUserByEmail(authentication.getName());
+        if (!validatePassword(newPasswordRequest.getNewPass())) {
+            throw new BadRequestExceptionHandler("The password is not valid");
+        }
         mddUser.setPassword(passwordEncoder.encode(newPasswordRequest.getNewPass()));
         mddUserService.updateUser(mddUser);
         return ResponseEntity.ok(new MessageResponse("Password updated successfully"));

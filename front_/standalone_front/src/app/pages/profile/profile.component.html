@@ -46,6 +46,7 @@
         type="password"
         (change)="handlePasswordTouched()"
       >
+      <mat-error *ngIf="!newPasswordForm.valid">{{'user-profile.password-composition' | transloco}}</mat-error>
     </mat-form-field>
 
     <mat-form-field  class="single-word">

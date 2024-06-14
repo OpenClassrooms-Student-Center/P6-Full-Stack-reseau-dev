@@ -7,6 +7,8 @@ import {TranslocoModule} from "@jsverse/transloco";
 import {AuthService} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {ToasterService} from "../../../core/services/toaster.service";
+import {passwordValidator} from "../../../shared/validators/validators.functions";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-register',
@@ -19,6 +21,7 @@ import {ToasterService} from "../../../core/services/toaster.service";
     ReactiveFormsModule,
     TranslocoModule,
     MatError,
+    NgIf,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -27,7 +30,7 @@ export class RegisterComponent {
 
   usernameControl = new FormControl('', Validators.required);
   emailControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordControl = new FormControl('', Validators.required);
+  passwordControl = new FormControl('', [Validators.required, passwordValidator()]);
   passwordMatchControl = new FormControl('', [Validators.required]);
 
   submitted: boolean = false;
