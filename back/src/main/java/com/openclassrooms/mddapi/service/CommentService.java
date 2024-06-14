@@ -17,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CommentService is a service for handling comments operations such as create, read, update, delete.
+ *
+ */
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -25,7 +29,12 @@ import java.util.List;
 public class CommentService {
 
     CommentRepository commentRepository;
-
+    /**
+     * Get all the comments from database.
+     *
+     * @return the list of comments.
+     * @throws NotFoundExceptionHandler when we could not find any comments.
+     */
     public List<Comment> findAllComments() {
         try {
             log.info("findAllComments");
@@ -38,6 +47,13 @@ public class CommentService {
         }
     }
 
+    /**
+     * Get a specific comment by id from database.
+     *
+     * @param id the id of comment.
+     * @return the comment.
+     * @throws NotFoundExceptionHandler when we could not find the comment.
+     */
     public Comment findCommentById(Long id) {
         try {
             log.info("findCommentById - id: " + id);
@@ -50,6 +66,13 @@ public class CommentService {
         }
     }
 
+    /**
+     * Get a list of comments by a list of ids from database.
+     *
+     * @param ids the ids of comments.
+     * @return a list of comments.
+     * @throws NotFoundExceptionHandler when we could not find the comments.
+     */
     public List<Comment> findAllByIds(List<Long> ids){
         try {
             log.info("findAllByIds - ids: " + ids);
@@ -60,6 +83,14 @@ public class CommentService {
             throw new NotFoundExceptionHandler("We could not find your comments");
         }
     }
+
+    /**
+     * Create a comment.
+     *
+     * @param comment the comment to create
+     * @return the newly created comment.
+     * @throws BadRequestExceptionHandler when we failed to create comment.
+     */
     public Comment createComment(Comment comment) {
         try {
             log.info("createComment");
@@ -72,6 +103,13 @@ public class CommentService {
         }
     }
 
+    /**
+     * Update a specific comment.
+     *
+     * @param comment the updated comment.
+     * @return the updated comment.
+     * @throws BadRequestExceptionHandler when we failed to update comment.
+     */
     public Comment updateComment(Comment comment) {
         try {
             log.info("updateComment - id: " + comment.getId());
@@ -87,6 +125,13 @@ public class CommentService {
         }
     }
 
+    /**
+     * Delete a specific comment by id.
+     *
+     * @param id of the comment.
+     * @return a string indicate that the specified comment was deleted.
+     * @throws BadRequestExceptionHandler when we failed to delete comment.
+     */
     public String deleteComment(Long id) {
         try {
             log.info("deleteComment - id: " + id);
@@ -100,6 +145,13 @@ public class CommentService {
         }
     }
 
+    /**
+     * Find all the comments by post id.
+     *
+     * @param postId the id of the post.
+     * @return a list of comments for this post.
+     * @throws NotFoundExceptionHandler when we could not find comments for the post.
+     */
     public List<Comment> findCommentsByPostId(Long postId) {
         try {
             log.info("findCommentsByPostId - postId: " + postId);

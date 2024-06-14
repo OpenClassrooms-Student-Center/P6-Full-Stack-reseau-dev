@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles business logic associated with posts.
+ */
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -26,6 +29,12 @@ public class PostService {
 
     PostRepository postRepository;
 
+
+    /**
+     * Fetches all posts.
+     *
+     * @return list of all posts
+     */
     public List<Post> findAllPosts() {
         try {
             log.info("findAllPosts");
@@ -38,7 +47,12 @@ public class PostService {
         }
     }
 
-
+    /**
+     * Fetches a post by id.
+     *
+     * @param id id of the post
+     * @return the post with the given id
+     */
     public Post findPostById(Long id) {
         try {
             log.info("findPostById - id: " + id);
@@ -51,17 +65,29 @@ public class PostService {
         }
     }
 
-	public List<Post> findAllByIds(List<Long> ids){
-		try {
-			log.info("findAllByIds - ids: " + ids);
-			List<Post> posts = postRepository.findAllById(ids);
-			return posts;
-		} catch (Exception e) {
-			log.error("We could not find posts: " + ids, e.getMessage());
-			throw new NotFoundExceptionHandler("We could not find your posts");
-		}
-	}
+    /**
+     * Fetches posts with given ids.
+     *
+     * @param ids ids of the posts
+     * @return the posts with the given ids
+     */
+    public List<Post> findAllByIds(List<Long> ids){
+        try {
+            log.info("findAllByIds - ids: " + ids);
+            List<Post> posts = postRepository.findAllById(ids);
+            return posts;
+        } catch (Exception e) {
+            log.error("We could not find posts: " + ids, e.getMessage());
+            throw new NotFoundExceptionHandler("We could not find your posts");
+        }
+    }
 
+    /**
+     * Creates a new post.
+     *
+     * @param post the post to create
+     * @return the created post with id assigned
+     */
     public Post createPost(Post post) {
         try {
             log.info("createPost");
@@ -76,6 +102,12 @@ public class PostService {
         }
     }
 
+    /**
+     * Updates an existing post.
+     *
+     * @param post the post to update
+     * @return the updated post
+     */
     public Post updatePost(Post post) {
         try {
             log.info("updatePost - id: " + post.getId());
@@ -93,6 +125,12 @@ public class PostService {
         }
     }
 
+    /**
+     * Deletes a post by id.
+     *
+     * @param id id of the post
+     * @return a message indicating the post has been deleted
+     */
     public String deletePost(Long id) {
         try {
             log.info("deletePost - id: " + id);
@@ -106,7 +144,13 @@ public class PostService {
         }
     }
 
-    public  List<Post> findPostsByUserSubscriptions (Long mddUserId){
+    /**
+     * Fetches posts based on user subscriptions.
+     *
+     * @param mddUserId user id for whom to fetch posts
+     * @return list of posts of subscribed topics of the user
+     */
+    public List<Post> findPostsByUserSubscriptions (Long mddUserId){
         try {
             log.info("findAllByUserSubscriptions - userId: " + mddUserId);
             List<Post> posts = postRepository.findPostsByTopic_UsersId(mddUserId);

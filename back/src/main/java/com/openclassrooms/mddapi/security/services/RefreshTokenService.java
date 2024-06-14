@@ -13,6 +13,9 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service class for performing operations related to Refresh Tokens.
+ */
 @Service
 @Slf4j
 public class RefreshTokenService {
@@ -23,6 +26,12 @@ public class RefreshTokenService {
     @Autowired
     MddUserService userService;
 
+    /**
+     * Creates a Refresh Token for a username.
+     *
+     * @param username the username for which the refresh token is to be created.
+     * @return the created refresh token
+     */
     public RefreshToken createRefreshToken(String username){
         try {
             MddUser user = userService.findUserByEmail(username);
@@ -40,12 +49,23 @@ public class RefreshTokenService {
         }
     }
 
-
-
+    /**
+     * Finds a Refresh Token by its token string.
+     *
+     * @param token the token string.
+     * @return the refresh token if found
+     */
     public Optional<RefreshToken> findByToken(String token){
         return refreshTokenRepository.findByToken(token);
     }
 
+    /**
+     * Verifies if a Refresh Token has expired.
+     *
+     * @param token the refresh token.
+     * @return the refresh token if it is not expired
+     * @throws RuntimeException if the refresh token is expired
+     */
     public RefreshToken verifyExpiration(RefreshToken token){
         if(token.getExpiryDate().compareTo(Instant.now())<0){
             refreshTokenRepository.delete(token);
@@ -55,6 +75,11 @@ public class RefreshTokenService {
         return token;
     }
 
+    /**
+     * Deletes a Refresh Token by its ID.
+     *
+     * @param id the id of the Refresh Token to be deleted.
+     */
     private void deleteRefreshToken(Long id){
         refreshTokenRepository.deleteById(id);
     }

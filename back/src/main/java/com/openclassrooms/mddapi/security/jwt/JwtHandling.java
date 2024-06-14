@@ -14,20 +14,38 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
+/**
+ * Configuration class for handling JWT related operations.
+ */
 @Configuration
 public class JwtHandling {
 
     private final RsaKeyProperties rsaKeys;
 
+    /**
+     * Constructs a new instance of JwtHandling.
+     *
+     * @param rsaKeys The RSA keys properties.
+     */
     public JwtHandling(RsaKeyProperties rsaKeys) {
         this.rsaKeys = rsaKeys;
     }
 
+    /**
+     * JWT Decoder bean.
+     *
+     * @return JwtDecoder instance.
+     */
     @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
     }
 
+    /**
+     * JWT Decoder bean.
+     *
+     * @return JwtDecoder instance.
+     */
     @Bean
     JwtEncoder jwtEncoder(){
         JWK jwk = new RSAKey.Builder(rsaKeys.publicKey()).privateKey(rsaKeys.privateKey()).build();

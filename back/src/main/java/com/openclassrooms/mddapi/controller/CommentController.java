@@ -43,6 +43,10 @@ public class CommentController {
     @Autowired
     MddUserService mddUserService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping("/comments")
     public ResponseEntity<List<CommentDto>> getUsers() {
         return ResponseEntity.ok(commentMapper.toDto(commentService.findAllComments()));

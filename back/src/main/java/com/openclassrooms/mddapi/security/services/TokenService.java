@@ -17,19 +17,36 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * A service for creating, encoding, and decoding a JWT token
+ */
 @Service
 @Slf4j
 public class TokenService {
+
     private final JwtEncoder encoder;
     private final JwtDecoder decoder;
     private final MddUserService mddUserService;
 
+    /**
+     * The constructor for TokenService class
+     *
+     * @param encoder The JWT encoder
+     * @param decoder The JWT decoder
+     * @param mddUserService The service for managing user data
+     */
     public TokenService(JwtEncoder encoder, JwtDecoder decoder, MddUserService mddUserService) {
         this.encoder = encoder;
         this.decoder = decoder;
         this.mddUserService = mddUserService;
     }
 
+    /**
+     * Generates a JWT token string from an authentication object
+     *
+     * @param authentication the authentication object
+     * @return a JWT token string
+     */
     public String generateTokenFromAuthentication(Authentication authentication) {
         log.info("Generating token from authentication");
         try {
@@ -40,6 +57,12 @@ public class TokenService {
         }
     }
 
+    /**
+     * Generates a JWT token string from a username
+     *
+     * @param username The username
+     * @return a JWT token string
+     */
     public String generateTokenFromUsername(String username) {
         log.info("Generating token from username");
         try {
@@ -51,6 +74,12 @@ public class TokenService {
         }
     }
 
+    /**
+     * Decodes the username from a JWT token
+     *
+     * @param token The JWT token
+     * @return the username found inside the JWT token
+     */
     public String decodeTokenUsername(String token) {
         log.info("Decoding token username");
         try {
@@ -61,6 +90,13 @@ public class TokenService {
         }
     }
 
+    /**
+     * Generates a JWT token string from a username and a collection of user's authorities
+     *
+     * @param username The username
+     * @param authorities The user's authorities
+     * @return a JWT token string
+     */
     private String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
         log.info("Generating token");
         try {

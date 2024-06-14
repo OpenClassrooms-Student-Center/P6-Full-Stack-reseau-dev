@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Class TopicService is a service for handling various operations related to Topics.
+ */
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -28,6 +31,10 @@ public class TopicService {
 
     TopicRepository topicRepository;
 
+    /**
+     * Method to return a list of all topics in the repository.
+     * @return list of all topics
+     */
     public List<Topic> findAllTopics() {
         try {
             log.info("findAllTopics");
@@ -40,6 +47,11 @@ public class TopicService {
         }
     }
 
+    /**
+     * Method to find and return a topic by its ID.
+     * @param id Topic's ID.
+     * @return the topic with given ID
+     */
     public Topic findTopicById(Long id) {
         try {
             log.info("findTopicById - id: " + id);
@@ -52,6 +64,11 @@ public class TopicService {
         }
     }
 
+    /**
+     * Method to create a new topic.
+     * @param topic Topic object.
+     * @return created topic
+     */
     public Topic createTopic(Topic topic) {
         try {
             log.info("createTopic");
@@ -64,6 +81,11 @@ public class TopicService {
         }
     }
 
+    /**
+     * Method to update an existing topic.
+     * @param topic Topic object with new data.
+     * @return updated topic
+     */
     public Topic updateTopic(Topic topic) {
         try {
             log.info("updateTopic - id: " + topic.getId());
@@ -78,6 +100,11 @@ public class TopicService {
         }
     }
 
+    /**
+     * Method to delete a topic.
+     * @param id Topic's ID.
+     * @return deletion message
+     */
     public String deleteTopic(Long id) {
         try {
             log.info("deleteTopic - id: " + id);
@@ -91,6 +118,12 @@ public class TopicService {
         }
     }
 
+    /**
+     * Method for user to subscribe a topic.
+     * @param topicId ID of the topic to subscribe.
+     * @param mddUser User who wants to subscribe.
+     * @return success message
+     */
     public String subscribe(Long topicId, MddUser mddUser){
         try {
             log.info("User(id) : " + mddUser.getId() + "subscribe to topic(id) : " + topicId);
@@ -108,6 +141,12 @@ public class TopicService {
         }
     }
 
+    /**
+     * Method for user to unsubscribe a topic.
+     * @param topicId ID of the topic to unsubscribe.
+     * @param mddUser User who wants to unsubscribe.
+     * @return success message
+     */
     public String unsubscribe(Long topicId, MddUser mddUser){
         try {
             log.info("User(id) : " + mddUser.getId() + "unsubscribe from topic(id) : " + topicId);
@@ -124,6 +163,11 @@ public class TopicService {
         }
     }
 
+    /**
+     * Method for user to get his subscriptions.
+     * @param mddUser User who wants to get his subscriptions.
+     * @return set of topics user is subscribed to
+     */
     public Set<Topic> mySubscriptions(MddUser mddUser){
         try {
             log.info("Get my subscriptions for user(id) : " + mddUser.getId());

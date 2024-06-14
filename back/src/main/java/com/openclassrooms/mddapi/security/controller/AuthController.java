@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * API controller for handling authentication requests.
+ */
 @RestController
 @Slf4j
 @SecurityScheme(
@@ -42,12 +45,25 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor for AuthController.
+     *
+     * @param tokenService the JWT token service
+     * @param refreshTokenService the refresh token service
+     * @param userService the user service
+     */
     public AuthController(TokenService tokenService, RefreshTokenService refreshTokenService, MddUserService userService) {
         this.tokenService = tokenService;
         this.refreshTokenService = refreshTokenService;
         this.userService = userService;
     }
 
+    /**
+     * Endpoint for generating a JWT token.
+     *
+     * @param authentication the Authentication object containing the user's credentials
+     * @return ResponseEntity with authorization information
+     */
     @Operation(summary = "Get JWT token", description = "Get JWT token")
     @SecurityRequirement(name = "basicAuth")
     @PostMapping("/token")
@@ -60,6 +76,12 @@ public class AuthController {
         return ResponseEntity.ok(new AuthInfoResponse(token, refreshToken));
     }
 
+    /**
+     * Endpoint for refreshing a JWT token.
+     *
+     * @param refreshTokenRequest the RefreshTokenRequest containing the old refresh token
+     * @return ResponseEntity with the new authorization information
+     */
     @PostMapping("/refreshtoken")
     public ResponseEntity<AuthRefreshResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         RefreshToken refreshToken = refreshTokenService.findByToken(refreshTokenRequest.getToken())
@@ -74,6 +96,12 @@ public class AuthController {
         return ResponseEntity.ok(new AuthRefreshResponse(token));
     }
 
+    /**
+     * Endpoint for registering a new user.
+     *
+     * @param registerRequest the RegisterRequest containing the user's registration information
+     * @return ResponseEntity with a message indicating the status of the registration
+     */
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> register(@RequestBody RegisterRequest registerRequest) {
         MddUser mddUser = new MddUser();

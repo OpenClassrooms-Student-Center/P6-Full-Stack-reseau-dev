@@ -22,6 +22,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service for managing MddUser entities.
+ */
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -31,6 +34,11 @@ public class MddUserService implements UserDetailsService {
 
     MddUserRepository mddUserRepository;
 
+    /**
+     * Finds all MddUsers in the database.
+     *
+     * @return a list of all MddUsers.
+     */
     public List<MddUser> findAllUsers() {
         try {
             log.info("findAllUsers");
@@ -43,8 +51,12 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
-
-
+    /**
+     * Finds a MddUser in the database by ID.
+     *
+     * @param id the ID of the MddUser to find.
+     * @return the MddUser with the given ID, if it exists.
+     */
     public MddUser findUserById(Long id) {
         try {
             log.info("findUserById - id: " + id);
@@ -56,6 +68,12 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Finds a MddUser in the database by username.
+     *
+     * @param username the username of the MddUser to find.
+     * @return the MddUser with the given username, if it exists.
+     */
     public MddUser findUserByUsername(String username) {
         try {
             log.info("findUserByUsername - username: " + username);
@@ -67,6 +85,12 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Finds a MddUser in the database by email.
+     *
+     * @param mail the email of the MddUser to find.
+     * @return the MddUser with the given email, if it exists.
+     */
     public MddUser findUserByEmail(String mail) {
         try {
             log.info("findUserByEmail - email: " + mail);
@@ -78,6 +102,12 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Creates a new MddUser in the database.
+     *
+     * @param user the MddUser to create.
+     * @return the created MddUser.
+     */
     public MddUser createUser(MddUser user) {
 
         mddUserRepository.findByEmail(user.getEmail()).ifPresent(
@@ -99,6 +129,12 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Updates an existing MddUser in the database.
+     *
+     * @param user the MddUser to update.
+     * @return the updated MddUser.
+     */
     public MddUser updateUser(MddUser user) {
         try {
             log.info("updateUser - id: " + user.getId());
@@ -119,6 +155,12 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Deletes a MddUser from the database by ID.
+     *
+     * @param id the ID of the MddUser to delete.
+     * @return a message indicating that the user was deleted.
+     */
     public String deleteUser(Long id) {
         try {
             log.info("deleteUser - id: " + id);
@@ -133,6 +175,13 @@ public class MddUserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Loads a MddUser from the database by email.
+     *
+     * @param mail the email of the MddUser to load.
+     * @return the UserDetails of the loaded MddUser.
+     * @throws UsernameNotFoundException if no user with the given email exists.
+     */
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         MddUser user = mddUserRepository.findByEmail(mail).orElseThrow(() -> new UsernameNotFoundException("No user with this email address"));
