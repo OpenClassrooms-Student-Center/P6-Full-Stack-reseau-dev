@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { UnauthGuard } from './guards/unauth.guard';
 import { ThemeComponent } from './pages/theme/component/theme/theme.component';
-import { UserComponent } from './pages/user/components/detail/user.component';
 import { EditComponent } from './pages/user/components/edit/edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ArticleComponent } from './pages/article/features/form/form.component';
@@ -25,11 +24,6 @@ const routes: Routes = [
     path: 'theme',
     canActivate: [AuthGuard],
     component: ThemeComponent
-  },
-  {
-    path: 'detail',
-    canActivate: [AuthGuard],
-    component: UserComponent
   },
   {
     path: 'edit',

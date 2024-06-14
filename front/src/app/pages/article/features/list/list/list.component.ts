@@ -15,9 +15,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ListComponent implements OnInit {
 
-  public articles$: Observable<Article[]> = this.articleService.all();
+  public articles$: Observable<Article[]> = this.articleService.allDesc();
+
+  public articlesAsc$: Observable<Article[]> = this.articleService.allAsc();
 
   public commentForm: FormGroup | undefined;
+
+  public ascending : boolean | undefined;
 
   constructor(
     private articleService : ArticleService,
@@ -25,11 +29,18 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.articles$ = this.articleService.all();
+    // this.articles$ = this.articleService.allDesc();
   }
 
   create() {
     this.router.navigateByUrl('article/create');
   }
 
+  onDownClick() {
+    this.ascending=true;
+  }
+
+  onUpClick() {
+    this.ascending=false;
+  }
 }

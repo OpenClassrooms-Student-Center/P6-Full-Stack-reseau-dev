@@ -1,9 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
-import com.openclassrooms.mddapi.dto.ThemeDto;
-import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.dto.UserUpdateDto;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
@@ -13,16 +10,15 @@ import com.openclassrooms.mddapi.services.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -41,14 +37,54 @@ public class ArticleController {
 
     @GetMapping()
     public ResponseEntity<?> findAll() {
-        List<Article> articleList = this.articleService.findAll();
+
+        // récupérer l'utilisateur
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User user = userService.findByEmail(email);
+
+        // récupérer les thèmes
+        List<Theme> userThemes = user.getThemes();
+        List<Long> listIds = userThemes.stream().map(t -> t.getThemeId()).collect(Collectors.toList());
+
+        // filtrer articles en fonction des themes
+        List<Article> articleList = this.articleService.findAllDesc().stream().filter(a -> listIds.contains(a.getTheme().getThemeId())).collect(Collectors.toList());
         List<ArticleDto> articleDtoList = new ArrayList<>();
 
         for (Article article : articleList) {
             ArticleDto articleDto = new ArticleDto();
             articleDto.setArticleId(article.getArticleId());
             articleDto.setTitre(article.getTitre());
-            articleDto.setDate(article.getCreatedAt());
+            articleDto.setCreatedAt(article.getCreatedAt());
+            articleDto.setDescription(article.getContenu());
+            articleDto.setAuteur(article.getAuteur());
+            articleDtoList.add(articleDto);
+        }
+
+        return ResponseEntity.ok().body(articleDtoList);
+    }
+
+    @GetMapping("/asc")
+    public ResponseEntity<?> findAllAsc() {
+
+        // récupérer l'utilisateur
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User user = userService.findByEmail(email);
+
+        // récupérer les thèmes
+        List<Theme> userThemes = user.getThemes();
+        List<Long> listIds = userThemes.stream().map(t -> t.getThemeId()).collect(Collectors.toList());
+
+        // filtrer articles en fonction des themes
+        List<Article> articleList = this.articleService.findAllAsc().stream().filter(a -> listIds.contains(a.getTheme().getThemeId())).collect(Collectors.toList());
+        List<ArticleDto> articleDtoList = new ArrayList<>();
+
+        for (Article article : articleList) {
+            ArticleDto articleDto = new ArticleDto();
+            articleDto.setArticleId(article.getArticleId());
+            articleDto.setTitre(article.getTitre());
+            articleDto.setCreatedAt(article.getCreatedAt());
             articleDto.setDescription(article.getContenu());
             articleDto.setAuteur(article.getAuteur());
             articleDtoList.add(articleDto);

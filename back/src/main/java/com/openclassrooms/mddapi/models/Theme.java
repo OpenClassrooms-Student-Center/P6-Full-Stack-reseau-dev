@@ -11,7 +11,7 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"themeId"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

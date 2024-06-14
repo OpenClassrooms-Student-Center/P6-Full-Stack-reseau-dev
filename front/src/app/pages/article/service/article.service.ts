@@ -13,8 +13,12 @@ export class ArticleService {
   constructor(private httpClient : HttpClient) { 
   }
 
-  public all(): Observable<Article[]> {
+  public allDesc(): Observable<Article[]> {
     return this.httpClient.get<Article[]>(this.pathService);
+  }
+
+  public allAsc(): Observable<Article[]> {
+    return this.httpClient.get<Article[]>(`${this.pathService}/asc`);
   }
 
   public create(article : Article): Observable<Article> {

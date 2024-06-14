@@ -1,14 +1,14 @@
 
 <div class="app">
     <div *ngIf="$isLogged() | async; else notLogged">
-      <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-      <img src="/assets/logo_p6.png" alt="logo" />
+      <mat-card class="tool" fxLayout="row" fxLayoutAlign="space-between center">
+      <img class="logo" src="/assets/logo_p6.png" alt="logo" />
       <span routerLink="article/list" class="link">Articles</span>
       <span routerLink="theme" class="link">Thèmes</span>
-      <span routerLink="edit" class="link">   <mat-icon>
-        person
-      </mat-icon></span>
-    </mat-toolbar>
+      <span routerLink="edit" class="link">   
+        <img class="icon" src="/assets/person-icon.png" alt="logo" />
+      </span>
+    </mat-card>
     </div>
     <ng-template #notLogged>
       <div>
@@ -20,3 +20,20 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<!-- <div *ngIf="$isLogged() | async; else notLogged">
+<div class="card text-center">
+  <div class="card-header">
+    <ul class="nav nav-pills card-header-pills">
+      <li class="nav-item">
+        <a class="nav-link active" href="/article/list">Active</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+  </div>
+  </div> -->

@@ -35,7 +35,7 @@ export class LoginComponent {
       next: (response: SessionInformation) => {
         this.sessionService.logIn(response);
         console.log(this.sessionService.sessionInformation?.token);
-        this.router.navigate(['detail']);
+        this.router.navigate(['article/list']);
       },
       error: error => {this.onError = true,
       console.log(error)}

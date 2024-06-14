@@ -11,7 +11,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ThemeComponent } from './pages/theme/component/theme/theme.component';
-import { UserComponent } from './pages/user/components/detail/user.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -39,7 +38,7 @@ const materialModule = [
 @NgModule({
   declarations: [
     AppComponent, 
-    HomeComponent, ThemeComponent, UserComponent, EditComponent],
+    HomeComponent, ThemeComponent, EditComponent],
 
   imports: [
     BrowserModule,

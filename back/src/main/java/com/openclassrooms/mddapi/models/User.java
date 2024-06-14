@@ -10,7 +10,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -58,12 +60,12 @@ public class User {
 //          inverseJoinColumns = @JoinColumn(name = "article_id"))
 //  private Set<Article> articles= new HashSet<>();
 
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
           name = "theme_like",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "theme_id"))
-  private Set<Theme> themes= new HashSet<>();
+  private List<Theme> themes= new ArrayList<>();
 
 
 }

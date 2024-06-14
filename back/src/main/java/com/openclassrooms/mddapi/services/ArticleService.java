@@ -13,8 +13,12 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
-    public List<Article> findAll() {
-        return this.articleRepository.findAll();
+    public List<Article> findAllDesc() {
+        return this.articleRepository.findByOrderByCreatedAtDesc();
+    }
+
+    public List<Article> findAllAsc() {
+        return this.articleRepository.findByOrderByCreatedAtAsc();
     }
 
     public Article findById(Long id) {

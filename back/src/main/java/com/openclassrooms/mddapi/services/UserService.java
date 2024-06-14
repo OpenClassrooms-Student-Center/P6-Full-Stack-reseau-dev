@@ -29,23 +29,28 @@ public class UserService {
         return this.userRepository.findById(id).orElse(null);
     }
 
+    public User findByEmail(String email) {
+        return this.userRepository.findByEmail(email).orElse(null);
+    }
+
     public void follow(Long themeId, Long userId) {
         Theme theme = this.themeRepository.findById(themeId).orElse(null);
         User user = this.userRepository.findById(userId).orElse(null);
+        System.out.println("themeId" + themeId);
+        System.out.println("userId" + userId);
         if (theme == null || user == null) {
             throw new NotFoundException();
         }
-
+        System.out.println("user" + user);
         boolean alreadyFollow = user.getThemes().stream().anyMatch(o -> o.getThemeId().equals(themeId));
         if(alreadyFollow) {
             throw new BadRequestException();
         }
 
-        theme.setFollow(true);
         themeRepository.save(theme);
 
         user.getThemes().add(theme);
-
+        System.out.println("user" + user);
         this.userRepository.save(user);
     }
 
@@ -63,9 +68,9 @@ public class UserService {
         }
 
 
-        theme.setFollow(false);
+        //theme.setFollow(false);
         themeRepository.save(theme);
-        user.setThemes(user.getThemes().stream().filter(themeUp -> !themeUp.getThemeId().equals(themeId)).collect(Collectors.toSet()));
+        user.setThemes(user.getThemes().stream().filter(themeUp -> !themeUp.getThemeId().equals(themeId)).collect(Collectors.toList()));
 
         this.userRepository.save(user);
     }

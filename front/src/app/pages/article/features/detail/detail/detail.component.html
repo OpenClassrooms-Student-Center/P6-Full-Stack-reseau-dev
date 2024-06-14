@@ -1,6 +1,6 @@
-<div>
-    <mat-card>
-        <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+<div class="m3">
+    <mat-card class="col-sm-12">
+        <div fxLayout="row wrap" fxLayout.lt-md="column">
             <mat-card class="item" fxFlex>
                 <mat-card-title>
                     {{ article?.titre }}
@@ -18,24 +18,28 @@
                     <!-- </div> -->
                 </mat-card-content>
             </mat-card>
-            <mat-card>
+            <mat-card class="col-sm-12">
                 <mat-card-title>
                     <h2>Commentaires</h2>
                 </mat-card-title>
                 <mat-card-subtitle *ngFor="let comment of comments ">
                     <p>
                         {{comment.auteur }}
-                        {{comment.commentaire }}
+                        <mat-card class="comment">
+                            {{comment.commentaire }}
+                        </mat-card>
                     </p>
                 </mat-card-subtitle>
-                    <mat-card-content>
+                    <mat-card>
+                        <div class="card-footer text-muted">
                     <form [formGroup]="commentForm" (ngSubmit)="submit()" fxLayout="column">
-                        <textarea matInput placeholder="Ajoutez un commentaire" rows="6" formControlName="commentaire"></textarea>
+                        <textarea matInput placeholder="Ecrivez ici votre commentaire" rows="6" formControlName="commentaire"></textarea>
                         <div fxLayout="row" fxLayoutAlign="end center" class="mt2">
-                            <button mat-raised-button color="primary" type="submit"
-                                [disabled]="commentForm.invalid">Send</button>
+                            <button class="btn" mat-raised-button type="submit">
+                                <img src="/assets/send-icon.png" width="90" height="90" alt="submit"></button>
                         </div>
                     </form>
-                </mat-card-content>
+                </div>
+                </mat-card>
             </mat-card>
         </div>
