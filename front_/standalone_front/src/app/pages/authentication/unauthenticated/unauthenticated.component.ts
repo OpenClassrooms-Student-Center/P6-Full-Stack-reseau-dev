@@ -22,6 +22,7 @@ export class UnauthenticatedComponent {
   }
 
   goToSignin(){
+    console.log('hello')
     this.router.navigate(['/login']);
   }
 
