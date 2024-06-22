@@ -1,8 +1,8 @@
 package com.openclassrooms.mddapi.handler;
 
 import com.openclassrooms.mddapi.dto.ResponseDTO;
-import javax.persistence.EntityExistsException;
-import javax.validation.ConstraintViolationException;
+import jakarta.persistence.EntityExistsException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             if(ex instanceof BadCredentialsException){
                 status = HttpStatus.UNAUTHORIZED;
             }
-            return ResponseEntity.status(status).body(new ResponseDTO("error"));
+            return ResponseEntity.status(status).body(new ResponseDTO(ex.getMessage()));
         }
 
     }
