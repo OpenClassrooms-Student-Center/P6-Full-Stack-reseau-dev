@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.service;
+package com.openclassrooms.mddapi.service.post;
 
 import com.openclassrooms.mddapi.repository.PostRepository;
 
