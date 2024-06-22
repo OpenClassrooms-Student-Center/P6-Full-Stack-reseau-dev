@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 
 @RestController
@@ -83,6 +84,14 @@ public class AuthController {
         Errors errors
     )
     {
+        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+        if (!pattern.matcher(user.getPassword()).matches()) {
+            throw new IllegalArgumentException(
+                    "Le mot de passe doit contenir au moins une lettre majuscule, " +
+                    "une lettre minuscule, un chiffre, un caractère spécial " +
+                    "et avoir une longueur d'au moins 8 caractères."
+            );
+        }
         dbUserService.create(user);
         UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         Authentication auth = authenticationManager.authenticate(authReq);

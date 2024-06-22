@@ -1,14 +1,11 @@
 package com.openclassrooms.mddapi.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.sql.Timestamp;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,7 +15,20 @@ public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "comment_id")
+	@Column(name = "id")
 	private Long id;
-	// TODO : to finish...
+
+	@ManyToOne
+	@JoinColumn(name = "post_id", nullable = false)
+	private Post postId;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private DBUser userId;
+
+	private String content;
+
+	@Column(name = "created_at")
+	private Timestamp createdAt;
+
 }
