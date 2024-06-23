@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Optional;
 
@@ -77,6 +78,24 @@ public class DBUserService implements IDBUserService {
 
         if(dbUser.isPresent()) {
             return modelMapper.map(dbUser.get(), DBUserDTO.class);
+        }
+        else{
+            throw new UsernameNotFoundException("User not found");
+        }
+
+    }
+
+    public DBUserDTO update(DBUserDTO updatedUser, Principal loggedUser) throws UsernameNotFoundException {
+
+        Optional<DBUser> dbUser = dbUserRepository.findByEmail(loggedUser.getName());
+
+        if(dbUser.isPresent()) {
+            DBUser user = dbUser.get();
+            user.setUsername(updatedUser.getUsername());
+            user.setEmail(updatedUser.getEmail());
+            user.setUpdatedAt(DateUtils.now());
+            dbUserRepository.save(user);
+            return modelMapper.map(user, DBUserDTO.class);
         }
         else{
             throw new UsernameNotFoundException("User not found");

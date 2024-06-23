@@ -18,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.annotation.*;
@@ -36,6 +39,8 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsService userDetailsService;
     @Autowired
     private IJWTService jwtService;
     @Autowired
@@ -92,6 +97,7 @@ public class AuthController {
                     "et avoir une longueur d'au moins 8 caractères."
             );
         }
+
         dbUserService.create(user);
         UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         Authentication auth = authenticationManager.authenticate(authReq);
@@ -154,7 +160,6 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usernameOrEmail, password));
             return new TokenDTO(jwtService.generateToken(auth));
         } else {
-            // Assuming you have a method in your service to find user by username
             DBUserDTO userByUsername = dbUserService.findByUsername(usernameOrEmail);
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userByUsername.getEmail(), password));
             return new TokenDTO(jwtService.generateToken(auth));
@@ -193,5 +198,23 @@ public class AuthController {
     @SecurityRequirement(name = "bearer")
     public DBUserDTO info(Principal user) {
         return dbUserService.findByEmail(user.getName());
+    }
+
+    @PostMapping(value = "/me", produces = "application/json")
+    @SecurityRequirement(name = "bearer")
+    public TokenDTO updateInfo(@Valid @RequestBody DBUserDTO updatedUser, Principal loggedUser) {
+        dbUserService.update(updatedUser, loggedUser);
+        UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(updatedUser.getEmail());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                updatedUserDetails,
+                updatedUserDetails.getPassword(),
+                updatedUserDetails.getAuthorities()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String newToken = jwtService.generateToken(authentication);
+
+        return new TokenDTO(newToken);
     }
 }

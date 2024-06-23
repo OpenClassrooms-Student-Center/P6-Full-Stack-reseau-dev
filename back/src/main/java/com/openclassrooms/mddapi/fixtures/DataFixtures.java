@@ -54,14 +54,16 @@ public class DataFixtures implements CommandLineRunner {
         user1.setName("John Doe");
         user1.setUsername("JohnDoe");
         user1.setEmail("john.doe@email.com");
-        user1.setPassword("password1");
+        // Mypassword8$
+        user1.setPassword("$2a$10$iubE9N0INEpjueHwqfKJq.d/Dr2QpWc3l91Z.v7nH1uBMcDdH4X4.");
         user1.setCreatedAt(now);
 
         DBUser user2 = new DBUser();
         user2.setName("Lorem Ipsum");
         user2.setUsername("LoremIpsum");
         user2.setEmail("lorem.ipsum@email.com");
-        user2.setPassword("password2");
+        // Mypassword8$
+        user2.setPassword("$2a$10$WWUaHpk6yi9PKDmAv/BekejHy14u.ahqw8HjHmlm7NgKy9xOXs9p.");
         user2.setCreatedAt(now);
 
         Post post1 = new Post();

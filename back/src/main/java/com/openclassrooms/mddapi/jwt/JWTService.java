@@ -1,6 +1,10 @@
 package com.openclassrooms.mddapi.jwt;
 
+import com.openclassrooms.mddapi.dto.TokenDTO;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -13,6 +17,7 @@ import java.time.temporal.ChronoUnit;
 
 @Service
 public class JWTService implements IJWTService {
+
     private JwtEncoder jwtEncoder;
 
     public JWTService(JwtEncoder jwtEncoder) {
@@ -33,4 +38,5 @@ public class JWTService implements IJWTService {
         JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
         return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
     }
+
 }
