@@ -1,10 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import com.openclassrooms.mddapi.dto.*;
-import com.openclassrooms.mddapi.model.DBUser;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,9 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.openclassrooms.mddapi.service.topic.ITopicService;
@@ -28,8 +24,6 @@ public class TopicController {
 
 	@Autowired
 	private IDBUserService dbUserService;
-    @Autowired
-    private ModelMapper modelMapper;
 
 	public TopicController(ITopicService topicService) {
 		this.topicService = topicService;

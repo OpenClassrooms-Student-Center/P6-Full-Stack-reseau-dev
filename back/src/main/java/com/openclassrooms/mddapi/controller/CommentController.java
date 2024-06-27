@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.*;
 import com.openclassrooms.mddapi.service.comment.ICommentService;
-import com.openclassrooms.mddapi.service.post.IPostService;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
