@@ -13,6 +13,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 @Component
 public class DataFixtures implements CommandLineRunner {
@@ -58,6 +61,9 @@ public class DataFixtures implements CommandLineRunner {
         user1.setPassword("$2a$10$iubE9N0INEpjueHwqfKJq.d/Dr2QpWc3l91Z.v7nH1uBMcDdH4X4.");
         user1.setCreatedAt(now);
 
+        user1.setTopics(new HashSet<>(Arrays.asList(topic1, topic2)));
+
+
         DBUser user2 = new DBUser();
         user2.setName("Lorem Ipsum");
         user2.setUsername("LoremIpsum");
@@ -65,6 +71,8 @@ public class DataFixtures implements CommandLineRunner {
         // Mypassword8$
         user2.setPassword("$2a$10$WWUaHpk6yi9PKDmAv/BekejHy14u.ahqw8HjHmlm7NgKy9xOXs9p.");
         user2.setCreatedAt(now);
+
+
 
         Post post1 = new Post();
         post1.setTitle("PHP 8.2 is out!");
