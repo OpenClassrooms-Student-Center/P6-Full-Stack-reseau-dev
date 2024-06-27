@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -30,4 +31,10 @@ public class DBUser {
     private Timestamp createdAt;
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+    @JoinTable(
+            name = "participation",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    @ManyToMany
+    Set<Topic> topics;
 }
