@@ -11,18 +11,13 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "USERS", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "USERS")
 @Data
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-@EqualsAndHashCode(of = {"id"})
 @Builder
 @NoArgsConstructor
 @RequiredArgsConstructor

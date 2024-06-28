@@ -56,7 +56,7 @@ public class ArticleController {
             articleDto.setArticleId(article.getArticleId());
             articleDto.setTitre(article.getTitre());
             articleDto.setCreatedAt(article.getCreatedAt());
-            articleDto.setDescription(article.getContenu());
+            articleDto.setContenu(article.getContenu());
             articleDto.setAuteur(article.getAuteur());
             articleDtoList.add(articleDto);
         }
@@ -85,7 +85,7 @@ public class ArticleController {
             articleDto.setArticleId(article.getArticleId());
             articleDto.setTitre(article.getTitre());
             articleDto.setCreatedAt(article.getCreatedAt());
-            articleDto.setDescription(article.getContenu());
+            articleDto.setContenu(article.getContenu());
             articleDto.setAuteur(article.getAuteur());
             articleDtoList.add(articleDto);
         }
@@ -112,7 +112,7 @@ public class ArticleController {
 
         Article article = new Article();
         article.setTitre(articleDto.getTitre());
-        article.setContenu(articleDto.getDescription());
+        article.setContenu(articleDto.getContenu());
 
         Theme theme = new Theme();
         if (articleDto.getTheme_id() != null) {

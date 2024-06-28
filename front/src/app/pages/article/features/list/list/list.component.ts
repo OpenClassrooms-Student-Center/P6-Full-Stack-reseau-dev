@@ -29,7 +29,6 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.articles$ = this.articleService.allDesc();
   }
 
   create() {

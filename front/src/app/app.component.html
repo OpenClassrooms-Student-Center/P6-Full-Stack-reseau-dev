@@ -1,39 +1,22 @@
-
 <div class="app">
-    <div *ngIf="$isLogged() | async; else notLogged">
-      <mat-card class="tool" fxLayout="row" fxLayoutAlign="space-between center">
-      <img class="logo" src="/assets/logo_p6.png" alt="logo" />
-      <span routerLink="article/list" class="link">Articles</span>
-      <span routerLink="theme" class="link">Thèmes</span>
-      <span routerLink="edit" class="link">   
-        <img class="icon" src="/assets/person-icon.png" alt="logo" />
-      </span>
-    </mat-card>
-    </div>
-    <ng-template #notLogged>
-      <div>
-        <!-- <span routerLink="login" class="link">Login</span>
-        <span routerLink="register" class="link">Register</span> -->
-      </div>
-    </ng-template>
-  <div>
-    <router-outlet></router-outlet>
+  <div *ngIf="$isLogged() | async; else notLogged">
+    <header class="header">
+      <img class="logo" src="/assets/logo_p6.png" style="padding-left: 50px" alt="logo" />
+      <input class="menu-btn" type="checkbox" id="menu-btn" />
+      <label class="menu-icon" for="menu-btn">
+        <span class="navicon"></span>
+      </label>
+      <ul class="menu">
+        <li><a routerLink="article/list" class="link">Articles</a></li>
+        <li><a routerLink="theme" class="link">Thèmes</a></li>
+        <li><a routerLink="edit" class="link">
+            <img class="image" src="/assets/person-icon.png" alt="logo"></a></li>
+      </ul>
+    </header>
   </div>
 </div>
-
-<!-- <div *ngIf="$isLogged() | async; else notLogged">
-<div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-pills card-header-pills">
-      <li class="nav-item">
-        <a class="nav-link active" href="/article/list">Active</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-  </div>
-  </div> -->
+<ng-template #notLogged>
+</ng-template>
+<div>
+  <router-outlet></router-outlet>
+</div>

@@ -1,23 +1,22 @@
 <div class="m3">
-  <mat-card class="col-12">
-    <mat-card-title>
+  <mat-card>
+  <mat-cardheader fxLayout="row" fxLayoutAlign="center center">
+    <mat-card-title fxLayoutAlign="center center">
       <h1>Profil Utilisateur</h1>
     </mat-card-title>
-    <mat-card-content *ngIf="editUserForm">
+    </mat-cardheader>
+    <mat-card-content class="user" *ngIf="editUserForm" fxLayout="column" fxLayoutAlign="center center">
       <form class="mt2" fxLayout="column" [formGroup]="editUserForm" (ngSubmit)="submit()">
-        <mat-form-field appearance="outline" class="" fxFlex>
-          <mat-label>Name</mat-label>
+        <mat-form-field appearance="outline" fxFlex>
           <input matInput formControlName="firstName">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex>
-          <mat-label>Email</mat-label>
           <input matInput formControlName="email">
         </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password">
+        <mat-form-field appearance="outline" fxFlex>
+          <input matInput formControlName="password" placeholder="Mot de passe">
         </mat-form-field>
-        <div fxLayout="row" fxLayoutAlign="center">
+        <div fxLayout="row" fxLayoutAlign="center center">
           <div>
             <button mat-raised-button color="primary" type="submit" [disabled]="editUserForm.invalid">
               Sauvegarder
@@ -31,7 +30,7 @@
     </mat-card-content>
   </mat-card>
   <h1>Abonnements</h1>
-  <mat-card class="col-6">
+  <mat-card>
     <div *ngFor="let theme of themes$" fxFlex>
       <mat-card-header>
         <mat-card-title>

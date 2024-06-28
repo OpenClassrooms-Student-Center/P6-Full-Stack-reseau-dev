@@ -5,8 +5,14 @@
 
 .item {
     background-color: rgb(243, 243, 243);
+    display: inline-flex; 
+    flex-flow: row wrap;
 }
 
 .list {
+    margin: 20px;
     text-align: left;
+    .items {
+        gap: 2rem;
+    }
 }

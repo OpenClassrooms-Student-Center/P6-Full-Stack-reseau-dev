@@ -4,7 +4,7 @@ import { Theme } from "../../theme/interface/theme";
 export interface Article {
     articleId: number;
     titre: string;
-    description: string;
+    contenu: string;
     auteur: string;
     themeId: number;
     user_id: number;

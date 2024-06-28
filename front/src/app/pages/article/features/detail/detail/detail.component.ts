@@ -59,6 +59,9 @@ export class DetailComponent implements OnInit {
     this.initForm();
   }
 
+  public back() {
+    window.history.back();
+  }
 
   private initForm(): void {
     this.commentForm = this.fb.group({

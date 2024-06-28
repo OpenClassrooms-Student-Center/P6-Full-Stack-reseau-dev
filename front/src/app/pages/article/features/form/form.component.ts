@@ -51,8 +51,8 @@ export class ArticleComponent implements OnInit {
         article ? article.themeId : '',
         [Validators.required]
       ],
-      description: [
-        article ? article.description : '',
+      contenu: [
+        article ? article.contenu : '',
         [
           Validators.required,
           Validators.max(2000)

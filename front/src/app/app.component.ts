@@ -24,24 +24,4 @@ export class AppComponent {
     this.sessionService.logOut();
     this.router.navigate([''])
   }
-
-  
-  // connexion() {
-  //   this.router.navigate(['/login'])
-  // }
-
-  // enregistrement() {
-  //   this.router.navigate(['/register'])
-  // }
-
-  // theme() {
-  //   this.router.navigate(['/theme'])
-  // }
-
-  // user() {
-  //   this.router.navigate(['/detail'])
-  // }
-  // edit() {
-  //   this.router.navigate(['/edit'])
-  // }
 }

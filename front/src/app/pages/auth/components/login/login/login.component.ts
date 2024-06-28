@@ -20,7 +20,7 @@ export class LoginComponent {
   public onError = false;
 
   public form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    emailOrFirstName: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.min(8)]]
   });
 

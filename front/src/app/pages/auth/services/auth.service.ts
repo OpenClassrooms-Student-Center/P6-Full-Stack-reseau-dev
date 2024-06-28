@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RegisterRequest } from '../interfaces/interfaces/registerRequest.interface';
-import { AuthSuccess } from '../interfaces/interfaces/authSuccess.interface';
 import { LoginRequest } from '../interfaces/interfaces/loginRequest.interface';
 import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
 
@@ -23,7 +22,4 @@ export class AuthService {
     return this.httpClient.post<SessionInformation>(`${this.pathService}/login`, loginRequest);
   }
 
-  // public me(): Observable<User> {
-  //   return this.httpClient.get<User>(`${this.pathService}/me`);
-  // }
 }

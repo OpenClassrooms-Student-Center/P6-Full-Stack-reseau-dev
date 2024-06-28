@@ -17,7 +17,7 @@ public class ArticleDto {
 
     private String theme_id;
 
-    private String description;
+    private String contenu;
 
     private Date createdAt;
 

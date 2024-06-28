@@ -1,3 +1,20 @@
 .item {
      background-color: rgb(243, 243, 243);
 }
+
+.fleche {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 5px;
+}
+
+.button {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-weight: bold ;
+}
+

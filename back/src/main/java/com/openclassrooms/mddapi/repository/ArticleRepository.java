@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    List<Article> findByTheme_ThemeId(Long theme_id);
-
     List<Article> findByOrderByCreatedAtDesc();
 
     List<Article> findByOrderByCreatedAtAsc();

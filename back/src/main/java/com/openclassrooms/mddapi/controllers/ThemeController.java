@@ -1,8 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.ThemeDto;
-import com.openclassrooms.mddapi.dto.ThemeUpdateDto;
-import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.ThemeService;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
