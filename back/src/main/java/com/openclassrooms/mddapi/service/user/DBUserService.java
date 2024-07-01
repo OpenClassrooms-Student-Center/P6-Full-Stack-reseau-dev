@@ -85,7 +85,7 @@ public class DBUserService implements IDBUserService {
 
     }
 
-    public DBUserDTO update(DBUserDTO updatedUser, Principal loggedUser) throws UsernameNotFoundException {
+    public void update(DBUserDTO updatedUser, Principal loggedUser) throws UsernameNotFoundException {
 
         Optional<DBUser> dbUser = dbUserRepository.findByEmail(loggedUser.getName());
 
@@ -95,7 +95,7 @@ public class DBUserService implements IDBUserService {
             user.setEmail(updatedUser.getEmail());
             user.setUpdatedAt(DateUtils.now());
             dbUserRepository.save(user);
-            return modelMapper.map(user, DBUserDTO.class);
+            modelMapper.map(user, DBUserDTO.class);
         }
         else{
             throw new UsernameNotFoundException("User not found");

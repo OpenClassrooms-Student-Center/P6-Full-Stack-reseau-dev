@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.service.topic;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.openclassrooms.mddapi.dto.DBUserDTO;
@@ -40,7 +41,7 @@ public class TopicService implements ITopicService {
 				.collect(Collectors.toList());
 	}
 
-	public void follow(DBUserDTO currentUser, Long topicId) throws Exception {
+	public void subscribe(DBUserDTO currentUser, Long topicId) throws Exception {
 		Topic topic = topicRepository.findById(topicId).orElse(null);
 		DBUser user = dbUserRepository.findById(currentUser.getId()).orElse(null);
 		if (topic == null || user == null) {
@@ -59,7 +60,7 @@ public class TopicService implements ITopicService {
 		dbUserRepository.save(user);
 	}
 
-	public void unfollow(DBUserDTO currentUser, Long topicId) throws Exception {
+	public void unsubscribe(DBUserDTO currentUser, Long topicId) throws Exception {
 		Topic topic = topicRepository.findById(topicId).orElse(null);
 		DBUser user = dbUserRepository.findById(currentUser.getId()).orElse(null);
 		if (topic == null || user == null) {
@@ -76,6 +77,16 @@ public class TopicService implements ITopicService {
 
 		topicRepository.save(topic);
 		dbUserRepository.save(user);
+	}
+
+	public Set<TopicDTO> getTopicsByUser(DBUserDTO currentUser) throws Exception {
+		DBUser user = dbUserRepository.findById(currentUser.getId()).orElse(null);
+		if (user == null) {
+			throw new Exception("User not found");
+		}
+		return user.getTopics().stream()
+				.map(topic -> modelMapper.map(topic, TopicDTO.class))
+				.collect(Collectors.toSet());
 	}
 
 	

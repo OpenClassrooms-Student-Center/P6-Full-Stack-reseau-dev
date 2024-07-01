@@ -42,6 +42,11 @@ public class DataFixtures implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        commentRepository.deleteAll();
+        postRepository.deleteAll();
+        dbUserRepository.deleteAll();
+        topicRepository.deleteAll();
+
         Timestamp now = dateUtils.now();
 
         Topic topic1 = new Topic();

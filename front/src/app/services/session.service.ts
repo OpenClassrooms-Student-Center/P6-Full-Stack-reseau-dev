@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SessionInformation } from '../interfaces/sessionInformation.interface';
+import {Token} from "../interfaces/token.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
-
-  public sessionInformation: SessionInformation | undefined;
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 
@@ -19,15 +17,13 @@ export class SessionService {
     return this.getToken() !== null;
   }
 
-  public logIn(user: SessionInformation): void {
-    localStorage.setItem('token', user.token);
-    this.sessionInformation = user;
+  public logIn(token: Token): void {
+    this.setToken(token.token)
     this.next();
   }
 
   public logOut(): void {
     localStorage.removeItem('token');
-    this.sessionInformation = undefined;
     this.next();
   }
 
@@ -37,6 +33,10 @@ export class SessionService {
 
   private getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  private setToken(token: string): void {
+    return localStorage.setItem('token',token);
   }
 
 }

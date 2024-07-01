@@ -1,8 +1,11 @@
 package com.openclassrooms.mddapi.controller;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Set;
 
 import com.openclassrooms.mddapi.dto.*;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -86,8 +89,14 @@ public class TopicController {
 	)
 	@GetMapping(value = "", produces = "application/json")
 	@SecurityRequirement(name = "bearer")
-	public TopicsDTO getTopics() {
-		return TopicsDTO.builder().topics(topicService.getTopics()).build();
+	public List<TopicDTO> getTopics() {
+		return topicService.getTopics();
+	}
+
+	@GetMapping(value = "/user", produces = "application/json")
+	@SecurityRequirement(name = "bearer")
+	public Set<TopicDTO> getTopicsByUser(Principal user) throws Exception {
+		return topicService.getTopicsByUser(dbUserService.findByEmail(user.getName()));
 	}
 
 	@Operation(summary = "Follow a topic", description = "Follow a topic")
@@ -137,12 +146,12 @@ public class TopicController {
 				)
 			}
 	)
-	@PostMapping("{id}/participate")
-	public ResponseDTO follow(
+	@PostMapping("{id}/user/subscribe")
+	public ResponseDTO subscribe(
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		topicService.follow(dbUserService.findByEmail(user.getName()),Long.parseLong(id));
+		topicService.subscribe(dbUserService.findByEmail(user.getName()),Long.parseLong(id));
 		return new ResponseDTO("Topic unfollowed !");
 	}
 
@@ -192,12 +201,12 @@ public class TopicController {
 				)
 			}
 	)
-	@DeleteMapping("{id}/participate")
-	public ResponseDTO unfollow(
+	@DeleteMapping("{id}/user/subscribe")
+	public ResponseDTO unsubscribe(
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		topicService.unfollow(dbUserService.findByEmail(user.getName()),Long.parseLong(id));
+		topicService.unsubscribe(dbUserService.findByEmail(user.getName()),Long.parseLong(id));
 		return new ResponseDTO("Topic unfollowed !");
 	}
 

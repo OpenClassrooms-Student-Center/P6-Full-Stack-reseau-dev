@@ -4,8 +4,9 @@ import { User } from '../../interfaces/user.interface';
 import { SessionService } from '../../services/session.service';
 import { UserService } from '../../services/user.service';
 import {FormBuilder, Validators} from "@angular/forms";
-import {AuthService} from "../../features/auth/services/auth.service";
-import {SessionInformation} from "../../interfaces/sessionInformation.interface";
+import {TopicService} from "../../features/auth/services/topic.service";
+import {Topic} from "../../interfaces/topic.interface";
+import {Token} from "../../interfaces/token.interface";
 
 @Component({
   selector: 'app-me',
@@ -28,17 +29,20 @@ export class MeComponent implements OnInit {
 
   public user: User | undefined;
 
+  public topics: Topic[] = [];
+
   constructor(private router: Router,
               private sessionService: SessionService,
               private fb: FormBuilder,
-              private authService: AuthService) {
+              private userService: UserService,
+              private topicService: TopicService) {
   }
 
   public submit(): void {
     const updatedUser = this.form.value as User;
     console.log(updatedUser);
-    this.authService.updateInfo(updatedUser).subscribe({
-      next: (response: SessionInformation) => {
+    this.userService.updateInfo(updatedUser).subscribe({
+      next: (response: Token) => {
         this.sessionService.logIn(response);
         this.router.navigate(['/me']);
       },
@@ -47,10 +51,11 @@ export class MeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService
+    this.userService
       .me()
       .subscribe((user: User) => {
         this.user = user;
+        console.log(user);
         this.form = this.fb.group({
           username: [user.username],
           email: [user.email]

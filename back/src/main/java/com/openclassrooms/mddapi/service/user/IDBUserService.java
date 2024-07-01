@@ -12,6 +12,6 @@ public interface IDBUserService {
     DBUserDTO findByEmail(String userEmail) throws UsernameNotFoundException;
     DBUserDTO findByUsername(String username) throws UsernameNotFoundException;
     DBUserDTO findById(Integer userId) throws UsernameNotFoundException;
-    DBUserDTO update(DBUserDTO updatedUser, Principal loggedUser) throws UsernameNotFoundException;
+    void update(DBUserDTO updatedUser, Principal loggedUser) throws UsernameNotFoundException;
 
 }

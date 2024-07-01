@@ -30,9 +30,8 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @Validated
 @Tag(name = "Auth", description = "Auth ressources")
 @RequestMapping("/auth")
@@ -40,8 +39,6 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserDetailsService userDetailsService;
     @Autowired
     private IJWTService jwtService;
     @Autowired
@@ -168,54 +165,4 @@ public class AuthController {
 
     }
 
-    @Operation(summary = "Profile", description = "Get the user profile")
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "User profile",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = DBUserDTO.class),
-                examples = @ExampleObject(
-                    name = "User example",
-                    value = "{\"id\": 99,\"username\": \"JohnDoe\",\"email\": \"example@chatop.com\",\"created_at\": \"2024/04/29\",\"updated_at\": \"2024/04/29\"}"
-                )
-            )
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = HashMap.class),
-                examples = @ExampleObject(
-                        name = "Unauthorized",
-                        value = "{}"
-                )
-            )
-        )
-    })
-    @GetMapping(value = "/me", produces = "application/json")
-    @SecurityRequirement(name = "bearer")
-    public DBUserDTO info(Principal user) {
-        return dbUserService.findByEmail(user.getName());
-    }
-
-    @PutMapping(value = "/me", produces = "application/json")
-    @SecurityRequirement(name = "bearer")
-    public TokenDTO updateInfo(@Valid @RequestBody DBUserDTO updatedUser, Principal loggedUser) {
-        dbUserService.update(updatedUser, loggedUser);
-        UserDetails updatedUserDetails = userDetailsService.loadUserByUsername(updatedUser.getEmail());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                updatedUserDetails,
-                updatedUserDetails.getPassword(),
-                updatedUserDetails.getAuthorities()
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String newToken = jwtService.generateToken(authentication);
-
-        return new TokenDTO(newToken);
-    }
 }
