@@ -53,7 +53,6 @@ public class DataFixtures implements CommandLineRunner {
         topic2.setDescription("The new version of Java is out!");
 
         DBUser user1 = new DBUser();
-        user1.setName("John Doe");
         user1.setUsername("JohnDoe");
         user1.setEmail("john.doe@email.com");
         // Mypassword8$
@@ -64,7 +63,6 @@ public class DataFixtures implements CommandLineRunner {
 
 
         DBUser user2 = new DBUser();
-        user2.setName("Lorem Ipsum");
         user2.setUsername("LoremIpsum");
         user2.setEmail("lorem.ipsum@email.com");
         // Mypassword8$

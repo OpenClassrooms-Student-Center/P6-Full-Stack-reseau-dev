@@ -7,7 +7,6 @@ import { SessionInformation } from '../interfaces/sessionInformation.interface';
 })
 export class SessionService {
 
-  public isLogged = false;
   public sessionInformation: SessionInformation | undefined;
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
@@ -16,19 +15,28 @@ export class SessionService {
     return this.isLoggedSubject.asObservable();
   }
 
+  public get isLogged(): boolean {
+    return this.getToken() !== null;
+  }
+
   public logIn(user: SessionInformation): void {
+    localStorage.setItem('token', user.token);
     this.sessionInformation = user;
-    this.isLogged = true;
     this.next();
   }
 
   public logOut(): void {
+    localStorage.removeItem('token');
     this.sessionInformation = undefined;
-    this.isLogged = false;
     this.next();
   }
 
   private next(): void {
     this.isLoggedSubject.next(this.isLogged);
   }
+
+  private getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
 }

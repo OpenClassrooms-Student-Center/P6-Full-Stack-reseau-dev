@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @Validated
 @Tag(name = "Auth", description = "Auth ressources")
 @RequestMapping("/auth")
@@ -80,7 +81,7 @@ public class AuthController {
                     @ExampleObject(
                         name = "User sample",
                         summary = "User example",
-                        value = "{\"email\": \"example@chatop.com\"," + "\"name\": \"John Doe\"," + "\"password\": \"Strong password\"}"
+                        value = "{\"email\": \"example@chatop.com\"," + "\"username\": \"JohnDoe\"," + "\"password\": \"Strong password\"}"
                     )
                 }
             )
@@ -89,12 +90,12 @@ public class AuthController {
         Errors errors
     )
     {
-        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:\"\\\\|,.<>\\/?]).{8,}$");
         if (!pattern.matcher(user.getPassword()).matches()) {
             throw new IllegalArgumentException(
                     "Le mot de passe doit contenir au moins une lettre majuscule, " +
-                    "une lettre minuscule, un chiffre, un caractère spécial " +
-                    "et avoir une longueur d'au moins 8 caractères."
+                            "une lettre minuscule, un chiffre, un caractère spécial " +
+                            "et avoir une longueur d'au moins 8 caractères."
             );
         }
 
@@ -177,7 +178,7 @@ public class AuthController {
                 schema = @Schema(implementation = DBUserDTO.class),
                 examples = @ExampleObject(
                     name = "User example",
-                    value = "{\"id\": 99,\"name\": \"John DOE\",\"username\": \"JohnDoe\",\"email\": \"example@chatop.com\",\"created_at\": \"2024/04/29\",\"updated_at\": \"2024/04/29\"}"
+                    value = "{\"id\": 99,\"username\": \"JohnDoe\",\"email\": \"example@chatop.com\",\"created_at\": \"2024/04/29\",\"updated_at\": \"2024/04/29\"}"
                 )
             )
         ),
@@ -200,7 +201,7 @@ public class AuthController {
         return dbUserService.findByEmail(user.getName());
     }
 
-    @PostMapping(value = "/me", produces = "application/json")
+    @PutMapping(value = "/me", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public TokenDTO updateInfo(@Valid @RequestBody DBUserDTO updatedUser, Principal loggedUser) {
         dbUserService.update(updatedUser, loggedUser);

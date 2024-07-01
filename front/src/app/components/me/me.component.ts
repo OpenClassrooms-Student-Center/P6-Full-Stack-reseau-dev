@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user.interface';
 import { SessionService } from '../../services/session.service';
 import { UserService } from '../../services/user.service';
+import {FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../../features/auth/services/auth.service";
+import {SessionInformation} from "../../interfaces/sessionInformation.interface";
 
 @Component({
   selector: 'app-me',
@@ -12,32 +14,57 @@ import { UserService } from '../../services/user.service';
 })
 export class MeComponent implements OnInit {
 
+  public onError = false;
+
+  public form = this.fb.group({
+    email: [
+      '',
+      [
+        Validators.email
+      ]
+    ],
+    username: ['', []]
+  });
+
   public user: User | undefined;
 
   constructor(private router: Router,
               private sessionService: SessionService,
-              private matSnackBar: MatSnackBar,
-              private userService: UserService) {
+              private fb: FormBuilder,
+              private authService: AuthService) {
+  }
+
+  public submit(): void {
+    const updatedUser = this.form.value as User;
+    console.log(updatedUser);
+    this.authService.updateInfo(updatedUser).subscribe({
+      next: (response: SessionInformation) => {
+        this.sessionService.logIn(response);
+        this.router.navigate(['/me']);
+      },
+      error: error => this.onError = true,
+    });
   }
 
   public ngOnInit(): void {
-    this.userService
-      .getById(this.sessionService.sessionInformation!.id.toString())
-      .subscribe((user: User) => this.user = user);
+    this.authService
+      .me()
+      .subscribe((user: User) => {
+        this.user = user;
+        this.form = this.fb.group({
+          username: [user.username],
+          email: [user.email]
+        });
+      });
   }
 
   public back(): void {
     window.history.back();
   }
 
-  public delete(): void {
-    this.userService
-      .delete(this.sessionService.sessionInformation!.id.toString())
-      .subscribe((_) => {
-        this.matSnackBar.open("Your account has been deleted !", 'Close', { duration: 3000 });
-        this.sessionService.logOut();
-        this.router.navigate(['/']);
-      })
+  public logout(): void {
+    this.sessionService.logOut();
+    this.router.navigate([''])
   }
 
 }
