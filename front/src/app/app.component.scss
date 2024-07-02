@@ -13,6 +13,12 @@
   width: 10%;
 }
 
+div{
+  --justify: center;
+  align-items: center;
+  padding-inline: 1rem;
+}
+
 .tool {
   background-color: white;
 }

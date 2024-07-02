@@ -1,6 +1,6 @@
 <div class="app">
   <div *ngIf="$isLogged() | async; else notLogged">
-    <header class="header">
+    <div class="header">
       <img class="logo" src="/assets/logo_p6.png" style="padding-left: 50px" alt="logo" />
       <input class="menu-btn" type="checkbox" id="menu-btn" />
       <label class="menu-icon" for="menu-btn">
@@ -12,7 +12,7 @@
         <li><a routerLink="edit" class="link">
             <img class="image" src="/assets/person-icon.png" alt="logo"></a></li>
       </ul>
-    </header>
+    </div>
   </div>
 </div>
 <ng-template #notLogged>

@@ -29,8 +29,11 @@
                         </button>
                     </mat-form-field>
                 </mat-card-content>
-                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
-                <p *ngIf="onError" class="error">An error occurred</p>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se
+                        connecter</button>
+                    <p *ngIf="onError" class="error">An error occurred</p>
+                </div>
             </form>
         </mat-card>
     </div>

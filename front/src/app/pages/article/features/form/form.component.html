@@ -24,7 +24,7 @@
           <input matInput formControlName="titre" placeholder="Titre de l'article">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex>
-          <input matInput formControlName="contenu" placeholder="Contenu de l'article">
+          <textarea matInput rows="8" formControlName="contenu"></textarea>
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="center center">
           <button mat-raised-button color="primary" type="submit" [disabled]="articleForm.invalid">
