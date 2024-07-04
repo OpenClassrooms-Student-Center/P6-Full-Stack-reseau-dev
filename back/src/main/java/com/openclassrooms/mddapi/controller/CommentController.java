@@ -92,7 +92,7 @@ public class CommentController {
             }
     )
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/posts/{postId}", produces = "application/json")
+    @GetMapping(value = "/post/{postId}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public CommentsDTO getPostComments(@PathVariable Long postId) {
         return new CommentsDTO(commentService.getCommentsByPostId(postId));

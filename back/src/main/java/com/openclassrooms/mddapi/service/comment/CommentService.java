@@ -37,9 +37,7 @@ public class CommentService implements ICommentService {
 
 	@Override
 	public List<CommentDTO> getCommentsByPostId(Long postId) {
-		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new EntityNotFoundException("Post not found"));
-		List<Comment> comments = commentRepository.findByPostId(post);
+		List<Comment> comments = commentRepository.findByPostId(postId);
 		return comments.stream()
 				.map(entity -> modelMapper.map(entity, CommentDTO.class))
 				.collect(Collectors.toList());

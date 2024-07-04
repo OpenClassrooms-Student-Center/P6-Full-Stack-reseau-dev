@@ -14,14 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDTO {
-    @NotNull
-    @NotEmpty
     private Long id;
     @NotNull
-    @NotEmpty
     private Long postId;
-    @NotNull
-    @NotEmpty
     private Long userId;
     @NotNull
     @NotEmpty
