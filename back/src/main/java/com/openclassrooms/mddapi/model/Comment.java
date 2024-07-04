@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "comments")
 public class Comment {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -19,15 +18,18 @@ public class Comment {
 
 	@ManyToOne
 	@JoinColumn(name = "post_id", nullable = false)
-	private Post postId;
+	private Post post;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-	private DBUser userId;
+	private DBUser userOwner;
 
+	@Column(nullable = false)
 	private String content;
 
 	@Column(name = "created_at")
 	private Timestamp createdAt;
 
+	@Column(name = "updated_at")
+	private Timestamp updatedAt;
 }

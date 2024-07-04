@@ -50,11 +50,11 @@ public class DataFixtures implements CommandLineRunner {
         Timestamp now = dateUtils.now();
 
         Topic topic1 = new Topic();
-        topic1.setName("PHP");
+        topic1.setTitle("PHP");
         topic1.setDescription("The new version of PHP is out!");
 
         Topic topic2 = new Topic();
-        topic2.setName("Java");
+        topic2.setTitle("Java");
         topic2.setDescription("The new version of Java is out!");
 
         DBUser user1 = new DBUser();
@@ -79,27 +79,27 @@ public class DataFixtures implements CommandLineRunner {
         Post post1 = new Post();
         post1.setTitle("PHP 8.2 is out!");
         post1.setContent("content1");
-        post1.setTopicId(topic1);
+        post1.setTopic(topic1);
         post1.setCreatedAt(now);
-        post1.setUserId(user1);
+        post1.setUserOwner(user1);
 
         Post post2 = new Post();
         post2.setTitle("Java 17 is out!");
         post2.setContent("content2");
-        post2.setTopicId(topic2);
+        post2.setTopic(topic2);
         post2.setCreatedAt(now);
-        post2.setUserId(user2);
+        post2.setUserOwner(user2);
 
         Comment comment1 = new Comment();
         comment1.setContent("Very interesting!");
-        comment1.setPostId(post1);
-        comment1.setUserId(user2);
+        comment1.setPost(post1);
+        comment1.setUserOwner(user2);
         comment1.setCreatedAt(now);
 
         Comment comment2 = new Comment();
         comment2.setContent("Awesome!");
-        comment2.setPostId(post2);
-        comment2.setUserId(user1);
+        comment2.setPost(post2);
+        comment2.setUserOwner(user1);
         comment2.setCreatedAt(now);
 
         topicRepository.save(topic1);

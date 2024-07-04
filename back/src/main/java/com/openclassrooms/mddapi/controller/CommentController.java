@@ -11,7 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -89,6 +91,7 @@ public class CommentController {
                     )
             }
     )
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/posts/{postId}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public CommentsDTO getPostComments(@PathVariable Long postId) {
@@ -106,10 +109,11 @@ public class CommentController {
                         mediaType = "application/json",
                         schema = @Schema(implementation = ResponseDTO.class),
                         examples = @ExampleObject(
-                                name = "Comments successfully retrieved",
-                                value = "{" +
-                                            "\"message\": \"Comment created !\"" +
-                                        "}"
+                            name = "Comments successfully created",
+                            value =
+                                "{" +
+                                    "\"message\": \"Comment created !\"" +
+                                "}"
                         )
                     )
                 ),
@@ -120,8 +124,8 @@ public class CommentController {
                         mediaType = "application/json",
                         schema = @Schema(type = ""),
                         examples = @ExampleObject(
-                                name = "Unauthorized",
-                                value = ""
+                            name = "Unauthorized",
+                            value = ""
                         )
                     )
                 ),
@@ -134,19 +138,20 @@ public class CommentController {
                         examples = @ExampleObject(
                             name = "Bad request",
                             value =
-                                    "{" +
-                                        "\"message\": \"{{Error message}}\"" +
-                                    "}"
+                                "{" +
+                                    "\"message\": \"{{Error message}}\"" +
+                                "}"
                         )
                     )
                 )
             }
     )
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public ResponseDTO createComment(
             Principal user,
-            @ModelAttribute CommentDTO commentDTO
+            @RequestBody @Valid CommentDTO commentDTO
     )
     {
         commentService.createComment(dbUserService.findByEmail(user.getName()), commentDTO);

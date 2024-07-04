@@ -19,19 +19,18 @@ import java.sql.Timestamp;
 @Setter
 @Table(name = "posts")
 public class Post {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "topic_id", nullable = false)
-	private Topic topicId;
+	private Topic topic;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-	private DBUser userId;
+	private DBUser userOwner;
 
 	@Column(name="title", nullable = false)
 	private String title;
@@ -41,4 +40,7 @@ public class Post {
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
+
+	@Column(name = "updated_at")
+	private Timestamp updatedAt;
 }

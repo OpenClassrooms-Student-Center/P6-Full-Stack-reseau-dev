@@ -19,20 +19,26 @@ public class DBUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(nullable = false, unique = true)
     private String username;
+
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column(nullable = false)
     private String password;
+
     @Column(name = "created_at")
     private Timestamp createdAt;
+
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
     @JoinTable(
             name = "subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     Set<Topic> topics;
 }

@@ -23,7 +23,11 @@ public class CommentDTO {
     @NotNull
     @NotEmpty
     private Long userId;
+    @NotNull
+    @NotEmpty
     private String content;
     @JsonProperty("created_at")
     private String createdAt;
+    @JsonProperty("updated_at")
+    private String updatedAt;
 }

@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,7 +48,7 @@ public class AuthController {
     @Operation(summary = "Register", description = "Register to Chatop")
     @ApiResponses(value = {
         @ApiResponse(
-            responseCode = "200",
+            responseCode = "201",
             description = "User successfully connected",
             content = @Content(
                 mediaType = "application/json",
@@ -69,6 +70,7 @@ public class AuthController {
             )
         )
     })
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/register", produces = "application/json")
     @SecurityRequirement(name = "")
     public TokenDTO register(
@@ -83,8 +85,8 @@ public class AuthController {
                 }
             )
         )
-        @Valid @RequestBody DBUserDTO user,
-        Errors errors
+        @Valid @RequestBody DBUserDTO user
+        //Errors errors
     )
     {
         Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:\"\\\\|,.<>\\/?]).{8,}$");
@@ -95,7 +97,6 @@ public class AuthController {
                             "et avoir une longueur d'au moins 8 caractères."
             );
         }
-
         dbUserService.create(user);
         UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         Authentication auth = authenticationManager.authenticate(authReq);
@@ -128,6 +129,7 @@ public class AuthController {
             )
         )
     })
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/login", produces = "application/json")
     @SecurityRequirement(name = "")
     public TokenDTO login(
@@ -150,19 +152,17 @@ public class AuthController {
         @RequestBody DBUserDTO user
     )
     {
-
         String usernameOrEmail = user.getEmail();
         String password = user.getPassword();
-
         if (usernameOrEmail.contains("@")) {
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usernameOrEmail, password));
             return new TokenDTO(jwtService.generateToken(auth));
-        } else {
+        }
+        else {
             DBUserDTO userByUsername = dbUserService.findByUsername(usernameOrEmail);
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userByUsername.getEmail(), password));
             return new TokenDTO(jwtService.generateToken(auth));
         }
-
     }
 
 }

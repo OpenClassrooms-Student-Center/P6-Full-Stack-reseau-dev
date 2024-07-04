@@ -35,6 +35,7 @@ public class CommentService implements ICommentService {
         this.commentRepository = commentRepository;
 	}
 
+	@Override
 	public List<CommentDTO> getCommentsByPostId(Long postId) {
 		Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new EntityNotFoundException("Post not found"));
@@ -43,13 +44,17 @@ public class CommentService implements ICommentService {
 				.map(entity -> modelMapper.map(entity, CommentDTO.class))
 				.collect(Collectors.toList());
 	}
-	public void createComment(DBUserDTO currentUser, CommentDTO commentDTO) throws RuntimeException {
+
+
+	@Override
+
+	public void createComment(DBUserDTO currentUser, CommentDTO commentDTO){
 		Timestamp now = DateUtils.now();
 
 		Comment newComment = modelMapper.map(commentDTO, Comment.class);
 		DBUser user = modelMapper.map(currentUser, DBUser.class);
 		newComment.setCreatedAt(now);
-		newComment.setUserId(user);
+		newComment.setUserOwner(user);
 
 		commentRepository.save(newComment);
 	}

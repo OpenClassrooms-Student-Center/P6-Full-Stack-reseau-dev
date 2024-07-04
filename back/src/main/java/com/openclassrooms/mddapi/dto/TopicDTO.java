@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -16,8 +17,11 @@ public class TopicDTO {
     private Long id;
     @NotNull
     @NotEmpty
-    private String name;
+    private String title;
     @NotNull
     @NotEmpty
-    private String description;
+    @JsonProperty("created_at")
+    private String createdAt;
+    @JsonProperty("updated_at")
+    private String updatedAt;
 }

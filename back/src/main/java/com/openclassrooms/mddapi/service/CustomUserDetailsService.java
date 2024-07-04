@@ -25,7 +25,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private DBUserRepository DBUserRepository;
 
-    // On implémente la méthode loadUserByUsername qui va nous permettre de récupérer l'utilisateur lors de la connexion
+    /**
+     * Loads the user's data given the user's email.
+     *
+     * @param email The email of the user to load.
+     * @return UserDetails containing the user's information if the user is found.
+     * @throws UsernameNotFoundException if the user cannot be found in the database.
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -42,9 +48,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
-    /*
-       * We add a default role USER to the user
-
+    /**
+     * Assigns a default role of "USER" to the authenticated user.
+     *
+     * @param role The role to be granted to the user. This is a placeholder and currently only supports "USER".
+     * @return A list of GrantedAuthority based on the roles assigned.
      */
     private List<GrantedAuthority> getGrantedAuthorities(String role) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();

@@ -28,7 +28,8 @@ public class DBUserService implements IDBUserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public void create(DBUserDTO userDTO) throws EntityExistsException{
+    @Override
+    public void create(final DBUserDTO userDTO) throws EntityExistsException{
 
         DBUser user = modelMapper.map(userDTO, DBUser.class);
 
@@ -47,7 +48,8 @@ public class DBUserService implements IDBUserService {
         dbUserRepository.save(user);
     }
 
-    public DBUserDTO findByEmail(String userEmail) throws UsernameNotFoundException {
+    @Override
+    public DBUserDTO findByEmail(final String userEmail) throws UsernameNotFoundException {
 
         Optional<DBUser> dbUser = dbUserRepository.findByEmail(userEmail);
 
@@ -59,7 +61,9 @@ public class DBUserService implements IDBUserService {
         }
 
     }
-    public DBUserDTO findByUsername(String username) throws UsernameNotFoundException {
+
+    @Override
+    public DBUserDTO findByUsername(final String username) throws UsernameNotFoundException {
 
         Optional<DBUser> dbUser = dbUserRepository.findByUsername(username);
 
@@ -72,7 +76,8 @@ public class DBUserService implements IDBUserService {
 
     }
 
-    public DBUserDTO findById(Integer userId) throws UsernameNotFoundException {
+    @Override
+    public DBUserDTO findById(final Integer userId) throws UsernameNotFoundException {
 
         Optional<DBUser> dbUser = dbUserRepository.findById(userId);
 
@@ -85,21 +90,32 @@ public class DBUserService implements IDBUserService {
 
     }
 
-    public void update(DBUserDTO updatedUser, Principal loggedUser) throws UsernameNotFoundException {
+    @Override
+    public void update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException {
+
+        Optional<DBUser> emailExist = dbUserRepository.findByEmail(updatedUser.getEmail());
+        if(emailExist.isPresent()) {
+            throw new EntityExistsException("Email already exists in DB");
+        }
+
+        Optional<DBUser> usernameExist = dbUserRepository.findByUsername(updatedUser.getUsername());
+        if(usernameExist.isPresent()) {
+            throw new EntityExistsException("Username already exists in DB");
+        }
 
         Optional<DBUser> dbUser = dbUserRepository.findByEmail(loggedUser.getName());
 
-        if(dbUser.isPresent()) {
-            DBUser user = dbUser.get();
-            user.setUsername(updatedUser.getUsername());
-            user.setEmail(updatedUser.getEmail());
-            user.setUpdatedAt(DateUtils.now());
-            dbUserRepository.save(user);
-            modelMapper.map(user, DBUserDTO.class);
-        }
-        else{
+        if(dbUser.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
+
+        DBUser user = dbUser.get();
+        user.setUsername(updatedUser.getUsername());
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        user.setUpdatedAt(DateUtils.now());
+        dbUserRepository.save(user);
+        modelMapper.map(user, DBUserDTO.class);
 
     }
 }

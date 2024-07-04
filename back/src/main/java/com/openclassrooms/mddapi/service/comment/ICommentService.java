@@ -6,6 +6,18 @@ import com.openclassrooms.mddapi.dto.DBUserDTO;
 import java.util.List;
 
 public interface ICommentService {
+    /**
+     * Retrieves all comments for a given post.
+     *
+     * @param postId The ID of the post for which comments are to be retrieved.
+     * @return A list of CommentDTOs representing all comments for the specified post.
+     */
     List<CommentDTO> getCommentsByPostId(Long postId);
-    void createComment(DBUserDTO currentUser, CommentDTO commentDTO) throws RuntimeException;
+    /**
+     * Creates a new comment.
+     *
+     * @param currentUser The current user attempting to create a comment, represented as a DBUserDTO.
+     * @param commentDTO The comment to be created, represented as a CommentDTO.
+     */
+    void createComment(DBUserDTO currentUser, CommentDTO commentDTO);
 }

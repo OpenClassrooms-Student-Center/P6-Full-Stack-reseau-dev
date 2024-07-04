@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -147,6 +149,7 @@ public class PostController {
             )
         )
     })
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public PostDTO getPost(@PathVariable(value = "id") Long id) {
@@ -157,7 +160,7 @@ public class PostController {
     @ApiResponses(
             value = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "201",
                             description = "Post created",
                             content = @Content(
                                     mediaType = "application/json",
@@ -197,11 +200,12 @@ public class PostController {
                     )
             }
     )
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public ResponseDTO createPost(
             Principal user,
-            @ModelAttribute PostDTO postDTO
+            @RequestBody @Validated PostDTO postDTO
     )
     {
         postService.createPost(dbUserService.findByEmail(user.getName()), postDTO);
