@@ -3,11 +3,12 @@ package com.openclassrooms.mddapi.service.user;
 import jakarta.persistence.EntityExistsException;
 
 import com.openclassrooms.mddapi.dto.DBUserDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.security.Principal;
 
-public interface IDBUserService {
+public interface IDBUserService extends UserDetailsService {
     /**
      * Creates a new user in the database.
      *

@@ -1,6 +1,7 @@
-package com.openclassrooms.mddapi.handler;
+package com.openclassrooms.mddapi.controller.handler;
 
 import com.openclassrooms.mddapi.dto.ResponseDTO;
+import com.openclassrooms.mddapi.exception.AuthBadRequestException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -40,6 +41,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             return ResponseEntity.status(status).body(new ResponseDTO(ex.getMessage()));
         }
 
+    }
+// Créer les exceptions personnalisés
+    @ExceptionHandler(value = { AuthBadRequestException.class })
+    protected ResponseEntity<?> handleException(AuthBadRequestException ex) {
+        return ResponseEntity.status(400).body(new ResponseDTO(ex.getMessage()));
     }
 
 }

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -205,7 +206,7 @@ public class PostController {
     @SecurityRequirement(name = "bearer")
     public ResponseDTO createPost(
             Principal user,
-            @RequestBody @Validated PostDTO postDTO
+            @RequestBody @Valid PostDTO postDTO
     )
     {
         postService.createPost(dbUserService.findByEmail(user.getName()), postDTO);

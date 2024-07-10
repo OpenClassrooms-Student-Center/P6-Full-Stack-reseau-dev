@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.exception.AuthBadRequestException;
+import com.openclassrooms.mddapi.validation.ValidationUserGroup;
 import jakarta.validation.Valid;
 import com.openclassrooms.mddapi.dto.DBUserDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
@@ -19,12 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -33,7 +31,6 @@ import java.util.regex.Pattern;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@Validated
 @Tag(name = "Auth", description = "Auth ressources")
 @RequestMapping("/auth")
 public class AuthController {
@@ -85,7 +82,7 @@ public class AuthController {
                 }
             )
         )
-        @Valid @RequestBody DBUserDTO user
+        @RequestBody @Validated(ValidationUserGroup.RegistrationUser.class) DBUserDTO user
         //Errors errors
     )
     {
@@ -149,11 +146,17 @@ public class AuthController {
                 }
             )
         )
-        @RequestBody DBUserDTO user
+        @RequestBody @Validated(ValidationUserGroup.AuthenticationUser.class) DBUserDTO user,
+        BindingResult result
     )
     {
+        // Récupérer champ en erreur et message associé
+        if(result.hasErrors()) {
+            throw new AuthBadRequestException("Invalid credentials");
+        }
         String usernameOrEmail = user.getEmail();
         String password = user.getPassword();
+        // Faire vérif dans un service
         if (usernameOrEmail.contains("@")) {
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usernameOrEmail, password));
             return new TokenDTO(jwtService.generateToken(auth));

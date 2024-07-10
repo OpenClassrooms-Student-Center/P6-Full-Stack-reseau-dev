@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.configuration;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
-import com.openclassrooms.mddapi.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
