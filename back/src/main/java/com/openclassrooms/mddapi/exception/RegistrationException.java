@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthBadRequestException extends RuntimeException{
+public class RegistrationException extends RuntimeException{
     private String message;
 }

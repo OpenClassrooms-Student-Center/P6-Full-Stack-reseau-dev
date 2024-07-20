@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.*;
+import com.openclassrooms.mddapi.exception.CommentException;
 import com.openclassrooms.mddapi.service.comment.ICommentService;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,12 +12,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Tag(name = "Comments", description = "Comments resources")
@@ -95,7 +100,7 @@ public class CommentController {
     @GetMapping(value = "/post/{postId}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public CommentsDTO getPostComments(@PathVariable Long postId) {
-        return new CommentsDTO(commentService.getCommentsByPostId(postId));
+        return commentService.getCommentsByPost(postId);
     }
 
 
@@ -147,15 +152,20 @@ public class CommentController {
             }
     )
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "", produces = "application/json")
+    @PostMapping(value = "/posts", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public ResponseDTO createComment(
             Principal user,
-            @RequestBody @Valid CommentDTO commentDTO
+            @RequestBody @Validated CommentDTO commentDTO,
+            BindingResult result
     )
     {
-        commentService.createComment(dbUserService.findByEmail(user.getName()), commentDTO);
-        return new ResponseDTO("Comment created !");
+        if(result.hasErrors()) {
+            Map<String, String> errors = result.getFieldErrors().stream()
+                    .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
+            throw new CommentException(errors.toString());
+        }
+        return commentService.createComment(commentDTO, user);
     }
 
 }

@@ -26,9 +26,6 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
     /*
         * This method configures the security filter chain.
         * It disables CSRF and session management.

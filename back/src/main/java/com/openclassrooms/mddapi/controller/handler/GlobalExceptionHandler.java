@@ -1,24 +1,29 @@
 package com.openclassrooms.mddapi.controller.handler;
 
 import com.openclassrooms.mddapi.dto.ResponseDTO;
-import com.openclassrooms.mddapi.exception.AuthBadRequestException;
+import com.openclassrooms.mddapi.exception.AuthException;
+import com.openclassrooms.mddapi.exception.CommentException;
+import com.openclassrooms.mddapi.exception.PostException;
+import com.openclassrooms.mddapi.exception.RegistrationException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.HashMap;
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /*
-        * Handle all exceptions
+        * Handle all native exceptions
         * EntityExistsException: Throwed when a user already exists
         * DataIntegrityViolationException: Throwed when a user already exists
         * BadCredentialsException: Throwed when a user try to authenticate with bad credentials
@@ -42,10 +47,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
     }
-// Créer les exceptions personnalisés
-    @ExceptionHandler(value = { AuthBadRequestException.class })
-    protected ResponseEntity<?> handleException(AuthBadRequestException ex) {
+    @ExceptionHandler(value = { AuthException.class })
+    protected ResponseEntity<?> handleBadRequestException(AuthException ex) {
         return ResponseEntity.status(400).body(new ResponseDTO(ex.getMessage()));
     }
-
+    @ExceptionHandler(value = { RegistrationException.class })
+    protected ResponseEntity<?> handleRegistrationException(RegistrationException ex) {
+        return ResponseEntity.status(400).body(new ResponseDTO(ex.getMessage()));
+    }
+    @ExceptionHandler(value = { CommentException.class })
+    protected ResponseEntity<?> handleCommentException(CommentException ex) {
+        return ResponseEntity.status(400).body(new ResponseDTO(ex.getMessage()));
+    }
+    @ExceptionHandler(value = { PostException.class })
+    protected ResponseEntity<?> handlePostException(PostException ex) {
+        return ResponseEntity.status(400).body(new ResponseDTO(ex.getMessage()));
+    }
 }

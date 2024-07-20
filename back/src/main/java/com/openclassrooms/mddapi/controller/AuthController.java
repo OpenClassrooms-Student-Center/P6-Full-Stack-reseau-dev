@@ -1,7 +1,10 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.exception.AuthBadRequestException;
-import com.openclassrooms.mddapi.validation.ValidationUserGroup;
+import com.openclassrooms.mddapi.exception.AuthException;
+import com.openclassrooms.mddapi.exception.CommentException;
+import com.openclassrooms.mddapi.exception.PostException;
+import com.openclassrooms.mddapi.exception.RegistrationException;
+import com.openclassrooms.mddapi.validation.Validation;
 import jakarta.validation.Valid;
 import com.openclassrooms.mddapi.dto.DBUserDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
@@ -22,12 +25,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -42,16 +51,16 @@ public class AuthController {
     @Autowired
     private IDBUserService dbUserService;
 
-    @Operation(summary = "Register", description = "Register to Chatop")
+    @Operation(summary = "Register", description = "Register")
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "201",
-            description = "User successfully connected",
+            description = "Account successfully created",
             content = @Content(
                 mediaType = "application/json",
-                schema = @Schema(implementation = TokenDTO.class),
+                schema = @Schema(implementation = ResponseDTO.class),
                 examples = @ExampleObject(
-                    value = "{\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}"
+                    value = "{\"message\": \"Compte crée avec succès\"}"
                 )
             )
         ),
@@ -70,34 +79,28 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/register", produces = "application/json")
     @SecurityRequirement(name = "")
-    public TokenDTO register(
+    public ResponseDTO register(
         @io.swagger.v3.oas.annotations.parameters.RequestBody(
             content = @Content(
                 examples = {
                     @ExampleObject(
                         name = "User sample",
                         summary = "User example",
-                        value = "{\"email\": \"example@chatop.com\"," + "\"username\": \"JohnDoe\"," + "\"password\": \"Strong password\"}"
+                        value = "{\"email\": \"example@example.com\"," + "\"username\": \"JohnDoe\"," + "\"password\": \"Strong password\"}"
                     )
                 }
             )
         )
-        @RequestBody @Validated(ValidationUserGroup.RegistrationUser.class) DBUserDTO user
-        //Errors errors
+        @RequestBody @Validated(Validation.Registration.class) DBUserDTO user,
+        BindingResult result
     )
     {
-        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:\"\\\\|,.<>\\/?]).{8,}$");
-        if (!pattern.matcher(user.getPassword()).matches()) {
-            throw new IllegalArgumentException(
-                    "Le mot de passe doit contenir au moins une lettre majuscule, " +
-                            "une lettre minuscule, un chiffre, un caractère spécial " +
-                            "et avoir une longueur d'au moins 8 caractères."
-            );
+        if(result.hasErrors()) {
+            Map<String, String> errors = result.getFieldErrors().stream()
+                    .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
+            throw new RegistrationException(errors.toString());
         }
-        dbUserService.create(user);
-        UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
-        Authentication auth = authenticationManager.authenticate(authReq);
-        return new TokenDTO(jwtService.generateToken(auth));
+        return dbUserService.register(user);
     }
 
     @Operation(summary = "Login", description = "Login to MDD")
@@ -114,13 +117,13 @@ public class AuthController {
             )
         ),
         @ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
+            responseCode = "400",
+            description = "Bad Request",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = ResponseDTO.class),
                 examples = @ExampleObject(
-                        name = "Unauthorized",
+                        name = "Bad request",
                         value = "{\"message\": \"error\"}"
                 )
             )
@@ -146,26 +149,15 @@ public class AuthController {
                 }
             )
         )
-        @RequestBody @Validated(ValidationUserGroup.AuthenticationUser.class) DBUserDTO user,
+        @RequestBody @Validated(Validation.Authentication.class) DBUserDTO user,
         BindingResult result
     )
     {
-        // Récupérer champ en erreur et message associé
         if(result.hasErrors()) {
-            throw new AuthBadRequestException("Invalid credentials");
+            Map<String, String> errors = result.getFieldErrors().stream()
+                    .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
+            throw new AuthException(errors.toString());
         }
-        String usernameOrEmail = user.getEmail();
-        String password = user.getPassword();
-        // Faire vérif dans un service
-        if (usernameOrEmail.contains("@")) {
-            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usernameOrEmail, password));
-            return new TokenDTO(jwtService.generateToken(auth));
-        }
-        else {
-            DBUserDTO userByUsername = dbUserService.findByUsername(usernameOrEmail);
-            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userByUsername.getEmail(), password));
-            return new TokenDTO(jwtService.generateToken(auth));
-        }
+       return dbUserService.login(user);
     }
-
 }

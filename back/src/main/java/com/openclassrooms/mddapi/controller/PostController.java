@@ -3,6 +3,9 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.PostDTO;
 import com.openclassrooms.mddapi.dto.PostsDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
+import com.openclassrooms.mddapi.exception.AuthException;
+import com.openclassrooms.mddapi.exception.PostException;
+import com.openclassrooms.mddapi.exception.RegistrationException;
 import com.openclassrooms.mddapi.service.post.IPostService;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,10 +19,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Tag(name = "Posts", description = "Posts resources")
@@ -88,7 +95,7 @@ public class PostController {
                     examples = @ExampleObject(
                             name = "Bad request",
                             value = "{" +
-                                    "\"message\": \"{{Error message}}\"" +
+                                        "\"message\": \"{{Error message}}\"" +
                                     "}"
                     )
                 )
@@ -98,7 +105,7 @@ public class PostController {
     @GetMapping(value = "", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public PostsDTO getPosts() {
-        return PostsDTO.builder().posts(postService.getPosts()).build();
+        return postService.getPosts();
     }
 
     @Operation(summary = "Get post", description = "Retrieved a specified post")
@@ -206,11 +213,16 @@ public class PostController {
     @SecurityRequirement(name = "bearer")
     public ResponseDTO createPost(
             Principal user,
-            @RequestBody @Valid PostDTO postDTO
+            @RequestBody @Validated PostDTO postDTO,
+            BindingResult result
     )
     {
-        postService.createPost(dbUserService.findByEmail(user.getName()), postDTO);
-        return new ResponseDTO("Post created !");
+        if(result.hasErrors()) {
+            Map<String, String> errors = result.getFieldErrors().stream()
+                    .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
+            throw new PostException(errors.toString());
+        }
+        return postService.createPost(postDTO,user);
     }
 
 }

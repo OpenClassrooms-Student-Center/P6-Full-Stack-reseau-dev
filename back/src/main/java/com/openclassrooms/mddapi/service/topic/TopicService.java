@@ -1,14 +1,12 @@
 package com.openclassrooms.mddapi.service.topic;
 
-import java.util.List;
-import java.util.Set;
+import java.security.Principal;
 import java.util.stream.Collectors;
 
-import com.openclassrooms.mddapi.dto.DBUserDTO;
-import com.openclassrooms.mddapi.dto.TopicDTO;
+import com.openclassrooms.mddapi.dto.*;
 import com.openclassrooms.mddapi.model.DBUser;
 import com.openclassrooms.mddapi.repository.DBUserRepository;
-import org.apache.coyote.BadRequestException;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,44 +30,38 @@ public class TopicService implements ITopicService {
     }
 
 	@Override
-	public List<TopicDTO> getTopics() {
-		List<Topic> topics = topicRepository.findAll();
-		return topics.stream()
-				.map(entity -> {
+	public TopicsDTO getTopics() {
+		return TopicsDTO.builder().topics(topicRepository.findAll().stream()
+			.map(entity -> {
 				return modelMapper.map(entity, TopicDTO.class);
-				})
-				.collect(Collectors.toList());
+			})
+			.collect(Collectors.toList())).build();
 	}
 
 	@Override
-	public void subscribe(final DBUserDTO currentUser, final Long topicId) throws Exception {
-		Topic topic = topicRepository.findById(topicId).orElse(null);
-		DBUser user = dbUserRepository.findById(currentUser.getId()).orElse(null);
-		if (topic == null || user == null) {
-			throw new Exception("User or Topic not found");
-		}
+	public ResponseDTO subscribe(final Principal currentUser, final Long topicId) throws Exception {
+		Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("Topic not found"));
+		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		user.getTopics().add(topic);
 		dbUserRepository.save(user);
+		return new ResponseDTO("Topic followed !");
 	}
 
-	public void unsubscribe(final DBUserDTO currentUser, final Long topicId) throws Exception {
-		Topic topic = topicRepository.findById(topicId).orElse(null);
-		DBUser user = dbUserRepository.findById(currentUser.getId()).orElse(null);
-		if (topic == null || user == null) {
-			throw new Exception("User or Topic not found");
-		}
+	public ResponseDTO unsubscribe(final Principal currentUser, final Long topicId) throws Exception {
+		Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("Topic not found"));
+		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		user.getTopics().remove(topic);
 		dbUserRepository.save(user);
+		return new ResponseDTO("Topic unfollowed !");
 	}
 
-	public Set<TopicDTO> getTopicsByUser(final DBUserDTO currentUser) throws Exception {
-		DBUser user = dbUserRepository.findById(currentUser.getId()).orElse(null);
-		if (user == null) {
-			throw new Exception("User not found");
-		}
-		return user.getTopics().stream()
-				.map(topic -> modelMapper.map(topic, TopicDTO.class))
-				.collect(Collectors.toSet());
+	public TopicsDTO getTopicsByUser(final Principal currentUser) throws Exception {
+		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+		return TopicsDTO.builder().topics(user.getTopics().stream()
+			.map(entity -> {
+				return modelMapper.map(entity, TopicDTO.class);
+			})
+			.collect(Collectors.toList())).build();
 	}
 
 	

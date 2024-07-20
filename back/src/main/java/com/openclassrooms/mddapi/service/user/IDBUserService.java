@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.service.user;
 
+import com.openclassrooms.mddapi.dto.ResponseDTO;
+import com.openclassrooms.mddapi.dto.TokenDTO;
 import jakarta.persistence.EntityExistsException;
 
 import com.openclassrooms.mddapi.dto.DBUserDTO;
@@ -15,15 +17,7 @@ public interface IDBUserService extends UserDetailsService {
      * @param userDTO the user data transfer object containing the user's information
      * @throws EntityExistsException if a user with the same email or username already exists
      */
-    void create(final DBUserDTO userDTO) throws EntityExistsException;
-    /**
-     * Finds a user by their email.
-     *
-     * @param userEmail the email of the user to find
-     * @return the found user as a data transfer object
-     * @throws UsernameNotFoundException if no user with the given email can be found
-     */
-    DBUserDTO findByEmail(final String userEmail) throws UsernameNotFoundException;
+    ResponseDTO register(final DBUserDTO userDTO) throws EntityExistsException;
     /**
      * Finds a user by their username.
      *
@@ -31,15 +25,15 @@ public interface IDBUserService extends UserDetailsService {
      * @return the found user as a data transfer object
      * @throws UsernameNotFoundException if no user with the given username can be found
      */
-    DBUserDTO findByUsername(final String username) throws UsernameNotFoundException;
+    TokenDTO login(final DBUserDTO user) throws UsernameNotFoundException;
     /**
-     * Finds a user by their ID.
+     * Finds a user by their email.
      *
-     * @param userId the ID of the user to find
+     * @param userEmail the email of the user to find
      * @return the found user as a data transfer object
-     * @throws UsernameNotFoundException if no user with the given ID can be found
+     * @throws UsernameNotFoundException if no user with the given email can be found
      */
-    DBUserDTO findById(final Integer userId) throws UsernameNotFoundException;
+    DBUserDTO findByEmail(final String email) throws UsernameNotFoundException;
     /**
      * Updates a user's information.
      *
@@ -47,6 +41,7 @@ public interface IDBUserService extends UserDetailsService {
      * @param loggedUser the principal of the currently logged-in user
      * @throws UsernameNotFoundException if the user to update cannot be found
      */
-    void update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException;
-
+    TokenDTO update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException;
+    boolean checkPassword(final DBUserDTO user);
+    boolean checkIsEmail(final String usernameOrEmail);
 }

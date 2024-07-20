@@ -91,7 +91,7 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@GetMapping(value = "", produces = "application/json")
-	public List<TopicDTO> getTopics() {
+	public TopicsDTO getTopics() {
 		return topicService.getTopics();
 	}
 
@@ -153,8 +153,8 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@GetMapping(value = "/user", produces = "application/json")
-	public Set<TopicDTO> getTopicsByUser(Principal user) throws Exception {
-		return topicService.getTopicsByUser(dbUserService.findByEmail(user.getName()));
+	public TopicsDTO getTopicsByUser(Principal user) throws Exception {
+		return topicService.getTopicsByUser(user);
 	}
 
 	@Operation(summary = "Follow a topic", description = "Follow a topic")
@@ -210,8 +210,7 @@ public class TopicController {
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		topicService.subscribe(dbUserService.findByEmail(user.getName()),Long.parseLong(id));
-		return new ResponseDTO("Topic followed !");
+		return topicService.subscribe(user,Long.parseLong(id));
 	}
 
 	@Operation(summary = "Unfollow a topic", description = "Unfollow a topic")
@@ -266,10 +265,7 @@ public class TopicController {
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		topicService.unsubscribe(dbUserService.findByEmail(user.getName()),Long.parseLong(id));
-		return new ResponseDTO("Topic unfollowed !");
+		return topicService.unsubscribe(user,Long.parseLong(id));
 	}
-
-
 
 }

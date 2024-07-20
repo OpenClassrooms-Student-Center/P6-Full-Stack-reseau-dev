@@ -12,18 +12,19 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostDTO {
-    @NotNull
-    @NotEmpty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Le topic ne peut pas être NULL.")
+    @JsonProperty("topic_id")
     private Long topicId;
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "L'auteur de l'article ne peut pas être NULL.")
+    @JsonProperty("user_id")
     private Long userId;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Le titre ne peut pas être vide.")
+    @NotNull(message = "Le titre ne peut pas être NULL.")
     private String title;
+    @NotEmpty(message = "Le contenu ne peut pas être vide.")
+    @NotNull(message = "Le contenu ne peut pas être NULL.")
     private String content;
     @JsonProperty("created_at")
     private String createdAt;

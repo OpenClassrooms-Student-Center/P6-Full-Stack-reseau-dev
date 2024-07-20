@@ -2,8 +2,7 @@ package com.openclassrooms.mddapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.openclassrooms.mddapi.validation.ValidationUserGroup;
-import jakarta.validation.constraints.Email;
+import com.openclassrooms.mddapi.validation.Validation;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,18 +15,87 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DBUserDTO {
-    private Integer id;
+    private Long id;
 
-    @NotNull(groups = {ValidationUserGroup.RegistrationUser.class}, message = "Username is required")
-    @NotEmpty(groups = {ValidationUserGroup.RegistrationUser.class}, message = "Username is required")
+    @NotNull(
+            groups = {
+                    Validation.Me.class,
+            },
+            message = "Le champ nom d'utilisateur ne peut pas être NULL."
+    )
+    @NotEmpty(
+            groups = {
+                    Validation.Me.class,
+            },
+            message = "Le champ nom d'utilisateur ne peut pas être vide."
+    )
+    @NotNull(
+            groups = {
+                    Validation.Registration.class,
+            },
+            message = "Le champ nom d'utilisateur ne peut pas être NULL."
+    )
+    @NotEmpty(
+            groups = {
+                    Validation.Registration.class,
+            },
+            message = "Le champ nom d'utilisateur ne peut pas être vide."
+    )
     private String username;
 
     @JsonAlias({"login"})
-    @NotNull(groups = {ValidationUserGroup.AuthenticationUser.class, ValidationUserGroup.RegistrationUser.class}, message = "Email is required")
+    @NotNull(
+            groups = {
+                    Validation.Me.class,
+            },
+            message = "Le champ email ne peut pas être NULL."
+    )
+    @NotEmpty(
+            groups = {
+                    Validation.Me.class,
+            },
+            message = "Le champ email ne peut pas être vide."
+    )
+    @NotNull(
+            groups = {
+                    Validation.Registration.class,
+            },
+            message = "Le champ email ne peut pas être NULL."
+    )
+    @NotEmpty(
+            groups = {
+                    Validation.Registration.class,
+            },
+            message = "Le champ email ne peut pas être vide."
+    )
+    @NotNull(
+            groups = {
+                    Validation.Authentication.class,
+            },
+            message = "Le champ login ne peut pas être NULL."
+    )
+    @NotEmpty(
+            groups = {
+                    Validation.Authentication.class,
+            },
+            message = "Le champ login ne peut pas être vide."
+    )
     private String email;
 
-    @NotNull(groups = {ValidationUserGroup.AuthenticationUser.class, ValidationUserGroup.RegistrationUser.class}, message = "Password is required")
-    @NotEmpty(groups = {ValidationUserGroup.AuthenticationUser.class, ValidationUserGroup.RegistrationUser.class}, message = "Password is required")
+    @NotNull(
+            groups = {
+                    Validation.Registration.class,
+                    Validation.Authentication.class
+            },
+            message = "Le champ mot de passe ne peut pas être NULL."
+    )
+    @NotEmpty(
+            groups = {
+                    Validation.Registration.class,
+                    Validation.Authentication.class
+            },
+            message = "Le champ mot de passe ne peut pas être vide."
+    )
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

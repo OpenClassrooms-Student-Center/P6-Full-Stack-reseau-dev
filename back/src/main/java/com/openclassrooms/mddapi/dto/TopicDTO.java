@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openclassrooms.mddapi.validation.Validation;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -12,14 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TopicDTO {
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "L'id ne peut pas être NULL.")
     private Long id;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Le titre ne peut pas être vide.")
+    @NotNull(message = "Le titre ne peut pas être NULL.")
     private String title;
-    @NotNull
-    @NotEmpty
     @JsonProperty("created_at")
     private String createdAt;
     @JsonProperty("updated_at")

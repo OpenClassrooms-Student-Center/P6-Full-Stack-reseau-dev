@@ -1,5 +1,10 @@
 package com.openclassrooms.mddapi.service.user;
 
+import com.openclassrooms.mddapi.dto.ResponseDTO;
+import com.openclassrooms.mddapi.dto.TokenDTO;
+import com.openclassrooms.mddapi.exception.AuthException;
+import com.openclassrooms.mddapi.exception.RegistrationException;
+import com.openclassrooms.mddapi.jwt.JWTService;
 import jakarta.persistence.EntityExistsException;
 
 import com.openclassrooms.mddapi.dto.DBUserDTO;
@@ -8,6 +13,7 @@ import com.openclassrooms.mddapi.repository.DBUserRepository;
 import com.openclassrooms.mddapi.util.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,12 +21,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.ObjectError;
 
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static java.lang.String.format;
 
@@ -32,98 +40,83 @@ public class DBUserService implements IDBUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
+    private JWTService jwtService;
+    @Autowired
     private DateUtils DateUtils;
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public void create(final DBUserDTO userDTO) throws EntityExistsException{
-
+    public ResponseDTO register(final DBUserDTO userDTO) throws EntityExistsException{
+        if(!checkPassword(userDTO)){
+            throw new AuthException("Le mot de passe doit ne respecte pas les règles de sécurité");
+        }
         DBUser user = modelMapper.map(userDTO, DBUser.class);
-
         Optional<DBUser> dbUserByEmail = dbUserRepository.findByEmail(user.getEmail());
         Optional<DBUser> dbUserByUsername = dbUserRepository.findByUsername(user.getUsername());
         if(dbUserByEmail.isPresent() || dbUserByUsername.isPresent()) {
-            throw new EntityExistsException("User already exists in DB");
+            throw new EntityExistsException("Un utilisateur avec cet e-mail ou nom d'utilisateur existe déjà.");
         }
-
         Timestamp formattedDate = DateUtils.now();
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreatedAt(formattedDate);
         user.setUpdatedAt(formattedDate);
-
         dbUserRepository.save(user);
+        return new ResponseDTO("Compte crée avec succès");
     }
 
     @Override
-    public DBUserDTO findByEmail(final String userEmail) throws UsernameNotFoundException {
+    public DBUserDTO findByEmail(final String email) throws UsernameNotFoundException {
+        DBUser dbUser = dbUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return modelMapper.map(dbUser, DBUserDTO.class);
+    }
 
-        Optional<DBUser> dbUser = dbUserRepository.findByEmail(userEmail);
-
+    @Override
+    public TokenDTO login(final DBUserDTO user) throws UsernameNotFoundException {
+        String login = user.getEmail();
+        Optional<DBUser> dbUser = dbUserRepository.findByUsername(login);
+        if(checkIsEmail(user.getEmail())){
+            dbUser = dbUserRepository.findByEmail(login);
+        }
         if(dbUser.isPresent()) {
-            return modelMapper.map(dbUser.get(), DBUserDTO.class);
+            String password = user.getPassword();
+            if(!passwordEncoder.matches(password, dbUser.get().getPassword())){
+                throw new BadCredentialsException("Mot de passe incorrect");
+            }
+            return new TokenDTO(jwtService.generateToken(dbUser.get().getEmail()));
         }
         else{
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Utilisateur introuvable");
         }
-
     }
 
     @Override
-    public DBUserDTO findByUsername(final String username) throws UsernameNotFoundException {
+    public TokenDTO update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException {
+        DBUser current = dbUserRepository.findByEmail(loggedUser.getName()).orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable"));
 
-        Optional<DBUser> dbUser = dbUserRepository.findByUsername(username);
-
-        if(dbUser.isPresent()) {
-            return modelMapper.map(dbUser.get(), DBUserDTO.class);
+        Optional<DBUser> newEmailAlreadyExists = dbUserRepository.findByEmail(updatedUser.getEmail());
+        Optional<DBUser> newUsernameAlreadyExists = dbUserRepository.findByUsername(updatedUser.getUsername());
+        // If the email has changed, we check that the chosen email doesn't exists
+        if(!current.getEmail().equals(updatedUser.getEmail())){
+            if(newEmailAlreadyExists.isPresent()){
+                throw new UsernameNotFoundException("le nouvel e-mail choisi est déjà utilisé.");
+            }
         }
-        else{
-            throw new UsernameNotFoundException("User not found");
-        }
-
-    }
-
-    @Override
-    public DBUserDTO findById(final Integer userId) throws UsernameNotFoundException {
-
-        Optional<DBUser> dbUser = dbUserRepository.findById(userId);
-
-        if(dbUser.isPresent()) {
-            return modelMapper.map(dbUser.get(), DBUserDTO.class);
-        }
-        else{
-            throw new UsernameNotFoundException("User not found");
+        // If the username has changed, we check that the chosen username doesn't exists
+        else if(!current.getUsername().equals(updatedUser.getUsername())){
+            if(newUsernameAlreadyExists.isPresent()){
+                throw new UsernameNotFoundException("le nouveau nom d'utilisateur choisi est déjà utilisé.");
+            }
         }
 
-    }
+        current.setUsername(updatedUser.getUsername());
+        current.setEmail(updatedUser.getEmail());
+        current.setPassword(passwordEncoder.encode(current.getPassword()));
+        current.setUpdatedAt(DateUtils.now());
+        dbUserRepository.save(current);
 
-    @Override
-    public void update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException {
-
-        Optional<DBUser> emailExist = dbUserRepository.findByEmail(updatedUser.getEmail());
-        if(emailExist.isPresent()) {
-            throw new EntityExistsException("Email already exists in DB");
-        }
-
-        Optional<DBUser> usernameExist = dbUserRepository.findByUsername(updatedUser.getUsername());
-        if(usernameExist.isPresent()) {
-            throw new EntityExistsException("Username already exists in DB");
-        }
-
-        Optional<DBUser> dbUser = dbUserRepository.findByEmail(loggedUser.getName());
-
-        if(dbUser.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        DBUser user = dbUser.get();
-        user.setUsername(updatedUser.getUsername());
-        user.setEmail(updatedUser.getEmail());
-        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        user.setUpdatedAt(DateUtils.now());
-        dbUserRepository.save(user);
-        modelMapper.map(user, DBUserDTO.class);
+        String newToken = jwtService.generateToken(updatedUser.getEmail());
+        return new TokenDTO(newToken);
 
     }
 
@@ -136,20 +129,18 @@ public class DBUserService implements IDBUserService {
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        Optional<DBUser> user = dbUserRepository.findByEmail(email);
-
-        if(user.isPresent()) {
-            DBUser existingUser = user.get();
-
-            return new User(existingUser.getEmail(), existingUser.getPassword(), getGrantedAuthorities("USER"));
-        }
-        else {
-            throw new UsernameNotFoundException(format("User: %s not found in db", email));
-        }
-
+        DBUser user = dbUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(format("User: %s not found in db", email)));
+        return new User(user.getEmail(), user.getPassword(), getGrantedAuthorities("USER"));
     }
 
+    public boolean checkPassword(DBUserDTO user){
+        Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:\"\\\\|,.<>\\/?]).{8,}$");
+        return pattern.matcher(user.getPassword()).matches();
+    }
+
+    public boolean checkIsEmail(String usernameOrEmail){
+        return usernameOrEmail.contains("@");
+    }
 
     /**
      * Assigns a default role of "USER" to the authenticated user.
