@@ -1,7 +1,10 @@
 <div class="register" fxLayout="row" fxLayoutAlign="center center">
     <mat-card>
+      <button mat-icon-button (click)="goHome()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
         <mat-card-header fxLayoutAlign="center center">
-            <mat-card-title>Register</mat-card-title>
+            <mat-card-title>Inscription</mat-card-title>
         </mat-card-header>
         <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
             <mat-card-content fxLayout="column">

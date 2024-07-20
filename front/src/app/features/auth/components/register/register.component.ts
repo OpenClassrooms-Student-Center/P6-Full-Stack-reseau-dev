@@ -52,4 +52,7 @@ export class RegisterComponent {
     );
   }
 
+  public goHome(): void {
+    this.router.navigate(['']);
+  }
 }

@@ -16,11 +16,10 @@ export class LoginComponent {
   public onError = false;
 
   public form = this.fb.group({
-    email: [
+    login: [
       '',
       [
-        Validators.required,
-        Validators.email
+        Validators.required
       ]
     ],
     password: [
@@ -48,5 +47,8 @@ export class LoginComponent {
       },
       error: error => this.onError = true,
     });
+  }
+  public goHome(): void {
+    this.router.navigate(['']);
   }
 }
