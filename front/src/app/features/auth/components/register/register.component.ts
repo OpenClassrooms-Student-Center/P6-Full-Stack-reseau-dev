@@ -13,6 +13,7 @@ import {Token} from "../../../../interfaces/token.interface";
 export class RegisterComponent {
 
   public onError = false;
+  public errorMessage = "";
 
   public form = this.fb.group({
     email: [
@@ -47,7 +48,10 @@ export class RegisterComponent {
     const registerRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest).subscribe({
         next: (_: Token) => this.router.navigate(['/login']),
-        error: _ => this.onError = true,
+        error: (error) => {
+          this.onError = true;
+          this.errorMessage = error.error.message;
+        }
       }
     );
   }

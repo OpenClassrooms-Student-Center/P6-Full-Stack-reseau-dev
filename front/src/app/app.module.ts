@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,15 +19,6 @@ import { TopicComponent } from './features/topic/topic.component';
 import { HomeComponent } from './components/home/home.component';
 import { PostComponent } from './components/post/post.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
-const materialModule = [
-  MatButtonModule,
-  MatInputModule,
-  MatCardModule,
-  MatIconModule,
-  MatSnackBarModule,
-  MatToolbarModule,
-]
 
 @NgModule({
   declarations: [
@@ -42,7 +34,13 @@ const materialModule = [
         BrowserAnimationsModule,
         FlexLayoutModule,
         HttpClientModule,
-        ...materialModule,
+        MatButtonModule,
+        MatInputModule,
+        MatCardModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatSidenavModule,
         FormsModule,
         ReactiveFormsModule
     ],

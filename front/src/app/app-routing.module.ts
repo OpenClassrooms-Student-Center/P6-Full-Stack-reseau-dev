@@ -23,6 +23,11 @@ const routes: Routes = [
     component: PostComponent
   },
   {
+    path: 'topics',
+    canActivate: [AuthGuard],
+    component: PostComponent
+  },
+  {
     path: 'me',
     canActivate: [AuthGuard],
     component: MeComponent

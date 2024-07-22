@@ -14,6 +14,7 @@ import {Token} from "../../../../interfaces/token.interface";
 export class LoginComponent {
   public hide = true;
   public onError = false;
+  public errorMessage = "";
 
   public form = this.fb.group({
     login: [
@@ -45,7 +46,10 @@ export class LoginComponent {
         this.sessionService.logIn(token);
         this.router.navigate(['/posts']);
       },
-      error: error => this.onError = true,
+      error: (error) => {
+        this.onError = true;
+        this.errorMessage = error.error.message;
+      }
     });
   }
   public goHome(): void {

@@ -1,15 +1,39 @@
-<div class="app">
-  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-    <div >
-      <img src="assets/logo_p6.png" width="200" height="100">
-      <div *ngIf="$isLogged() | async;">
-        <span routerLink="posts" class="link">Articles</span>
-        <span routerLink="topics" class="link">Thèmes</span>
-        <span routerLink="me" class="link">Account</span>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" position="end">
+    <div class="menu hamburger-menu" *ngIf="$isLogged() | async;">
+      <div fxLayout="column" fxLayoutAlign="end end" class="mb-auto">
+        <a routerLink="posts">Articles</a>
+        <a routerLink="topics">Thèmes</a>
+      </div>
+      <a class="me-link" routerLink="me"><mat-icon>account_circle</mat-icon></a>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="app">
+      <mat-toolbar
+        *ngIf="currentRoute != '/'"
+        [ngClass]="{'toolbar-auth': currentRoute == '/register' || currentRoute == '/login'}"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+      >
+        <img class="img-toolbar" src="assets/logo_p6.png" width="100">
+        <div fxLayoutAlign="end center" class="menu toolbar-menu" *ngIf="$isLogged() | async;">
+          <a routerLink="posts">Articles</a>
+          <a routerLink="topics">Thèmes</a>
+          <a class="me-link" routerLink="me"><mat-icon>account_circle</mat-icon></a>
+        </div>
+        <a class="hamburger-button" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></a>
+      </mat-toolbar>
+      <div
+        fxLayout
+        fxLayoutAlign="center center"
+        *ngIf="currentRoute == '/'"
+      >
+        <img class="img-home" src="assets/logo_p6.png">
+      </div>
+      <div>
+        <router-outlet></router-outlet>
       </div>
     </div>
-  </mat-toolbar>
-  <div>
-    <router-outlet></router-outlet>
-  </div>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

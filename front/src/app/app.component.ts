@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {filter, Observable} from 'rxjs';
 import { AuthService } from './features/auth/services/auth.service';
 import { SessionService } from './services/session.service';
+import {MatSidenav} from "@angular/material/sidenav";
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,23 @@ import { SessionService } from './services/session.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private sessionService: SessionService) {
-  }
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+  currentRoute:string = "";
 
+  constructor(
+    private router: Router,
+    private sessionService: SessionService
+  )
+  {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentRoute = event.url;
+    });
+  }
+  public openSidenav(): void {
+    this.sidenav.open();
+  }
   public $isLogged(): Observable<boolean> {
     return this.sessionService.$isLogged();
   }

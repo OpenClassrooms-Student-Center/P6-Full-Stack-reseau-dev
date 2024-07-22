@@ -1,25 +1,35 @@
-<div class="register" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card>
-      <button mat-icon-button (click)="goHome()">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-        <mat-card-header fxLayoutAlign="center center">
-            <mat-card-title>Inscription</mat-card-title>
-        </mat-card-header>
-        <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
-            <mat-card-content fxLayout="column">
-                <mat-form-field fxFlex>
-                    <input matInput placeholder="Nom d'utilisateur" formControlName="username">
-                </mat-form-field>
-                <mat-form-field fxFlex>
-                    <input matInput placeholder="Email" formControlName="email">
-                </mat-form-field>
-                <mat-form-field fxFlex>
-                    <input matInput placeholder="Password" formControlName="password">
-                </mat-form-field>
-            </mat-card-content>
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
-            <span *ngIf="onError" class="error ml2">An error occurred</span>
-        </form>
-    </mat-card>
+<div class="header-auth">
+  <button class="bg-transparent" mat-icon-button  (click)="goHome()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <img class="img-login-mobile" src="assets/logo_p6.png">
+  <h3>
+    Inscription
+  </h3>
 </div>
+<form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+  <mat-card-content fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="column">
+      <mat-label>Nom d'utilisateur</mat-label>
+      <mat-form-field class="input-auth" appearance="outline">
+        <input matInput formControlName="username">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column">
+      <mat-label>Adresse e-mail</mat-label>
+      <mat-form-field class="input-auth" appearance="outline">
+        <input matInput formControlName="email">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column">
+      <mat-label>Mot de passe</mat-label>
+      <mat-form-field appearance="outline">
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <div fxLayout fxLayoutAlign="center center">
+    <button class="skyblue-button" mat-raised-button type="submit" [disabled]="form.invalid">S'inscrire</button>
+  </div>
+  <p *ngIf="onError" class="error">{{errorMessage}}</p>
+</form>

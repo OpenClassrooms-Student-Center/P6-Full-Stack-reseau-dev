@@ -1,4 +1,133 @@
 /* You can add global styles to this file, and also import other style files */
 
+$skyblue : #7550EC;
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.border-black{
+  border: 1px solid #000!important;
+}
+.skyblue-button{
+  font-weight: bold;
+  background: $skyblue;
+  color: white;
+}
+.bg-transparent {
+  background-color: transparent !important;
+}
+.img-toolbar{
+  margin-right: auto;
+}
+.hamburger-button{
+  display: none;
+}
+mat-toolbar{
+  background: white!important;
+  padding: 50px!important;
+  border: 1px solid black;
+}
+.menu a{
+  color: black;
+  text-decoration: none;
+}
+.me-link{
+  color: gray!important;
+  mat-icon{
+    font-size: 48px; /* Taille de l'icône */
+    height: 48px; /* Hauteur de l'icône */
+    width: 48px; /* Largeur de l'icône */
+  }
+}
+.mb-auto{
+  margin-bottom: auto;
+
+}
+.hamburger-menu{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  a{
+    margin-right: 10px;
+    &:nth-child(1){
+      margin-top: 36px;
+      margin-bottom: 16px;
+    }
+    &:nth-child(3){
+      align-self: end;
+    }
+  }
+}
+.toolbar-menu a{
+  &:nth-child(1),&:nth-child(2){
+    margin-right: 24px;
+  }
+}
+.error{
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.img-login-mobile{
+  display: none;
+  width: 350px;
+  @media (max-width: 599px) {
+    display: block;
+  }
+}
+.header-auth{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .mat-icon-button{
+    align-self: flex-start;
+  }
+}
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: black;
+}
+.home-buttons {
+  width: 120px!important;
+  &:first-of-type {
+    margin-right: 24px;
+    @media (max-width: 599px) {
+      margin-right: unset;
+    }
+  }
+  &:nth-of-type(2) {
+    margin-left: 24px;
+    @media (max-width: 599px) {
+      margin-left: unset;
+      margin-top: 24px;
+    }
+  }
+}
+@media (max-width: 599px) {
+  .img-home{
+    width: 350px;
+  }
+  mat-toolbar{
+    padding: 0px;
+  }
+  .toolbar-menu{
+    display: none!important;
+  }
+  .hamburger-button{
+    display: block;
+  }
+  .toolbar-auth{
+    display: none!important;
+  }
+}
+.mat-sidenav-container {
+  height: 100%;
+}
+
+.mat-sidenav {
+  width: 250px;
+}
+
+.mat-nav-list a {
+  color: #555;
+  text-decoration: none;
+}
