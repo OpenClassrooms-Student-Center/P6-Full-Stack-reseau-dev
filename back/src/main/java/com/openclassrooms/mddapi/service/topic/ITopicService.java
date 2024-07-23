@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.service.topic;
 import java.security.Principal;
 import java.util.List;
 
-import com.openclassrooms.mddapi.dto.ResponseDTO;
 import com.openclassrooms.mddapi.dto.TopicDTO;
 
 public interface ITopicService {
@@ -12,7 +11,7 @@ public interface ITopicService {
 	 *
 	 * @return A list of TopicDTOs representing all topics.
 	 */
-	List<TopicDTO> getTopics();
+	List<TopicDTO> getTopics(Principal user) throws Exception;
 	/**
 	 * Subscribes a user to a topic.
 	 *
@@ -20,7 +19,7 @@ public interface ITopicService {
 	 * @param topicId The ID of the topic to subscribe to.
 	 * @throws Exception if the user or topic cannot be found.
 	 */
-	ResponseDTO subscribe(final Principal currentUser, final Long topicId) throws Exception;
+	List<TopicDTO> subscribe(final Principal currentUser, final Long topicId) throws Exception;
 	/**
 	 * Unsubscribes a user from a topic.
 	 *
@@ -28,7 +27,7 @@ public interface ITopicService {
 	 * @param topicId The ID of the topic to unsubscribe from.
 	 * @throws Exception if the user or topic cannot be found.
 	 */
-	ResponseDTO unsubscribe(final Principal currentUser, final Long topicId) throws Exception;
+	List<TopicDTO> unsubscribe(final Principal currentUser, final Long topicId) throws Exception;
 	/**
 	 * Retrieves topics subscribed by a user.
 	 *

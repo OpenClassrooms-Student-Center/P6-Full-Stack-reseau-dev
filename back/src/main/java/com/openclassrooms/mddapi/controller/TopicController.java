@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.controller;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.openclassrooms.mddapi.dto.*;
 import com.openclassrooms.mddapi.model.Topic;
@@ -93,8 +94,8 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@GetMapping(value = "", produces = "application/json")
-	public List<TopicDTO> getTopics() {
-		return topicService.getTopics();
+	public List<TopicDTO> getTopics(Principal user) throws Exception {
+        return topicService.getTopics(user);
 	}
 
 	@Operation(summary = "Get topics followed by user", description = "Retrieve all topics for a user")
@@ -162,21 +163,29 @@ public class TopicController {
 	@Operation(summary = "Follow a topic", description = "Follow a topic")
 	@ApiResponses(
 		value = {
-			@ApiResponse(
-				responseCode = "200",
-				description = "Topic followed !",
-				content = @Content(
-					mediaType = "application/json",
-					schema = @Schema(implementation = ResponseDTO.class),
-					examples = @ExampleObject(
-						value =
-							"{" +
-								"\"message\": \"{{Topic followed !}}\"" +
-							"}"
-
-					)
-				)
-			),
+            @ApiResponse(
+                responseCode = "200",
+                description = "Topics successfully retrieved",
+                content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(type = "array", implementation = TopicDTO.class),
+                    examples = @ExampleObject(
+                        value =
+                                "[" +
+                                    "{" +
+                                        "\"id\": 1," +
+                                        "\"name\": \"PHP\"," +
+                                        "\"description\": description," +
+                                        "}," +
+                                        "{" +
+                                        "\"id\": 1," +
+                                        "\"name\": \"PHP\"," +
+                                        "\"description\": description," +
+                                    "}" +
+                                "]"
+                    )
+                )
+            ),
 			@ApiResponse(
 				responseCode = "401",
 				description = "Unauthorized",
@@ -212,27 +221,35 @@ public class TopicController {
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		topicService.subscribe(user,Long.parseLong(id));
-		return this.getTopicsByUser(user);
+		return topicService.subscribe(user,Long.parseLong(id));
 	}
 
 	@Operation(summary = "Unfollow a topic", description = "Unfollow a topic")
 	@ApiResponses(
 		value = {
-			@ApiResponse(
-				responseCode = "200",
-				description = "Topic unfollowed !",
-				content = @Content(
-					mediaType = "application/json",
-					schema = @Schema(implementation = ResponseDTO.class),
-					examples = @ExampleObject(
-						value =
-							"{" +
-								"\"message\": \"{{Topic followed !}}\"" +
-							"}"
-					)
-				)
-			),
+            @ApiResponse(
+                responseCode = "200",
+                description = "Topics successfully retrieved",
+                content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(type = "array", implementation = TopicDTO.class),
+                    examples = @ExampleObject(
+                        value =
+                            "[" +
+                                "{" +
+                                    "\"id\": 1," +
+                                    "\"name\": \"PHP\"," +
+                                    "\"description\": description," +
+                                "}," +
+                                "{" +
+                                    "\"id\": 1," +
+                                    "\"name\": \"PHP\"," +
+                                    "\"description\": description," +
+                                "}" +
+                            "]"
+                    )
+                )
+            ),
 			@ApiResponse(
 				responseCode = "401",
 				description = "Unauthorized",
@@ -268,8 +285,7 @@ public class TopicController {
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		topicService.unsubscribe(user,Long.parseLong(id));
-		return this.getTopicsByUser(user);
+		return topicService.unsubscribe(user,Long.parseLong(id));
 	}
 
 }

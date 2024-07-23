@@ -31,27 +31,31 @@ public class TopicService implements ITopicService {
     }
 
 	@Override
-	public List<TopicDTO> getTopics() {
-		return topicRepository.findAll().stream()
+	public List<TopicDTO> getTopics(final Principal user) throws Exception {
+		List<TopicDTO> userTopics = this.getTopicsByUser(user);
+		List<TopicDTO> allTopics = topicRepository.findAll().stream()
 				.map(entity -> modelMapper.map(entity, TopicDTO.class))
+				.collect(Collectors.toList());
+		return allTopics.stream()
+				.filter(topic -> userTopics.stream().noneMatch(userTopic -> userTopic.getId().equals(topic.getId())))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public ResponseDTO subscribe(final Principal currentUser, final Long topicId) throws Exception {
+	public List<TopicDTO> subscribe(final Principal currentUser, final Long topicId) throws Exception {
 		Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("Topic not found"));
 		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		user.getTopics().add(topic);
 		dbUserRepository.save(user);
-		return new ResponseDTO("Topic followed !");
+		return this.getTopics(currentUser);
 	}
 
-	public ResponseDTO unsubscribe(final Principal currentUser, final Long topicId) throws Exception {
+	public List<TopicDTO> unsubscribe(final Principal currentUser, final Long topicId) throws Exception {
 		Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("Topic not found"));
 		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		user.getTopics().remove(topic);
 		dbUserRepository.save(user);
-		return new ResponseDTO("Topic unfollowed !");
+		return this.getTopicsByUser(currentUser);
 	}
 
 	public List<TopicDTO> getTopicsByUser(final Principal currentUser) throws Exception {

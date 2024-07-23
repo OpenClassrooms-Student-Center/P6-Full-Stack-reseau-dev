@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { UnauthGuard } from './guards/unauth.guard';
 import {HomeComponent} from "./components/home/home.component";
 import {PostComponent} from "./features/post/components/post/post.component";
+import {TopicComponent} from "./features/topic/components/topic/topic.component";
 
 const routes: Routes = [
   {
@@ -25,7 +26,7 @@ const routes: Routes = [
   {
     path: 'topics',
     canActivate: [AuthGuard],
-    component: PostComponent
+    component: TopicComponent
   },
   {
     path: 'me',

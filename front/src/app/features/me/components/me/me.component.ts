@@ -7,7 +7,6 @@ import {AuthService} from "../../../auth/services/auth.service";
 import {UserService} from "../../services/user.service";
 import {TopicService} from "../../../topic/services/topic.service";
 import {Token} from "../../../auth/interfaces/token.interface";
-import {Response} from "../../../../interfaces/response.interface";
 
 @Component({
   selector: 'app-me',
@@ -42,7 +41,7 @@ export class MeComponent implements OnInit {
   public topics: Topic[] = [];
 
   constructor(private router: Router,
-              private sessionService: AuthService,
+              private authService: AuthService,
               private fb: FormBuilder,
               private userService: UserService,
               private topicService: TopicService) {
@@ -54,7 +53,7 @@ export class MeComponent implements OnInit {
     console.log(updatedUser);
     this.userService.updateInfo(updatedUser).subscribe({
       next: (response: Token) => {
-        this.sessionService.logIn(response);
+        this.authService.logIn(response);
         this.router.navigate(['/me']);
       },
       error: (error) => {
@@ -94,7 +93,7 @@ export class MeComponent implements OnInit {
   }
 
   public logout(): void {
-    this.sessionService.logOut();
+    this.authService.logOut();
     this.router.navigate([''])
   }
 

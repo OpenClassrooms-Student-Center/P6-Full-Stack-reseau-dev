@@ -24,7 +24,6 @@ hr{
 mat-toolbar{
   background: white!important;
   padding: 50px!important;
-  border: 1px solid black;
 }
 .menu a{
   color: black;
@@ -118,13 +117,14 @@ mat-toolbar{
 }
 .subscriptions-user{
   display: flex;
-  padding: 20px;
+  flex-wrap: wrap;
+  padding: 20px!important;
   .mat-card{
-    width: 50%;
+    flex-basis: calc(50% - 46px);
     margin-right: 6px;
-    &:last-of-type{
-      margin-right: unset!important;
-    }
+  }
+  .mat-card:only-child{
+    flex-basis: 100%;
   }
   .mat-card-title{
     font-weight: bold;
@@ -152,7 +152,7 @@ mat-toolbar{
   .subscriptions-user{
     flex-direction: column;
     .mat-card{
-      width: unset!important;
+      flex-basis: 100% !important;
       margin-bottom: 6px;
       margin-right: unset!important;
       &:last-of-type{

@@ -1,1 +1,13 @@
-<p>topic works!</p>
+<ng-container *ngIf="topics.length > 0;">
+  <div class="subscriptions-user">
+    <mat-card *ngFor="let topic of topics">
+      <mat-card-header>
+        <mat-card-title>{{topic.title}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="column">
+        <p>Description:{{topic.description}}</p>
+        <button class="skyblue-button" mat-raised-button (click)="subscribe(topic.id)">S'abonner</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-container>
