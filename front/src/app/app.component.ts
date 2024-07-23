@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {Component, ViewChild} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import {filter, Observable} from 'rxjs';
-import { AuthService } from './features/auth/services/auth.service';
-import { SessionService } from './services/session.service';
 import {MatSidenav} from "@angular/material/sidenav";
+import {AuthService} from "./features/auth/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +15,7 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private sessionService: SessionService
+    private authService: AuthService
   )
   {
     this.router.events.pipe(
@@ -29,7 +28,7 @@ export class AppComponent {
     this.sidenav.open();
   }
   public $isLogged(): Observable<boolean> {
-    return this.sessionService.$isLogged();
+    return this.authService.$isLogged();
   }
 
 }

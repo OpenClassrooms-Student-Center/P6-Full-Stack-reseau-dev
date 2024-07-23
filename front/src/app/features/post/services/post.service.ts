@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TopicService {
+export class PostService {
 
   private pathService = 'http://localhost:3001/api/topic';
 

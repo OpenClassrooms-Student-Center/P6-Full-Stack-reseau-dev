@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/user.interface';
-import {Token} from "../interfaces/token.interface";
-import {environment} from "../../environments/environment";
+import {User} from "../interfaces/user.interface";
+import {environment} from "../../../../environments/environment";
+import {Token} from "../../auth/interfaces/token.interface";
 
 @Injectable({
   providedIn: 'root'

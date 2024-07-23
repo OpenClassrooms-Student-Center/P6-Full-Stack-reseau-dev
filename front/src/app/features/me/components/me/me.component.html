@@ -1,0 +1,35 @@
+<h3 class="header-me">Profil utilisateur</h3>
+<form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+  <mat-card-content fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="column">
+      <mat-form-field class="input-auth" appearance="outline">
+        <input matInput formControlName="username">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column">
+      <mat-form-field appearance="outline">
+        <input matInput type="email" formControlName="email">
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <button class="skyblue-button me-button" mat-raised-button type="submit" [disabled]="form.invalid">Sauvegarder</button>
+    <a (click)="logout()" class="link logout">Se déconnecter</a>
+  </div>
+  <p *ngIf="onError" class="error">{{errorMessage}}</p>
+</form>
+<hr>
+<h3 class="header-me">Abonnements</h3>
+<ng-container *ngIf="topics.length > 0;">
+  <div class="subscriptions-user">
+    <mat-card *ngFor="let topic of topics">
+      <mat-card-header>
+        <mat-card-title>{{topic.title}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="column">
+        <p>Description:{{topic.description}}</p>
+        <button class="skyblue-button" mat-raised-button (click)="unsubscribe(topic.id)">Se désabonner</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-container>

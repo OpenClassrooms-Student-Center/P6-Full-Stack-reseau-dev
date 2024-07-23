@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { SessionService } from 'src/app/services/session.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { MeComponent } from './me.component';
 
@@ -30,7 +30,7 @@ describe('MeComponent', () => {
         MatIconModule,
         MatInputModule
       ],
-      providers: [{ provide: SessionService, useValue: mockSessionService }],
+      providers: [{ provide: AuthService, useValue: mockSessionService }],
     })
       .compileComponents();
 

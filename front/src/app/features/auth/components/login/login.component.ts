@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SessionService } from 'src/app/services/session.service';
 import { LoginRequest } from '../../interfaces/loginRequest.interface';
-import { AuthService } from '../../services/auth.service';
-import {Token} from "../../../../interfaces/token.interface";
+import {AuthService} from "../../services/auth.service";
+import {Token} from "../../interfaces/token.interface";
 
 @Component({
   selector: 'app-login',
@@ -36,7 +35,7 @@ export class LoginComponent {
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               private router: Router,
-              private sessionService: SessionService) {
+              private sessionService: AuthService) {
   }
 
   public submit(): void {

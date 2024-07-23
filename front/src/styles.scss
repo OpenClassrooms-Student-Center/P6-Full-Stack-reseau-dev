@@ -3,9 +3,6 @@
 $skyblue : #7550EC;
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.border-black{
-  border: 1px solid #000!important;
-}
 .skyblue-button{
   font-weight: bold;
   background: $skyblue;
@@ -20,6 +17,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .hamburger-button{
   display: none;
 }
+hr{
+  width: 80%;
+  margin: 24px auto 24px auto;
+}
 mat-toolbar{
   background: white!important;
   padding: 50px!important;
@@ -32,14 +33,13 @@ mat-toolbar{
 .me-link{
   color: gray!important;
   mat-icon{
-    font-size: 48px; /* Taille de l'icône */
-    height: 48px; /* Hauteur de l'icône */
-    width: 48px; /* Largeur de l'icône */
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
   }
 }
 .mb-auto{
   margin-bottom: auto;
-
 }
 .hamburger-menu{
   display: flex;
@@ -86,8 +86,22 @@ mat-toolbar{
 .mat-form-field-appearance-outline .mat-form-field-outline {
   color: black;
 }
+.mat-sidenav-container {
+  height: 100%;
+}
+
+.mat-sidenav {
+  width: 250px;
+}
+
+.mat-nav-list a {
+  color: #555;
+  text-decoration: none;
+}
+.mat-raised-button{
+  width: 130px!important;
+}
 .home-buttons {
-  width: 120px!important;
   &:first-of-type {
     margin-right: 24px;
     @media (max-width: 599px) {
@@ -102,7 +116,50 @@ mat-toolbar{
     }
   }
 }
+.subscriptions-user{
+  display: flex;
+  padding: 20px;
+  .mat-card{
+    width: 50%;
+    margin-right: 6px;
+    &:last-of-type{
+      margin-right: unset!important;
+    }
+  }
+  .mat-card-title{
+    font-weight: bold;
+  }
+  .mat-card-header-text{
+    margin-left: unset!important;
+  }
+  mat-card button{
+    align-self: center;
+  }
+}
+.logout{
+  font-size: 0.9em;
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-me{
+  width: 100%;
+  text-align: center;
+}
+.me-button {
+  margin-bottom: 8px!important;
+}
 @media (max-width: 599px) {
+  .subscriptions-user{
+    flex-direction: column;
+    .mat-card{
+      width: unset!important;
+      margin-bottom: 6px;
+      margin-right: unset!important;
+      &:last-of-type{
+        margin-bottom: unset!important;
+      }
+    }
+  }
   .img-home{
     width: 350px;
   }
@@ -119,15 +176,4 @@ mat-toolbar{
     display: none!important;
   }
 }
-.mat-sidenav-container {
-  height: 100%;
-}
 
-.mat-sidenav {
-  width: 250px;
-}
-
-.mat-nav-list a {
-  color: #555;
-  text-decoration: none;
-}

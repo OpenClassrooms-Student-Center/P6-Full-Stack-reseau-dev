@@ -14,10 +14,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MeComponent } from './components/me/me.component';
-import { TopicComponent } from './features/topic/topic.component';
+import { MeComponent } from './features/me/components/me/me.component';
+import { TopicComponent } from './features/topic/components/topic/topic.component';
 import { HomeComponent } from './components/home/home.component';
-import { PostComponent } from './components/post/post.component';
+import { PostComponent } from './features/post/components/post/post.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
@@ -26,7 +26,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     TopicComponent,
     MeComponent,
     HomeComponent,
-    PostComponent,
+    PostComponent
   ],
     imports: [
         BrowserModule,

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../interfaces/user.interface';
-import { SessionService } from '../../services/session.service';
-import { UserService } from '../../services/user.service';
 import {FormBuilder, Validators} from "@angular/forms";
-import {TopicService} from "../../features/auth/services/topic.service";
-import {Topic} from "../../interfaces/topic.interface";
-import {Token} from "../../interfaces/token.interface";
+import {Topic} from "../../../topic/interfaces/topic.interface";
+import {User} from "../../interfaces/user.interface";
+import {AuthService} from "../../../auth/services/auth.service";
+import {UserService} from "../../services/user.service";
+import {TopicService} from "../../../topic/services/topic.service";
+import {Token} from "../../../auth/interfaces/token.interface";
+import {Response} from "../../../../interfaces/response.interface";
 
 @Component({
   selector: 'app-me',
@@ -16,6 +17,7 @@ import {Token} from "../../interfaces/token.interface";
 export class MeComponent implements OnInit {
 
   public onError = false;
+  public errorMessage = "";
 
   public form = this.fb.group({
     email: [
@@ -32,13 +34,14 @@ export class MeComponent implements OnInit {
   public topics: Topic[] = [];
 
   constructor(private router: Router,
-              private sessionService: SessionService,
+              private sessionService: AuthService,
               private fb: FormBuilder,
               private userService: UserService,
               private topicService: TopicService) {
   }
 
-  public submit(): void {
+  public submit(): void
+  {
     const updatedUser = this.form.value as User;
     console.log(updatedUser);
     this.userService.updateInfo(updatedUser).subscribe({
@@ -46,25 +49,39 @@ export class MeComponent implements OnInit {
         this.sessionService.logIn(response);
         this.router.navigate(['/me']);
       },
-      error: error => this.onError = true,
+      error: (error) => {
+        this.onError = true;
+        this.errorMessage = error.error.message;
+      }
     });
   }
 
-  public ngOnInit(): void {
+  public ngOnInit(): void
+  {
     this.userService
       .me()
       .subscribe((user: User) => {
         this.user = user;
-        console.log(user);
         this.form = this.fb.group({
           username: [user.username],
           email: [user.email]
         });
       });
+    this.topicService.getUserSubscriptions().subscribe((topics: Topic[]) => {
+      this.topics = topics;
+    });
   }
 
-  public back(): void {
-    window.history.back();
+  public unsubscribe(id:number): void{
+    this.topicService.unfollow(id).subscribe({
+      next: (topics: Topic[]) => {
+        this.topics = topics;
+      },
+      error: (error) => {
+        this.onError = true;
+        this.errorMessage = error.error.message;
+      }
+    });
   }
 
   public logout(): void {
