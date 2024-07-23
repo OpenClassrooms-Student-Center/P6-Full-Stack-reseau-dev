@@ -37,14 +37,10 @@ public class CommentService implements ICommentService {
     }
 
 	@Override
-	public CommentsDTO getCommentsByPost(Long postId) {
-		List<Comment> comments = commentRepository.findByPostId(postId);
-		return CommentsDTO.builder().comments(comments.stream()
-			.map(entity -> {
-				return modelMapper.map(entity, CommentDTO.class);
-			})
-			.collect(Collectors.toList())).build();
-
+	public List<CommentDTO> getCommentsByPost(Long postId) {
+		return commentRepository.findByPostId(postId).stream()
+				.map(entity -> modelMapper.map(entity, CommentDTO.class))
+				.collect(Collectors.toList());
 	}
 
 	@Override

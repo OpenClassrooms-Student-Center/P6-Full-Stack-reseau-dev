@@ -26,7 +26,15 @@ export class MeComponent implements OnInit {
         Validators.email
       ]
     ],
-    username: ['', []]
+    username: ['', []],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.min(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:"\\\\|,.<>\\/?]).+$')
+      ]
+    ]
   });
 
   public user: User | undefined;
@@ -62,9 +70,10 @@ export class MeComponent implements OnInit {
       .me()
       .subscribe((user: User) => {
         this.user = user;
-        this.form = this.fb.group({
-          username: [user.username],
-          email: [user.email]
+        this.form.patchValue({
+          username: user.username,
+          email: user.email,
+          // Ne pas inclure password ici pour conserver les validateurs
         });
       });
     this.topicService.getUserSubscriptions().subscribe((topics: Topic[]) => {

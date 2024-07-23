@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.service.topic;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.openclassrooms.mddapi.dto.*;
@@ -30,12 +31,10 @@ public class TopicService implements ITopicService {
     }
 
 	@Override
-	public TopicsDTO getTopics() {
-		return TopicsDTO.builder().topics(topicRepository.findAll().stream()
-			.map(entity -> {
-				return modelMapper.map(entity, TopicDTO.class);
-			})
-			.collect(Collectors.toList())).build();
+	public List<TopicDTO> getTopics() {
+		return topicRepository.findAll().stream()
+				.map(entity -> modelMapper.map(entity, TopicDTO.class))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -55,13 +54,11 @@ public class TopicService implements ITopicService {
 		return new ResponseDTO("Topic unfollowed !");
 	}
 
-	public TopicsDTO getTopicsByUser(final Principal currentUser) throws Exception {
+	public List<TopicDTO> getTopicsByUser(final Principal currentUser) throws Exception {
 		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
-		return TopicsDTO.builder().topics(user.getTopics().stream()
-			.map(entity -> {
-				return modelMapper.map(entity, TopicDTO.class);
-			})
-			.collect(Collectors.toList())).build();
+		return user.getTopics().stream()
+				.map(entity -> modelMapper.map(entity, TopicDTO.class))
+				.collect(Collectors.toList());
 	}
 
 	

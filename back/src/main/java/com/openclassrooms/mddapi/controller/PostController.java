@@ -1,11 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
-import com.openclassrooms.mddapi.dto.PostsDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
-import com.openclassrooms.mddapi.exception.AuthException;
 import com.openclassrooms.mddapi.exception.PostException;
-import com.openclassrooms.mddapi.exception.RegistrationException;
 import com.openclassrooms.mddapi.service.post.IPostService;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -25,9 +21,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @Tag(name = "Posts", description = "Posts resources")
 @RequestMapping("/posts")
@@ -104,7 +102,7 @@ public class PostController {
     )
     @GetMapping(value = "", produces = "application/json")
     @SecurityRequirement(name = "bearer")
-    public PostsDTO getPosts() {
+    public List<PostDTO> getPosts() {
         return postService.getPosts();
     }
 

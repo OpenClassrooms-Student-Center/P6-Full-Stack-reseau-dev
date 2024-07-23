@@ -4,6 +4,7 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.DBUserDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
 import com.openclassrooms.mddapi.dto.TokenDTO;
+import com.openclassrooms.mddapi.exception.MeException;
 import com.openclassrooms.mddapi.exception.PostException;
 import com.openclassrooms.mddapi.jwt.IJWTService;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
@@ -145,16 +146,16 @@ public class UserController {
     @PutMapping(value = "/me", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public TokenDTO updateInfo(
-            @RequestBody @Validated(Validation.Me.class) DBUserDTO user,
-            Principal loggedUser,
+            @RequestBody @Validated(Validation.Me.class) DBUserDTO newUser,
+            Principal user,
             BindingResult result
     ) {
         if(result.hasErrors()) {
             Map<String, String> errors = result.getFieldErrors().stream()
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
-            throw new PostException(errors.toString());
+            throw new MeException(errors.toString());
         }
-        return dbUserService.update(user, loggedUser);
+        return dbUserService.update(newUser, user);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.service.post;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
-import com.openclassrooms.mddapi.dto.PostsDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
 import com.openclassrooms.mddapi.model.DBUser;
 import com.openclassrooms.mddapi.model.Post;
@@ -47,13 +46,10 @@ public class PostService implements IPostService {
 		return modelMapper.map(post, PostDTO.class);
 	}
 	@Override
-	public PostsDTO getPosts() {
-		List<Post> posts = postRepository.findAll();
-		return PostsDTO.builder().posts(posts.stream()
-				.map(entity -> {
-					return modelMapper.map(entity, PostDTO.class);
-				})
-				.collect(Collectors.toList())).build();
+	public List<PostDTO> getPosts() {
+		return postRepository.findAll().stream()
+				.map(entity -> modelMapper.map(entity, PostDTO.class))
+				.collect(Collectors.toList());
 	}
 	@Override
 	public ResponseDTO createPost(final PostDTO postDTO, final Principal user) {

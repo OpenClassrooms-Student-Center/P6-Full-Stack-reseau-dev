@@ -1,11 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.exception.AuthException;
-import com.openclassrooms.mddapi.exception.CommentException;
-import com.openclassrooms.mddapi.exception.PostException;
 import com.openclassrooms.mddapi.exception.RegistrationException;
 import com.openclassrooms.mddapi.validation.Validation;
-import jakarta.validation.Valid;
 import com.openclassrooms.mddapi.dto.DBUserDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
 import com.openclassrooms.mddapi.dto.TokenDTO;
@@ -22,20 +19,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

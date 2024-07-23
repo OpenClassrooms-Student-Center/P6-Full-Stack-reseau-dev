@@ -1,11 +1,11 @@
 package com.openclassrooms.mddapi.service.post;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
-import com.openclassrooms.mddapi.dto.PostsDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.security.Principal;
+import java.util.List;
 
 public interface IPostService {
     /**
@@ -21,7 +21,7 @@ public interface IPostService {
      *
      * @return A list of PostDTOs representing all posts.
      */
-    PostsDTO getPosts();
+    List<PostDTO> getPosts();
     /**
      * Creates a new post.
      *

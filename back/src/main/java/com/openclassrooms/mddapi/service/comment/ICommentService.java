@@ -1,8 +1,6 @@
 package com.openclassrooms.mddapi.service.comment;
 
 import com.openclassrooms.mddapi.dto.CommentDTO;
-import com.openclassrooms.mddapi.dto.CommentsDTO;
-import com.openclassrooms.mddapi.dto.DBUserDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
 
 import java.security.Principal;
@@ -15,7 +13,7 @@ public interface ICommentService {
      * @param postId The ID of the post for which comments are to be retrieved.
      * @return A list of CommentDTOs representing all comments for the specified post.
      */
-    CommentsDTO getCommentsByPost(Long postId);
+    List<CommentDTO> getCommentsByPost(Long postId);
     /**
      * Creates a new comment.
      *

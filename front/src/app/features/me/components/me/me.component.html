@@ -11,6 +11,12 @@
         <input matInput type="email" formControlName="email">
       </mat-form-field>
     </div>
+    <div fxLayout="column">
+      <mat-label>Mot de passe</mat-label>
+      <mat-form-field appearance="outline">
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
+    </div>
   </mat-card-content>
   <div fxLayout="column" fxLayoutAlign="center center">
     <button class="skyblue-button me-button" mat-raised-button type="submit" [disabled]="form.invalid">Sauvegarder</button>

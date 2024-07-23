@@ -1,9 +1,10 @@
 package com.openclassrooms.mddapi.service.topic;
 
 import java.security.Principal;
+import java.util.List;
 
 import com.openclassrooms.mddapi.dto.ResponseDTO;
-import com.openclassrooms.mddapi.dto.TopicsDTO;
+import com.openclassrooms.mddapi.dto.TopicDTO;
 
 public interface ITopicService {
 	/**
@@ -11,7 +12,7 @@ public interface ITopicService {
 	 *
 	 * @return A list of TopicDTOs representing all topics.
 	 */
-	TopicsDTO getTopics();
+	List<TopicDTO> getTopics();
 	/**
 	 * Subscribes a user to a topic.
 	 *
@@ -35,5 +36,5 @@ public interface ITopicService {
 	 * @return A set of TopicDTOs representing topics subscribed by the user.
 	 * @throws Exception if the user cannot be found.
 	 */
-	TopicsDTO getTopicsByUser(final Principal currentUser) throws Exception;
+	List<TopicDTO> getTopicsByUser(final Principal currentUser) throws Exception;
 }

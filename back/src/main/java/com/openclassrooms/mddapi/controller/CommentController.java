@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.*;
 import com.openclassrooms.mddapi.exception.CommentException;
 import com.openclassrooms.mddapi.service.comment.ICommentService;
-import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -20,9 +19,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @Tag(name = "Comments", description = "Comments resources")
 @RequestMapping("/comments")
@@ -30,9 +31,6 @@ public class CommentController {
 
     @Autowired
     private ICommentService commentService;
-
-    @Autowired
-    private IDBUserService dbUserService;
 
     @Operation(summary = "Get comments by post", description = "Retrieve all comments by post")
     @ApiResponses(
@@ -99,10 +97,9 @@ public class CommentController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/post/{postId}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
-    public CommentsDTO getPostComments(@PathVariable Long postId) {
+    public List<CommentDTO> getPostComments(@PathVariable Long postId) {
         return commentService.getCommentsByPost(postId);
     }
-
 
     @Operation(summary = "Create a comment", description = "Create a new comment")
     @ApiResponses(

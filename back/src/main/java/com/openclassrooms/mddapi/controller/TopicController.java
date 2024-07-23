@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.openclassrooms.mddapi.dto.*;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.service.user.IDBUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.openclassrooms.mddapi.service.topic.ITopicService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/topics")
 public class TopicController {
@@ -40,7 +42,7 @@ public class TopicController {
 				description = "Topics successfully retrieved",
 				content = @Content(
 					mediaType = "application/json",
-					schema = @Schema(implementation = TopicsDTO.class),
+					schema = @Schema(type = "array", implementation = TopicDTO.class),
 					examples = @ExampleObject(
 						value =
 							"[" +
@@ -91,7 +93,7 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@GetMapping(value = "", produces = "application/json")
-	public TopicsDTO getTopics() {
+	public List<TopicDTO> getTopics() {
 		return topicService.getTopics();
 	}
 
@@ -103,7 +105,7 @@ public class TopicController {
 				description = "Topics successfully retrieved",
 				content = @Content(
 					mediaType = "application/json",
-					schema = @Schema(implementation = TopicsDTO.class),
+					schema = @Schema(type = "array", implementation = TopicDTO.class),
 					examples = @ExampleObject(
 						value =
 							"[" +
@@ -153,7 +155,7 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@GetMapping(value = "/user", produces = "application/json")
-	public TopicsDTO getTopicsByUser(Principal user) throws Exception {
+	public List<TopicDTO> getTopicsByUser(Principal user) throws Exception {
 		return topicService.getTopicsByUser(user);
 	}
 
@@ -206,11 +208,12 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@PostMapping("{id}/subscribe")
-	public ResponseDTO subscribe(
+	public List<TopicDTO> subscribe(
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		return topicService.subscribe(user,Long.parseLong(id));
+		topicService.subscribe(user,Long.parseLong(id));
+		return this.getTopicsByUser(user);
 	}
 
 	@Operation(summary = "Unfollow a topic", description = "Unfollow a topic")
@@ -261,11 +264,12 @@ public class TopicController {
 	)
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("{id}/subscribe")
-	public ResponseDTO unsubscribe(
+	public List<TopicDTO> unsubscribe(
 			@PathVariable("id") String id,
 			Principal user
 	) throws Exception {
-		return topicService.unsubscribe(user,Long.parseLong(id));
+		topicService.unsubscribe(user,Long.parseLong(id));
+		return this.getTopicsByUser(user);
 	}
 
 }

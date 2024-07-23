@@ -111,7 +111,7 @@ public class DBUserService implements IDBUserService {
 
         current.setUsername(updatedUser.getUsername());
         current.setEmail(updatedUser.getEmail());
-        current.setPassword(passwordEncoder.encode(current.getPassword()));
+        current.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         current.setUpdatedAt(DateUtils.now());
         dbUserRepository.save(current);
 
