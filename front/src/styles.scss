@@ -1,12 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
-$skyblue : #7550EC;
+$primary : #7763C5;
+$secondary : #6C5CCF;
+$danger : #A40F0F;
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  body { margin: 0; font-family: Inter; }
 .skyblue-button{
   font-weight: bold;
-  background: $skyblue;
+  background: $primary;
+  background: $primary;
   color: white;
+}
+.active-link{
+  color: $secondary!important;
+}
+.mat-form-field-outline{
+  color: $secondary!important;
+
+}
+a{
+  text-decoration: none!important;
 }
 .bg-transparent {
   background-color: transparent !important;
@@ -30,7 +44,7 @@ mat-toolbar{
   text-decoration: none;
 }
 .me-link{
-  color: gray!important;
+  color: #D9D9D9!important;
   mat-icon{
     font-size: 48px;
     height: 48px;
@@ -74,7 +88,7 @@ mat-toolbar{
     display: block;
   }
 }
-.header-auth{
+.header-arrow{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,24 +129,39 @@ mat-toolbar{
     }
   }
 }
-.subscriptions-user{
+.create-post{
+  padding: 50px;
+}
+.sort-posts-link{
+  cursor: pointer;
+}
+#post-author,#post-date{
+  text-align: left;
+  width: 50%;
+}
+.flexbox{
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  padding: 20px!important;
-  .mat-card{
-    flex-basis: calc(50% - 46px);
-    margin-right: 6px;
+  margin: 50px!important;
+  .title{
+    margin-bottom: 15px;
   }
-  .mat-card:only-child{
-    flex-basis: 100%;
+  .flex-element{
+    color: black!important;
+    background-color: #F5F5F5!important;
+    flex-basis: calc(50% - 40px);
+    margin: 10px;
+    padding: 10px;
   }
-  .mat-card-title{
+  .flex-element:only-child{
+    flex-basis: 100% !important;
+    margin:0px!important;
+  }
+  .title{
     font-weight: bold;
   }
-  .mat-card-header-text{
-    margin-left: unset!important;
-  }
-  mat-card button{
+  .flex-element button{
     align-self: center;
   }
 }
@@ -140,6 +169,7 @@ mat-toolbar{
   font-size: 0.9em;
   font-weight: bold;
   cursor: pointer;
+  color : $danger;
 }
 .header-me{
   width: 100%;
@@ -149,15 +179,11 @@ mat-toolbar{
   margin-bottom: 8px!important;
 }
 @media (max-width: 599px) {
-  .subscriptions-user{
+  .flexbox{
     flex-direction: column;
-    .mat-card{
+    .flex-element{
       flex-basis: 100% !important;
-      margin-bottom: 6px;
       margin-right: unset!important;
-      &:last-of-type{
-        margin-bottom: unset!important;
-      }
     }
   }
   .img-home{

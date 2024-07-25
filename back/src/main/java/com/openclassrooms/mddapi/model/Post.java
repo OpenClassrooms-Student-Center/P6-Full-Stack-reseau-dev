@@ -1,18 +1,12 @@
 package com.openclassrooms.mddapi.model;
 
+import com.openclassrooms.mddapi.dto.CommentDTO;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,11 +18,11 @@ public class Post {
 	@Column(name="id")
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "topic_id", nullable = false)
 	private Topic topic;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
 	private DBUser userOwner;
 
@@ -37,6 +31,9 @@ public class Post {
 
 	@Column(name="content")
 	private String content;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+	private List<Comment> comments;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;

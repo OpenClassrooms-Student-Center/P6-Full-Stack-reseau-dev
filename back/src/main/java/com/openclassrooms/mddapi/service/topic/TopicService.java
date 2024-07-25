@@ -31,7 +31,14 @@ public class TopicService implements ITopicService {
     }
 
 	@Override
-	public List<TopicDTO> getTopics(final Principal user) throws Exception {
+	public List<TopicDTO> findAll() {
+		return topicRepository.findAll().stream()
+				.map(entity -> modelMapper.map(entity, TopicDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<TopicDTO> getTopicsNotFollowedByUser(final Principal user) {
 		List<TopicDTO> userTopics = this.getTopicsByUser(user);
 		List<TopicDTO> allTopics = topicRepository.findAll().stream()
 				.map(entity -> modelMapper.map(entity, TopicDTO.class))
@@ -42,15 +49,15 @@ public class TopicService implements ITopicService {
 	}
 
 	@Override
-	public List<TopicDTO> subscribe(final Principal currentUser, final Long topicId) throws Exception {
+	public List<TopicDTO> subscribe(final Principal currentUser, final Long topicId) {
 		Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("Topic not found"));
 		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		user.getTopics().add(topic);
 		dbUserRepository.save(user);
-		return this.getTopics(currentUser);
+		return this.getTopicsNotFollowedByUser(currentUser);
 	}
 
-	public List<TopicDTO> unsubscribe(final Principal currentUser, final Long topicId) throws Exception {
+	public List<TopicDTO> unsubscribe(final Principal currentUser, final Long topicId) {
 		Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("Topic not found"));
 		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		user.getTopics().remove(topic);
@@ -58,7 +65,7 @@ public class TopicService implements ITopicService {
 		return this.getTopicsByUser(currentUser);
 	}
 
-	public List<TopicDTO> getTopicsByUser(final Principal currentUser) throws Exception {
+	public List<TopicDTO> getTopicsByUser(final Principal currentUser) {
 		DBUser user = dbUserRepository.findByEmail(currentUser.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		return user.getTopics().stream()
 				.map(entity -> modelMapper.map(entity, TopicDTO.class))

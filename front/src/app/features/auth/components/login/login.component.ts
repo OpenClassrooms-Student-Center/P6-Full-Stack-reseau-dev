@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/loginRequest.interface';
 import {AuthService} from "../../services/auth.service";
-import {Token} from "../../interfaces/token.interface";
+import {SessionInformation} from "../../interfaces/sessionInformation.interface";
 
 @Component({
   selector: 'app-login',
@@ -41,13 +41,13 @@ export class LoginComponent {
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
-      next: (token: Token) => {
-        this.sessionService.logIn(token);
+      next: (sessionInformation: SessionInformation) => {
+        this.sessionService.logIn(sessionInformation);
         this.router.navigate(['/posts']);
       },
       error: (error) => {
         this.onError = true;
-        this.errorMessage = error.error.message;
+        console.log(error);
       }
     });
   }

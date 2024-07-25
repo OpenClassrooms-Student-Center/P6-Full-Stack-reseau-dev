@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {User} from "../interfaces/user.interface";
 import {environment} from "../../../../environments/environment";
-import {Token} from "../../auth/interfaces/token.interface";
+import {SessionInformation} from "../../auth/interfaces/sessionInformation.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class UserService {
     return this.httpClient.get<User>(`${this.pathService}/me`);
   }
 
-  public updateInfo(user: User): Observable<Token> {
-    return this.httpClient.put<Token>(`${this.pathService}/me`, user);
+  public updateInfo(user: User): Observable<SessionInformation> {
+    return this.httpClient.put<SessionInformation>(`${this.pathService}/me`, user);
   }
 
 

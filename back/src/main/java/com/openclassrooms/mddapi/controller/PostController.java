@@ -34,9 +34,6 @@ public class PostController {
     @Autowired
     private IPostService postService;
 
-    @Autowired
-    private IDBUserService dbUserService;
-
     @Operation(summary = "Get posts", description = "Retrieve all posts")
     @ApiResponses(
         value = {
@@ -209,7 +206,7 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "", produces = "application/json")
     @SecurityRequirement(name = "bearer")
-    public ResponseDTO createPost(
+    public PostDTO createPost(
             Principal user,
             @RequestBody @Validated PostDTO postDTO,
             BindingResult result

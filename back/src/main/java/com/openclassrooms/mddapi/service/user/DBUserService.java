@@ -1,9 +1,7 @@
 package com.openclassrooms.mddapi.service.user;
 
 import com.openclassrooms.mddapi.dto.ResponseDTO;
-import com.openclassrooms.mddapi.dto.TokenDTO;
 import com.openclassrooms.mddapi.exception.AuthException;
-import com.openclassrooms.mddapi.exception.RegistrationException;
 import com.openclassrooms.mddapi.jwt.JWTService;
 import jakarta.persistence.EntityExistsException;
 
@@ -72,7 +70,7 @@ public class DBUserService implements IDBUserService {
     }
 
     @Override
-    public TokenDTO login(final DBUserDTO user) throws UsernameNotFoundException {
+    public DBUserDTO login(final DBUserDTO user) throws UsernameNotFoundException {
         String login = user.getEmail();
         Optional<DBUser> dbUser = dbUserRepository.findByUsername(login);
         if(checkIsEmail(user.getEmail())){
@@ -83,7 +81,10 @@ public class DBUserService implements IDBUserService {
             if(!passwordEncoder.matches(password, dbUser.get().getPassword())){
                 throw new BadCredentialsException("Mot de passe incorrect");
             }
-            return new TokenDTO(jwtService.generateToken(dbUser.get().getEmail()));
+            String token = jwtService.generateToken(dbUser.get().getEmail());
+            DBUserDTO sessionInformation = modelMapper.map(dbUser, DBUserDTO.class);
+            sessionInformation.setToken(token);
+            return sessionInformation;
         }
         else{
             throw new UsernameNotFoundException("Utilisateur introuvable");
@@ -91,7 +92,7 @@ public class DBUserService implements IDBUserService {
     }
 
     @Override
-    public TokenDTO update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException {
+    public DBUserDTO update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException {
         DBUser current = dbUserRepository.findByEmail(loggedUser.getName()).orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable"));
 
         Optional<DBUser> newEmailAlreadyExists = dbUserRepository.findByEmail(updatedUser.getEmail());
@@ -115,8 +116,10 @@ public class DBUserService implements IDBUserService {
         current.setUpdatedAt(DateUtils.now());
         dbUserRepository.save(current);
 
-        String newToken = jwtService.generateToken(updatedUser.getEmail());
-        return new TokenDTO(newToken);
+        String token = jwtService.generateToken(current.getEmail());
+        DBUserDTO sessionInformation = modelMapper.map(current, DBUserDTO.class);
+        sessionInformation.setToken(token);
+        return sessionInformation;
 
     }
 

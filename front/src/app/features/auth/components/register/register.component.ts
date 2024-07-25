@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterRequest } from '../../interfaces/registerRequest.interface';
 import {AuthService} from "../../services/auth.service";
-import {Token} from "../../interfaces/token.interface";
+import {Response} from "../../../../interfaces/response.interface";
 
 @Component({
   selector: 'app-register',
@@ -47,7 +47,7 @@ export class RegisterComponent {
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest).subscribe({
-        next: (_: Token) => this.router.navigate(['/login']),
+        next: (_: Response) => this.router.navigate(['/login']),
         error: (error) => {
           this.onError = true;
           this.errorMessage = error.error.message;

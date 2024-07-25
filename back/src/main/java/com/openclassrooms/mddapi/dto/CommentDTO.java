@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openclassrooms.mddapi.model.DBUser;
+import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.validation.Validation;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,11 +19,9 @@ import lombok.NoArgsConstructor;
 public class CommentDTO {
     private Long id;
     @NotNull(message = "Le post ne peut pas être NULL.")
-    @JsonProperty("post_id")
-    private Long postId;
+    private Post post;
     @NotNull(message = "L'utilisateur ne peut pas être NULL.")
-    @JsonProperty("user_id")
-    private Long userId;
+    private DBUser user;
     @NotEmpty(message = "Le contenu ne peut pas être vide.")
     @NotNull(message = "Le contenu ne peut pas être NULL.")
     private String content;

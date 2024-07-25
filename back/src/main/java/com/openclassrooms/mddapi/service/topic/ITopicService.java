@@ -11,7 +11,13 @@ public interface ITopicService {
 	 *
 	 * @return A list of TopicDTOs representing all topics.
 	 */
-	List<TopicDTO> getTopics(Principal user) throws Exception;
+	List<TopicDTO> findAll();
+	/**
+	 * Retrieves all topics not followed by user
+	 *
+	 * @return A list of TopicDTOs representing all topics not foollowed by user.
+	 */
+	List<TopicDTO> getTopicsNotFollowedByUser(Principal user) throws Exception;
 	/**
 	 * Subscribes a user to a topic.
 	 *
@@ -27,7 +33,7 @@ public interface ITopicService {
 	 * @param topicId The ID of the topic to unsubscribe from.
 	 * @throws Exception if the user or topic cannot be found.
 	 */
-	List<TopicDTO> unsubscribe(final Principal currentUser, final Long topicId) throws Exception;
+	List<TopicDTO> unsubscribe(final Principal currentUser, final Long topicId);
 	/**
 	 * Retrieves topics subscribed by a user.
 	 *
@@ -35,5 +41,5 @@ public interface ITopicService {
 	 * @return A set of TopicDTOs representing topics subscribed by the user.
 	 * @throws Exception if the user cannot be found.
 	 */
-	List<TopicDTO> getTopicsByUser(final Principal currentUser) throws Exception;
+	List<TopicDTO> getTopicsByUser(final Principal currentUser);
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -19,6 +19,15 @@ import { TopicComponent } from './features/topic/components/topic/topic.componen
 import { HomeComponent } from './components/home/home.component';
 import { PostComponent } from './features/post/components/post/post.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatSelectModule} from "@angular/material/select";
+import { NewPostComponent } from './features/post/components/new-post/new-post.component';
+import { PostsComponent } from './features/post/components/posts/posts.component';
+
+// Importez les fonctions nécessaires et la locale française
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -26,7 +35,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     TopicComponent,
     MeComponent,
     HomeComponent,
-    PostComponent
+    PostsComponent,
+    PostComponent,
+    NewPostComponent,
   ],
     imports: [
         BrowserModule,
@@ -42,10 +53,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MatToolbarModule,
         MatSidenavModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatSelectModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'fr' },
   ],
   bootstrap: [AppComponent]
 })

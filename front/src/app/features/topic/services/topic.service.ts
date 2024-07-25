@@ -14,8 +14,12 @@ export class TopicService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public findAll(): Observable<Topic[]> {
+  public getTopicsNotFollowedByUser(): Observable<Topic[]> {
     return this.httpClient.get<Topic[]>(`${this.pathService}`);
+  }
+
+  public findAll(): Observable<Topic[]> {
+    return this.httpClient.get<Topic[]>(`${this.pathService}/all`);
   }
 
   public getUserSubscriptions(): Observable<Topic[]> {

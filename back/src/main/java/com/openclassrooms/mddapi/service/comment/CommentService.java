@@ -46,7 +46,7 @@ public class CommentService implements ICommentService {
 	@Override
 	public ResponseDTO createComment(CommentDTO commentDTO, Principal user){
 		DBUser dbUser = dbUserRepository.findByEmail(user.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
-		if(!dbUser.getId().equals(commentDTO.getUserId())){
+		if(!dbUser.getId().equals(commentDTO.getUser().getId())){
 			throw new EntityNotFoundException("L'utilisateur sélectionné est différent de l'utilisateur connecté");
 		}
 		Timestamp now = DateUtils.now();

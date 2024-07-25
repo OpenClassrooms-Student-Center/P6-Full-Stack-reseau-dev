@@ -28,14 +28,74 @@ public class TopicController {
 	
 	private final ITopicService topicService;
 
-	@Autowired
-	private IDBUserService dbUserService;
-
 	public TopicController(ITopicService topicService) {
 		this.topicService = topicService;
 	}
 
-	@Operation(summary = "Get topics", description = "Retrieve all topics")
+	@Operation(summary = "Get all topics", description = "Retrieve all topics")
+	@ApiResponses(
+		value = {
+			@ApiResponse(
+				responseCode = "200",
+				description = "Topics successfully retrieved",
+				content = @Content(
+					mediaType = "application/json",
+					schema = @Schema(type = "array", implementation = TopicDTO.class),
+					examples = @ExampleObject(
+						value =
+								"[" +
+									"{" +
+									"\"id\": 1," +
+									"\"name\": \"PHP\"," +
+									"\"description\": description," +
+									"}," +
+									"{" +
+									"\"id\": 1," +
+									"\"name\": \"PHP\"," +
+									"\"description\": description," +
+									"}" +
+								"]"
+
+					)
+				)
+			),
+			@ApiResponse(
+					responseCode = "401",
+					description = "Unauthorized",
+					content = @Content(
+							mediaType = "application/json",
+							schema = @Schema(type = ""),
+							examples = @ExampleObject(
+									name = "Unauthorized",
+									value = ""
+							)
+					)
+			),
+			@ApiResponse(
+					responseCode = "400",
+					description = "Bad request",
+					content = @Content(
+							mediaType = "application/json",
+							schema = @Schema(implementation = ResponseDTO.class),
+							examples = @ExampleObject(
+									name = "Bad request",
+									value =
+											"{" +
+													"\"message\": \"{{Error message}}\"" +
+													"}"
+							)
+					)
+			)
+		}
+	)
+	@ResponseStatus(HttpStatus.OK)
+	@SecurityRequirement(name = "bearer")
+	@GetMapping(value = "/all", produces = "application/json")
+	public List<TopicDTO> getAllTopics() {
+		return topicService.findAll();
+	}
+
+	@Operation(summary = "Get topics not followed by user", description = "Retrieve topics not followed by user")
 	@ApiResponses(
 		value = {
 			@ApiResponse(
@@ -94,8 +154,8 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@GetMapping(value = "", produces = "application/json")
-	public List<TopicDTO> getTopics(Principal user) throws Exception {
-        return topicService.getTopics(user);
+	public List<TopicDTO> getTopicsNotFollowedByUser(Principal user) throws Exception {
+        return topicService.getTopicsNotFollowedByUser(user);
 	}
 
 	@Operation(summary = "Get topics followed by user", description = "Retrieve all topics for a user")
@@ -156,7 +216,7 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@SecurityRequirement(name = "bearer")
 	@GetMapping(value = "/user", produces = "application/json")
-	public List<TopicDTO> getTopicsByUser(Principal user) throws Exception {
+	public List<TopicDTO> getTopicsByUser(Principal user) {
 		return topicService.getTopicsByUser(user);
 	}
 

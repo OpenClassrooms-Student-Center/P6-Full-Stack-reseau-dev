@@ -25,7 +25,7 @@ public interface IDBUserService extends UserDetailsService {
      * @return the found user as a data transfer object
      * @throws UsernameNotFoundException if no user with the given username can be found
      */
-    TokenDTO login(final DBUserDTO user) throws UsernameNotFoundException;
+    DBUserDTO login(final DBUserDTO user) throws UsernameNotFoundException;
     /**
      * Finds a user by their email.
      *
@@ -41,7 +41,7 @@ public interface IDBUserService extends UserDetailsService {
      * @param loggedUser the principal of the currently logged-in user
      * @throws UsernameNotFoundException if the user to update cannot be found
      */
-    TokenDTO update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException;
+    DBUserDTO update(final DBUserDTO updatedUser, final Principal loggedUser) throws UsernameNotFoundException;
     boolean checkPassword(final DBUserDTO user);
     boolean checkIsEmail(final String usernameOrEmail);
 }

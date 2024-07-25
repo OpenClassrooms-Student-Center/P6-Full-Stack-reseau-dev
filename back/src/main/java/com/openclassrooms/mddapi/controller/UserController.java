@@ -145,7 +145,7 @@ public class UserController {
     })
     @PutMapping(value = "/me", produces = "application/json")
     @SecurityRequirement(name = "bearer")
-    public TokenDTO updateInfo(
+    public DBUserDTO updateInfo(
             @RequestBody @Validated(Validation.Me.class) DBUserDTO newUser,
             Principal user,
             BindingResult result

@@ -28,5 +28,5 @@ public interface IPostService {
      * @param currentUser The current user attempting to create a post, represented as a DBUserDTO.
      * @param postDTO The post to be created, represented as a PostDTO.
      */
-    ResponseDTO createPost(final PostDTO postDTO, final Principal user);
+    PostDTO createPost(final PostDTO postDTO, final Principal user);
 }

@@ -6,6 +6,8 @@ import { UnauthGuard } from './guards/unauth.guard';
 import {HomeComponent} from "./components/home/home.component";
 import {PostComponent} from "./features/post/components/post/post.component";
 import {TopicComponent} from "./features/topic/components/topic/topic.component";
+import {PostsComponent} from "./features/post/components/posts/posts.component";
+import {NewPostComponent} from "./features/post/components/new-post/new-post.component";
 
 const routes: Routes = [
   {
@@ -19,9 +21,19 @@ const routes: Routes = [
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'posts',
+    path: 'post/new',
+    canActivate: [AuthGuard],
+    component: NewPostComponent
+  },
+  {
+    path: 'post/:id',
     canActivate: [AuthGuard],
     component: PostComponent
+  },
+  {
+    path: 'posts',
+    canActivate: [AuthGuard],
+    component: PostsComponent
   },
   {
     path: 'topics',

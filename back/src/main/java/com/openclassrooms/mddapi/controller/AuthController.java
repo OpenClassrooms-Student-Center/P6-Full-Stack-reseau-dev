@@ -35,10 +35,6 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private IJWTService jwtService;
-    @Autowired
     private IDBUserService dbUserService;
 
     @Operation(summary = "Register", description = "Register")
@@ -122,7 +118,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/login", produces = "application/json")
     @SecurityRequirement(name = "")
-    public TokenDTO login(
+    public DBUserDTO login(
         @io.swagger.v3.oas.annotations.parameters.RequestBody(
             content = @Content(
                 examples = {

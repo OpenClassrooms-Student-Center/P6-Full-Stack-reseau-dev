@@ -2,10 +2,10 @@
   <mat-sidenav #sidenav mode="over" position="end">
     <div class="menu hamburger-menu" *ngIf="$isLogged() | async;">
       <div fxLayout="column" fxLayoutAlign="end end" class="mb-auto">
-        <a routerLink="posts">Articles</a>
-        <a routerLink="topics">Thèmes</a>
+        <a routerLink="posts" routerLinkActive="active-link">Articles</a>
+        <a routerLink="topics" routerLinkActive="active-link">Thèmes</a>
       </div>
-      <a class="me-link" routerLink="me"><mat-icon>account_circle</mat-icon></a>
+      <a class="me-link" routerLink="me" routerLinkActive="active-link"><mat-icon>account_circle</mat-icon></a>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -16,11 +16,11 @@
         fxLayout="row"
         fxLayoutAlign="end center"
       >
-        <img class="img-toolbar" src="assets/logo_p6.png" width="100">
+        <a class="img-toolbar" routerLink=""><img src="assets/logo_p6.png" width="100" /></a>
         <div fxLayoutAlign="end center" class="menu toolbar-menu" *ngIf="$isLogged() | async;">
-          <a routerLink="posts">Articles</a>
-          <a routerLink="topics">Thèmes</a>
-          <a class="me-link" routerLink="me"><mat-icon>account_circle</mat-icon></a>
+          <a routerLink="posts" routerLinkActive="active-link">Articles</a>
+          <a routerLink="topics" routerLinkActive="active-link">Thèmes</a>
+          <a class="me-link" routerLinkActive="active-link" routerLink="me"><mat-icon>account_circle</mat-icon></a>
         </div>
         <a class="hamburger-button" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></a>
       </mat-toolbar>

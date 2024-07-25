@@ -17,8 +17,7 @@ export class TopicComponent implements OnInit {
   constructor(private topicService: TopicService) {}
 
   ngOnInit(): void {
-    console.log('ok');
-    this.topicService.findAll().subscribe((topics: Topic[]) => {
+    this.topicService.getTopicsNotFollowedByUser().subscribe((topics: Topic[]) => {
       this.topics = topics;
     });
   }

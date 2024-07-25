@@ -1,9 +1,13 @@
 package com.openclassrooms.mddapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openclassrooms.mddapi.model.DBUser;
+import com.openclassrooms.mddapi.model.Topic;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -15,17 +19,15 @@ public class PostDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     @NotNull(message = "Le topic ne peut pas être NULL.")
-    @JsonProperty("topic_id")
-    private Long topicId;
-    @NotNull(message = "L'auteur de l'article ne peut pas être NULL.")
-    @JsonProperty("user_id")
-    private Long userId;
+    private Topic topic;
+    private DBUser user;
     @NotEmpty(message = "Le titre ne peut pas être vide.")
     @NotNull(message = "Le titre ne peut pas être NULL.")
     private String title;
     @NotEmpty(message = "Le contenu ne peut pas être vide.")
     @NotNull(message = "Le contenu ne peut pas être NULL.")
     private String content;
+    private List<CommentDTO> comments;
     @JsonProperty("created_at")
     private String createdAt;
     @JsonProperty("updated_at")

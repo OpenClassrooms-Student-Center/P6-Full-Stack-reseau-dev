@@ -6,7 +6,7 @@ import {User} from "../../interfaces/user.interface";
 import {AuthService} from "../../../auth/services/auth.service";
 import {UserService} from "../../services/user.service";
 import {TopicService} from "../../../topic/services/topic.service";
-import {Token} from "../../../auth/interfaces/token.interface";
+import {SessionInformation} from "../../../auth/interfaces/sessionInformation.interface";
 
 @Component({
   selector: 'app-me',
@@ -50,10 +50,9 @@ export class MeComponent implements OnInit {
   public submit(): void
   {
     const updatedUser = this.form.value as User;
-    console.log(updatedUser);
     this.userService.updateInfo(updatedUser).subscribe({
-      next: (response: Token) => {
-        this.authService.logIn(response);
+      next: (sessionInformation: SessionInformation) => {
+        this.authService.logIn(sessionInformation);
         this.router.navigate(['/me']);
       },
       error: (error) => {

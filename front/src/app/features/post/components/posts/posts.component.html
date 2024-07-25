@@ -1,0 +1,23 @@
+<div class="create-post" fxLayout fxLayoutAlign="space-between center">
+  <button class="skyblue-button" mat-raised-button [routerLink]="['/post', 'new']">Créer un article</button>
+  <a fxLayout fxLayoutAlign="center end" class="sort-posts-link" (click)="sort()">
+    Trier par
+    <mat-icon id="sort-icon">arrow_upward</mat-icon>
+  </a>
+</div>
+<div class="flexbox">
+  <a *ngFor="let post of posts$ | async" [routerLink]="['/post', post.id]" class="flex-element">
+    <div>
+      <div class="header" fxLayout="column">
+        <div class="title">{{post.title}}</div>
+      </div>
+      <div fxLayout>
+        <div id="post-date">{{post.created_at | date:'fullDate'}}</div>
+        <div id="post-author">{{post.user?.username}}</div>
+      </div>
+      <div class="content" fxLayout="column">
+        <p>Description:{{post.content}}</p>
+      </div>
+    </div>
+  </a>
+</div>
