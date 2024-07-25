@@ -30,10 +30,12 @@ public class CommentService implements ICommentService {
 
 	private final CommentRepository commentRepository;
 	private final DBUserRepository dbUserRepository;
+	private final PostRepository postRepository;
 	
-	public CommentService(CommentRepository commentRepository, DBUserRepository dbUserRepository) {
+	public CommentService(CommentRepository commentRepository, DBUserRepository dbUserRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
         this.dbUserRepository = dbUserRepository;
+        this.postRepository = postRepository;
     }
 
 	@Override
@@ -44,17 +46,16 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
-	public ResponseDTO createComment(CommentDTO commentDTO, Principal user){
+	public List<CommentDTO> createComment(CommentDTO commentDTO, Long postId, Principal user){
 		DBUser dbUser = dbUserRepository.findByEmail(user.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
-		if(!dbUser.getId().equals(commentDTO.getUser().getId())){
-			throw new EntityNotFoundException("L'utilisateur sélectionné est différent de l'utilisateur connecté");
-		}
+		Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("Post not found"));
 		Timestamp now = DateUtils.now();
 		Comment newComment = modelMapper.map(commentDTO, Comment.class);
 		newComment.setCreatedAt(now);
-		newComment.setUserOwner(dbUser);
+		newComment.setPost(post);
+		newComment.setUser(dbUser);
 		commentRepository.save(newComment);
-		return new ResponseDTO("Comment created !");
+		return this.getCommentsByPost(postId);
 	}
 
 }

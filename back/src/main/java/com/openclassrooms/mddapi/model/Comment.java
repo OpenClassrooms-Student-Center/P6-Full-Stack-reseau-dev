@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ public class Comment {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-	private DBUser userOwner;
+	private DBUser user;
 
 	@Column(nullable = false)
 	private String content;

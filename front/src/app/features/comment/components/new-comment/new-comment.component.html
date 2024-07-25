@@ -1,0 +1,13 @@
+<div class="create-comment">
+  <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+    <div fxLayout fxLayoutAlign="center center">
+      <mat-form-field appearance="outline">
+        <textarea matInput formControlName="content"></textarea>
+      </mat-form-field>
+      <button [ngClass]="{'form-valid-icon-create-comment': form.valid}" class="btn-submit-comment" mat-icon-button type="submit" [disabled]="form.invalid">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+    <p *ngIf="onError" class="error">{{errorMessage}}</p>
+  </form>
+</div>

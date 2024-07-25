@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from "../../../../environments/environment";
 import {RegisterRequest} from "../interfaces/registerRequest.interface";
 import {LoginRequest} from "../interfaces/loginRequest.interface";
@@ -12,33 +12,24 @@ import {Response} from "../../../interfaces/response.interface";
 })
 export class AuthService {
 
-  private sessionInformationSubject = new BehaviorSubject<SessionInformation | null>(null);
   private pathService = `${environment.baseUrl}/auth`;
-
-  public isLogged:boolean = false;
 
   constructor(private httpClient: HttpClient) { }
 
-  public $isLogged(): Observable<boolean> {
-    return this.sessionInformationSubject.asObservable().pipe(
-      map((sessionInformation: SessionInformation | null) => {
-        return sessionInformation !== null;
-      })
-    );
+  public isLogged(){
+    return this.getToken() !== null;
   }
 
   public getToken(): string | null {
-    return this.sessionInformationSubject.getValue()?.token ?? null;
+    return sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') as string).token : null;
   }
 
   public logIn(sessionInformation: SessionInformation): void {
-    this.isLogged = true;
-    this.sessionInformationSubject.next(sessionInformation);
+    sessionStorage.setItem('user', JSON.stringify(sessionInformation));
   }
 
   public logOut(): void {
-    this.isLogged = false;
-    this.sessionInformationSubject.next(null);
+    sessionStorage.removeItem('user');
   }
 
   public register(registerRequest: RegisterRequest): Observable<Response> {

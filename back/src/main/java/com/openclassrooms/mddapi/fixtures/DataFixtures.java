@@ -81,25 +81,25 @@ public class DataFixtures implements CommandLineRunner {
         post1.setContent("content1");
         post1.setTopic(topic1);
         post1.setCreatedAt(now);
-        post1.setUserOwner(user1);
+        post1.setUser(user1);
 
         Post post2 = new Post();
         post2.setTitle("Java 17 is out!");
         post2.setContent("content2");
         post2.setTopic(topic2);
         post2.setCreatedAt(now);
-        post2.setUserOwner(user2);
+        post2.setUser(user2);
 
         Comment comment1 = new Comment();
         comment1.setContent("Very interesting!");
         comment1.setPost(post1);
-        comment1.setUserOwner(user2);
+        comment1.setUser(user2);
         comment1.setCreatedAt(now);
 
         Comment comment2 = new Comment();
         comment2.setContent("Awesome!");
         comment2.setPost(post2);
-        comment2.setUserOwner(user1);
+        comment2.setUser(user1);
         comment2.setCreatedAt(now);
 
         topicRepository.save(topic1);

@@ -1,0 +1,11 @@
+<div *ngFor="let comment of comments$|async">
+  <div class="comment">
+    <div class="comment-details">
+      {{comment?.user?.username}}
+    </div>
+    <div class="comment-content">
+      {{comment?.content}}
+    </div>
+  </div>
+</div>
+<app-new-comment [postId]="this.postId" (commentAdded)="handleCommentAdded($event)"></app-new-comment>

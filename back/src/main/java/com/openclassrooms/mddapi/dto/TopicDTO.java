@@ -19,8 +19,6 @@ public class TopicDTO {
     @NotNull(message = "Le titre ne peut pas être NULL.")
     private String title;
     private String description;
-    @JsonProperty("created_at")
     private String createdAt;
-    @JsonProperty("updated_at")
     private String updatedAt;
 }

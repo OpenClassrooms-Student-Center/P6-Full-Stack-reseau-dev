@@ -27,8 +27,8 @@ export class AppComponent {
   public openSidenav(): void {
     this.sidenav.open();
   }
-  public $isLogged(): Observable<boolean> {
-    return this.authService.$isLogged();
+  public isLogged(): boolean {
+    return this.authService.isLogged();
   }
 
 }

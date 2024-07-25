@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.service.comment;
 
 import com.openclassrooms.mddapi.dto.CommentDTO;
+import com.openclassrooms.mddapi.dto.PostDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
 
 import java.security.Principal;
@@ -20,5 +21,5 @@ public interface ICommentService {
      * @param currentUser The current user attempting to create a comment, represented as a DBUserDTO.
      * @param commentDTO The comment to be created, represented as a CommentDTO.
      */
-    ResponseDTO createComment(CommentDTO commentDTO, Principal user);
+    List<CommentDTO> createComment(CommentDTO commentDTO, Long postId, Principal user);
 }

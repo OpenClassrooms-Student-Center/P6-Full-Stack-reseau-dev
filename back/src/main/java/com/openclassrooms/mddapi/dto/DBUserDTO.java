@@ -69,8 +69,6 @@ public class DBUserDTO {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String token;
-    @JsonProperty("created_at")
     private String createdAt;
-    @JsonProperty("updated_at")
     private String updatedAt;
 }

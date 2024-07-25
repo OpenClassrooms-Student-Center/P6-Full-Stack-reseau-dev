@@ -8,7 +8,7 @@
   </h3>
 </div>
 <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
-  <mat-card-content fxLayout="column" fxLayoutAlign="start center">
+  <div fxLayout="column" fxLayoutAlign="start center">
     <div fxLayout="column">
       <mat-label>E-mail ou nom d'utilisateur</mat-label>
       <mat-form-field class="input-auth" appearance="outline">
@@ -21,7 +21,7 @@
         <input matInput type="password" formControlName="password">
       </mat-form-field>
     </div>
-  </mat-card-content>
+  </div>
   <div fxLayout fxLayoutAlign="center center">
     <button class="skyblue-button" mat-raised-button type="submit" [disabled]="form.invalid">Se connecter</button>
   </div>

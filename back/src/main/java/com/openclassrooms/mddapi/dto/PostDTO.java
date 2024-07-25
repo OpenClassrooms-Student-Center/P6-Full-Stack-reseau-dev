@@ -19,8 +19,8 @@ public class PostDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     @NotNull(message = "Le topic ne peut pas être NULL.")
-    private Topic topic;
-    private DBUser user;
+    private Long topicId;
+    private Long userId;
     @NotEmpty(message = "Le titre ne peut pas être vide.")
     @NotNull(message = "Le titre ne peut pas être NULL.")
     private String title;
@@ -28,8 +28,6 @@ public class PostDTO {
     @NotNull(message = "Le contenu ne peut pas être NULL.")
     private String content;
     private List<CommentDTO> comments;
-    @JsonProperty("created_at")
     private String createdAt;
-    @JsonProperty("updated_at")
     private String updatedAt;
 }

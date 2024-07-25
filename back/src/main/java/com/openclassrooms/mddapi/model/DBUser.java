@@ -39,6 +39,6 @@ public class DBUser {
             name = "subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     Set<Topic> topics;
 }

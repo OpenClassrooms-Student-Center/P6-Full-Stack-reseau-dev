@@ -19,7 +19,6 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.findAll().subscribe((posts: Post[]) => {
-      console.log(posts);
       this.postsSubject.next(posts);
     });
   }
@@ -28,20 +27,17 @@ export class PostsComponent implements OnInit {
     this.sortAsc = !this.sortAsc;
     const icon = document.getElementById('sort-icon');
     if(icon){
-      console.log( icon.innerText)
       icon.innerText === 'arrow_downward' ? icon.innerText = 'arrow_upward' : icon.innerText = 'arrow_downward';
-      console.log( icon.innerText)
     }
 
     const posts = this.postsSubject.getValue().sort((a, b) => {
       // Convert dates to timestamps and handle potentially undefined values
-      const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
-      const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
       console.log(dateA,a);
       console.log(dateB,b);
       return this.sortAsc ? dateA - dateB : dateB - dateA;
     });
-    console.log(posts);
     this.postsSubject.next(posts);
   }
 

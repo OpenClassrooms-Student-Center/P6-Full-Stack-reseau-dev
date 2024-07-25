@@ -149,20 +149,21 @@ public class CommentController {
             }
     )
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/posts", produces = "application/json")
+    @PostMapping(value = "/post/{postId}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
-    public ResponseDTO createComment(
+    public List<CommentDTO> createComment(
             Principal user,
+            @PathVariable Long postId,
             @RequestBody @Validated CommentDTO commentDTO,
             BindingResult result
     )
     {
         if(result.hasErrors()) {
-            Map<String, String> errors = result.getFieldErrors().stream()
-                    .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
-            throw new CommentException(errors.toString());
-        }
-        return commentService.createComment(commentDTO, user);
+        Map<String, String> errors = result.getFieldErrors().stream()
+                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
+        throw new CommentException(errors.toString());
+    }
+        return commentService.createComment(commentDTO, postId, user);
     }
 
 }

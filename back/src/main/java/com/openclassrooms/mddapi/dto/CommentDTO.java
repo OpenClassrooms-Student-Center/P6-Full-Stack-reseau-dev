@@ -18,15 +18,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentDTO {
     private Long id;
-    @NotNull(message = "Le post ne peut pas être NULL.")
-    private Post post;
-    @NotNull(message = "L'utilisateur ne peut pas être NULL.")
-    private DBUser user;
+    private Long postId;
+    private DBUserDTO user;
     @NotEmpty(message = "Le contenu ne peut pas être vide.")
     @NotNull(message = "Le contenu ne peut pas être NULL.")
     private String content;
-    @JsonProperty("created_at")
     private String createdAt;
-    @JsonProperty("updated_at")
     private String updatedAt;
 }

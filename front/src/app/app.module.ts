@@ -26,6 +26,8 @@ import { PostsComponent } from './features/post/components/posts/posts.component
 // Importez les fonctions nécessaires et la locale française
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { CommentsComponent } from './features/comment/components/comments/comments.component';
+import {NewCommentComponent} from "./features/comment/components/new-comment/new-comment.component";
 
 registerLocaleData(localeFr);
 
@@ -38,6 +40,9 @@ registerLocaleData(localeFr);
     PostsComponent,
     PostComponent,
     NewPostComponent,
+    CommentsComponent,
+    NewCommentComponent,
+    CommentsComponent,
   ],
     imports: [
         BrowserModule,

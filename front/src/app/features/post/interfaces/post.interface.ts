@@ -8,6 +8,6 @@ export interface Post {
   topic?: Topic;
   comments?: Comment[];
   user?: User;
-  created_at?: Date;
-  updated_at?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

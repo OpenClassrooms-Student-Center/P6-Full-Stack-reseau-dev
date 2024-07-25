@@ -43,13 +43,10 @@ public class PostService implements IPostService {
 	@Override
 	public PostDTO getPost(final Long id) throws EntityNotFoundException {
 		Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Post not found"));
-		post.getComments().size();
 		return modelMapper.map(post, PostDTO.class);
 	}
 	@Override
 	public List<PostDTO> getPosts() {
-		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.typeMap(Post.class, PostDTO.class).addMappings(mapper -> mapper.skip((destination, value) -> destination.setComments(null)));
 		return postRepository.findAll().stream()
 				.map(entity -> modelMapper.map(entity, PostDTO.class))
 				.collect(Collectors.toList());
@@ -59,7 +56,7 @@ public class PostService implements IPostService {
 		DBUser dbUser = dbUserRepository.findByEmail(user.getName()).orElseThrow(() -> new EntityNotFoundException("User not found"));
 		Timestamp now = DateUtils.now();
 		final Post post = modelMapper.map(postDTO, Post.class);
-		post.setUserOwner(dbUser);
+		post.setUser(dbUser);
 		post.setCreatedAt(now);
 		postRepository.save(post);
 		return modelMapper.map(post, PostDTO.class);

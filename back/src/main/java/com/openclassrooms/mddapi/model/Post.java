@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.openclassrooms.mddapi.dto.CommentDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,13 +20,13 @@ public class Post {
 	@Column(name="id")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "topic_id", nullable = false)
 	private Topic topic;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-	private DBUser userOwner;
+	private DBUser user;
 
 	@Column(name="title", nullable = false)
 	private String title;
@@ -32,7 +34,7 @@ public class Post {
 	@Column(name="content")
 	private String content;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+	@OneToMany(mappedBy = "post")
 	private List<Comment> comments;
 
 	@Column(name="created_at")

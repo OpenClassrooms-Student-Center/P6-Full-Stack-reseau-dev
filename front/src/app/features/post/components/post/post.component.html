@@ -1,0 +1,23 @@
+<ng-container *ngIf="post$ | async as post">
+  <div fxLayout fxLayoutAlign="start center">
+    <button class="bg-transparent" mat-icon-button  (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h3>
+      {{post?.title}}
+    </h3>
+  </div>
+  <div class="post-data">
+    <div class="post-details">
+      <span>{{post?.createdAt | date:'fullDate'}}</span>
+      <span>{{post?.user?.username}}</span>
+      <span>{{post?.topic?.title }}</span>
+    </div>
+    <span>{{post?.content}}</span>
+    <hr>
+    Commentaires
+    <div class="comments">
+      <app-comments [postId]="this.id"></app-comments>
+    </div>
+  </div>
+</ng-container>
