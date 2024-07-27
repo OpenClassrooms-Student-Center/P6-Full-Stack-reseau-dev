@@ -16,11 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostDTO {
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     @NotNull(message = "Le topic ne peut pas être NULL.")
-    private Long topicId;
-    private Long userId;
+    private TopicDTO topic;
+    @NotNull(message = "Le champ utilisateur ne peut pas être NULL.")
+    private DBUserDTO user;
     @NotEmpty(message = "Le titre ne peut pas être vide.")
     @NotNull(message = "Le titre ne peut pas être NULL.")
     private String title;

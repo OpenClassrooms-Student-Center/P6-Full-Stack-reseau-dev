@@ -8,4 +8,4 @@
     </div>
   </div>
 </div>
-<app-new-comment [postId]="this.postId" (commentAdded)="handleCommentAdded($event)"></app-new-comment>
+<app-new-comment [post$]="post$" (commentAdded)="handleCommentAdded($event)"></app-new-comment>

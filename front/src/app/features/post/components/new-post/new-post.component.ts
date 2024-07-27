@@ -6,7 +6,6 @@ import {Post} from "../../interfaces/post.interface";
 import {Location} from "@angular/common";
 import {Router} from "@angular/router";
 import {PostService} from "../../services/post.service";
-import {Response} from "../../../../interfaces/response.interface";
 
 @Component({
   selector: 'app-new-post',
@@ -62,6 +61,7 @@ export class NewPostComponent implements OnInit {
         title: this.form.value.title??'',
         content: this.form.value.content??'',
         topic: this.topics.find((topic: Topic) => topic.id === id),
+        user: JSON.parse(sessionStorage.getItem('user') as string)
       };
       this.postService.create(post).subscribe({
           next: (post: Post) => this.router.navigate([`/post/${post.id}`]),

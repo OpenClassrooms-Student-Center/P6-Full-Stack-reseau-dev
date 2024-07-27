@@ -13,11 +13,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TopicDTO {
-    @NotNull(message = "L'id ne peut pas être NULL.")
     private Long id;
     @NotEmpty(message = "Le titre ne peut pas être vide.")
     @NotNull(message = "Le titre ne peut pas être NULL.")
     private String title;
+    @NotEmpty(message = "Le contenu ne peut pas être vide.")
+    @NotNull(message = "Le contenu ne peut pas être NULL.")
     private String description;
     private String createdAt;
     private String updatedAt;

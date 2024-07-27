@@ -1,5 +1,6 @@
 import {Topic} from "../../topic/interfaces/topic.interface";
 import {User} from "../../me/interfaces/user.interface";
+import {Comment} from "../../comment/interfaces/comment.interface";
 
 export interface Post {
   id?: number;

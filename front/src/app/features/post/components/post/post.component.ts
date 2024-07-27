@@ -3,8 +3,7 @@ import {PostService} from "../../services/post.service";
 import {Post} from "../../interfaces/post.interface";
 import {ActivatedRoute} from "@angular/router";
 import { Location } from '@angular/common';
-import {BehaviorSubject} from "rxjs";
-import { Comment } from "../../../comment/interfaces/comment.interface";
+import {BehaviorSubject, filter} from "rxjs";
 
 @Component({
   selector: 'app-post',
@@ -16,8 +15,9 @@ export class PostComponent implements OnInit {
   id: Number | null = null;
 
   private postSubject = new BehaviorSubject<Post|null>( null);
-  public post$ = this.postSubject.asObservable();
-
+  public post$ = this.postSubject.asObservable().pipe(
+    filter((post: Post | null): post is Post => post !== null)
+  );
   constructor(
     private postService:PostService,
     private location: Location,

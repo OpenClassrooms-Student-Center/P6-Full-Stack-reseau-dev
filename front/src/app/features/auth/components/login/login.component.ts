@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/loginRequest.interface';
@@ -10,8 +10,7 @@ import {SessionInformation} from "../../interfaces/sessionInformation.interface"
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  public hide = true;
+export class LoginComponent implements OnDestroy {
   public onError = false;
   public errorMessage = "";
 
@@ -47,11 +46,16 @@ export class LoginComponent {
       },
       error: (error) => {
         this.onError = true;
+        this.errorMessage = error.error.message;
         console.log(error);
       }
     });
   }
   public goHome(): void {
     this.router.navigate(['']);
+  }
+
+  public ngOnDestroy() {
+
   }
 }

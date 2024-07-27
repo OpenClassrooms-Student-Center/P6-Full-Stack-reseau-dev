@@ -19,6 +19,7 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.findAll().subscribe((posts: Post[]) => {
+      console.log(posts);
       this.postsSubject.next(posts);
     });
   }

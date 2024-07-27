@@ -18,7 +18,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentDTO {
     private Long id;
+    @NotNull(message = "Le champ id du post ne peut pas être NULL.")
     private Long postId;
+    @NotNull(message = "Le champ utilisateur ne peut pas être NULL.")
     private DBUserDTO user;
     @NotEmpty(message = "Le contenu ne peut pas être vide.")
     @NotNull(message = "Le contenu ne peut pas être NULL.")

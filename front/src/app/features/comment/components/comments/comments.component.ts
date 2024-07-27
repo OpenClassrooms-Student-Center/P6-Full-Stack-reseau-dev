@@ -11,7 +11,7 @@ import {Post} from "../../../post/interfaces/post.interface";
 })
 export class CommentsComponent implements OnInit {
 
-  @Input() postId:Number|null = null;
+  @Input() post$!: Observable<Post>;
 
   private commentsSubject = new BehaviorSubject<Comment[]>( []);
   public comments$ = this.commentsSubject.asObservable();
@@ -19,12 +19,19 @@ export class CommentsComponent implements OnInit {
   constructor(private commentService: CommentService) { }
 
   ngOnInit(): void {
-    this.commentService.getCommentsByPostId(Number(this.postId)).subscribe({
-      next: (comments: Comment[]) => this.commentsSubject.next(comments),
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    if(this.post$){
+      this.post$.subscribe({
+        next: (post: Post) => {
+          if(post.comments){
+            console.log(post.comments)
+            this.commentsSubject.next(post.comments);
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
   }
 
   public handleCommentAdded(comments: Comment[]): void {
