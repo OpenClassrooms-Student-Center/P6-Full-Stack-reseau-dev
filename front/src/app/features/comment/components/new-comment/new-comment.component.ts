@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {Comment} from "../../interfaces/comment.interface";
 import {CommentService} from "../../services/comment.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Post} from "../../../post/interfaces/post.interface";
 
 @Component({
@@ -10,11 +10,13 @@ import {Post} from "../../../post/interfaces/post.interface";
   templateUrl: './new-comment.component.html',
   styleUrls: ['./new-comment.component.scss']
 })
-export class NewCommentComponent implements OnInit {
+export class NewCommentComponent implements OnInit, OnDestroy {
 
   @Input() post$: Observable<Post> | null = null;
   @Input() postId: number | null = null;
   @Output() commentAdded = new EventEmitter<Comment[]>();
+
+  private postSubscription!: Subscription;
 
   public onError = false;
   public errorMessage = "";
@@ -33,7 +35,7 @@ export class NewCommentComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.post$){
-      this.post$.subscribe({
+      this.postSubscription = this.post$.subscribe({
         next: (post: Post) => {
           if(post.id){
             console.log(post.id)
@@ -44,6 +46,12 @@ export class NewCommentComponent implements OnInit {
           console.error(error);
         }
       });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
     }
   }
 

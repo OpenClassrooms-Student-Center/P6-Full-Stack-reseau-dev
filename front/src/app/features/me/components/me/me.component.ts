@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {FormBuilder, Validators} from "@angular/forms";
 import {Topic} from "../../../topic/interfaces/topic.interface";
@@ -7,13 +7,14 @@ import {AuthService} from "../../../auth/services/auth.service";
 import {UserService} from "../../services/user.service";
 import {TopicService} from "../../../topic/services/topic.service";
 import {SessionInformation} from "../../../auth/interfaces/sessionInformation.interface";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-me',
   templateUrl: './me.component.html',
   styleUrls: ['./me.component.scss']
 })
-export class MeComponent implements OnInit {
+export class MeComponent implements OnInit, OnDestroy {
 
   public onError = false;
   public errorMessage = "";
@@ -40,6 +41,10 @@ export class MeComponent implements OnInit {
 
   public topics: Topic[] = [];
 
+  private userSubscription!: Subscription;
+  private userUpdateSubscription!: Subscription;
+  private topicsSubscription!: Subscription;
+
   constructor(private router: Router,
               private authService: AuthService,
               private fb: FormBuilder,
@@ -50,7 +55,7 @@ export class MeComponent implements OnInit {
   public submit(): void
   {
     const updatedUser = this.form.value as User;
-    this.userService.updateInfo(updatedUser).subscribe({
+    this.userUpdateSubscription = this.userService.updateInfo(updatedUser).subscribe({
       next: (sessionInformation: SessionInformation) => {
         this.authService.logIn(sessionInformation);
         this.router.navigate(['/me']);
@@ -64,7 +69,7 @@ export class MeComponent implements OnInit {
 
   public ngOnInit(): void
   {
-    this.userService
+    this.userSubscription = this.userService
       .me()
       .subscribe((user: User) => {
         this.user = user;
@@ -74,7 +79,7 @@ export class MeComponent implements OnInit {
           // Ne pas inclure password ici pour conserver les validateurs
         });
       });
-    this.topicService.getUserSubscriptions().subscribe((topics: Topic[]) => {
+    this.topicsSubscription = this.topicService.getUserSubscriptions().subscribe((topics: Topic[]) => {
       this.topics = topics;
     });
   }
@@ -94,6 +99,19 @@ export class MeComponent implements OnInit {
   public logout(): void {
     this.authService.logOut();
     this.router.navigate([''])
+  }
+
+  public ngOnDestroy(): void
+  {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+    if (this.userUpdateSubscription) {
+      this.userUpdateSubscription.unsubscribe();
+    }
+    if (this.topicsSubscription) {
+      this.topicsSubscription.unsubscribe();
+    }
   }
 
 }

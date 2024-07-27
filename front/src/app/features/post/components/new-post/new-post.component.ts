@@ -6,6 +6,7 @@ import {Post} from "../../interfaces/post.interface";
 import {Location} from "@angular/common";
 import {Router} from "@angular/router";
 import {PostService} from "../../services/post.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-new-post',
@@ -18,6 +19,9 @@ export class NewPostComponent implements OnInit {
   public errorMessage = "";
 
   public topics: Topic[] = [];
+
+  private postSubscription!: Subscription;
+  private topicSubscription!: Subscription;
 
   public form = this.fb.group({
     topic: [
@@ -48,7 +52,7 @@ export class NewPostComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.topicService.findAll().subscribe((topics: Topic[]) => {
+    this.topicSubscription = this.topicService.findAll().subscribe((topics: Topic[]) => {
       this.topics = topics;
     });
   }
@@ -63,7 +67,7 @@ export class NewPostComponent implements OnInit {
         topic: this.topics.find((topic: Topic) => topic.id === id),
         user: JSON.parse(sessionStorage.getItem('user') as string)
       };
-      this.postService.create(post).subscribe({
+      this.postSubscription = this.postService.create(post).subscribe({
           next: (post: Post) => this.router.navigate([`/post/${post.id}`]),
           error: (error) => {
             this.onError = true;
@@ -77,6 +81,15 @@ export class NewPostComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  ngOnDestroy(): void {
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
+    }
+    if (this.topicSubscription) {
+      this.topicSubscription.unsubscribe();
+    }
   }
 
 }
