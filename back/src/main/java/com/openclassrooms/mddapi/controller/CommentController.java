@@ -29,8 +29,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/comments")
 public class CommentController {
 
-    @Autowired
-    private ICommentService commentService;
+    private final ICommentService commentService;
+
+    public CommentController(ICommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @Operation(summary = "Get comments by post", description = "Retrieve all comments by post")
     @ApiResponses(
@@ -98,7 +101,7 @@ public class CommentController {
     @GetMapping(value = "/post/{postId}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public List<CommentDTO> getPostComments(@PathVariable Long postId) {
-        return commentService.getCommentsByPost(postId);
+        return this.commentService.getCommentsByPost(postId);
     }
 
     @Operation(summary = "Create a comment", description = "Create a new comment")

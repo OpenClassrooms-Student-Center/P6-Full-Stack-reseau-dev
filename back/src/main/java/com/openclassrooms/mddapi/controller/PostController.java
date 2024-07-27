@@ -31,8 +31,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/posts")
 public class PostController {
 
-    @Autowired
-    private IPostService postService;
+    private final IPostService postService;
+
+    public PostController(IPostService postService) {
+        this.postService = postService;
+    }
 
     @Operation(summary = "Get posts", description = "Retrieve all posts")
     @ApiResponses(
@@ -100,7 +103,7 @@ public class PostController {
     @GetMapping(value = "", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public List<PostDTO> getPosts() {
-        return postService.getPosts();
+        return this.postService.getPosts();
     }
 
     @Operation(summary = "Get post", description = "Retrieved a specified post")
@@ -156,7 +159,7 @@ public class PostController {
     @GetMapping(value = "/{id}", produces = "application/json")
     @SecurityRequirement(name = "bearer")
     public PostDTO getPost(@PathVariable(value = "id") Long id) {
-        return postService.getPost(id);
+        return this.postService.getPost(id);
     }
 
     @Operation(summary = "Create a post", description = "Create a new post")
@@ -217,7 +220,7 @@ public class PostController {
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
             throw new PostException(errors.toString());
         }
-        return postService.createPost(postDTO,user);
+        return this.postService.createPost(postDTO,user);
     }
 
 }

@@ -41,8 +41,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private IDBUserService dbUserService;
+    private final IDBUserService dbUserService;
+
+    public UserController(IDBUserService dbUserService) {
+        this.dbUserService = dbUserService;
+    }
 
     @Operation(summary = "Profile", description = "Get the user profile")
     @ApiResponses(value = {
@@ -96,7 +99,7 @@ public class UserController {
     @SecurityRequirement(name = "bearer")
     @GetMapping(value = "/me", produces = "application/json")
     public DBUserDTO info(Principal user) {
-        return dbUserService.findByEmail(user.getName());
+        return this.dbUserService.findByEmail(user.getName());
     }
 
     @Operation(summary = "Update profile", description = "Update profile")
@@ -155,7 +158,7 @@ public class UserController {
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
             throw new MeException(errors.toString());
         }
-        return dbUserService.update(newUser, user);
+        return this.dbUserService.update(newUser, user);
     }
 
 }

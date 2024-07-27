@@ -34,8 +34,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private IDBUserService dbUserService;
+    private final IDBUserService dbUserService;
+
+    public AuthController(IDBUserService dbUserService) {
+        this.dbUserService = dbUserService;
+    }
 
     @Operation(summary = "Register", description = "Register")
     @ApiResponses(value = {
@@ -86,7 +89,7 @@ public class AuthController {
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
             throw new RegistrationException(errors.toString());
         }
-        return dbUserService.register(user);
+        return this.dbUserService.register(user);
     }
 
     @Operation(summary = "Login", description = "Login to MDD")
@@ -144,6 +147,6 @@ public class AuthController {
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacement) -> existing));
             throw new AuthException(errors.toString());
         }
-       return dbUserService.login(user);
+       return this.dbUserService.login(user);
     }
 }
