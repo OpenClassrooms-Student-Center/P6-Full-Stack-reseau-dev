@@ -107,6 +107,10 @@ mat-toolbar{
 .form-valid-icon-create-comment{
   color: $primary;
 }
+.not-found-title{
+  text-align: center;
+  width: 100%;
+}
 .btn-submit-comment{
   transform: rotate(-45deg);
   .mat-icon{

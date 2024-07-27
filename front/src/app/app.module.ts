@@ -28,6 +28,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { CommentsComponent } from './features/comment/components/comments/comments.component';
 import {NewCommentComponent} from "./features/comment/components/new-comment/new-comment.component";
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 registerLocaleData(localeFr);
 
@@ -43,6 +44,7 @@ registerLocaleData(localeFr);
     CommentsComponent,
     NewCommentComponent,
     CommentsComponent,
+    NotFoundComponent,
   ],
     imports: [
         BrowserModule,

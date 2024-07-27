@@ -8,6 +8,7 @@ import {PostComponent} from "./features/post/components/post/post.component";
 import {TopicComponent} from "./features/topic/components/topic/topic.component";
 import {PostsComponent} from "./features/post/components/posts/posts.component";
 import {NewPostComponent} from "./features/post/components/new-post/new-post.component";
+import {NotFoundComponent} from "./components/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -45,7 +46,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: MeComponent
   },
-  { path: '**', redirectTo: '404' }
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-<ng-container *ngIf="post$ | async as post">
+<ng-container *ngIf="post$ | async as post; else notFound">
   <div fxLayout fxLayoutAlign="start center">
     <button class="bg-transparent" mat-icon-button  (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
@@ -21,3 +21,6 @@
     </div>
   </div>
 </ng-container>
+<ng-template #notFound>
+  <app-not-found></app-not-found>
+</ng-template>
