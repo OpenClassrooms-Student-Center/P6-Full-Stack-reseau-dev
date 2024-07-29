@@ -32,6 +32,9 @@
         <img class="img-home" src="assets/logo_p6.png">
       </div>
       <div>
+        <div class="loader" *ngIf="loading$ | async">
+          <app-loader></app-loader>
+        </div>
         <router-outlet></router-outlet>
       </div>
     </div>

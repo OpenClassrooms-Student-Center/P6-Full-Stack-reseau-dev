@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {PostService} from "../../services/post.service";
 import {Post} from "../../interfaces/post.interface";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { Location } from '@angular/common';
 import {BehaviorSubject, filter, Subscription} from "rxjs";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-post',
@@ -23,8 +24,10 @@ export class PostComponent implements OnInit {
 
   constructor(
     private postService:PostService,
+    private loaderService: LoaderService,
     private location: Location,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +37,10 @@ export class PostComponent implements OnInit {
           next: (post: Post) => this.postSubject.next(post),
           error: (error) => {
             console.error(error);
+            this.router.navigate(['not-found']);
+          },
+          complete: () => {
+            this.loaderService.hide();
           }
         }
       );

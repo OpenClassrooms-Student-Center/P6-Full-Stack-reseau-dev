@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterRequest } from '../../interfaces/registerRequest.interface';
 import {AuthService} from "../../services/auth.service";
 import {Response} from "../../../../interfaces/response.interface";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
 
   public onError = false;
   public errorMessage = "";
@@ -40,8 +41,13 @@ export class RegisterComponent {
   });
 
   constructor(private authService: AuthService,
+              private loaderService: LoaderService,
               private fb: FormBuilder,
               private router: Router) {
+  }
+
+  ngOnInit() {
+    this.loaderService.hide();
   }
 
   public submit(): void {

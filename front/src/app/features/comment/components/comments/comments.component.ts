@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Comment} from "../../interfaces/comment.interface";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {Post} from "../../../post/interfaces/post.interface";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-comments',
@@ -24,7 +25,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
       this.postSubscription = this.post$.subscribe({
         next: (post: Post) => {
           if (post.comments) {
-            console.log(post.comments);
             this.commentsSubject.next(post.comments);
           }
         },

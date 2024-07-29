@@ -76,6 +76,16 @@ mat-toolbar{
     margin-right: 24px;
   }
 }
+.loader{
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 100px);
+  background-color: white;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .error{
   text-align: center;
   color: red;

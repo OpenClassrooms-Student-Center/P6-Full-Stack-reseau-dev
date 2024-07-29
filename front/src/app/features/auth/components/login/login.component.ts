@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/loginRequest.interface';
 import {AuthService} from "../../services/auth.service";
 import {SessionInformation} from "../../interfaces/sessionInformation.interface";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-login',
@@ -32,9 +33,14 @@ export class LoginComponent implements OnDestroy {
   });
 
   constructor(private authService: AuthService,
+              private loaderService: LoaderService,
               private fb: FormBuilder,
               private router: Router,
               private sessionService: AuthService) {
+  }
+
+  ngOnInit(): void {
+    this.loaderService.hide();
   }
 
   public submit(): void {

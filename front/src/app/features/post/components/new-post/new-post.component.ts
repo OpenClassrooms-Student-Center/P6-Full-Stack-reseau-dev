@@ -7,6 +7,7 @@ import {Location} from "@angular/common";
 import {Router} from "@angular/router";
 import {PostService} from "../../services/post.service";
 import {Subscription} from "rxjs";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-new-post',
@@ -44,6 +45,7 @@ export class NewPostComponent implements OnInit {
   });
 
   constructor(
+    private loaderService: LoaderService,
     private topicService:TopicService,
     private postService:PostService,
     private fb: FormBuilder,
@@ -52,8 +54,17 @@ export class NewPostComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.topicSubscription = this.topicService.findAll().subscribe((topics: Topic[]) => {
-      this.topics = topics;
+    this.topicSubscription = this.topicService.findAll().subscribe({
+      next: (topics: Topic[]) => {
+        this.topics = topics;
+      },
+      error: (error) => {
+        this.onError = true;
+        this.errorMessage = error.error.message;
+      },
+      complete: () => {
+        this.loaderService.hide();
+      }
     });
   }
 

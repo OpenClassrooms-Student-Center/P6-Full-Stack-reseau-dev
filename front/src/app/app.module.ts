@@ -28,7 +28,9 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { CommentsComponent } from './features/comment/components/comments/comments.component';
 import {NewCommentComponent} from "./features/comment/components/new-comment/new-comment.component";
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 registerLocaleData(localeFr);
 
@@ -45,6 +47,7 @@ registerLocaleData(localeFr);
     NewCommentComponent,
     CommentsComponent,
     NotFoundComponent,
+    LoaderComponent,
   ],
     imports: [
         BrowserModule,
@@ -61,7 +64,8 @@ registerLocaleData(localeFr);
         MatSidenavModule,
         FormsModule,
         ReactiveFormsModule,
-        MatSelectModule
+        MatSelectModule,
+        MatProgressSpinnerModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

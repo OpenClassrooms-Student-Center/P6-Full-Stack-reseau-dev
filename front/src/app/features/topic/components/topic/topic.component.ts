@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Topic} from "../../interfaces/topic.interface";
 import {TopicService} from "../../services/topic.service";
 import {Subscription} from "rxjs";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-topic',
@@ -18,11 +19,15 @@ export class TopicComponent implements OnInit {
   private topicSubscription!: Subscription;
   private followTopicSubscription!: Subscription;
 
-  constructor(private topicService: TopicService) {}
+  constructor(
+    private topicService: TopicService,
+    private loaderService: LoaderService
+  ) {}
 
   ngOnInit(): void {
     this.topicSubscription = this.topicService.getTopicsNotFollowedByUser().subscribe((topics: Topic[]) => {
       this.topics = topics;
+      this.loaderService.hide();
     });
   }
 

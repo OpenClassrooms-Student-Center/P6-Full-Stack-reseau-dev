@@ -8,6 +8,7 @@ import {UserService} from "../../services/user.service";
 import {TopicService} from "../../../topic/services/topic.service";
 import {SessionInformation} from "../../../auth/interfaces/sessionInformation.interface";
 import {Subscription} from "rxjs";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-me',
@@ -47,6 +48,7 @@ export class MeComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private authService: AuthService,
+              private loaderService: LoaderService,
               private fb: FormBuilder,
               private userService: UserService,
               private topicService: TopicService) {
@@ -71,13 +73,22 @@ export class MeComponent implements OnInit, OnDestroy {
   {
     this.userSubscription = this.userService
       .me()
-      .subscribe((user: User) => {
-        this.user = user;
-        this.form.patchValue({
-          username: user.username,
-          email: user.email,
-          // Ne pas inclure password ici pour conserver les validateurs
-        });
+      .subscribe({
+        next: (user: User) => {
+          this.user = user;
+          this.form.patchValue({
+            username: user.username,
+            email: user.email,
+            // Ne pas inclure password ici pour conserver les validateurs
+          });
+        },
+        error: (error) => {
+          this.onError = true;
+          this.errorMessage = error.error.message;
+        },
+        complete: () => {
+          this.loaderService.hide();
+        }
       });
     this.topicsSubscription = this.topicService.getUserSubscriptions().subscribe((topics: Topic[]) => {
       this.topics = topics;

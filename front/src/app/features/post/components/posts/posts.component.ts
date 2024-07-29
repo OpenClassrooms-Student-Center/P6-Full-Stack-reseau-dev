@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Post} from "../../interfaces/post.interface";
 import {PostService} from "../../services/post.service";
 import {BehaviorSubject} from "rxjs";
+import {LoaderService} from "../../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-posts',
@@ -15,11 +16,14 @@ export class PostsComponent implements OnInit {
 
   public sortAsc = true;
 
-  constructor(private postService:PostService) { }
+  constructor(
+    private postService:PostService,
+    private loaderService:LoaderService
+  ) { }
 
   ngOnInit(): void {
     this.postService.findAll().subscribe((posts: Post[]) => {
-      console.log(posts);
+      this.loaderService.hide();
       this.postsSubject.next(posts);
     });
   }
