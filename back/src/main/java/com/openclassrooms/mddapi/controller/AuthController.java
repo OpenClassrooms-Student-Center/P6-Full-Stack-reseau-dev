@@ -99,9 +99,18 @@ public class AuthController {
             description = "Login successful",
             content = @Content(
                 mediaType = "application/json",
-                schema = @Schema(implementation = TokenDTO.class),
+                schema = @Schema(implementation = DBUserDTO.class),
                 examples = @ExampleObject(
-                    value = "{\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}"
+                    value=
+                            "{" +
+                                "\"id\": 1," +
+                                "\"email\": john.doe@email.com," +
+                                " \"username\": \"JohnDoe\"," +
+                                " \"token\": \"TOKEN\"," +
+                                " \"createdAt\": \"2024-07-29 16:35:07.019715\"," +
+                                " \"updatedAt\": \"2024-07-29 16:35:07.019715\"" +
+                            "}"
+
                 )
             )
         ),

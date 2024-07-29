@@ -123,7 +123,7 @@ public class PostController {
                             "\"created_at\": \"2012/12/02\"," +
                             "\"topic_id\": \"1\"," +
                             "\"user_id\": \"3\"," +
-                        "},"
+                        "}"
                 )
             )
         ),
@@ -170,10 +170,18 @@ public class PostController {
                             description = "Post created",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ResponseDTO.class),
+                                    schema = @Schema(implementation = PostDTO.class),
                                     examples = @ExampleObject(
                                             name = "Post created",
-                                            value = "{\"message\": \"Post created !\"}"
+                                            value =
+                                                    "{" +
+                                                        "\"id\": 1," +
+                                                        "\"title\": \"Post 1\"," +
+                                                        "\"content\": \"Content 1\"," +
+                                                        "\"created_at\": \"2012/12/02\"," +
+                                                        "\"topic_id\": \"1\"," +
+                                                        "\"user_id\": \"3\"," +
+                                                    "}"
                                     )
                             )
                     ),

@@ -225,7 +225,7 @@ public class TopicController {
 		value = {
             @ApiResponse(
                 responseCode = "200",
-                description = "Topics successfully retrieved",
+                description = "Topics successfully followed",
                 content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(type = "array", implementation = TopicDTO.class),
@@ -289,7 +289,7 @@ public class TopicController {
 		value = {
             @ApiResponse(
                 responseCode = "200",
-                description = "Topics successfully retrieved",
+                description = "Topics successfully unfollowed",
                 content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(type = "array", implementation = TopicDTO.class),

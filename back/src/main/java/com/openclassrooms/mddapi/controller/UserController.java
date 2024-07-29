@@ -109,13 +109,18 @@ public class UserController {
                 description = "Update user details",
                 content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = ResponseDTO.class),
+                    schema = @Schema(implementation = DBUserDTO.class),
                     examples = @ExampleObject(
                             name = "User example",
                             value =
-                                "{" +
-                                    "\"message\": \"User updated !\"" +
-                                "}"
+                                    "{" +
+                                        "\"id\": 1," +
+                                        "\"email\": john.doe@email.com," +
+                                        " \"username\": \"JohnDoe\"," +
+                                        " \"token\": \"TOKEN\"," +
+                                        " \"createdAt\": \"2024-07-29 16:35:07.019715\"," +
+                                        " \"updatedAt\": \"2024-07-29 16:35:07.019715\"" +
+                                    "}"
                     )
                 )
             ),
