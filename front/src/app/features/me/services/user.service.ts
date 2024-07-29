@@ -14,10 +14,17 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * Get the user information
+   */
   public me(): Observable<User> {
     return this.httpClient.get<User>(`${this.pathService}/me`);
   }
 
+  /**
+   * Update the user information
+   * @param user
+   */
   public updateInfo(user: User): Observable<SessionInformation> {
     return this.httpClient.put<SessionInformation>(`${this.pathService}/me`, user);
   }

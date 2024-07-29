@@ -13,10 +13,11 @@ export class CommentService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getCommentsByPostId(postId:number): Observable<Comment[]> {
-    return this.httpClient.get<Comment[]>(`${this.pathService}/post/${postId}`);
-  }
-
+  /**
+   * Create a comment
+   * @param postId
+   * @param comment
+   */
   public create(postId:number, comment: Comment): Observable<Comment[]> {
     return this.httpClient.post<Comment[]>(`${this.pathService}/post/${postId}`, comment);
   }

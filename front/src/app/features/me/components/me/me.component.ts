@@ -59,7 +59,7 @@ export class MeComponent implements OnInit, OnDestroy {
     const updatedUser = this.form.value as User;
     this.userUpdateSubscription = this.userService.updateInfo(updatedUser).subscribe({
       next: (sessionInformation: SessionInformation) => {
-        this.authService.logIn(sessionInformation);
+        this.authService.save(sessionInformation);
         this.router.navigate(['/me']);
       },
       error: (error) => {

@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/loginRequest.interface';
@@ -11,7 +11,7 @@ import {LoaderService} from "../../../../shared/services/loading.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit {
   public onError = false;
   public errorMessage = "";
 
@@ -47,7 +47,7 @@ export class LoginComponent implements OnDestroy {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
       next: (sessionInformation: SessionInformation) => {
-        this.sessionService.logIn(sessionInformation);
+        this.sessionService.save(sessionInformation);
         this.router.navigate(['/posts']);
       },
       error: (error) => {
@@ -59,9 +59,5 @@ export class LoginComponent implements OnDestroy {
   }
   public goHome(): void {
     this.router.navigate(['']);
-  }
-
-  public ngOnDestroy() {
-
   }
 }

@@ -13,14 +13,25 @@ export class PostService {
 
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * Get all the posts
+   */
   public findAll(): Observable<Post[]> {
     return this.httpClient.get<Post[]>(`${this.pathService}`);
   }
 
+  /**
+   * Find a post by id
+   * @param id
+   */
   public findById(id:number): Observable<Post> {
     return this.httpClient.get<Post>(`${this.pathService}/${id}`);
   }
 
+  /**
+   * Create a post
+   * @param post
+   */
   public create(post: Post): Observable<Post> {
     return this.httpClient.post<Post>(this.pathService, post);
   }

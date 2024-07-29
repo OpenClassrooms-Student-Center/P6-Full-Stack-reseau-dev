@@ -11,7 +11,7 @@ import {LoaderService} from "../../../../shared/services/loading.service";
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
 
   public onError = false;
   public errorMessage = "";

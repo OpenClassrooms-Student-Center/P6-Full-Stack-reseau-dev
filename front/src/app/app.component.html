@@ -2,10 +2,10 @@
   <mat-sidenav #sidenav mode="over" position="end">
     <div class="menu hamburger-menu" *ngIf="isLogged()">
       <div fxLayout="column" fxLayoutAlign="end end" class="mb-auto">
-        <a routerLink="posts" routerLinkActive="active-link">Articles</a>
-        <a routerLink="topics" routerLinkActive="active-link">Thèmes</a>
+        <a (click)="sidenav.close()" routerLink="posts" routerLinkActive="active-link">Articles</a>
+        <a (click)="sidenav.close()" routerLink="topics" routerLinkActive="active-link">Thèmes</a>
       </div>
-      <a class="me-link" routerLink="me" routerLinkActive="active-link"><mat-icon>account_circle</mat-icon></a>
+      <a (click)="sidenav.close()" class="me-link" routerLink="me" routerLinkActive="active-link"><mat-icon>account_circle</mat-icon></a>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>

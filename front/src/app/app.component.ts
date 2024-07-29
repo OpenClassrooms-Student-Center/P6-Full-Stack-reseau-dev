@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NavigationCancel, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {BehaviorSubject, filter, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {MatSidenav} from "@angular/material/sidenav";
 import {AuthService} from "./features/auth/services/auth.service";
 import {LoaderService} from "./shared/services/loading.service";
@@ -46,12 +46,12 @@ export class AppComponent implements OnInit, OnDestroy{
     });
   }
 
-  public openSidenav(): void {
-    this.sidenav.open();
-  }
-
   public isLogged(): boolean {
     return this.authService.isLogged();
+  }
+
+  closeSidenav(){
+    this.sidenav.close();
   }
 
   ngOnDestroy() {

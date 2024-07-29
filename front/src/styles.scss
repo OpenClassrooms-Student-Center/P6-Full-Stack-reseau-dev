@@ -29,6 +29,7 @@ a{
   margin-right: auto;
 }
 .hamburger-button{
+  cursor: pointer;
   display: none;
 }
 hr{
@@ -238,6 +239,7 @@ mat-toolbar{
 }
 @media (max-width: 599px) {
   .flexbox{
+    align-items: unset!important;
     flex-direction: column;
     .flex-element{
       flex-basis: 100% !important;
