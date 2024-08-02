@@ -2,11 +2,14 @@ package com.openclassrooms.mddapi.service.post;
 
 import com.openclassrooms.mddapi.dto.PostDTO;
 import com.openclassrooms.mddapi.dto.ResponseDTO;
+import com.openclassrooms.mddapi.dto.TopicDTO;
 import com.openclassrooms.mddapi.model.DBUser;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.repository.DBUserRepository;
 import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
+import com.openclassrooms.mddapi.service.topic.ITopicService;
+import com.openclassrooms.mddapi.service.topic.TopicService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +33,13 @@ public class PostService implements IPostService {
 
 	private final PostRepository postRepository;
 
-	private final TopicRepository topicRepository;
+	private final ITopicService topicService;
 
 	private final DBUserRepository dbUserRepository;
 	
-	public PostService(PostRepository postRepository, TopicRepository topicRepository, DBUserRepository dbUserRepository) {
+	public PostService(PostRepository postRepository, ITopicService topicService, DBUserRepository dbUserRepository) {
 		this.postRepository = postRepository;
-        this.topicRepository = topicRepository;
+        this.topicService = topicService;
         this.dbUserRepository = dbUserRepository;
     }
 
@@ -46,9 +49,12 @@ public class PostService implements IPostService {
 		return modelMapper.map(post, PostDTO.class);
 	}
 	@Override
-	public List<PostDTO> getPosts() {
-		return postRepository.findAll().stream()
-				.map(entity -> modelMapper.map(entity, PostDTO.class))
+	public List<PostDTO> getPosts(Principal user) {
+		List<TopicDTO> topics = topicService.getTopicsByUser(user);
+		List<Post> posts = postRepository.findAll();
+		return posts.stream()
+				.filter(post -> topics.stream().anyMatch(topic -> topic.getId().equals(post.getTopic().getId())))
+				.map(post -> modelMapper.map(post, PostDTO.class))
 				.collect(Collectors.toList());
 	}
 	@Override

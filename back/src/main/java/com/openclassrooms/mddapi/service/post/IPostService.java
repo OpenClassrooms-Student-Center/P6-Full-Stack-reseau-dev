@@ -21,7 +21,7 @@ public interface IPostService {
      *
      * @return A list of PostDTOs representing all posts.
      */
-    List<PostDTO> getPosts();
+    List<PostDTO> getPosts(Principal user);
     /**
      * Creates a new post.
      *

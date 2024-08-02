@@ -102,8 +102,8 @@ public class PostController {
     )
     @GetMapping(value = "", produces = "application/json")
     @SecurityRequirement(name = "bearer")
-    public List<PostDTO> getPosts() {
-        return this.postService.getPosts();
+    public List<PostDTO> getPosts(Principal user) {
+        return this.postService.getPosts(user);
     }
 
     @Operation(summary = "Get post", description = "Retrieved a specified post")
