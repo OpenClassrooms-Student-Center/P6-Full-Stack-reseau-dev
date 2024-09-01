@@ -44,10 +44,18 @@ The MVP will allow users to subscribe to programming topics, view articles chron
 - TypeScript
 - Angular 17
 
-<a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML5" target="_blank" rel="noreferrer" title="HTML5"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/html5-colored.svg" width="36" height="36" alt="HTML5" /></a>
-<a href="https://sass-lang.com/" target="_blank" rel="noreferrer" title="SASS"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" width="36" height="36" alt="SASS" /></a>
-<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer" title="TypeScript"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" /></a>
-<a href="https://angular.dev/" target="_blank" rel="noreferrer" title="Angular"><img src="https://cdn.discordapp.com/attachments/688142925204422899/1208048635066060860/image.png?ex=65e1ddf7&is=65cf68f7&hm=bac39733e54e8c7db598f6aab7f273f4215f993d30916bb000081cee11916bbb&" width="44" height="40" alt="Angular" /></a>
+<a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML5" target="_blank" rel="noreferrer" title="HTML5">
+  <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/html5-colored.svg" width="36" height="36" alt="HTML5" />
+</a>
+<a href="https://sass-lang.com/" target="_blank" rel="noreferrer" title="SASS">
+  <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" width="36" height="36" alt="SASS" />
+</a>
+<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer" title="TypeScript">
+  <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="36" height="36" alt="TypeScript" />
+</a>
+<a href="https://angular.dev/" target="_blank" rel="noreferrer" title="Angular">
+  <img src="https://miro.medium.com/v2/resize:fit:1400/1*Klh1l7wkoG6PDPb9A5oCHQ.png" width="44" height="40" alt="Angular" />
+</a>
 
 ### Back-End
 
@@ -55,9 +63,15 @@ The MVP will allow users to subscribe to programming topics, view articles chron
 - Spring Boot 3.1.2
 - PostgreSQL
 
-<a href="https://www.java.com/en/" target="_blank" rel="noreferrer" title="Java"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/java/java-original.svg" width="36" height="36" alt="Java" /></a>
-<a href="https://spring.io/projects/spring-boot" target="_blank" rel="noreferrer" title="Spring"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/spring/spring-original.svg" width="36" height="36" alt="Spring" /></a>
-<a href="https://www.postgresql.org/" target="_blank" rel="noreferrer" title="PostgreSQL"><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/postgresql/postgresql-original.svg" width="36" height="36" alt="PostgreSQL" /></a>
+<a href="https://www.java.com/en/" target="_blank" rel="noreferrer" title="Java">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/java/java-original.svg" width="36" height="36" alt="Java" />
+</a>
+<a href="https://spring.io/projects/spring-boot" target="_blank" rel="noreferrer" title="Spring">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/spring/spring-original.svg" width="36" height="36" alt="Spring" />
+</a>
+<a href="https://www.postgresql.org/" target="_blank" rel="noreferrer" title="PostgreSQL">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/postgresql/postgresql-original.svg" width="36" height="36" alt="PostgreSQL" />
+</a>
 
 ## Pre-requisites
 
