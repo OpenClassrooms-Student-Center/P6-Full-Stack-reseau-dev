@@ -1,0 +1,87 @@
+@use "../../utils/preprocessed-sass/" as *;
+
+.login {
+  position: relative;
+
+
+  --_login-element-padding: 25px;
+  padding: var(--_login-element-padding);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__image-container {
+    display: none;
+    margin-bottom: 10%;
+
+    @include mobile-only {
+      display: block;
+    }
+  }
+
+  &__image {
+    display: none;
+    width: 225px;
+
+    @include mobile-only {
+      display: block;
+    }
+  }
+
+
+  &__go-back-button {
+    @include go-back-button-style(var(--_login-element-padding));
+  }
+
+  &__title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+  }
+
+  &__form {
+    @include form-style;
+  }
+
+  &__fieldset {
+    @include fieldset-style;
+  }
+
+  &__label {
+    @include label-style;
+
+    &--password {
+      position: relative;
+    }
+  }
+
+  &__input {
+    @include input-style;
+
+    &--password {
+      padding-inline-end: 30px;
+    }
+  }
+
+  &__submit-button {
+    @include button-style;
+  }
+
+  &__input-password-icon {
+    position: absolute;
+    right: 10px;
+
+    top: 53%;
+
+    &--toggle {}
+  }
+
+  &__loading {}
+
+  &__error {
+    @include error-paragraph-style;
+  }
+}

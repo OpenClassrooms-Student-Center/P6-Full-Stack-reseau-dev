@@ -1,0 +1,59 @@
+<section class="register">
+
+  <div class="register__image-container">
+    <img src="/assets/png/mdd-logo.png" alt="Monde de Dév logo" class="register__image">
+  </div>
+
+  <a routerLink="/" class="register__go-back-button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+      <path fill="currentColor"
+        d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z" />
+    </svg>
+  </a>
+
+  <h1 class="register__title">S'inscrire</h1>
+
+  <form class="register__form" [formGroup]="registerForm" (ngSubmit)="onSubmit($event)">
+    <fieldset class="register__fieldset">
+      <label class="register__label">
+        Nom d'utilisateur
+        <input type="text" class="register__input" formControlName="username" autocomplete="username"
+          [readonly]="isLoading()" />
+      </label>
+
+      <label class="register__label">
+        Adresse e-mail
+        <input type="email" class="register__input" formControlName="email" autocomplete="email"
+          [readonly]="isLoading()" />
+      </label>
+
+      <label class="register__label register__label--password">
+        Mot de passe
+        <input type="{{showPassword() ? 'text' : 'password'}}" class="register__input register__input--password"
+          formControlName="password" autocomplete="current-password" [readonly]="isLoading()" />
+
+        <ng-icon class="register__input-password-icon register__input-password-icon--toggle"
+          name="{{showPassword() ? 'bootstrapEyeFill' : 'bootstrapEyeSlashFill'}}"
+          (click)="togglePasswordVisibility()"></ng-icon>
+
+      </label>
+    </fieldset>
+
+
+
+    <button type="submit" class="register__submit-button" [disabled]="isLoading()">S'inscrire</button>
+  </form>
+
+  @if(isLoading()){
+  <app-spin-loader></app-spin-loader>
+  <p class="register__loading">En attente</p>
+  }
+
+  @if(!isLoading() && hasError()) {
+  <p class="register__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
+  }
+
+  @if(hasJwt){
+  <p class="register__success">Compte créé avec succès! Vous serez redirigé dans 3 secondes</p>
+  }
+</section>

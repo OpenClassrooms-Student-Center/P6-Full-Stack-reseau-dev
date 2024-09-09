@@ -1,0 +1,33 @@
+@use "../../../../utils/preprocessed-sass/" as *;
+
+:host {
+  height: 100%;
+}
+
+.articles-summary {
+  @include card-style;
+
+  &__link {
+    height: inherit;
+  }
+
+  &__title {}
+
+  &__info {
+    display: flex;
+
+    font-size: 14px;
+  }
+
+  &__date {
+    flex: 1;
+  }
+
+  &__author {
+    flex: 1;
+  }
+
+  &__description {
+    @include multiline-ellipsis-effect(5);
+  }
+}

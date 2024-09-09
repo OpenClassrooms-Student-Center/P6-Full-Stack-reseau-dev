@@ -1,0 +1,77 @@
+@use "../../utils/preprocessed-sass/" as *;
+
+.create-article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  --_create-article-element-padding: 25px;
+  padding: var(--_create-article-element-padding);
+
+  &__go-back-button {
+    @include go-back-button-style(var(--_create-article-element-padding));
+  }
+
+  &__title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    @include mobile-only {
+      margin-top: 50px;
+    }
+  }
+
+  &__form {
+    @include center-flex-column(15px);
+
+    width: 80%;
+    margin: auto;
+    margin-top: 15%;
+  }
+
+  &__select {
+    width: inherit;
+    @include input-style;
+
+    border-color: var(--bg-secondary);
+  }
+
+  &__option {
+    @include input-style;
+
+    background-color: var(--bg-primary);
+  }
+
+  &__input {
+    width: inherit;
+    @include input-style;
+
+    border-color: var(--bg-secondary);
+  }
+
+  &__textarea {
+    height: 212px;
+    width: inherit;
+    @include input-style;
+
+    border-color: var(--bg-secondary);
+
+  }
+
+  &__button {
+    @include button-style;
+  }
+
+  &__loading {
+    margin-top: 15px;
+  }
+
+  &__error {
+    @include error-paragraph-style;
+  }
+}

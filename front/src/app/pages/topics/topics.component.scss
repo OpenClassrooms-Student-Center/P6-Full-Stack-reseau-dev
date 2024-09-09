@@ -1,0 +1,15 @@
+@use "../../utils/preprocessed-sass/" as *;
+
+.topics {
+
+  padding: 25px;
+
+  &__no-topics {
+    text-align: center;
+  }
+
+  &__container {
+    display: grid;
+    gap: 10px;
+  }
+}

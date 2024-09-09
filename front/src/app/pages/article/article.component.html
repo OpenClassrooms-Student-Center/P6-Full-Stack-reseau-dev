@@ -1,0 +1,71 @@
+@if(isLoading()) {
+<h1 class="article__loading article__loading--article">Récupération de l'article avec l'ID: {{id}} en cours</h1>
+<app-spin-loader></app-spin-loader>
+}
+@else {
+<article class="article">
+  @if(hasError()) {
+  <h2 class="article__error article__error--not-found">L'article avec l'ID: {{id}} n'existe pas</h2>
+  }@else {
+
+  <h1 class="article__title">
+    <a routerLink="/articles" class="article__go-back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <path fill="currentColor"
+          d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z" />
+      </svg>
+    </a>
+    {{this.currentArticle().title}}
+  </h1>
+
+  <div class="article__info">
+    <p class="article__date">{{this.currentArticle().creationDate}}</p>
+    <p class="article__author">{{this.currentArticle().authorName}}</p>
+    <p class="article__topic">{{this.currentArticle().theme}}</p>
+  </div>
+
+  <p class="article__description">{{this.currentArticle().description}}</p>
+
+  <hr class="article__horizontal-line" />
+
+  <h2 class="article_comment-title">Commentaires</h2>
+  <section class="article__comments-section">
+    @if(this.articleComments().length ===0){
+    <p class="article__no-comments">Il n'y a pas encore de commentaires (ㆆ_ㆆ)</p>
+    }@else {
+    @for (comment of this.articleComments(); track comment.username) {
+    <app-comments [username]="comment.username" [comment]="comment.comment"></app-comments>
+    }
+    }
+
+    <form class="article__create-comment-section" [formGroup]="commentCreationForm"
+      (ngSubmit)="onCommentSubmission($event)">
+      <textarea name="comment" cols="30" rows="10" class="article__create-comment-textarea"
+        placeholder="Écrivez ici votre commentaire" formControlName="comment"
+        (keydown)="submitCommentWithShortcut($event)"></textarea>
+
+      <button class="article__create-comment-button" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="49" height="49" viewBox="0 0 49 49" fill="none">
+          <path d="M45.9999 3L22.3499 26.65" stroke="var(--bg-secondary)" stroke-width="5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M46 3L30.95 46L22.35 26.65L3 18.05L46 3Z" stroke="var(--bg-secondary)" stroke-width="5"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+      </button>
+    </form>
+
+    @if(isWaitingForCommentsResponse()) {
+    <p class="article__loading article__loading--article">Envoi du commentaire en cours</p>
+    <app-spin-loader></app-spin-loader>
+    }
+
+    @if(hasCommentSubmissionError()) {
+    <p class="article__error article__error--comment">Le commentaire n'a pas pu être envoyé</p>
+    }
+  </section>
+
+
+  }
+</article>
+}

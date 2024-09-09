@@ -1,5 +1,14 @@
-<div class="center">
-  <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
-</div>
+<section class="home">
+  <div class="home__image-container">
+    <img src="/assets/png/mdd-logo.png" alt="Monde de Dév logo">
+  </div>
+
+  <div class="home__links-container">
+    <a class="home__link" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">
+      Se connecter
+    </a>
+    <a class="home__link" routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">
+      S'inscrire
+    </a>
+  </div>
+</section>

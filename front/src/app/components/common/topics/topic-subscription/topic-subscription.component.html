@@ -1,0 +1,14 @@
+<div class="topic-subscription">
+  <h3 class="topic-subscription__title">{{title()}}</h3>
+
+  <p class="topic-subscription__description">
+    {{description()}}
+  </p>
+
+  <button type="submit"
+    class="topic-subscription__subscription-button topic-subscription__subscription-button{{ isSubscribed()? '--unsubscribe' : '--subscribe'}}"
+    (click)="toggleTopicSubscription()">
+    {{ isSubscribed()? "Se désabonner" :
+    "S'abonner"}}
+  </button>
+</div>

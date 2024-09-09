@@ -1,0 +1,59 @@
+@use "../../utils/preprocessed-sass/" as *;
+
+.articles {
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
+
+  width: 80%;
+
+  margin-inline: auto;
+  padding-top: 30px;
+
+  &__create-sort {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    @include mobile-only {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+
+  &__sort-button {
+    font-size: 16px;
+  }
+
+  &__sort-order {
+    display: inline-block;
+
+    transition: rotate 250ms ease-in-out;
+
+    &--asc {
+      rotate: 0deg
+    }
+
+    &--desc {
+      rotate: 180deg
+    }
+  }
+
+  &__create-article-button {
+    @include button-style;
+  }
+
+  &__article-summaries {
+    display: grid;
+    gap: 10px;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    @include mobile-only {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}

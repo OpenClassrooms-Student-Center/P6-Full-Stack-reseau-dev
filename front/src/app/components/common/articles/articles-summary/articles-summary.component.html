@@ -1,0 +1,14 @@
+<a routerLink="/article/{{id()}}" class="articles-summary__link">
+  <article class="articles-summary">
+    <h3 class="articles-summary__title">{{title()}}</h3>
+
+    <div class="articles-summary__info">
+      <p class="articles-summary__date">{{publishDate()}}</p>
+      <p class="articles-summary__author">{{author()}}</p>
+    </div>
+
+    <p class="articles-summary__description">
+      {{description()}}
+    </p>
+  </article>
+</a>

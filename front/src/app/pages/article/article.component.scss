@@ -1,0 +1,107 @@
+@use "../../utils/preprocessed-sass/" as *;
+
+.article {
+  min-height: 50svh;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 35px;
+
+  position: relative;
+
+  --_article-element-padding: 25px;
+  padding: var(--_article-element-padding);
+
+  &__error {
+    @include error-paragraph-style;
+
+    display: inline-block;
+    height: 100%;
+
+    &--not-found {
+      margin-block: auto
+    }
+  }
+
+  &__loading {}
+
+  &__go-back-button {
+    display: inline-block;
+    rotate: 90deg;
+
+    height: 30px;
+
+    @include mobile-only {
+      height: 25px;
+    }
+
+    &>svg {
+      height: inherit;
+      ;
+    }
+  }
+
+  &__title {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    @include mobile-only {
+      margin-top: 50px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__comment-title {}
+
+  &__comments-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__create-comment-section {
+    @include center-flex(15px);
+
+    position: relative;
+
+    --_send-comment-btn-width: 50px;
+    --_send-comment-btn-x-offset: 20px;
+  }
+
+  &__create-comment-textarea {
+    @include input-style;
+
+    border-radius: 15px;
+    border: 2px solid currentColor;
+
+    resize: none;
+
+    width: 570px;
+    height: 120px;
+
+    field-sizing: content;
+
+    @include mobile-only {
+      width: 100%;
+
+      padding-inline-end: calc(var(--_send-comment-btn-width) + var(--_send-comment-btn-x-offset));
+    }
+  }
+
+  &__create-comment-button {
+    @include mobile-only {
+      position: absolute;
+
+      right: var(--_send-comment-btn-x-offset);
+
+      width: var(--_send-comment-btn-width);
+    }
+  }
+}

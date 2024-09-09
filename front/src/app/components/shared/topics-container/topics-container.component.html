@@ -1,0 +1,10 @@
+@if(topicsArray()().length === 0){
+<h3 class="topics-container__no-topics">Il n'y a pas encore de thèmes (╯°□°）╯︵ ┻━┻</h3>
+}@else {
+<div class="topics-container">
+  @for(topic of topicsArray()(); track topic.id){
+  <app-topic-subscription [id]="topic.id" [title]="topic.title" [description]="topic.description"
+    [isSubscribed]="topic.isSubscribed" (toggleSubscription)="onSubscriptionChange()($event)"></app-topic-subscription>
+  }
+</div>
+}

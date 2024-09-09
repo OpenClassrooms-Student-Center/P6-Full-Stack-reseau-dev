@@ -1,0 +1,17 @@
+@use "../../../utils/preprocessed-sass/" as *;
+
+.topics-container {
+  display: grid;
+  gap: 10px;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  @include mobile-only {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  &__no-topics {
+    text-align: center;
+  }
+
+}

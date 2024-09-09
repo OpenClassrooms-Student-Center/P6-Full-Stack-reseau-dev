@@ -1,0 +1,48 @@
+<header class="header {{ passedAuthentication ? '' : 'header--not-authenticated' }}">
+  <section class="header__logo-container">
+    <a class="header__link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page">
+      <img src="/assets/png/mdd-logo.png" alt="Monde de Dév logo" class="header__logo" />
+    </a>
+  </section>
+
+
+  <button type="button" class="header__burger-menu-button" (click)="toggleMobileBurgerMenuSidebar(true)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
+      <rect width="23.7037" height="2.96296" fill="currentColor" />
+      <rect y="6.51849" width="23.7037" height="2.96296" fill="currentColor" />
+      <rect y="13.037" width="23.7037" height="2.96296" fill="currentColor" />
+    </svg>
+  </button>
+
+  @if(passedAuthentication){
+  <nav class="header__navigation-bar" #navigationBarRef>
+    <div class="header__overlay" (click)="toggleMobileBurgerMenuSidebar(false)"></div>
+    <ul class="header__links-list">
+      <li class="header__list-item">
+        <a class="header__link" routerLink="/articles" routerLinkActive="active" ariaCurrentWhenActive="page">
+          Articles
+        </a>
+      </li>
+      <li class="header__list-item">
+        <a class="header__link" routerLink="/topics" routerLinkActive="active" ariaCurrentWhenActive="page">
+          Thèmes
+        </a>
+      </li>
+      <li class="header__list-item header__list-item--user">
+        <a class="header__link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="24" fill="var(--_circle-stroke-color)" />
+            <path
+              d="M12.0001 38V34.8817C12.0001 33.2276 12.6572 31.6413 13.8268 30.4717C14.9964 29.3021 16.5827 28.645 18.2368 28.645H30.7101C32.3642 28.645 33.9505 29.3021 35.1201 30.4717C36.2897 31.6413 36.9468 33.2276 36.9468 34.8817V38"
+              stroke="var(--_path-stroke-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M24.4735 22.4733C21.0291 22.4733 18.2369 19.6811 18.2369 16.2367C18.2369 12.7923 21.0291 10 24.4735 10C27.918 10 30.7102 12.7923 30.7102 16.2367C30.7102 19.6811 27.918 22.4733 24.4735 22.4733Z"
+              stroke="var(--_path-stroke-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  }
+</header>

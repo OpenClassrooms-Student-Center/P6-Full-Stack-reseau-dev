@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-P6Application<p6>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.openclassrooms.p6.P6Application",
+            "projectName": "p6",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

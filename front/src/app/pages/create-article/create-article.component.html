@@ -1,0 +1,41 @@
+<section class="create-article">
+  <a routerLink="/articles" class="create-article__go-back-button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+      <path fill="currentColor"
+        d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z" />
+    </svg>
+  </a>
+
+  <h1 class="create-article__title">Créer un nouvel article</h1>
+
+  <form class="create-article__form" [formGroup]="createArticleForm" (ngSubmit)="onSubmit($event)">
+    <select name="topics" id="topics" class="create-article__select" formControlName="themeId"
+      (change)="setDefaultValueToLocalStorage($event)">
+      @for(themeItem of themesArray; track themeItem.id){
+      <option [value]="themeItem.id" class="create-article__option">{{themeItem.theme}}
+      </option>
+      }
+    </select>
+
+    <input name="title" type="text" class="create-article__input" placeholder="Titre de l'article"
+      formControlName="title" (input)="setDefaultValueToLocalStorage($event)" />
+
+    <textarea name="description" id="" class="create-article__textarea" placeholder="Contenu de l'article"
+      formControlName="description" (input)="setDefaultValueToLocalStorage($event)"></textarea>
+
+    <button type="submit" class="create-article__button" [disabled]="isLoading()">Créer</button>
+  </form>
+
+  @if(isLoading()){
+  <app-spin-loader></app-spin-loader>
+  <p class="create-article__loading">En attente de la réponse du serveur</p>
+  }
+
+  @if(hasError()) {
+  <p class="create-article__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
+  }
+
+  @if(hasSuccess()){
+  <p class="create-article__success">Article créé avec succès!</p>
+  }
+</section>

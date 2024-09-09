@@ -1,0 +1,40 @@
+<section class="user">
+
+  <h1 class="user__title">Profil utilisateur</h1>
+
+  <form class="user__form" [formGroup]="userCredentialsForm" (ngSubmit)="onSubmit($event)">
+    <fieldset class="user__fieldset">
+      <input type="text" class="user__input" formControlName="username" autocomplete="username"
+        value="{{userInfo()?.username}}" />
+
+      <input type="email" class="user__input" formControlName="email" autocomplete="email"
+        value="{{userInfo()?.email}}" />
+    </fieldset>
+
+
+    <button type="submit" class="user__submit-button">Sauvegarder</button>
+  </form>
+
+  @if(userUpdateIsLoading()){
+  <app-spin-loader></app-spin-loader>
+  <p class="user__loading">En attente</p>
+  } @else {
+  @if(userHasAnError()){
+  <p class="user__error">Une erreur est survenue: <br /> {{userErrorMessage()}}</p>
+  } @else{
+  <p class="user__success">{{userSuccessMessage}}</p>
+  }
+  }
+
+
+  <button type="button" class="user__logout-button" (click)="logout()">Se déconnecter</button>
+
+  <hr class="user__horizontal-line" />
+
+  <div class="user__subscriptions-container">
+    <h2 class="user__subscriptions-title">Abonnements</h2>
+
+    <app-topics-container [onSubscriptionChange]="updateUserThemeSubscription"
+      [topicsArray]="topicsArray"></app-topics-container>
+  </div>
+</section>

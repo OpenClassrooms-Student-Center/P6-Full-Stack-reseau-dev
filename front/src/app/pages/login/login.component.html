@@ -1,0 +1,49 @@
+<section class="login">
+
+  <div class="login__image-container">
+    <img src="/assets/png/mdd-logo.png" alt="Monde de Dév logo" class="login__image">
+  </div>
+
+  <a routerLink="/" class="login__go-back-button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+      <path fill="currentColor"
+        d="M169.4 502.6c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 402.7 224 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 370.7L86.6 329.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z" />
+    </svg>
+  </a>
+
+  <h1 class="login__title">Se connecter</h1>
+
+  <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+    <fieldset class="login__fieldset">
+      <label class="login__label">
+        E-mail ou nom d'utilisateur
+        <input type="text" class="login__input" formControlName="identifier" [readonly]="isLoading()" />
+      </label>
+
+      <label class="login__label login__label--password">
+        Mot de passe
+        <input type="{{showPassword() ? 'text' : 'password'}}" autocomplete="current-password"
+          class="login__input login__input--password" formControlName="password" [readonly]="isLoading()" />
+
+        <ng-icon class="login__input-password-icon login__input-password-icon--toggle"
+          name="{{showPassword() ? 'bootstrapEyeFill' : 'bootstrapEyeSlashFill'}}"
+          (click)="togglePasswordVisibility()"></ng-icon>
+      </label>
+    </fieldset>
+
+    <button type="submit" class="login__submit-button" [disabled]="isLoading()">Se connecter</button>
+  </form>
+
+  @if(isLoading()){
+  <app-spin-loader></app-spin-loader>
+  <p class="login__loading">En attente</p>
+  }
+
+  @if(!isLoading() && hasError()) {
+  <p class="login__error">Une erreur est survenue: <br /> {{errorMessage()}}</p>
+  }
+
+  @if(hasJwt) {
+  <p class="login__success">Succès! Vous serez redirigé dans 3 secondes</p>
+  }
+</section>

@@ -1,0 +1,86 @@
+@use "../utils/" as *;
+
+// .active {}
+
+//Simple classes to show or hide elements
+.hide {
+  display: none !important;
+}
+
+.show {
+  display: initial !important;
+}
+
+//Animation classes
+.fade {
+  &-in {
+    animation-name: fade-in;
+    animation-duration: 250ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-direction: normal;
+
+    &::-webkit-backdrop {
+      animation-name: fade-in;
+      animation-duration: 250ms;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      animation-direction: normal;
+
+    }
+
+    &::backdrop {
+      animation-name: fade-in;
+      animation-duration: 250ms;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      animation-direction: normal;
+
+    }
+  }
+
+  &-out {
+    //We play it in reverse
+    animation-direction: reverse;
+    animation-name: fade-in;
+    animation-duration: 250ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+
+    &::-webkit-backdrop {
+      animation-name: fade-in;
+      animation-duration: 250ms;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      animation-direction: reverse;
+    }
+
+    &::backdrop {
+      animation-name: fade-in;
+      animation-duration: 250ms;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      animation-direction: reverse;
+    }
+  }
+}
+
+.scale {
+
+  &-up {
+    animation-name: scale-up;
+    animation-duration: 250ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-direction: normal;
+  }
+
+  &-down {
+    //We play it in reverse
+    animation-name: scale-up;
+    animation-duration: 250ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-direction: reverse;
+  }
+}

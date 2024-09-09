@@ -1,0 +1,17 @@
+@use "../../../../utils/preprocessed-sass/" as *;
+
+.comment {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 15px;
+
+  width: 100%;
+
+  &__username {}
+
+  &__comment {
+    @include card-style;
+  }
+}

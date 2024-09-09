@@ -1,7 +1,66 @@
-.center {
-  height: 100vh;
+@use "../../utils/preprocessed-sass/index.scss" as *;
+
+.home {
+  min-height: 100svh;
+
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+
+  position: relative;
+
+  &__image-container {
+    position: absolute;
+
+    top: 15%;
+
+
+    @include mobile-only {
+      width: clamp(250px, 75%, 500px);
+    }
+  }
+
+  &__links-container {
+    position: absolute;
+
+    top: 65%;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+
+    @include mobile-only {
+      top: 50%;
+      flex-direction: column;
+    }
+  }
+
+  &__link {
+    flex: 1;
+
+    --_color: currentColor;
+    --_mix: #7763c5;
+    --_contrast: transparent;
+
+    color: currentColor;
+
+    padding: 10px;
+    border: 2px solid currentColor;
+    width: 180px;
+
+    text-align: center;
+
+    border-radius: 5px;
+    background-color: var(--_contrast);
+
+    transition: background-color 250ms ease-in-out, border 250ms ease-in-out;
+
+    &:hover {
+      --_contrast: color-mix(in lab, currentColor 5%, var(--_mix) 90%);
+
+      border: 2px solid var(--_contrast);
+    }
+  }
 }

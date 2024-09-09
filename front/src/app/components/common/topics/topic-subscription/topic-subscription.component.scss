@@ -1,0 +1,35 @@
+@use "../../../../utils/preprocessed-sass/" as *;
+
+:host {
+  height: 100%;
+}
+
+.topic-subscription {
+  @include card-style;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  height: inherit;
+
+  &__title {}
+
+  &__description {
+    font-size: 14px;
+  }
+
+  &__subscription-button {
+    @include button-style;
+
+    width: fit-content;
+
+    align-self: center;
+
+    &--unsubscribe {
+      background-color: var(--bg-primary);
+      color: var(--bg-secondary);
+      border: 2px solid var(--bg-secondary);
+    }
+  }
+}

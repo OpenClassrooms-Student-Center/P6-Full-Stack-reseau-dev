@@ -1,0 +1,74 @@
+@use "../../utils/preprocessed-sass/" as *;
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  padding: 25px;
+
+  &__title {}
+
+  &__form {
+    @include form-style;
+
+    margin-top: 35px;
+  }
+
+  &__fieldset {
+    @include fieldset-style;
+
+    gap: 40px;
+  }
+
+  &__label {
+    @include label-style;
+  }
+
+  &__input {
+    @include input-style;
+
+    border-color: var(--bg-secondary);
+
+    border-radius: 10px;
+  }
+
+  &__submit-button {
+    @include button-style;
+  }
+
+  &__error {
+    @include error-paragraph-style;
+  }
+
+  &__logout-button {
+    @include button-style;
+
+    margin-block: 20px;
+
+    background-color: transparent;
+
+    color: var(--color-error);
+  }
+
+  &__horizontal-line {
+    width: 100%;
+
+    margin-bottom: 20px;
+  }
+
+  &__subscriptions-title {
+    text-align: center;
+  }
+
+  &__subscriptions-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+
+    width: 100%;
+  }
+}

@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
+/**
+ * Represents the home component, landing page of the application
+ */
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
-  }
-}
+export class HomeComponent {}
