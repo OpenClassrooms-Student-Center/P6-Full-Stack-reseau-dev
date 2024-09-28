@@ -49,8 +49,8 @@ CREATE TABLE `COMMENTS` (
 
 INSERT INTO USERS (username, email, password, created_at, updated_at)
 VALUES
-('devUser1', 'devuser1@example.com', 'password.123', NOW(), NOW()),
-('devUser2', 'devuser2@example.com', 'password.123', NOW(), NOW());
+('devUser1', 'devuser1@example.com', 'Password.123', NOW(), NOW()),
+('devUser2', 'devuser2@example.com', 'Password.123', NOW(), NOW());
 
 INSERT INTO THEMES (name, description, created_at)
 VALUES
