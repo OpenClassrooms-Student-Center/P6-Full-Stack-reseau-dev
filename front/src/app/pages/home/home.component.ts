@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -6,14 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  Inscription() {
-    alert("btn S'inscrire clicked !");
+  redirectToLogin(): void  {
+    this.router.navigate(['/login']);
   }
-  SeConnecter() {
-    alert("btn Se connecter clicked !");
+
+  redirectToRegister(): void  {
+    this.router.navigate(['/register']);
   }
 }
