@@ -10,7 +10,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
+  Inscription() {
+    alert("btn S'inscrire clicked !");
+  }
+  SeConnecter() {
+    alert("btn Se connecter clicked !");
   }
 }
