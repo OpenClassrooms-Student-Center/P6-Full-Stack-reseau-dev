@@ -1,0 +1,62 @@
+.register-container {
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  img {
+    width: 100px; /* Ajustez la taille de l'image selon vos préférences */
+    height: auto; /* Pour conserver les proportions de l'image */
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    width: 100%; /* Pour s'assurer que les champs de saisie prennent toute la largeur */
+  }
+  
+  label {
+    display: block;
+    text-align: left;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    color: white;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 70%;
+  }
+  
+  button:hover {
+    background-color: #270153;
+  }
+  
+  /* Media query pour les écrans jusqu'à 600px de large */
+  @media screen and (max-width: 600px) {
+    .register-container {
+      width: 80%; /* Réduire la largeur du conteneur */
+    }
+  }
+  
+  /* Media query pour les écrans de 601px à 1024px de large */
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
+    .register-container {
+      width: 60%; /* Réduire la largeur du conteneur */
+    }
+  }
+  
