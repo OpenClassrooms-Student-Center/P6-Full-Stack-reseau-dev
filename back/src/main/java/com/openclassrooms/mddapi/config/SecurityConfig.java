@@ -43,9 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()  // Autorisation des routes dans la whitelist sans authentification
-                .anyRequest().authenticated()  // Toute autre requête nécessite une authentification
-            .and()
-            .exceptionHandling()
+                .anyRequest().authenticated().and()  // Toute autre requête nécessite une authentification
+                .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler());  // Gestion des erreurs d'authentification pour les requêtes non autorisées
 
         // Ajout du filtre JWT avant le filtre d'authentification par username/password de Spring Security
