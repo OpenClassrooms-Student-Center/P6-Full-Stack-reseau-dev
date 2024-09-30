@@ -13,6 +13,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   register() {
+    console.log('formData:', this.formData);
+
     this.http.post('http://localhost:8080/api/auth/register', this.formData)
       .subscribe((response) => {
         console.log('Inscription réussie !', response);

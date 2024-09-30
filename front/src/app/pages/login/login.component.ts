@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   constructor(private http: HttpClient) {}
   ngOnInit(): void {}
   login() {
+    console.log('formData:', this.formData);
     this.http.post('http://localhost:8080/api/auth/login', this.formData)
       .subscribe((response) => {
         console.log('Connexion réussie !', response);
