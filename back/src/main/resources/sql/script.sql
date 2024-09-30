@@ -1,74 +1,69 @@
 CREATE DATABASE ORION_DATABASE;
 USE ORION_DATABASE;
-
-CREATE TABLE `USERS` (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255),
-    email VARCHAR(255),
-    password VARCHAR(255),
-    created_at DATETIME,
-    updated_at DATETIME
+-- Création de la table User
+CREATE TABLE User (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `THEMES` (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    description TEXT,
-    created_at DATETIME
+-- Création de la table Themes
+CREATE TABLE Themes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `SUBSCRIPTIONS` (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    theme_id INT,
-    created_at DATETIME,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (theme_id) REFERENCES themes(id)
+-- Création de la table Article
+CREATE TABLE Article (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(5000) NOT NULL,
+    author_id BIGINT NOT NULL,
+    theme_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (theme_id) REFERENCES Themes(id) ON DELETE CASCADE
 );
 
-CREATE TABLE `ARTICLES` (
+-- Création de la table Messages
+CREATE TABLE Messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    theme_id INT,
-    title VARCHAR(255),
-    content TEXT,
-    created_at DATETIME,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (theme_id) REFERENCES themes(id)
+    Article_id BIGINT,
+    users_id BIGINT NOT NULL,
+    message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (Article_id) REFERENCES Article(id) ON DELETE SET NULL,
+    FOREIGN KEY (users_id) REFERENCES User(id) ON DELETE CASCADE
 );
 
-CREATE TABLE `COMMENTS` (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    article_id INT,
-    user_id INT,
-    content TEXT,
-    created_at DATETIME,
-    FOREIGN KEY (article_id) REFERENCES articles(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-INSERT INTO USERS (username, email, password, created_at, updated_at)
+-- Insertion d'exemples dans la table User
+INSERT INTO User (email, username, password, created_at, updated_at)
 VALUES
-('devUser1', 'devuser1@example.com', 'Password.123', NOW(), NOW()),
-('devUser2', 'devuser2@example.com', 'Password.123', NOW(), NOW());
+('devUser1@example.com', 'devUser1', '$2a$10$bmSphCve7WxxjaXR0y.pu.NSc1PWDxC9PoCS6H/vZwXdRodkYKa9q', NOW(), NOW()),
+('devUser2@example.com', 'devUser2', '$2a$10$bmSphCve7WxxjaXR0y.pu.NSc1PWDxC9PoCS6H/vZwXdRodkYKa9q', NOW(), NOW());
 
-INSERT INTO THEMES (name, description, created_at)
+-- Insertion d'exemples dans la table Themes
+INSERT INTO Themes (title, description, created_at, updated_at)
 VALUES
-('Développement Frontend', 'Tout sur les technologies frontend.', NOW()),
-('Développement Backend', 'Technologies côté serveur et bases de données.', NOW());
+('Développement Frontend', 'Apprenez les technologies de développement frontend.', NOW(), NOW()),
+('Développement Backend', 'Comprendre les technologies côté serveur et les bases de données.', NOW(), NOW());
 
-INSERT INTO SUBSCRIPTIONS (user_id, theme_id, created_at)
+-- Insertion d'exemples dans la table Article
+INSERT INTO Article (title, description, author_id, theme_id, created_at, updated_at)
 VALUES
-(1, 1, NOW()),
-(1, 2, NOW()),
-(2, 2, NOW());
+('Comprendre React', 'Un article approfondi sur React et ses fonctionnalités.', 1, 1, NOW(), NOW()),
+('Introduction à Node.js', 'Découvrez comment Node.js fonctionne et ses cas d\'utilisation.', 2, 2, NOW(), NOW());
 
-INSERT INTO ARTICLES (user_id, theme_id, title, content, created_at)
+-- Insertion d'exemples dans la table Messages
+INSERT INTO Messages (Article_id, users_id, message, created_at, updated_at)
 VALUES
-(1, 1, 'Comprendre React', 'Contenu sur React...', NOW()),
-(2, 2, 'Explorer Node.js', 'Contenu sur Node.js...', NOW());
-
-INSERT INTO COMMENTS (article_id, user_id, content, created_at)
-VALUES
-(1, 2, 'Super article sur React !', NOW()),
-(2, 1, 'Merci pour ces éclaircissements sur Node.js', NOW());
+(1, 2, 'Super article sur React !', NOW(), NOW()),
+(2, 1, 'Merci pour ces informations sur Node.js.', NOW(), NOW());

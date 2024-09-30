@@ -1,15 +1,10 @@
 package com.openclassrooms.mddapi.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class JwtConfig {
-
-    // Injection de la configuration de sécurité (potentiellement pour accéder à d'autres configurations)
-    @Autowired
-    SecurityConfig securityConfig;
 
     // La clé secrète utilisée pour signer et valider les jetons JWT, récupérée des propriétés de configuration
     @Value("${jwt}")

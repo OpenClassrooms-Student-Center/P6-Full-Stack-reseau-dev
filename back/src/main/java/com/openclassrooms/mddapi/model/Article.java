@@ -35,7 +35,9 @@ public class Article {
     @ManyToOne(fetch = FetchType.EAGER)  // Relation Many-to-One avec l'entité User, chargement des données de l'auteur de manière anticipée
     @JoinColumn(name = "author_id", referencedColumnName = "id")  // Indique la colonne qui contient la clé étrangère
     private User author;  // Référence à l'auteur de l'article
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "theme_id", referencedColumnName = "id")
+    private Themes theme;
     @Column(name = "created_at")  // Spécifie le nom de la colonne dans la base de données pour la date de création
     private LocalDateTime createdAt;  // Date et heure de création de l'article
 
