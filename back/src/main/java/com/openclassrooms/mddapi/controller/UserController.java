@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.mddapi.dto.UserLoginRequest;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.UserService;
@@ -70,32 +69,26 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    // Endpoint pour authentifier un utilisateur et générer un token JWT
-    @PostMapping("auth/login")
-    @ApiOperation(value = "Authenticate user", notes = "Authenticate a user and return a JWT token.")  // Documentation Swagger
-    public ResponseEntity<String> authenticateUser(@RequestBody UserLoginRequest loginRequest) {
-        // Authentifie l'utilisateur via son email et mot de passe, et génère un token
-        String token = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
-        // Si l'authentification réussit et un token est généré
-        if (token != null) {
-            // Crée une réponse JSON contenant le token
-            HashMap<String, String> response = new HashMap<>();
-            response.put("token", token);
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                String jsonResponse = objectMapper.writeValueAsString(response);
-                // Retourne le token dans une réponse avec statut 200 (OK)
-                return ResponseEntity.ok(jsonResponse);
-            } catch (Exception e) {
-                // En cas d'erreur dans la conversion JSON, retourne un statut 500
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error converting response to JSON");
-            }
-        } else {
-            // Si les identifiants sont incorrects, retourne un statut 401 (Unauthorized)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
+// Endpoint pour authentifier un utilisateur et générer un token JWT
+@PostMapping("auth/login")
+@ApiOperation(value = "Authenticate user", notes = "Authenticate a user and return a JWT token.")  // Documentation Swagger
+public ResponseEntity<String> authenticateUser(@RequestBody UserLoginRequest loginRequest) {
+    // Authentifie l'utilisateur via son email et mot de passe, et génère un token
+    String token = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+    // Si l'authentification réussit et un token est généré
+    if (token != null) {
+        // Crée une réponse JSON contenant le token
+        HashMap<String, String> response = new HashMap<>();
+        response.put("token", token);
+        
+        // Retourne le token en tant que chaîne JSON
+        return ResponseEntity.ok("{\"token\":\"" + token + "\"}");
+    } else {
+        // Si les identifiants sont incorrects, retourne un statut 401 (Unauthorized)
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
+}
+
 
     // Endpoint pour obtenir les informations de l'utilisateur actuel via le token JWT
     @GetMapping("/auth/me")

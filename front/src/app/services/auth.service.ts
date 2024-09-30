@@ -8,7 +8,7 @@ import { Observable } from 'rxjs'; // Observable pour gérer les réponses HTTP 
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth'; // URL de base de l'API d'authentification
-  private token: string | null = null; // Stocke le token JWT une fois l'utilisateur authentifié
+  private token: string | null = localStorage.getItem('token');
 
   // Injection d'HttpClient via le constructeur pour effectuer des requêtes HTTP
   constructor(private http: HttpClient) {}

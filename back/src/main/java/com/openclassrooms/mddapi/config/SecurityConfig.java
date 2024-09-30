@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Configuration de la sécurité HTTP
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()  // Désactivation de la protection CSRF, car nous utilisons des tokens stateless
+        http.cors().and()
+            .csrf().disable()
             .sessionManagement().sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS)  // Utilisation de sessions stateless (sans session persistante)
             .and()
             .authorizeRequests()
