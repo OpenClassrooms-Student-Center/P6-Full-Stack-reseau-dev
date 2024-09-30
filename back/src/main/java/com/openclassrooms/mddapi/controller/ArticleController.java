@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.model.Article;
+import com.openclassrooms.mddapi.model.Themes;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.ArticleService;
+import com.openclassrooms.mddapi.service.ThemesService;
 import com.openclassrooms.mddapi.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -43,6 +45,9 @@ public class ArticleController {
     // Injection de dépendance pour le service des utilisateurs
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ThemesService themesService;
 
     // Méthode pour obtenir tous les articles
     @GetMapping("/articles")
@@ -77,7 +82,8 @@ public class ArticleController {
     @ApiOperation(value = "Create a new Article", notes = "Creates a new Article.")
     public Article saveRentals(@RequestHeader("Authorization") String authorizationHeader,
                                @RequestParam("title") String title,
-                               @RequestParam("description") String description) {
+                               @RequestParam("description") String description,
+                               @RequestParam("theme") String theme){
         // Extraction du token d'authentification du header
         String token = authorizationHeader.substring("Bearer ".length()).trim();
         
@@ -85,14 +91,22 @@ public class ArticleController {
         User user = userService.getUserByToken(token);
         
         // Création d'une nouvelle instance d'article
+        Long themeId = Long.parseLong(theme);
+        System.err.println("theme: " + themeId);
+        Themes themeIdObject = themesService.getThemesById(themeId);   
         Article article = new Article();
         article.setTitle(title); // Définition du titre de l'article
         article.setDescription(description); // Définition de la description de l'article
         article.setAuthor(user); // Attribution de l'auteur à l'article
-        
+        article.setTheme(themeIdObject);
+
         // Enregistrement de l'article via le service
         Article savedRentals = articleService.saveArticles(article);
                                 
-        return savedRentals; // Retourne l'article enregistré
-    }
+        if (savedRentals != null) {
+            return new ResponseEntity<>(savedRentals, HttpStatus.OK).getBody();
+        } else {
+            return null;
+        }
+        }
 }

@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.controller;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,10 +76,6 @@ public ResponseEntity<String> authenticateUser(@RequestBody UserLoginRequest log
     String token = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
     // Si l'authentification réussit et un token est généré
     if (token != null) {
-        // Crée une réponse JSON contenant le token
-        HashMap<String, String> response = new HashMap<>();
-        response.put("token", token);
-        
         // Retourne le token en tant que chaîne JSON
         return ResponseEntity.ok("{\"token\":\"" + token + "\"}");
     } else {

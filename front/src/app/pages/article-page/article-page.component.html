@@ -1,6 +1,14 @@
-<div class="article-container">
-  <h1>Voici les articles !</h1>
-    <div class="article" *ngFor="let article of articles">
-      {{ article.title }}
+<div class="container">
+  <button  mat-raised-button color="primary" class="putArticleBtn" >Créer un article </button>
+  <div class="article-container">
+      <div class="row" *ngFor="let index of indexArray">
+        <div class="column" *ngFor="let article of articles | slice:(index * 2):(index * 2 + 2)">
+          <div class="article">
+            <h2>{{ article.title }}</h2>
+            <p class="description">{{ article.description }}</p>
+            <p>Auteur: {{ article.author.username }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+</div>
