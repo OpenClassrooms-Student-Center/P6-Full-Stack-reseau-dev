@@ -1,11 +1,14 @@
 package com.openclassrooms.mddapi.model;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +27,10 @@ public class User {
 
 	@NotNull
 	private String password;
+
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+	private List<Themes> themes;
+
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 	@Column(name = "updated_at")

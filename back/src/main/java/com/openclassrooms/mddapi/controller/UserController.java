@@ -21,21 +21,21 @@ import com.openclassrooms.mddapi.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@RestController  // Indique que cette classe est un contrôleur REST
-@CrossOrigin  // Autorise les requêtes cross-origin (CORS)
-@RequestMapping("/api")  // Définit un préfixe pour les routes de ce contrôleur
-@Api(tags = "Users", description = "Operations related to users")  // Documentation Swagger pour le contrôleur
+@RestController  // Indique que cette classe est un contrôleur REST, ce qui permet de définir des routes HTTP
+@CrossOrigin  // Autorise les requêtes provenant d'autres origines (CORS - Cross-Origin Resource Sharing)
+@RequestMapping("/api")  // Définit un préfixe pour toutes les routes de ce contrôleur
+@Api(tags = "Users", description = "Operations related to users")  // Utilisé pour la documentation Swagger
 public class UserController {
 
-    // Injection de dépendance pour accéder aux services utilisateur
+    // Injecte le service utilisateur pour accéder aux fonctionnalités métiers liées aux utilisateurs
     @Autowired
     private UserService userService;
 
     // Endpoint pour obtenir la liste de tous les utilisateurs
     @GetMapping("/users")
-    @ApiOperation(value = "Get all users", notes = "Returns a list of all users.")  // Documentation Swagger
+    @ApiOperation(value = "Get all users", notes = "Returns a list of all users.")  // Documente cette route pour Swagger
     public Iterable<User> getUsers() {
-        // Retourne tous les utilisateurs via le service
+        // Retourne tous les utilisateurs en appelant le service utilisateur
         return userService.getUsers();
     }
 
@@ -45,11 +45,11 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         // Recherche l'utilisateur par ID via le service
         Optional<User> user = userService.getUserById(id);
-        // Si l'utilisateur est trouvé, retourne un statut 200 et l'utilisateur
+        // Si l'utilisateur est trouvé, retourne une réponse HTTP 200 (OK) avec les données de l'utilisateur
         if (user.isPresent()) {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
         } else {
-            // Sinon, retourne un statut 404 (utilisateur non trouvé)
+            // Sinon, retourne une réponse HTTP 404 (NOT FOUND)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -58,49 +58,58 @@ public class UserController {
     @PostMapping("auth/register")
     @ApiOperation(value = "Create a new user", notes = "Creates a new user.")  // Documentation Swagger
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        // Sauvegarde le nouvel utilisateur via le service
+        // Sauvegarde le nouvel utilisateur en appelant le service
         User savedUser = userService.saveUser(user);
-        // Si l'utilisateur est créé avec succès, retourne un statut 201 (Created)
+        // Si l'utilisateur est créé avec succès, retourne une réponse HTTP 201 (CREATED)
         if (savedUser != null) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
-            // Sinon, retourne un statut 500 (Internal Server Error)
+            // Sinon, retourne une réponse HTTP 500 (INTERNAL SERVER ERROR)
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-// Endpoint pour authentifier un utilisateur et générer un token JWT
-@PostMapping("auth/login")
-@ApiOperation(value = "Authenticate user", notes = "Authenticate a user and return a JWT token.")  // Documentation Swagger
-public ResponseEntity<String> authenticateUser(@RequestBody UserLoginRequest loginRequest) {
-    // Authentifie l'utilisateur via son email et mot de passe, et génère un token
-    String token = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
-    // Si l'authentification réussit et un token est généré
-    if (token != null) {
-        // Retourne le token en tant que chaîne JSON
-        return ResponseEntity.ok("{\"token\":\"" + token + "\"}");
-    } else {
-        // Si les identifiants sont incorrects, retourne un statut 401 (Unauthorized)
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+
+    // Endpoint pour authentifier un utilisateur et générer un token JWT
+    @PostMapping("auth/login")
+    @ApiOperation(value = "Authenticate user", notes = "Authenticate a user and return a JWT token.")  // Documentation Swagger
+    public ResponseEntity<String> authenticateUser(@RequestBody UserLoginRequest loginRequest) {
+        // Authentifie l'utilisateur via son email et mot de passe, et génère un token JWT
+        String token = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        // Si l'authentification réussit, retourne le token au format JSON
+        if (token != null) {
+            return ResponseEntity.ok("{\"token\":\"" + token + "\"}");
+        } else {
+            // Si l'authentification échoue, retourne une réponse HTTP 401 (UNAUTHORIZED)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
     }
-}
 
-
-    // Endpoint pour obtenir les informations de l'utilisateur actuel via le token JWT
+    // Endpoint pour obtenir les informations de l'utilisateur courant à partir du token JWT
     @GetMapping("/auth/me")
     @ApiOperation(value = "Get current user", notes = "Returns the current user.")  // Documentation Swagger
     public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String authorizationHeader) {
-        // Extrait le token JWT de l'en-tête Authorization (en enlevant "Bearer ")
+        // Extrait le token JWT de l'en-tête "Authorization", en enlevant "Bearer "
         String token = authorizationHeader.substring(7);
         // Récupère l'email de l'utilisateur à partir du token
         String email = userService.getEmailFromToken(token);
         // Recherche l'utilisateur par email
         Optional<User> user = userService.getUserByEmail(email);
-        // Si l'utilisateur est trouvé, retourne un statut 200 et les informations de l'utilisateur
+        // Si l'utilisateur est trouvé, retourne une réponse HTTP 200 (OK) avec les données de l'utilisateur
         if (user.isPresent()) {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
         } else {
-            // Sinon, retourne un statut 404 (utilisateur non trouvé)
+            // Sinon, retourne une réponse HTTP 404 (NOT FOUND)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    // Endpoint pour souscrire un utilisateur à un thème
+    @PostMapping("/user/{userId}/theme/{themeId}")
+    @ApiOperation(value = "Subscribe to a theme", notes = "Subscribe to a theme.")  // Documentation Swagger
+    public ResponseEntity<User> suscribeToTheme(@PathVariable Long userId, @PathVariable Long themeId) {
+        // Souscrit l'utilisateur à un thème en appelant le service utilisateur
+        User user = userService.suscribeToTheme(userId, themeId);
+        // Retourne l'utilisateur mis à jour avec une réponse HTTP 200 (OK)
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

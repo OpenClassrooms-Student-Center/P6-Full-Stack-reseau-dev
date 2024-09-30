@@ -57,7 +57,7 @@ public class ArticleController {
         List<Article> articleList = (List<Article>) articleService.getArticle();
         
         // Création d'une réponse sous forme de Map
-        Map<String, List<Article>> response = new HashMap<>(); // Utilisation de l'inférence de type
+        Map<String, List<Article>> response = new HashMap<>();
         response.put("articles", articleList); // Ajout de la liste des articles dans la réponse
         return response; // Retourne la réponse
     }
@@ -92,7 +92,6 @@ public class ArticleController {
         
         // Création d'une nouvelle instance d'article
         Long themeId = Long.parseLong(theme);
-        System.err.println("theme: " + themeId);
         Themes themeIdObject = themesService.getThemesById(themeId);   
         Article article = new Article();
         article.setTitle(title); // Définition du titre de l'article
@@ -108,8 +107,9 @@ public class ArticleController {
         } else {
             return null;
         }
-        }
-            // find article by theme
+    }
+    
+    // Méthode pour récupérer des articles par thème
     @GetMapping("/articles/theme/{themeId}")
     public List<Article> getArticlesByTheme(@PathVariable Long themeId) {
         Themes theme = themesService.getThemesById(themeId);

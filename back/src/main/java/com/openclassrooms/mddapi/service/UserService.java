@@ -9,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.config.JwtConfig;
+import com.openclassrooms.mddapi.model.Themes;
 import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.repository.ThemesRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
 import io.jsonwebtoken.Jwts;
@@ -17,89 +19,110 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service  // Indique que cette classe est un service Spring
 public class UserService {
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;  // Injection de dépendance pour le codage des mots de passe
 
+    // Injecte un encodeur BCrypt pour gérer le hash des mots de passe
     @Autowired
-    private JwtConfig jwtConfig;  // Injection de dépendance pour la configuration JWT
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    // Injecte la configuration JWT, probablement utilisée pour la gestion des tokens
     @Autowired
-    private UserRepository userRepository;  // Injection de dépendance pour le repository des utilisateurs
+    private JwtConfig jwtConfig;
+    
+    // Injecte le repository des thèmes pour manipuler les entités "Themes"
+    @Autowired
+    private ThemesRepository themeRepository;
 
-    // Classe d'exception personnalisée pour gérer les cas où un utilisateur n'est pas trouvé
+    // Injecte le repository des utilisateurs pour manipuler les entités "User"
+    @Autowired
+    private UserRepository userRepository;
+
+    // Exception personnalisée pour gérer les cas où un utilisateur n'est pas trouvé
     public class NotFoundException extends RuntimeException implements Serializable {
         private static final long serialVersionUID = 1L;  // ID de version pour la sérialisation
 
         public NotFoundException(String message) {
-            super(message);  // Appelle le constructeur de la classe parente avec le message
+            super(message);  // Appelle le constructeur parent avec un message d'erreur
         }
     }
 
-    // Service pour obtenir tous les utilisateurs
+    // Méthode pour obtenir tous les utilisateurs
     public Iterable<User> getUsers() {
-        return userRepository.findAll();  // Récupère tous les utilisateurs via le repository
+        return userRepository.findAll();  // Retourne la liste de tous les utilisateurs
     }
 
-    // Service pour obtenir un utilisateur par son ID
+    // Méthode pour obtenir un utilisateur par son ID
     public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);  // Récupère un utilisateur par son ID
+        return userRepository.findById(id);  // Retourne l'utilisateur correspondant à l'ID
     }
 
-    // Service pour sauvegarder un utilisateur
+    // Sauvegarde un nouvel utilisateur en encodant son mot de passe
     public User saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));  // Encode le mot de passe
-        user.setCreatedAt(java.time.LocalDateTime.now());  // Définit la date de création
+        // Encode le mot de passe avant de sauvegarder
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setCreatedAt(java.time.LocalDateTime.now());  // Définit la date de création à la date actuelle
         User savedUser = userRepository.save(user);  // Sauvegarde l'utilisateur dans la base de données
         return savedUser;  // Retourne l'utilisateur sauvegardé
     }
 
-    // Service pour supprimer un utilisateur
+    // Supprime un utilisateur en fonction de son ID
     public void deleteUser(Long userId) {
-        User existingUser = userRepository.findById(userId).orElse(null);  // Cherche l'utilisateur par ID
+        // Cherche l'utilisateur par son ID
+        User existingUser = userRepository.findById(userId).orElse(null);
         if (existingUser != null) {
-            userRepository.delete(existingUser);  // Supprime l'utilisateur s'il existe
+            userRepository.delete(existingUser);  // Supprime l'utilisateur si trouvé
         } else {
-            throw new NotFoundException("Enregistrement introuvable");  // Lève une exception si l'utilisateur n'est pas trouvé
+            // Lance une exception si l'utilisateur n'est pas trouvé
+            throw new NotFoundException("Enregistrement introuvable");
         }
     }
 
-    // Service pour mettre à jour le mot de passe d'un utilisateur
+    // Met à jour le mot de passe d'un utilisateur
     public User updatePassword(User updatePassword) {
-        User existingUser = userRepository.findById(updatePassword.getId()).orElse(null);  // Cherche l'utilisateur existant
+        // Cherche l'utilisateur par son ID
+        User existingUser = userRepository.findById(updatePassword.getId()).orElse(null);
         if (existingUser != null) {
-            existingUser.setPassword(bCryptPasswordEncoder.encode(updatePassword.getPassword()));  // Encode le nouveau mot de passe
-            existingUser.setUpdatedAt(java.time.LocalDateTime.now());  // Définit la date de mise à jour
+            // Encode et met à jour le mot de passe
+            existingUser.setPassword(bCryptPasswordEncoder.encode(updatePassword.getPassword()));
+            existingUser.setUpdatedAt(java.time.LocalDateTime.now());  // Met à jour la date de modification
         }
-        User updatedRecord = userRepository.save(existingUser);  // Sauvegarde les modifications
+        // Sauvegarde les modifications
+        User updatedRecord = userRepository.save(existingUser);
         return updatedRecord;  // Retourne l'utilisateur mis à jour
     }
 
-    // Service pour mettre à jour les informations d'un utilisateur
+    // Met à jour les informations d'un utilisateur
     public User updateUser(User updatedUser) {
-        User existingUser = userRepository.findById(updatedUser.getId()).orElse(null);  // Cherche l'utilisateur existant
+        // Cherche l'utilisateur par son ID
+        User existingUser = userRepository.findById(updatedUser.getId()).orElse(null);
         if (existingUser != null) {
-            existingUser.setUsername(updatedUser.getUsername());  // Met à jour le nom d'utilisateur
-            existingUser.setEmail(updatedUser.getEmail());  // Met à jour l'email
-            User updatedRecord = userRepository.save(existingUser);  // Sauvegarde les modifications
+            // Met à jour les champs de l'utilisateur
+            existingUser.setUsername(updatedUser.getUsername());
+            existingUser.setEmail(updatedUser.getEmail());
+            // Sauvegarde l'utilisateur mis à jour
+            User updatedRecord = userRepository.save(existingUser);
             return updatedRecord;  // Retourne l'utilisateur mis à jour
         } else {
-            throw new NotFoundException("Enregistrement introuvable");  // Lève une exception si l'utilisateur n'est pas trouvé
+            // Lance une exception si l'utilisateur n'est pas trouvé
+            throw new NotFoundException("Enregistrement introuvable");
         }
     }
 
-    // Service pour authentifier un utilisateur
+    // Authentifie un utilisateur et retourne un token JWT
     public String authenticate(String email, String password) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);  // Cherche l'utilisateur par email
+        // Cherche l'utilisateur par son email
+        Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get();  // Récupère l'utilisateur trouvé
-            if (bCryptPasswordEncoder.matches(password, user.getPassword())) {  // Vérifie si le mot de passe correspond
-                long expirationTimeInMillis = jwtConfig.getJwtExpirationMs();  // Récupère la durée d'expiration du JWT
-                String token = Jwts.builder()  // Crée un nouveau JWT
-                        .setSubject(email)  // Définit le sujet du JWT (email de l'utilisateur)
-                        .setExpiration(new Date(System.currentTimeMillis() + expirationTimeInMillis))  // Définit la date d'expiration
-                        .signWith(SignatureAlgorithm.HS256, jwtConfig.getJwtSecret())  // Signe le JWT avec le secret
-                        .compact();  // Compacte le JWT
-                return token;  // Retourne le token JWT
+            User user = optionalUser.get();
+            // Vérifie si le mot de passe correspond
+            if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
+                long expirationTimeInMillis = jwtConfig.getJwtExpirationMs();  // Récupère la durée d'expiration du token
+                // Génère un token JWT
+                String token = Jwts.builder()
+                        .setSubject(email)
+                        .setExpiration(new Date(System.currentTimeMillis() + expirationTimeInMillis))
+                        .signWith(SignatureAlgorithm.HS256, jwtConfig.getJwtSecret())
+                        .compact();
+                return token;  // Retourne le token généré
             } else {
                 throw new NotFoundException("Mot de passe incorrect");  // Lève une exception si le mot de passe est incorrect
             }
@@ -108,25 +131,39 @@ public class UserService {
         }
     }
 
-    // Service pour obtenir l'email à partir d'un token
+    // Méthode pour extraire l'email depuis un token JWT
     public String getEmailFromToken(String token) {
-        String email = Jwts.parser()  // Parse le token JWT
-                .setSigningKey(jwtConfig.getJwtSecret())  // Définit la clé de signature
-                .parseClaimsJws(token)  // Parse le JWT
-                .getBody()  // Récupère le corps du JWT
-                .getSubject();  // Récupère le sujet (email)
-        return email;  // Retourne l'email
+        // Décode le token et récupère le sujet (l'email)
+        String email = Jwts.parser()
+            .setSigningKey(jwtConfig.getJwtSecret())
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+        return email;  // Retourne l'email extrait du token
     }
 
-    // Service pour obtenir un utilisateur par email
+    // Récupère un utilisateur par email
     public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);  // Récupère l'utilisateur par email
+        return userRepository.findByEmail(email);  // Retourne l'utilisateur correspondant à l'email
     }
 
-    // Service pour obtenir un utilisateur par token
+    // Récupère un utilisateur en fonction de son token JWT
     public User getUserByToken(String token) {
-        String email = getEmailFromToken(token);  // Récupère l'email à partir du token
-        return getUserByEmail(email)  // Récupère l'utilisateur par email
-                .orElseThrow(() -> new NotFoundException("Utilisateur introuvable"));  // Lève une exception si l'utilisateur n'est pas trouvé
+        // Extrait l'email du token et cherche l'utilisateur correspondant
+        String email = getEmailFromToken(token);
+        return getUserByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Utilisateur introuvable"));  // Lance une exception si l'utilisateur n'est pas trouvé
+    }
+    
+    // Souscrit un utilisateur à un thème
+    public User suscribeToTheme(Long userId, Long themeId) {
+        // Cherche l'utilisateur et le thème par leurs ID respectifs
+        User existingUser = userRepository.findById(userId).orElse(null);
+        Themes existingTheme = themeRepository.findById(themeId).orElse(null);
+        // Ajoute le thème à la liste des thèmes de l'utilisateur
+        existingUser.getThemes().add(existingTheme);
+        // Sauvegarde l'utilisateur avec le nouveau thème ajouté
+        User updatedRecord = userRepository.save(existingUser);
+        return updatedRecord;  // Retourne l'utilisateur mis à jour
     }
 }
