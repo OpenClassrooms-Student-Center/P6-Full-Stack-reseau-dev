@@ -1,14 +1,24 @@
+<!-- Conteneur principal pour le contenu de la page -->
 <div class="container">
-  <button  mat-raised-button color="primary" class="putArticleBtn" >Créer un article </button>
+  <!-- Bouton pour créer un nouvel article, utilisant Angular Material -->
+  <button mat-raised-button color="primary" class="putArticleBtn">Créer un article</button>
+
+  <!-- Conteneur pour les articles -->
   <div class="article-container">
-      <div class="row" *ngFor="let index of indexArray">
-        <div class="column" *ngFor="let article of articles | slice:(index * 2):(index * 2 + 2)">
-          <div class="article">
-            <h2>{{ article.title }}</h2>
-            <p class="description">{{ article.description }}</p>
-            <p>Auteur: {{ article.author.username }}</p>
-          </div>
+    <!-- Boucle pour parcourir les indices dans indexArray -->
+    <div class="row" *ngFor="let index of indexArray">
+      <!-- Boucle pour afficher les articles, en tranchant le tableau articles -->
+      <div class="column" *ngFor="let article of articles | slice:(index * 2):(index * 2 + 2)">
+        <!-- Conteneur pour chaque article -->
+        <div class="article">
+          <!-- Titre de l'article, affiché en tant que titre de niveau 2 -->
+          <h2>{{ article.title }}</h2>
+          <!-- Description de l'article -->
+          <p class="description">{{ article.description }}</p>
+          <!-- Affiche le nom de l'auteur de l'article -->
+          <p>Auteur: {{ article.author.username }}</p>
         </div>
       </div>
     </div>
+  </div>
 </div>

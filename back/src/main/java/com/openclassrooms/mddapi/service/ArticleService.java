@@ -2,12 +2,14 @@ package com.openclassrooms.mddapi.service;
 
 // Importation des classes nécessaires
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.model.Article;
+import com.openclassrooms.mddapi.model.Themes;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 
 // Annotation pour indiquer que cette classe est un service Spring
@@ -85,5 +87,8 @@ public class ArticleService {
             // Lève une exception si l'article n'est pas trouvé
             throw new NotFoundException("Enregistrement introuvable");
         }
+    }
+    public List<Article> getArticlesByTheme(Themes theme) {
+        return articleRepository.findByTheme(theme);
     }
 }

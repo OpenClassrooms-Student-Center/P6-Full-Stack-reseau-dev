@@ -109,4 +109,10 @@ public class ArticleController {
             return null;
         }
         }
+            // find article by theme
+    @GetMapping("/articles/theme/{themeId}")
+    public List<Article> getArticlesByTheme(@PathVariable Long themeId) {
+        Themes theme = themesService.getThemesById(themeId);
+        return articleService.getArticlesByTheme(theme);
+    }
 }
