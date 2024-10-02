@@ -91,7 +91,7 @@ public class ArticleController {
         User user = userService.getUserByToken(token);
         
         // Création d'une nouvelle instance d'article
-        Long themeId = Long.parseLong(theme);
+        Long themeId = Long.valueOf(theme);
         Themes themeIdObject = themesService.getThemesById(themeId);   
         Article article = new Article();
         article.setTitle(title); // Définition du titre de l'article

@@ -102,14 +102,26 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+// Endpoint pour souscrire un utilisateur à un thème
+@PostMapping("/auth/subscribe/{themeId}")  // Définit une route POST avec un paramètre "themeId"
+@ApiOperation(value = "Subscribe to a theme", notes = "Subscribe to a theme.")  // Documentation Swagger pour décrire l'opération de l'API
+public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String authorizationHeader, 
+                                           @PathVariable Long themeId) {
+    // Affiche dans la console le thème auquel l'utilisateur souhaite s'abonner (pour débogage)
+    System.err.println("themeId: " + themeId);
+    
+    // Extraction du token d'authentification à partir du header "Authorization"
+    // Le token commence par "Bearer ", donc on extrait la partie à partir du 7ème caractère
+    String token = authorizationHeader.substring(7);
+    
+    // Récupération de l'utilisateur correspondant au token via le service userService
+    User user = userService.getUserByToken(token);
+    
+    // Souscription de l'utilisateur au thème, en passant l'ID de l'utilisateur et l'ID du thème
+    User updatedUser = userService.suscribeToTheme(user.getId(), themeId);
+    
+    // Retourne l'utilisateur mis à jour avec le statut HTTP 200 (OK)
+    return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+}
 
-    // Endpoint pour souscrire un utilisateur à un thème
-    @PostMapping("/user/{userId}/theme/{themeId}")
-    @ApiOperation(value = "Subscribe to a theme", notes = "Subscribe to a theme.")  // Documentation Swagger
-    public ResponseEntity<User> suscribeToTheme(@PathVariable Long userId, @PathVariable Long themeId) {
-        // Souscrit l'utilisateur à un thème en appelant le service utilisateur
-        User user = userService.suscribeToTheme(userId, themeId);
-        // Retourne l'utilisateur mis à jour avec une réponse HTTP 200 (OK)
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
 }

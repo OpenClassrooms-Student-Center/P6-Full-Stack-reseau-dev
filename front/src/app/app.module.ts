@@ -12,9 +12,11 @@ import { ArticlePageComponent } from './pages/article-page/article-page.componen
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptor/auth-interceptor';
+import { NavbarComponent } from './navbar/navbar.component';
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, ArticlePageComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, ArticlePageComponent, NavbarComponent, CreateArticleComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,0 +1,71 @@
+/* CSS pour la barre de navigation */
+nav {
+    background-color: #ffffff;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+  }
+  
+  nav .logo img {
+    height: 50px; 
+    width: 2%;
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  nav ul li {
+    margin-right: 20px;
+  }
+  
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+  
+  nav ul li a {
+    color: #000000;
+    text-decoration: none;
+  }
+  
+  .menu-icon {
+    display: none; 
+  }
+  
+  @media screen and (max-width: 768px) {
+    .menu-icon {
+      display: block; 
+      cursor: pointer;
+    }
+  
+    nav ul {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%; 
+      right: 0;
+      background-color: #fff;
+      width: 100%;
+      padding: 10px 20px;
+    }
+  
+    nav ul li {
+      margin: 10px 0; 
+    }
+  
+    nav ul li a {
+      color: #333;
+      padding: 5px 0; 
+      border-bottom: 1px solid #333;
+    }
+  
+    nav ul.active {
+      display: flex; 
+    }
+  }
+  

@@ -161,9 +161,13 @@ public class UserService {
         User existingUser = userRepository.findById(userId).orElse(null);
         Themes existingTheme = themeRepository.findById(themeId).orElse(null);
         // Ajoute le thème à la liste des thèmes de l'utilisateur
-        existingUser.getThemes().add(existingTheme);
-        // Sauvegarde l'utilisateur avec le nouveau thème ajouté
+        System.err.println("existingTheme: " + existingTheme);
+        if (existingUser != null && existingTheme != null) {
+            existingUser.getThemes().add(existingTheme);
+        }        // Sauvegarde l'utilisateur avec le nouveau thème ajouté
         User updatedRecord = userRepository.save(existingUser);
+        System.err.println("updatedRecord: " + updatedRecord);
+
         return updatedRecord;  // Retourne l'utilisateur mis à jour
     }
 }

@@ -1,6 +1,8 @@
 // Importation des modules nécessaires d'Angular
 import { Component, OnInit } from '@angular/core'; // Composant et cycle de vie
 import { HttpClient } from '@angular/common/http'; // Service HttpClient pour faire des requêtes HTTP
+import { Inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Définition du décorateur @Component pour ce composant
 @Component({
@@ -16,12 +18,17 @@ export class ArticlePageComponent implements OnInit {
   indexArray: number[] = [];
 
   // Constructeur qui injecte le service HttpClient
-  constructor(private http: HttpClient) { }
+  constructor(@Inject(HttpClient) private http: HttpClient, @Inject(Router) private router: Router) {}
 
   // Méthode appelée lors de l'initialisation du composant
   ngOnInit(): void {
     this.fetchArticles(); // Appel de la méthode pour récupérer les articles
   }
+    
+  redirectToCreateArticle() {
+    this.router.navigate(['/article/add']);
+  }
+
 
   // Méthode pour récupérer les articles depuis l'API
   fetchArticles(): void {
