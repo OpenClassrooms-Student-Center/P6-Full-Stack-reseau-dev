@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ArticlePageComponent } from './pages/article-page/article-page.component';
 import { CreateArticleComponent } from './pages/create-article/create-article.component'; 
+import { ThemesPageComponent } from './pages/themes-page/themes-page.component';
 
 
 // consider a guard combined with canLoad / canActivate route option
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'article', component: ArticlePageComponent },
-  { path: 'article/add', component: CreateArticleComponent }, 
+  { path: 'article/add', component: CreateArticleComponent },
+  { path: 'themes', component: ThemesPageComponent},
   { path: '**', redirectTo: '' },
 ];
 

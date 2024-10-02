@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.mddapi.dto.ArticleRequestDto;
 import com.openclassrooms.mddapi.model.Article;
 import com.openclassrooms.mddapi.model.Themes;
 import com.openclassrooms.mddapi.model.User;
@@ -81,9 +82,7 @@ public class ArticleController {
     @PostMapping(value = "/articles")
     @ApiOperation(value = "Create a new Article", notes = "Creates a new Article.")
     public Article saveRentals(@RequestHeader("Authorization") String authorizationHeader,
-                               @RequestParam("title") String title,
-                               @RequestParam("description") String description,
-                               @RequestParam("theme") String theme){
+                                 @RequestBody ArticleRequestDto articleDto) {
         // Extraction du token d'authentification du header
         String token = authorizationHeader.substring("Bearer ".length()).trim();
         
@@ -91,13 +90,15 @@ public class ArticleController {
         User user = userService.getUserByToken(token);
         
         // Création d'une nouvelle instance d'article
-        Long themeId = Long.valueOf(theme);
+        Long themeId = articleDto.getTheme();
         Themes themeIdObject = themesService.getThemesById(themeId);   
-        Article article = new Article();
-        article.setTitle(title); // Définition du titre de l'article
-        article.setDescription(description); // Définition de la description de l'article
+        Article article = new Article() ;
+        article.setTitle(articleDto.getTitle());
+        article.setDescription(articleDto.getDescription());
         article.setAuthor(user); // Attribution de l'auteur à l'article
         article.setTheme(themeIdObject);
+        System.err.println("article: " + article);
+
 
         // Enregistrement de l'article via le service
         Article savedRentals = articleService.saveArticles(article);

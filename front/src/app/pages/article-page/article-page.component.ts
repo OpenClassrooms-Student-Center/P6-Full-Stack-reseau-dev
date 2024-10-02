@@ -1,49 +1,50 @@
 // Importation des modules nécessaires d'Angular
-import { Component, OnInit } from '@angular/core'; // Composant et cycle de vie
-import { HttpClient } from '@angular/common/http'; // Service HttpClient pour faire des requêtes HTTP
-import { Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'; // Permet de définir un composant et de gérer le cycle de vie d'un composant
+import { HttpClient } from '@angular/common/http'; // Service HttpClient pour effectuer des requêtes HTTP
+import { Router } from '@angular/router'; // Service Router pour naviguer entre les pages
 
-// Définition du décorateur @Component pour ce composant
+// Définition du décorateur @Component qui spécifie les métadonnées du composant
 @Component({
-  selector: 'app-article-page', // Nom du sélecteur pour utiliser ce composant dans le HTML
-  templateUrl: './article-page.component.html', // Chemin vers le template HTML du composant
-  styleUrls: ['./article-page.component.scss'] // Chemin vers les styles SCSS du composant
+  selector: 'app-article-page', // Nom du sélecteur utilisé pour inclure ce composant dans le HTML
+  templateUrl: './article-page.component.html', // Chemin vers le fichier de template HTML associé à ce composant
+  styleUrls: ['./article-page.component.scss'] // Chemin vers le fichier de styles SCSS associé à ce composant
 })
+
 // Classe du composant ArticlePageComponent
 export class ArticlePageComponent implements OnInit {
   // Tableau pour stocker les articles récupérés depuis l'API
   articles: any[] = [];
-  // Tableau pour stocker les indices des articles à afficher (utilisé pour la pagination ou le rendu)
+  
+  // Tableau pour stocker les indices des articles à afficher, potentiellement utilisé pour la pagination ou le rendu
   indexArray: number[] = [];
 
-  // Constructeur qui injecte le service HttpClient
-  constructor(@Inject(HttpClient) private http: HttpClient, @Inject(Router) private router: Router) {}
+  // Constructeur du composant qui injecte les services HttpClient et Router
+  constructor(private http: HttpClient, private router: Router) {}
 
-  // Méthode appelée lors de l'initialisation du composant
+  // Méthode appelée une fois que le composant est initialisé (cycle de vie d'Angular)
   ngOnInit(): void {
-    this.fetchArticles(); // Appel de la méthode pour récupérer les articles
+    this.fetchArticles(); // Appel de la méthode pour récupérer les articles à l'initialisation
   }
     
+  // Méthode pour rediriger l'utilisateur vers la page de création d'un article
   redirectToCreateArticle() {
-    this.router.navigate(['/article/add']);
+    this.router.navigate(['/article/add']); // Utilise le service Router pour naviguer vers la route spécifiée
   }
 
-
-  // Méthode pour récupérer les articles depuis l'API
+  // Méthode pour récupérer les articles depuis une API (via une requête HTTP GET)
   fetchArticles(): void {
-    // Requête GET vers l'API pour récupérer les articles
+    // Requête HTTP GET pour obtenir la liste des articles depuis l'API à l'URL spécifiée
     this.http.get<any>('http://localhost:8080/api/articles')
-      .subscribe((response) => {
-        // On assigne les articles récupérés à la propriété articles
+      .subscribe((response) => { 
+        // En cas de succès, on récupère les articles depuis la réponse et on les stocke dans la propriété articles
         this.articles = response.articles;
 
-        // Remplit indexArray avec les indices pour afficher les articles
+        // Remplissage de indexArray avec des indices basés sur la longueur de la liste des articles (divisée par 2 ici)
         for (let i = 0; i < this.articles.length / 2; i++) {
-          this.indexArray.push(i); // Ajoute chaque indice à indexArray
+          this.indexArray.push(i); // Ajoute chaque indice calculé dans indexArray
         }
       }, (error) => {
-        // Gestion des erreurs en cas d'échec de la récupération des articles
+        // En cas d'erreur lors de la requête HTTP, un message d'erreur est affiché dans la console
         console.error('Erreur lors de la récupération des articles :', error);
       });
   }

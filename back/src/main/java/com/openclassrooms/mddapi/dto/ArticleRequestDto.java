@@ -4,6 +4,6 @@ import lombok.Data;
 public class ArticleRequestDto {
     private String title;
     private String description;
-    private Long themeId;
+    private Long theme;
     // Getters et setters
 }

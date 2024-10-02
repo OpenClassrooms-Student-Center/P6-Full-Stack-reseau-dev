@@ -7,16 +7,25 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArticlePageComponent } from './pages/article-page/article-page.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptor/auth-interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import { ThemesPageComponent } from './pages/themes-page/themes-page.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, ArticlePageComponent, NavbarComponent, CreateArticleComponent],
+  declarations: [AppComponent, 
+                HomeComponent, 
+                LoginComponent, 
+                RegisterComponent, 
+                ArticlePageComponent, 
+                NavbarComponent, 
+                CreateArticleComponent,
+                ThemesPageComponent,
+              ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,6 +33,8 @@ import { CreateArticleComponent } from './pages/create-article/create-article.co
     MatButtonModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+
 
   ],
   providers: [
