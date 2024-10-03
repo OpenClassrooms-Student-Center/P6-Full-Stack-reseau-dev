@@ -1,0 +1,11 @@
+<div class="article-container" *ngIf="article">
+    <h2>{{ article.title }}</h2>
+    <div class="metadata">
+      <p *ngIf="isValidDate(article.createdAt)">Date: {{ article.createdAt  }}</p>
+      <ng-container *ngIf="article.author">
+        <p>Author: {{ article.author.username }}</p>
+      </ng-container>
+      <p>Theme: {{ article.theme.title }}</p>
+    </div>
+    <p class="description">{{ article.description }}</p>
+  </div>

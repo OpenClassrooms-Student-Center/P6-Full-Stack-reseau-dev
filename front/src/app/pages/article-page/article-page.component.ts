@@ -30,6 +30,9 @@ export class ArticlePageComponent implements OnInit {
   redirectToCreateArticle() {
     this.router.navigate(['/article/add']); // Utilise le service Router pour naviguer vers la route spécifiée
   }
+  redirectToArticleDetail(id: number): void {
+    this.router.navigate(['/article', id]);
+  }
 
   // Méthode pour récupérer les articles depuis une API (via une requête HTTP GET)
   fetchArticles(): void {

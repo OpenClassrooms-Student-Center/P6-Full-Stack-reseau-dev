@@ -1,7 +1,7 @@
 // Importation des modules nécessaires depuis Angular
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // HttpClient pour les requêtes HTTP, HttpHeaders pour les en-têtes
-import { Observable } from 'rxjs'; // Observable pour gérer les réponses HTTP de manière asynchrone
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root' // Indique que ce service est fourni à l'ensemble de l'application
@@ -16,17 +16,29 @@ export class AuthService {
   // Méthode pour effectuer une requête de login à l'API
   // Prend un objet "credentials" contenant l'email et le mot de passe, et renvoie un Observable
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials); // Envoie la requête POST avec les identifiants de connexion
-  }
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+        map(response => {
+          if (response && response.token) {
+            this.setToken(response.token);
+          }
+          return response;
+        })
+      );  }
 
   // Méthode pour définir (stocker) le token JWT
   setToken(token: string | null): void {
     this.token = token; // Le token est stocké localement dans cette propriété
+    localStorage.setItem('token', token || '');
+
   }
 
   // Méthode pour récupérer le token stocké
   getToken(): string | null {
     return this.token; // Retourne le token actuel ou null si non défini
+  }
+  logout(): void {
+    localStorage.removeItem('token');
   }
 
   // Méthode pour obtenir les en-têtes HTTP, avec le token si présent

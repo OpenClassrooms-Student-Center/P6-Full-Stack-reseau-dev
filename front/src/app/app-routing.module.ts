@@ -7,6 +7,7 @@ import { ArticlePageComponent } from './pages/article-page/article-page.componen
 import { CreateArticleComponent } from './pages/create-article/create-article.component'; 
 import { ThemesPageComponent } from './pages/themes-page/themes-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { ArticleIdPageComponent } from './pages/article-id-page/article-id-page.component';
 
 
 // consider a guard combined with canLoad / canActivate route option
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfilePageComponent},
   { path: 'article', component: ArticlePageComponent },
   { path: 'article/add', component: CreateArticleComponent },
+  { path: 'article/:id', component: ArticleIdPageComponent },
   { path: 'themes', component: ThemesPageComponent},
   { path: '**', redirectTo: '' },
 ];
