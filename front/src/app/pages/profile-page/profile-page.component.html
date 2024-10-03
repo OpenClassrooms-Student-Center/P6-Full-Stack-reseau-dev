@@ -9,9 +9,13 @@
       <input type="text" class="form-control" id="email" placeholder="Enter your email">
     </div>
     <button class="btn btn-primary" (click)="saveChanges()">Save</button>
-    <a class="Logout" (click)="logout()">Se deconnecter</a>
-  
-    <h2>Abonnements</h2>
+    <div class="LogoutBtn">
+      <a class="Logout" (click)="logout()">Se deconnecter</a>
+    </div>
+    <hr>
+    <div class="LogoutBtn">
+      <h2>Abonnements</h2>
+    </div>
     <div class="theme-grid">
         <div class="theme-card" *ngFor="let theme of userThemes">
           <h3>{{ theme.title }}</h3>

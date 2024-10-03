@@ -15,6 +15,8 @@ public class ThemesService {
     @Autowired
     private ThemesRepository themesRepository;
     
+
+
     // Méthode pour récupérer tous les thèmes
     public Iterable<Themes> getThemes() {
         // Appel du dépôt pour trouver tous les thèmes
