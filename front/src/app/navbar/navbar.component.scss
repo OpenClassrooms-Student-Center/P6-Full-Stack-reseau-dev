@@ -53,6 +53,8 @@
     right: -300px; /* Le menu est initialement en dehors de la vue */
     width: 300px;
     height: 100%;
+    z-index: 1000;
+    display: block;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease; /* Animation de transition */
@@ -64,8 +66,16 @@
   
   .menu ul {
     flex-direction: column;
+    padding:20px;
   }
-
+  .avatar {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  .top-right {
+    text-align: right; 
+  }
   .menu li {
     margin: 10px 0;
   }
