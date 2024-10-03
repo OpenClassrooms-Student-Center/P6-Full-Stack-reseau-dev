@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-article',
@@ -11,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class CreateArticleComponent implements OnInit {
   articleForm: FormGroup;
   themes: any[] = [];
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private _snackBar: MatSnackBar, private router: Router) {
     this.articleForm = this.formBuilder.group({
       theme: ['', Validators.required],
       title: ['', Validators.required],
@@ -46,6 +47,11 @@ export class CreateArticleComponent implements OnInit {
         .subscribe(
           (response: any) => { 
             console.log('Article créé avec succès:', response);
+            this._snackBar.open('Article créé avec succès', 'Fermer', {
+              duration: 1000,
+            });
+            this.router.navigate(['/article']);
+            
           },
           (error: any) => { 
             console.error('Erreur lors de la création de l\'article:', error);

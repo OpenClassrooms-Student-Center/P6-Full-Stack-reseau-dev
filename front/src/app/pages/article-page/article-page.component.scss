@@ -1,9 +1,23 @@
 .container {
   padding: 2%;
+  position: relative;
+}
+.button-container {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
 }
 .putArticleBtn {
   margin-bottom: 20px;
-  margin-top: 20px;
+}
+.sortBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-bottom: 20px;
+}
+.button-container {
+  position: relative;
 }
 
 article-container {

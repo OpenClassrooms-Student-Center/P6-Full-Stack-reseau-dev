@@ -1,7 +1,15 @@
 <!-- Conteneur principal pour le contenu de la page -->
 <div class="container">
-  <button mat-raised-button color="primary" (click)="redirectToCreateArticle()" class="putArticleBtn">Créer un article</button>
-  <div class="article-container">
+    <div class="button-container">
+        <button mat-raised-button color="primary" (click)="redirectToCreateArticle()" class="putArticleBtn">Créer un article</button>
+        <mat-form-field appearance="fill">
+            <mat-label>Trier par</mat-label>
+            <mat-select>
+                <mat-option (click)="sortArticlesAZ()">A à Z</mat-option>
+                <mat-option (click)="sortArticlesZA()">Z à A</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>  <div class="article-container">
       <div class="row">
           <div class="column" *ngFor="let article of articles">
               <div class="article" (click)="redirectToArticleDetail(article.articleId)">
@@ -12,4 +20,4 @@
           </div>
       </div>
   </div>
-  </div>
+  

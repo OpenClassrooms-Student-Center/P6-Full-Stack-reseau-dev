@@ -44,4 +44,10 @@ export class ArticlePageComponent implements OnInit {
   redirectToArticleDetail(id: number): void {
     this.router.navigate(['/article', id]);
   }
+  sortArticlesAZ(): void {
+    this.articles.sort((a, b) => a.title.localeCompare(b.title));
+  }
+  sortArticlesZA(): void {
+    this.articles.sort((a, b) => b.title.localeCompare(a.title));
+  }
 }

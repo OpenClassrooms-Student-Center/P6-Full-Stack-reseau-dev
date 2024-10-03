@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 interface Theme {
   id: number;
   title: string;
@@ -14,7 +17,7 @@ interface Theme {
 })
 export class ThemesPageComponent implements OnInit {
   themes: Theme[] = [];
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private _snackBar: MatSnackBar) { }
   ngOnInit(): void {
     this.fetchThemes();
   }
@@ -29,6 +32,10 @@ export class ThemesPageComponent implements OnInit {
       .subscribe(response => {
         // Traiter la réponse de l'API si nécessaire
         console.log('Souscrit avec succès au thème avec l\'ID', themeId);
+        this.openSnackBar('Souscrit avec succès au thème !', '');
       });
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
