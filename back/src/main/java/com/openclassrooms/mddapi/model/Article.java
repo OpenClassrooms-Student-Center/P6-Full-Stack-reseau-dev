@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -32,7 +35,10 @@ public class Article {
 	@Size(max = 5000)
     @NotNull
 	private String description;
-
+	
+	@ManyToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+	@JoinTable(name = "artcile_Messages", joinColumns = @JoinColumn(name = "Article_id"), inverseJoinColumns = @JoinColumn(name = "Messages_id"))
+	private Set<Messages> messages;
  
 
 	@ManyToOne(fetch = FetchType.EAGER)

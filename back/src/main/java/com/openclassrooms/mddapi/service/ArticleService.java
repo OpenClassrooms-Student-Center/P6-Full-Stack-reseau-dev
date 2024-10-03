@@ -2,15 +2,19 @@ package com.openclassrooms.mddapi.service;
 
 // Importation des classes nécessaires
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.dto.ArticleMessagesDTO;
+import com.openclassrooms.mddapi.dto.MessageDTO;
 import com.openclassrooms.mddapi.model.Article;
 import com.openclassrooms.mddapi.model.Themes;
-import com.openclassrooms.mddapi.repository.ArticleRepository;
+import com.openclassrooms.mddapi.repository.ArticleRepository; // Import the missing MessageDTO class
 
 // Annotation pour indiquer que cette classe est un service Spring
 @Service
@@ -31,10 +35,25 @@ public class ArticleService {
     }
 
     // Méthode pour récupérer tous les articles
-    public Iterable<Article> getArticle() {
-        // Appel du dépôt pour trouver tous les articles
-        Iterable<Article> article = articleRepository.findAll();
-        return article; // Retourne la liste des articles
+    public Iterable<ArticleMessagesDTO> getArticles() {
+        Iterable<Article> articles = articleRepository.findAll();
+        List<ArticleMessagesDTO> articleMessagesDTOs = ((Collection<Article>) articles).stream().map(article -> {
+            ArticleMessagesDTO articleMessagesDTO = new ArticleMessagesDTO();
+            articleMessagesDTO.setArticleId(article.getId());
+            articleMessagesDTO.setTitle(article.getTitle());
+            articleMessagesDTO.setDescription(article.getDescription());
+            articleMessagesDTO.setArticleId(article.getId());
+            articleMessagesDTO.setUserId(article.getAuthor().getId());
+            articleMessagesDTO.setMessages(article.getMessages().stream().map(message -> {
+                MessageDTO messageDTO = new MessageDTO(); 
+                messageDTO.setMessage(message.getMessage());
+                messageDTO.setUserUsername(article.getAuthor().getUsername());
+                messageDTO.setId(article.getMessages().stream().findFirst().get().getId());
+                return messageDTO;
+            }).collect(Collectors.toList()));
+            return articleMessagesDTO;
+        }).collect(Collectors.toList());
+        return articleMessagesDTOs;
     }
 
     // Méthode pour récupérer un article par son ID
@@ -55,7 +74,7 @@ public class ArticleService {
     // Méthode pour mettre à jour un article existant
     public Article updateArticles(Article updatedRentals) {
         // Recherche de l'article existant par ID
-        Article existingArticles = articleRepository.findById(updatedRentals.getId()).orElse(null);
+        Article existingArticles= articleRepository.findById(updatedRentals.getId()).orElse(null);
         
         // Vérifie si l'article existe
         if (existingArticles != null) {

@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.UserLoginRequest;
+import com.openclassrooms.mddapi.dto.UserProfileDTO;
 import com.openclassrooms.mddapi.model.Themes;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.UserService;
@@ -90,34 +92,35 @@ public class UserController {
 
     // Endpoint pour obtenir les informations de l'utilisateur courant à partir du token JWT
     @GetMapping("/auth/me")
-    @ApiOperation(value = "Get current user", notes = "Returns the current user.")  // Documentation Swagger
-    public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String authorizationHeader) {
-        // Extrait le token JWT de l'en-tête "Authorization", en enlevant "Bearer "
+    @ApiOperation(value = "Get current user", notes = "Returns the current user.")
+    public ResponseEntity<UserProfileDTO> getCurrentUser(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
-        // Récupère l'email de l'utilisateur à partir du token
-        String email = userService.getEmailFromToken(token);
-        // Recherche l'utilisateur par email
-        Optional<User> user = userService.getUserByEmail(email);
-        // Si l'utilisateur est trouvé, retourne une réponse HTTP 200 (OK) avec les données de l'utilisateur
-        if (user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
-        } else {
-            // Sinon, retourne une réponse HTTP 404 (NOT FOUND)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        User user = userService.getUserByToken(token);
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setEmail(user.getEmail());
+        userProfileDTO.setUsername(user.getUsername());
+        List<Themes> themes = user.getThemes().stream()
+                .toList();
+        userProfileDTO.setThemes(themes);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.OK);
     }
         // update email and username
         @PutMapping("/auth/me")
         @ApiOperation(value = "Update email and username", notes = "Updates the email and username of the current user.")
-        public ResponseEntity<User> updateUser(@RequestHeader("Authorization") String authorizationHeader, @RequestBody User updatedUser) {
+        public ResponseEntity<UserProfileDTO> updateUser(@RequestHeader("Authorization") String authorizationHeader, @RequestBody User updatedUser) {
             String token = authorizationHeader.substring(7);
             String email = userService.getEmailFromToken(token);
             User user = userService.getUserByEmail(email).get();
             user.setEmail(updatedUser.getEmail());
             user.setUsername(updatedUser.getUsername());
             User updatedRecord = userService.updateUser(user);
-            return new ResponseEntity<>(updatedRecord, HttpStatus.OK);
-        }
+            UserProfileDTO userProfileDTO = new UserProfileDTO();
+            userProfileDTO.setEmail(updatedRecord.getEmail());
+            userProfileDTO.setUsername(updatedRecord.getUsername());
+            List<Themes> themes = user.getThemes().stream()
+                    .toList();
+            userProfileDTO.setThemes(themes);
+            return new ResponseEntity<>(userProfileDTO, HttpStatus.OK);        }
 // Endpoint pour souscrire un utilisateur à un thème
 @PostMapping("/auth/subscribe/{themeId}")  // Définit une route POST avec un paramètre "themeId"
 @ApiOperation(value = "Subscribe to a theme", notes = "Subscribe to a theme.")  // Documentation Swagger pour décrire l'opération de l'API
@@ -145,7 +148,6 @@ public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") Strin
         public ResponseEntity<User> unsubscribeFromTheme(@RequestHeader("Authorization") String authorizationHeader , @PathVariable Long themeId) {
             String token = authorizationHeader.substring(7);
             User user = userService.getUserByToken(token);
-            System.err.println("user: " + user.getId() + " theme: " + themeId);
             userService.unsubscribeFromTheme(user.getId(), themeId);
             return new ResponseEntity<>(HttpStatus.OK);
         }

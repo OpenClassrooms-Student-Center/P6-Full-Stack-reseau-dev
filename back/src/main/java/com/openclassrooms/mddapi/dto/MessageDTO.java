@@ -1,10 +1,9 @@
 package com.openclassrooms.mddapi.dto;
 import lombok.Data;
 @Data
-public class PostMessagesDto {
-    
+public class MessageDTO {
+    private Integer id; 
+    private String userUsername;
     private String message;
-	private Long article_id;
-    private Long user_id;
-    
+ 
 }
