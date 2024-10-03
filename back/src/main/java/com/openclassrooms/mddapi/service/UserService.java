@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -151,8 +152,8 @@ public class UserService {
     public User getUserByToken(String token) {
         // Extrait l'email du token et cherche l'utilisateur correspondant
         String email = getEmailFromToken(token);
-        return getUserByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Utilisateur introuvable"));  // Lance une exception si l'utilisateur n'est pas trouvé
+        User user = getUserByEmail(email).orElseThrow(() -> new NotFoundException("Utilisateur introuvable"));
+        return user;
     }
     
     // Souscrit un utilisateur à un thème
@@ -160,13 +161,14 @@ public class UserService {
         // Cherche l'utilisateur et le thème par leurs ID respectifs
         User existingUser = userRepository.findById(userId).orElse(null);
         Themes existingTheme = themeRepository.findById(themeId).orElse(null);
+        System.err.println("existingUser : " + existingUser);
+        System.err.println("existingTheme : " + existingTheme);
         // Ajoute le thème à la liste des thèmes de l'utilisateur
         if (existingUser != null && existingTheme != null) {
             existingUser.getThemes().add(existingTheme);
         }        // Sauvegarde l'utilisateur avec le nouveau thème ajouté
-        User updatedRecord = userRepository.save(existingUser);
-
-        return updatedRecord;  // Retourne l'utilisateur mis à jour
+        System.err.println("existingUser 2 : " + existingUser);
+        return userRepository.save(existingUser);
     }
     // Désabonner l'utilisateur d'un thème
     public User unsubscribeFromTheme(Long userId, Long themeId) {
@@ -177,6 +179,15 @@ public class UserService {
         }
         return userRepository.save(existingUser);
     }
+    // Liste de tous les thèmes de l'utilisateur
+    public Set<Themes> getThemesByUser(Long userId) {
+        
+        User existingUser = userRepository.findById(userId).orElse(null);
+        if (existingUser != null) {
+            return existingUser.getThemes();
+        } else {
+            throw new NotFoundException("Utilisateur introuvable");
+        }
 
 
-}
+    } }
