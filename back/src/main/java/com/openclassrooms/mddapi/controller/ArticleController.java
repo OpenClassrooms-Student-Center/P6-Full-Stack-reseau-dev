@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,13 +17,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.ArticleRequestDto;
 import com.openclassrooms.mddapi.model.Article;
+import com.openclassrooms.mddapi.model.Messages;
 import com.openclassrooms.mddapi.model.Themes;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.ArticleService;
+import com.openclassrooms.mddapi.service.MessagesService;
 import com.openclassrooms.mddapi.service.ThemesService;
 import com.openclassrooms.mddapi.service.UserService;
 
@@ -46,6 +50,9 @@ public class ArticleController {
     // Injection de dépendance pour le service des utilisateurs
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MessagesService messagesService;
 
     @Autowired
     private ThemesService themesService;
@@ -77,6 +84,38 @@ public class ArticleController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Retourne 404 Not Found si l'article n'existe pas
         }
     }
+        // Méthode pour obtenir tous les messages associés à un article via son articleId
+        @GetMapping("/articles/{articleId}/messages")
+        public ResponseEntity<Set<Messages>> getMessagesByArticleId(@PathVariable Long articleId) {
+            Set<Messages> messages = messagesService.getMessagesByArticleId(articleId);
+            if (messages.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // 404 si aucun message n'est trouvé
+            } else {
+                return new ResponseEntity<>(messages, HttpStatus.OK);  // Retourne l'ensemble des messages avec statut 200 OK
+            }
+        }
+        // post message by article_id
+        @PostMapping("/articles/{articleId}/messages")
+        public ResponseEntity<Messages> saveMessages(@RequestHeader("Authorization") String authorizationHeader,
+                                                    @PathVariable Long articleId, 
+                                                    @RequestParam String message) {
+                        
+            String token = authorizationHeader.substring("Bearer ".length()).trim();
+            User user = userService.getUserByToken(token);
+            Article article = articleService.getArticleById(articleId).get();
+            Messages newMessage = new Messages();
+            newMessage.setUser(user);
+            newMessage.setArticle(article);
+            newMessage.setMessage(message);
+            Messages savedMessage = messagesService.saveMessage(newMessage);
+            article.getMessages().add(savedMessage);
+            if (savedMessage != null) {
+                return new ResponseEntity<>(savedMessage, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+                                                        
+        }
 
     // Méthode pour créer un nouvel article
     @PostMapping(value = "/articles")
