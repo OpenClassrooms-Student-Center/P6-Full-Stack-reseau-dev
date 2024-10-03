@@ -1,6 +1,4 @@
 package com.openclassrooms.mddapi.model;
-
-
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;

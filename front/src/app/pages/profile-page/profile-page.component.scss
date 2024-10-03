@@ -1,0 +1,71 @@
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 20px; 
+  }
+  .container{
+    padding: 2%;
+  }
+  .theme-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .container {
+    width: 100%;
+    max-width: 600px; 
+    margin: 0 auto; 
+    padding: 20px;
+    box-sizing: border-box; 
+  }
+  
+  .form-group {
+    margin-bottom: 20px; 
+  }
+  
+  
+  button {
+    display: block;
+    margin: 0 auto;
+  }
+  
+ 
+  .form-control {
+    width: 100%;
+  }
+  
+  textarea {
+    min-height: 150px; 
+  }
+  input[type="text"],
+textarea,
+select {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  box-sizing: border-box; 
+}
+.Logout{
+    color: #ff0000;
+}
+button {
+  border: none; 
+  border-radius: 5px;
+  padding: 10px 50px;
+  background-color: #5f0497;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+button:hover {
+  background-color: #0056b3; 
+}
+select {
+    background-color: #ffffff;
+  }
+  
+select option[value=""][disabled] {
+color: #848484; 
+}

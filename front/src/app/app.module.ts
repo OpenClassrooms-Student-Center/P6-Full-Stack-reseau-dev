@@ -15,6 +15,12 @@ import { AuthInterceptor } from './interceptor/auth-interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateArticleComponent } from './pages/create-article/create-article.component';
 import { ThemesPageComponent } from './pages/themes-page/themes-page.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+
 
 @NgModule({
   declarations: [AppComponent, 
@@ -25,6 +31,7 @@ import { ThemesPageComponent } from './pages/themes-page/themes-page.component';
                 NavbarComponent, 
                 CreateArticleComponent,
                 ThemesPageComponent,
+                ProfilePageComponent,
               ],
   imports: [
     BrowserModule,
@@ -34,8 +41,10 @@ import { ThemesPageComponent } from './pages/themes-page/themes-page.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
-
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     AuthService,

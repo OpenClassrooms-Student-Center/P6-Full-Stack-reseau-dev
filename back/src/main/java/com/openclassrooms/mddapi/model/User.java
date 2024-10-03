@@ -1,4 +1,5 @@
 package com.openclassrooms.mddapi.model;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,29 +16,43 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+
 @Entity
 @Data
 @Table(name = "User")
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@NotNull
-	private String email;
-	@NotNull
-	private String username;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotNull
-	private String password;
+    @NotNull
+    private String email;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_Themes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "Themes_id"))
-	private Set<Themes> Themes;
+    @NotNull
+    private String username;
 
-	@Column(name = "created_at")
-	private LocalDateTime createdAt;
-	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
-	
-	
+    @NotNull
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_Themes", 
+               joinColumns = @JoinColumn(name = "user_id"), 
+               inverseJoinColumns = @JoinColumn(name = "Themes_id"))
+    private Set<Themes> themes;  // Renommé en "themes" pour respecter les conventions de nommage
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    // Getter pour la collection Themes
+    public Set<Themes> getThemes() {
+        return themes;
+    }
+
+    // Setter pour la collection Themes
+    public void setThemes(Set<Themes> themes) {
+        this.themes = themes;
+    }
 }

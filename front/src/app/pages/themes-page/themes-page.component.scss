@@ -1,0 +1,22 @@
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 20px; 
+  }
+  .container{
+    padding: 2%;
+  }
+  .theme-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  @media (max-width: 767px) {
+    .theme-grid {
+      grid-template-columns: 1fr; 
+    }
+    .theme-card {
+      width: 100%; 
+    }
+  }

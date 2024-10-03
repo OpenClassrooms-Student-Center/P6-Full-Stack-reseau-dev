@@ -4,15 +4,18 @@ import {
   HttpInterceptor,    // Interface permettant d'intercepter les requêtes HTTP
   HttpRequest,        // Représente une requête HTTP
   HttpHandler,        // Gère la suite du traitement de la requête après interception
-  HttpEvent           // Représente un événement HTTP (comme une réponse)
+  HttpEvent,
+  HttpErrorResponse           
 } from '@angular/common/http';
-import { Observable } from 'rxjs'; // Observable, pour gérer les flux de données asynchrones
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service'; // Service d'authentification
 
 @Injectable() // Indique que cette classe peut être injectée en tant que service
 export class AuthInterceptor implements HttpInterceptor {
   // Injection du service d'authentification dans le constructeur
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   // La méthode intercept intercepte chaque requête HTTP sortante
   intercept(
@@ -26,6 +29,13 @@ export class AuthInterceptor implements HttpInterceptor {
     const authReq = req.clone({ headers });
 
     // Passage de la requête clonée avec les en-têtes au gestionnaire suivant
-    return next.handle(authReq);
-  }
+    return next.handle(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.router.navigateByUrl('/login');
+        }
+        return throwError(error);
+      })
+    );
+    }
 }

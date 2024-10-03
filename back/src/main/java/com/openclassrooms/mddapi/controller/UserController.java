@@ -1,20 +1,24 @@
 package com.openclassrooms.mddapi.controller;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.UserLoginRequest;
+import com.openclassrooms.mddapi.model.Themes;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.UserService;
 
@@ -102,6 +106,18 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+        // update email and username
+        @PutMapping("/auth/me")
+        @ApiOperation(value = "Update email and username", notes = "Updates the email and username of the current user.")
+        public ResponseEntity<User> updateUser(@RequestHeader("Authorization") String authorizationHeader, @RequestBody User updatedUser) {
+            String token = authorizationHeader.substring(7);
+            String email = userService.getEmailFromToken(token);
+            User user = userService.getUserByEmail(email).get();
+            user.setEmail(updatedUser.getEmail());
+            user.setUsername(updatedUser.getUsername());
+            User updatedRecord = userService.updateUser(user);
+            return new ResponseEntity<>(updatedRecord, HttpStatus.OK);
+        }
 // Endpoint pour souscrire un utilisateur à un thème
 @PostMapping("/auth/subscribe/{themeId}")  // Définit une route POST avec un paramètre "themeId"
 @ApiOperation(value = "Subscribe to a theme", notes = "Subscribe to a theme.")  // Documentation Swagger pour décrire l'opération de l'API
@@ -123,5 +139,22 @@ public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") Strin
     // Retourne l'utilisateur mis à jour avec le statut HTTP 200 (OK)
     return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 }
-
+        // unsubscribe from a theme
+        @DeleteMapping("/auth/unsubscribe/{themeId}")
+        @ApiOperation(value = "Unsubscribe from a theme", notes = "Unsubscribe from a theme.")
+        public ResponseEntity<User> unsubscribeFromTheme(@RequestHeader("Authorization") String authorizationHeader , @PathVariable Long themeId) {
+            String token = authorizationHeader.substring(7);
+            User user = userService.getUserByToken(token);
+            System.err.println("user: " + user.getId() + " theme: " + themeId);
+            userService.unsubscribeFromTheme(user.getId(), themeId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        //list of user themes
+        @GetMapping("/auth/themes")
+        @ApiOperation(value = "Get user themes", notes = "Returns the themes of the current user.")
+        public ResponseEntity<Set<Themes>> getUserThemes(@RequestHeader("Authorization") String authorizationHeader) {
+            String token = authorizationHeader.substring(7);
+            User user = userService.getUserByToken(token);
+            return new ResponseEntity<>(user.getThemes(), HttpStatus.OK);
+        }
 }

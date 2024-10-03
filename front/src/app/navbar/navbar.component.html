@@ -1,7 +1,16 @@
-<nav>
-    <img src="/assets/logo_p6.png" alt="logo" width="10%"/>
+<nav class="navbar">
+    <div class="logo">
+      <img src="/assets/logo_p6.png" alt="logo" width="100"/>
+    </div>
+    <button class="burger-menu" (click)="toggleMenu()">☰</button>
+    <div class="menu" [ngClass]="{'active': isMenuOpen}">
+
     <ul>
-        <li><a routerLink="/article">Accueil</a></li>
-        <li><a routerLink="/Themes">Themes</a></li>
+        <li><a routerLink="/article" (click)="toggleMenu()">Accueil</a></li>
+        <li><a routerLink="/themes" (click)="toggleMenu()">Themes</a></li>
     </ul>
+    <div class="avatar" (click)="toggleMenu()"> 
+        <img src="/assets/user.png" routerLink="/profile"  alt="avatar" width="100"/>
+      </div>
+    </div>
 </nav>

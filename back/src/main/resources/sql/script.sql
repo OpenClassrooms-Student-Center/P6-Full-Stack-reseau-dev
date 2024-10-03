@@ -43,7 +43,16 @@ CREATE TABLE Messages (
     FOREIGN KEY (Article_id) REFERENCES Article(id) ON DELETE SET NULL,
     FOREIGN KEY (users_id) REFERENCES User(id) ON DELETE CASCADE
 );
-
+-- Création de la table user_themes pour gérer la relation many-to-many entre User et Themes
+CREATE TABLE user_themes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    themes_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (themes_id) REFERENCES Themes(id) ON DELETE CASCADE
+);
 -- Insertion d'exemples dans la table User
 INSERT INTO User (email, username, password, created_at, updated_at)
 VALUES
