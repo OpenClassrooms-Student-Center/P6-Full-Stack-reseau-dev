@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit {
         }
           }, (error) => {
         console.error('Erreur lors de la connexion :', error);
+        alert(error.error);
+        location.reload();
       });
   }
 

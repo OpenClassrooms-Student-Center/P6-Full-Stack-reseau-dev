@@ -64,14 +64,12 @@ public class UserController {
     @PostMapping("auth/register")
     @ApiOperation(value = "Create a new user", notes = "Creates a new user.")  // Documentation Swagger
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        // Sauvegarde le nouvel utilisateur en appelant le service
-        User savedUser = userService.saveUser(user);
-        // Si l'utilisateur est créé avec succès, retourne une réponse HTTP 201 (CREATED)
-        if (savedUser != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            // Sinon, retourne une réponse HTTP 500 (INTERNAL SERVER ERROR)
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        User existingUser = userService.getUserByEmail(user.getEmail()).orElse(null);
+        if (existingUser != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
+        }else{
+            userService.saveUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
         }
     }
 

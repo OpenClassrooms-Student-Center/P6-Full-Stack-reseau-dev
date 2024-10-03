@@ -29,7 +29,7 @@ export class AuthService {
   // Méthode pour définir (stocker) le token JWT
   setToken(token: string | null): void {
     this.token = token; // Le token est stocké localement dans cette propriété
-    localStorage.setItem('token', token || '');
+    localStorage.setItem('token', token as string);
 
   }
 

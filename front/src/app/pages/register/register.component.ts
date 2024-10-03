@@ -17,12 +17,17 @@ export class RegisterComponent implements OnInit {
     console.log('formData:', this.formData);
 
     this.http.post('http://localhost:8080/api/auth/register', this.formData)
-      .subscribe((response) => {
+         
+    .subscribe(
+      (response) => {
         console.log('Inscription réussie !', response);
         this.router.navigate(['/login']);
-
-      }, (error) => {
+      }, 
+      (error) => {
         console.error('Erreur lors de l\'inscription :', error);
-      });
+        alert(error.error);
+        location.reload();
+      }
+    );
   }
 }

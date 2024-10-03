@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 interface Article {
   id: number;
   title: string;
   description: string;
-  author: {
-    id: number;
-    email: string;
-    username: string;
-    password: string;
-    createdAt: Date;
-    updatedAt: Date | null;
-    themes: Theme[];
-  };
-  theme: Theme;
-  createdAt: Date | string[];
+  username: string;
+  messages: {
+    id: number,
+    userUsername: string,
+    message: string,
+  }[];
+  themes: Theme;
+  created_at: String | null;
   updatedAt: Date | null;
+}
+
+interface formData{
+  message: string;
 }
 interface Theme {
   id: number;
@@ -32,7 +35,10 @@ interface Theme {
 })
 export class ArticleIdPageComponent implements OnInit {
   article: Article | undefined;
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  formData: formData = {
+    message: ''
+  };
+  constructor(private route: ActivatedRoute, private http: HttpClient,private router: Router) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -41,26 +47,28 @@ export class ArticleIdPageComponent implements OnInit {
       }
     });
   }
-  fetchArticle(id: number): void {
-    this.http.get<Article>(`http://localhost:8080/api/articles/${id}`)
+  postMessage(id : number){
+    console.log(id);
+    this.http.post(`http://localhost:8080/api/articles/${id}/messages`, this.formData)
       .subscribe((response) => {
-        response.createdAt = this.convertToDate(response.createdAt);
-        this.article = response;
+        console.log('Message posté !', response);
+        this.router.navigate([`/article/${id}`]);
+        location.reload();
       }, (error) => {
-        console.error('Erreur lors de la récupération de l\'article :', error);
+        console.error('Erreur lors de l\'inscription :', error);
       });
   }
-  convertToDate(date: Date | string[]): Date {
-    if (date instanceof Date) {
-      return date; 
-    } else if (Array.isArray(date) && date.length === 6) {
-      const [year, month, day, hour, minute, second] = date.map(Number);
-      return new Date(year, month - 1, day, hour, minute, second);
-    } else {
-      throw new Error('Format de date non reconnu');
-    }
-  }
-  isValidDate(date: any): boolean {
-    return date instanceof Date && !isNaN(date.getTime());
+
+  fetchArticle(id: number) {
+    this.http.get<Article>(`http://localhost:8080/api/articles/${id}`)
+      .subscribe(
+        (response) => {
+          this.article = response;
+          console.log('this.article', this.article);
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération des articles :', error);
+        }
+      );
   }
 }

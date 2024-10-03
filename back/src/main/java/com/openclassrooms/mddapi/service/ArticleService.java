@@ -43,7 +43,7 @@ public class ArticleService {
             articleMessagesDTO.setTitle(article.getTitle());
             articleMessagesDTO.setDescription(article.getDescription());
             articleMessagesDTO.setArticleId(article.getId());
-            articleMessagesDTO.setUserId(article.getAuthor().getId());
+            articleMessagesDTO.setUsername(article.getAuthor().getUsername());
             articleMessagesDTO.setMessages(article.getMessages().stream().map(message -> {
                 MessageDTO messageDTO = new MessageDTO(); 
                 messageDTO.setMessage(message.getMessage());

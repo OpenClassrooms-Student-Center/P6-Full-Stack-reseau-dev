@@ -1,11 +1,25 @@
-<div class="article-container" *ngIf="article">
-    <h2>{{ article.title }}</h2>
-    <div class="metadata">
-      <p *ngIf="isValidDate(article.createdAt)">Date: {{ article.createdAt  }}</p>
-      <ng-container *ngIf="article.author">
-        <p>Author: {{ article.author.username }}</p>
-      </ng-container>
-      <p>Theme: {{ article.theme.title }}</p>
+<div class="container" *ngIf="article">
+  <h2>{{ article.title }}</h2>
+  <div class="header">
+    <p>Date: {{ article.created_at }}</p>
+    <p>Author: {{ article.username }}</p>
+    <p>Theme: {{ article.themes.title }}</p>
     </div>
     <p class="description">{{ article.description }}</p>
+    <div *ngIf="article.messages && article.messages.length > 0" class="messages">
+      <h3>Messages:</h3>
+      <div *ngFor="let message of article.messages" class="message">
+        <div class="messageContainer">
+          <div class="user">{{ message.userUsername }}</div>
+          <div class="message-bubble">
+            <div class="content">{{ message.message }}</div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+    <div class="postMessage">
+      <textarea [(ngModel)]="formData.message" placeholder="Write your message" rows="4"></textarea>
+      <i (click)="postMessage(article.id)" class="fa-sharp fa-solid fa-paper-plane"></i>
+    </div>
   </div>

@@ -1,20 +1,73 @@
-.article-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-  }
-  
-  .metadata {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  
-  .metadata p {
-    margin-right: 20px;
-  }
-  
-  .description {
-    margin-top: 10px;
-  }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 2%;
+  margin: 2%;
+  width: 90%; 
+  font-size: 1rem;
+  max-width: 900px; 
+}
+.header {
+  display: flex;
+  flex-wrap: wrap; 
+  width: 100%;
+}
+.header p {
+  margin-right: 1%;
+}
+.messages {
+  margin-top: 20px;
+  width: 100%;
+}
+.message-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 70%;
+  margin-bottom: 10px;
+}
+.messageContainer {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  width: 100%;
+}
+.message-bubble .user {
+  align-self: flex-start;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+.message-bubble .content {
+  align-self: flex-end;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  width: 100%;
+  padding: 50%;
+  margin-bottom: 5px;
+}
+.postMessage {
+  display: flex;
+  align-items: center; 
+  width: 100%;
+  margin-top: 20px;
+}
+.postMessage textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box; 
+  resize: vertical; 
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #000000;
+}
+.postMessage i {
+  font-size: 2rem;
+  margin: 1%;
+}
+.postMessage i:hover {
+  cursor: pointer;
+  color: #69048e;
+}
