@@ -7,7 +7,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root' // Indique que ce service est fourni à l'ensemble de l'application
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth'; // URL de base de l'API d'authentification
+  private apiUrl = '/api/auth';
   private token: string | null = localStorage.getItem('token');
 
   // Injection d'HttpClient via le constructeur pour effectuer des requêtes HTTP
@@ -52,6 +52,7 @@ export class AuthService {
     // Si un token JWT est disponible, on l'ajoute dans l'en-tête Authorization
     if (this.token) {
       headersConfig['Authorization'] = `Bearer ${this.token}`; // Ajoute le token sous le format "Bearer {token}"
+      headersConfig['Access-Control-Allow-Origin'] = '*';
     }
 
     // Crée et retourne les en-têtes configurés

@@ -12,12 +12,12 @@ export class ProfilePageComponent implements OnInit {
   updatedUser: any = { username: '', email: '' }; 
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/api/auth/me').subscribe((data: any) => {
+    this.http.get('/api/auth/me').subscribe((data: any) => {
       this.user = data;
       this.updatedUser.username = this.user.username;
       this.updatedUser.email = this.user.email;
     });
-    this.http.get('http://localhost:8080/api/auth/themes').subscribe((data: any) => {
+    this.http.get('/api/auth/themes').subscribe((data: any) => {
       if (Array.isArray(data)) {
         this.userThemes = data;
       } else {
@@ -29,14 +29,15 @@ export class ProfilePageComponent implements OnInit {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
   }
-  UnsubscribeToTheme(themeId: number) {
-    this.http.delete<any>('http://localhost:8080/api/auth/subscribe/' + themeId, {})
-      .subscribe(response => {
-        console.log('Souscrit avec succès au thème avec l\'ID', themeId);
-      });
+  unSubscribeTheme(themeId: number) {
+    const headers = { 'Access-Control-Allow-Origin': '*' };
+    this.http.delete(`/api/auth/unsubscribe/${themeId}`, { headers }).subscribe((data: any) => {
+      console.log('Désabonnement réussi !');
+      this.userThemes = this.userThemes.filter((theme) => theme.id !== themeId);
+    });
   }
-    saveChanges() {
-    this.http.put('http://localhost:8080/api/auth/me', this.updatedUser).subscribe((data: any) => {
+  saveChanges() {
+    this.http.put('/api/auth/me', this.updatedUser).subscribe((data: any) => {
       console.log('Modifications enregistrées avec succès !');
     });
   }

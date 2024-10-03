@@ -49,7 +49,7 @@ export class ArticleIdPageComponent implements OnInit {
   }
   postMessage(id : number){
     console.log(id);
-    this.http.post(`http://localhost:8080/api/articles/${id}/messages`, this.formData)
+    this.http.post(`/api/articles/${id}/messages`, this.formData)
       .subscribe((response) => {
         console.log('Message posté !', response);
         this.router.navigate([`/article/${id}`]);
@@ -60,7 +60,7 @@ export class ArticleIdPageComponent implements OnInit {
   }
 
   fetchArticle(id: number) {
-    this.http.get<Article>(`http://localhost:8080/api/articles/${id}`)
+    this.http.get<Article>(`/api/articles/${id}`)
       .subscribe(
         (response) => {
           this.article = response;

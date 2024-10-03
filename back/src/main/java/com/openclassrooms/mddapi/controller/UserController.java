@@ -133,6 +133,8 @@ public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") Strin
     
     // Récupération de l'utilisateur correspondant au token via le service userService
     User user = userService.getUserByToken(token);
+    System.err.println("user: " + user.getId() + " theme: " + themeId);
+
     
     // Souscription de l'utilisateur au thème, en passant l'ID de l'utilisateur et l'ID du thème
     User updatedUser = userService.suscribeToTheme(user.getId(), themeId);

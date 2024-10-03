@@ -6,6 +6,7 @@
     <p>Theme: {{ article.themes.title }}</p>
     </div>
     <p class="description">{{ article.description }}</p>
+    <hr>
     <div *ngIf="article.messages && article.messages.length > 0" class="messages">
       <h3>Messages:</h3>
       <div *ngFor="let message of article.messages" class="message">

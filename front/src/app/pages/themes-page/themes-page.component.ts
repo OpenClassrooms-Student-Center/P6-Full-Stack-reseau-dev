@@ -19,13 +19,13 @@ export class ThemesPageComponent implements OnInit {
     this.fetchThemes();
   }
   fetchThemes() {
-    this.http.get<{themes: Theme[]}>('http://localhost:8080/api/themes')
+    this.http.get<{themes: Theme[]}>('/api/themes')
       .subscribe(response => {
         this.themes = response.themes;
       });
   }
   subscribeToTheme(themeId: number) {
-    this.http.post<any>('http://localhost:8080/api/auth/subscribe/' + themeId, {})
+    this.http.post<any>('/api/auth/subscribe/' + themeId, {})
       .subscribe(response => {
         // Traiter la réponse de l'API si nécessaire
         console.log('Souscrit avec succès au thème avec l\'ID', themeId);

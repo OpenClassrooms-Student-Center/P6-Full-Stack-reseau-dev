@@ -1,12 +1,6 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  padding: 2%;
-  margin: 2%;
-  width: 90%; 
-  font-size: 1rem;
-  max-width: 900px; 
+  padding-inline: 10%;
+  padding-top: 1%;
 }
 .header {
   display: flex;

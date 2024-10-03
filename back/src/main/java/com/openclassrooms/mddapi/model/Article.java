@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -32,8 +35,11 @@ public class Article {
 	@Size(max = 5000)
     @NotNull
 	private String description;
-	
- 
+	 
+
+	@ManyToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+	@JoinTable(name = "article_Messages", joinColumns = @JoinColumn(name = "Article_id"), inverseJoinColumns = @JoinColumn(name = "Messages_id"))
+	private Set<Messages> messages;
 
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
@@ -48,8 +54,9 @@ public class Article {
 
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+	
 
-    public Set<Messages> getMessages() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }	
+	
+	
+	
 }

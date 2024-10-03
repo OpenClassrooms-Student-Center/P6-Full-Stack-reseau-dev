@@ -2,11 +2,11 @@
     <h2>Profile utilisateur</h2>
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" placeholder="Enter your username">
+      <input type="text" class="form-control" id="username" placeholder="Changer votre pseudo : {{user.username}}">
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" placeholder="Enter your email">
+      <input type="text" class="form-control" id="email" placeholder="Changer votre Email : {{user.email}}">
     </div>
     <button class="btn btn-primary" (click)="saveChanges()">Sauvergarder</button>
     <div class="LogoutBtn">
@@ -20,7 +20,7 @@
         <div class="theme-card" *ngFor="let theme of userThemes">
           <h3>{{ theme.title }}</h3>
           <p>{{ theme.description }}</p>
-          <button mat-raised-button color="primary"  (click)="UnsubscribeToTheme(theme.id)" >Se désabonner</button>
+          <button mat-raised-button color="primary"  (click)="unSubscribeTheme(theme.id)" >Se désabonner</button>
         </div>
       </div>
   </div>

@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
   login() {
-    this.http.post<any>('http://localhost:8080/api/auth/login', this.formData)
+    this.http.post<any>('/api/auth/login', this.formData)
       .subscribe((response) => {
         if (response && response.token) {
           console.log('Connexion réussie ! Token:', response.token);
