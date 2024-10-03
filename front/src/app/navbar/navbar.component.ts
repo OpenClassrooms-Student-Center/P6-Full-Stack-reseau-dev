@@ -10,10 +10,10 @@ export class NavbarComponent {
   isMenuOpen: boolean = false;
   isResponsiveView: boolean = false;
   @HostListener('window:resize', ['$event'])
-  onResize() {
+  onResize(): void  {
     this.isResponsiveView = window.innerWidth <= 768;
   }
-  toggleMenu() {
+  toggleMenu(): void  {
     this.isMenuOpen = !this.isMenuOpen;
   }
 }

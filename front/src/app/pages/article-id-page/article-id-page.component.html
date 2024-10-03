@@ -8,7 +8,7 @@
     <p class="description">{{ article.description }}</p>
     <hr>
     <div *ngIf="article.messages && article.messages.length > 0" class="messages">
-      <h3>Messages:</h3>
+      <h3>Commentaires:</h3>
       <div *ngFor="let message of article.messages" class="message">
         <div class="messageContainer">
           <div class="user">{{ message.userUsername }}</div>

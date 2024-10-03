@@ -61,8 +61,8 @@ public class UserService {
         // Encode le mot de passe avant de sauvegarder
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCreatedAt(java.time.LocalDateTime.now());  // Définit la date de création à la date actuelle
-        User savedUser = userRepository.save(user);  // Sauvegarde l'utilisateur dans la base de données
-        return savedUser;  // Retourne l'utilisateur sauvegardé
+        return userRepository.save(user);
+
     }
 
     // Supprime un utilisateur en fonction de son ID
@@ -99,9 +99,8 @@ public class UserService {
             // Met à jour les champs de l'utilisateur
             existingUser.setUsername(updatedUser.getUsername());
             existingUser.setEmail(updatedUser.getEmail());
-            // Sauvegarde l'utilisateur mis à jour
-            User updatedRecord = userRepository.save(existingUser);
-            return updatedRecord;  // Retourne l'utilisateur mis à jour
+            return userRepository.save(existingUser);
+
         } else {
             // Lance une exception si l'utilisateur n'est pas trouvé
             throw new NotFoundException("Enregistrement introuvable");

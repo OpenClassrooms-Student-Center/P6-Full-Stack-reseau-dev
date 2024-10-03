@@ -3,6 +3,8 @@ package com.openclassrooms.mddapi.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,19 +62,25 @@ public class UserController {
         }
     }
 
-    // Endpoint pour créer un nouvel utilisateur
-    @PostMapping("auth/register")
-    @ApiOperation(value = "Create a new user", notes = "Creates a new user.")  // Documentation Swagger
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        User existingUser = userService.getUserByEmail(user.getEmail()).orElse(null);
-        if (existingUser != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
-        }else{
-            userService.saveUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+     // create a new user
+     @PostMapping("auth/register")
+     @ApiOperation(value = "Create a new user", notes = "Creates a new user.")
+     public ResponseEntity<String> createUser(@RequestBody User user) {
+         String emailRegex = "^(.+)@(.+)$";
+         Pattern pattern = Pattern.compile(emailRegex);
+         Matcher matcher = pattern.matcher(user.getEmail());
+         if (!matcher.matches()) {
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email format");
+         }
+         User existingUser = userService.getUserByEmail(user.getEmail()).orElse(null);
+         if (existingUser != null) {
+             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
+         } else {
+             userService.saveUser(user);
+             return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+         
+            }
         }
-    }
-
     // Endpoint pour authentifier un utilisateur et générer un token JWT
     @PostMapping("auth/login")
     @ApiOperation(value = "Authenticate user", notes = "Authenticate a user and return a JWT token.")  // Documentation Swagger

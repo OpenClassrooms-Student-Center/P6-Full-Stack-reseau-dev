@@ -19,9 +19,8 @@ public class ThemesService {
 
     // Méthode pour récupérer tous les thèmes
     public Iterable<Themes> getThemes() {
-        // Appel du dépôt pour trouver tous les thèmes
-        Iterable<Themes> themes = themesRepository.findAll();
-        return themes; // Retourne la liste des thèmes
+        return themesRepository.findAll();
+
     }
     
     // Méthode pour récupérer un thème par son ID
@@ -32,9 +31,8 @@ public class ThemesService {
     
     // Méthode pour sauvegarder un nouveau thème
     public Themes saveThemes(Themes themes) {
-        // Appel du dépôt pour sauvegarder le thème
-        Themes savedThemes = themesRepository.save(themes);
-        return savedThemes; // Retourne le thème sauvegardé
+        return  themesRepository.save(themes);
+
     }
     
     // Méthode pour supprimer un thème par ID
@@ -45,8 +43,7 @@ public class ThemesService {
     
     // Méthode pour mettre à jour un thème existant
     public Themes updateThemes(Themes themes) {
-        // Appel du dépôt pour sauvegarder les modifications apportées au thème
-        Themes updatedThemes = themesRepository.save(themes);
-        return updatedThemes; // Retourne le thème mis à jour
+        return themesRepository.save(themes);
+
     }
 }

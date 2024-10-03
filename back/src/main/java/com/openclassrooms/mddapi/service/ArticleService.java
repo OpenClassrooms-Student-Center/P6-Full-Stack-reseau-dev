@@ -66,9 +66,8 @@ public class ArticleService {
     public Article saveArticles(Article articles) {
         // Définit la date de création à l'heure actuelle
         articles.setCreatedAt(java.time.LocalDateTime.now());
-        // Appel du dépôt pour sauvegarder l'article
-        Article savedRentals = articleRepository.save(articles);
-        return savedRentals; // Retourne l'article sauvegardé
+        return articleRepository.save(articles);
+
     }
 
     // Méthode pour mettre à jour un article existant

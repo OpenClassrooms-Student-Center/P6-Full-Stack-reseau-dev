@@ -32,7 +32,7 @@ export class ThemesPageComponent implements OnInit {
       .subscribe(response => {
         // Traiter la réponse de l'API si nécessaire
         console.log('Souscrit avec succès au thème avec l\'ID', themeId);
-        this.openSnackBar('Souscrit avec succès au thème !', '');
+        this.openSnackBar('Souscrit avec succès au thème !', 'Fermer');
       });
   }
   openSnackBar(message: string, action: string) {

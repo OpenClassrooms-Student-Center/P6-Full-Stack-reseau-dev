@@ -25,7 +25,6 @@ export class RegisterComponent implements OnInit {
       }, 
       (error) => {
         console.error('Erreur lors de l\'inscription :', error);
-        alert(error.error);
         location.reload();
       }
     );

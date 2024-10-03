@@ -14,8 +14,10 @@
           <div class="column" *ngFor="let article of articles">
               <div class="article" (click)="redirectToArticleDetail(article.articleId)">
                   <h2>{{ article.title }}</h2>
-                  <p class="description">{{ article.description }}</p>
                   <p>Auteur: {{ article.username }}</p>
+                  <p class="description">{{ article.description }}</p>
+
+
               </div>
           </div>
       </div>
