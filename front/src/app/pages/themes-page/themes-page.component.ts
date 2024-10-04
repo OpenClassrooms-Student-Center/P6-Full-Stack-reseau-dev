@@ -1,41 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Themes } from 'src/app/interfaces/themes.interface';
 
 
-interface Theme {
-  id: number;
-  title: string;
-  description: string;
-  createdAt: string | null;
-  updatedAt: string | null;
-}
+
 @Component({
   selector: 'app-themes-page',
   templateUrl: './themes-page.component.html',
   styleUrls: ['./themes-page.component.scss']
 })
 export class ThemesPageComponent implements OnInit {
-  themes: Theme[] = [];
+  themes: Themes[] = [];
   constructor(private http: HttpClient,private _snackBar: MatSnackBar) { }
   ngOnInit(): void {
     this.fetchThemes();
   }
-  fetchThemes() {
-    this.http.get<{themes: Theme[]}>('/api/themes')
+  fetchThemes(): void  {
+    this.http.get<{themes: Themes[]}>('/api/themes')
       .subscribe(response => {
         this.themes = response.themes;
       });
   }
-  subscribeToTheme(themeId: number) {
-    this.http.post<any>('/api/auth/subscribe/' + themeId, {})
+  subscribeToTheme(themeId: number): void  {
+    this.http.post<Themes[]>('/api/auth/subscribe/' + themeId, {})
       .subscribe(response => {
         // Traiter la réponse de l'API si nécessaire
-        console.log('Souscrit avec succès au thème avec l\'ID', themeId);
         this.openSnackBar('Souscrit avec succès au thème !', 'Fermer');
       });
   }
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string): void  {
     this._snackBar.open(message, action);
   }
 }

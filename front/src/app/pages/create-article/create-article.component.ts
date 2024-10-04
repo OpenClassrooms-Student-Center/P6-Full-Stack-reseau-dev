@@ -1,19 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Themes } from 'src/app/interfaces/themes.interface';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-create-article',
   templateUrl: './create-article.component.html',
   styleUrls: ['./create-article.component.scss']
 })
-export class CreateArticleComponent implements OnInit {
+export class CreateArticleComponent implements OnInit, OnDestroy {
   articleForm: FormGroup;
-  themes: any[] = [];
-  constructor(private formBuilder: FormBuilder, private http: HttpClient,private _snackBar: MatSnackBar, private router: Router) {
-    this.articleForm = this.formBuilder.group({
+  themes: Themes[] = [];
+  private themesSubscription: Subscription | undefined;
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private snackbarService: SnackbarService,
+    private router: Router
+  ) {
+        this.articleForm = this.formBuilder.group({
       theme: ['', Validators.required],
       title: ['', Validators.required],
       description: ['']
@@ -22,34 +32,28 @@ export class CreateArticleComponent implements OnInit {
   ngOnInit(): void {
     this.fetchThemes();
   }
-  fetchThemes() {
-    this.http.get<any>('/api/themes')
+  fetchThemes(): void  {
+    this.themesSubscription = this.http.get<{ themes: Themes[] }>('/api/themes')
       .subscribe(
-        (response: any) => {
+        (response) => {
           this.themes = response.themes; 
         },
-        (error: any) => {
+        (error) => {
           console.error('Erreur lors de la récupération des thèmes:', error);
         }
       );
   }
-  onSubmit() {
+  onSubmit(): void  {
     if (this.articleForm.valid) {
-      console.log('title', this.articleForm.get('title')?.value);
-      console.log('description', this.articleForm.get('description')?.value);
-      console.log('theme', this.articleForm.get('theme')?.value);
       const articleData = {
         title: this.articleForm.get('title')?.value,
         description: this.articleForm.get('description')?.value,
         theme: this.articleForm.get('theme')?.value
       };
-      this.http.post<any>('/api/articles', articleData)
+      this.http.post('/api/articles', articleData)
         .subscribe(
           (response: any) => { 
-            console.log('Article créé avec succès:', response);
-            this._snackBar.open('Article créé avec succès', 'Fermer', {
-              duration: 1000,
-            });
+            this.snackbarService.openSnackBar('Article créé avec succès', 'Fermer');
             this.router.navigate(['/article']);
             
           },
@@ -58,7 +62,11 @@ export class CreateArticleComponent implements OnInit {
           }
         );
       } else {
-        console.log('Le formulaire est invalide');
+        this.snackbarService.openSnackBar('Le formulaire est invalide', 'Fermer');
+      }
     }
+    ngOnDestroy(): void {
+      if (this.themesSubscription) {
+        this.themesSubscription.unsubscribe();    }
 }
 }

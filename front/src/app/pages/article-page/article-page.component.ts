@@ -1,7 +1,10 @@
 // Importation des modules nécessaires d'Angular
-import { Component, OnInit } from '@angular/core'; // Permet de définir un composant et de gérer le cycle de vie d'un composant
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Service HttpClient pour effectuer des requêtes HTTP
 import { Router } from '@angular/router'; // Service Router pour naviguer entre les pages
+import { ArticlePage } from 'src/app/interfaces/article.interface';
+import { Subscription } from 'rxjs';
+
 
 // Définition du décorateur @Component qui spécifie les métadonnées du composant
 @Component({
@@ -11,9 +14,9 @@ import { Router } from '@angular/router'; // Service Router pour naviguer entre 
 })
 
 // Classe du composant ArticlePageComponent
-export class ArticlePageComponent implements OnInit {
-  // Tableau pour stocker les articles récupérés depuis l'API
-  articles: any[] = [];
+export class ArticlePageComponent implements OnInit, OnDestroy {
+  articles: ArticlePage[] = [];
+  private articlesSubscription: Subscription | undefined;
 
   // Constructeur du composant qui injecte les services HttpClient et Router
   constructor(private http: HttpClient, private router: Router) {}
@@ -21,6 +24,11 @@ export class ArticlePageComponent implements OnInit {
   // Méthode appelée une fois que le composant est initialisé (cycle de vie d'Angular)
   ngOnInit(): void {
     this.fetchArticles(); // Appel de la méthode pour récupérer les articles à l'initialisation
+  }
+  ngOnDestroy(): void {
+    if (this.articlesSubscription) {
+      this.articlesSubscription.unsubscribe();
+    }
   }
     
   redirectToCreateArticle(): void {
@@ -30,7 +38,7 @@ export class ArticlePageComponent implements OnInit {
 
   // Méthode pour récupérer les articles depuis une API (via une requête HTTP GET)
   fetchArticles(): void {
-    this.http.get<any[]>('http://localhost:8080/api/articles')
+    this.articlesSubscription = this.http.get<ArticlePage[]>('/api/articles')
       .subscribe(
         (response) => {
           this.articles = response;

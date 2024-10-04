@@ -1,73 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Themes } from 'src/app/interfaces/themes.interface';
+import { Article } from 'src/app/interfaces/article.interface';
+import { Subscription } from 'rxjs';
 
-interface Article {
-  id: number;
-  title: string;
-  description: string;
-  username: string;
-  messages: {
-    id: number,
-    userUsername: string,
-    message: string,
-  }[];
-  themes: Theme;
-  created_at: String | null;
-  updatedAt: Date | null;
-}
-
-interface formData{
+interface FormData {
   message: string;
 }
-interface Theme {
-  id: number;
-  title: string;
-  description: string;
-  createdAt: Date | null;
-  updatedAt: Date | null;
-}
+
 @Component({
   selector: 'app-article-id-page',
   templateUrl: './article-id-page.component.html',
   styleUrls: ['./article-id-page.component.scss']
 })
-export class ArticleIdPageComponent implements OnInit {
+export class ArticleIdPageComponent implements OnInit, OnDestroy {
   article: Article | undefined;
-  formData: formData = {
+  formData: FormData = {
     message: ''
   };
-  constructor(private route: ActivatedRoute, private http: HttpClient,private router: Router) { }
+  private articleSubscription: Subscription | undefined;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private snackbarService: SnackbarService) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.fetchArticle(id); 
+        this.fetchArticle(id);
       }
     });
   }
-  postMessage(id : number){
-    console.log(id);
+  ngOnDestroy(): void {
+    if (this.articleSubscription) {
+      this.articleSubscription.unsubscribe();
+    }
+  }
+  postMessage(id: number) {
     this.http.post(`/api/articles/${id}/messages`, this.formData)
       .subscribe((response) => {
-        console.log('Message posté !', response);
         this.router.navigate([`/article/${id}`]);
         location.reload();
       }, (error) => {
-        console.error('Erreur lors de l\'inscription :', error);
+        this.snackbarService.openSnackBar("Erreur lors de l'inscription :", "fermer");
       });
   }
 
   fetchArticle(id: number) {
-    this.http.get<Article>(`/api/articles/${id}`)
+    this.articleSubscription = this.http.get<Article>(`/api/articles/${id}`)
       .subscribe(
         (response) => {
           this.article = response;
-          console.log('this.article', this.article);
         },
         (error) => {
-          console.error('Erreur lors de la récupération des articles :', error);
+          this.snackbarService.openSnackBar('Erreur lors de la récupération des articles :', "fermer");
         }
       );
   }
