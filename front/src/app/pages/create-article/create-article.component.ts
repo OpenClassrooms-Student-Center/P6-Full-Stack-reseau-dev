@@ -69,4 +69,7 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
       if (this.themesSubscription) {
         this.themesSubscription.unsubscribe();    }
 }
+goBack(): void {
+  this.router.navigate(['/article']);
+}
 }

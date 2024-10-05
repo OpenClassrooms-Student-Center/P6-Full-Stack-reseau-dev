@@ -1,7 +1,9 @@
 <app-navbar></app-navbar>
-
-<div class="container">
+<div class="header">
+  <div class="back-button" (click)="goBack()">&#8592;</div> 
   <h2>Créer un nouvel article</h2>
+</div>
+<div class="container">
   <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <select class="form-control" id="theme" formControlName="theme">

@@ -1,37 +1,62 @@
 .container {
-    width: 100%;
-    max-width: 600px; 
-    margin: 0 auto; 
-    padding: 20px;
-    box-sizing: border-box; 
-  }
-  
-  .form-group {
-    margin-bottom: 20px; 
-  }
-  
-  
-  button {
-    display: block;
-    margin: 0 auto;
-  }
-  
- 
-  .form-control {
-    width: 100%;
-  }
-  
-  textarea {
-    min-height: 150px; 
-  }
-  input[type="text"],
+  width: 50%;
+  margin: 0 auto; 
+  padding: 20px;
+  box-sizing: border-box; 
+
+}
+.header {
+  display: flex; /* Utilisation de Flexbox */
+  align-items: center; /* Alignement vertical centré */
+}
+
+h2 {
+  flex: 1; /* Permet au titre de prendre tout l'espace restant */
+  text-align: center; /* Centre le texte horizontalement */
+  margin: 0% 8% 0% 0%;
+}
+.back-button {
+  font-size: 50px; 
+  cursor: pointer;
+  color: black;
+  margin: 20px 0; /* Ajout d'une marge verticale pour espacer le bouton */
+  padding-left: 30px; /* Ajout de remplissage à gauche */
+  font-weight: 100;
+}
+
+
+
+.back-button:hover {
+  text-decoration: none; 
+  opacity: 0.8; 
+}
+
+.form-group {
+  margin-bottom: 20px; 
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+}
+
+.form-control {
+  width: 100%;
+}
+
+textarea {
+  min-height: 150px; 
+}
+
+input[type="text"],
 textarea,
 select {
-  border: 1px solid #ccc;
+  border: 1px solid #5f0497;
   border-radius: 5px;
   padding: 8px;
   box-sizing: border-box; 
 }
+
 button {
   border: none; 
   border-radius: 5px;
@@ -42,13 +67,46 @@ button {
   cursor: pointer; 
   transition: background-color 0.3s; 
 }
+
 button:hover {
   background-color: #0056b3; 
 }
+
 select {
-    background-color: #ffffff;
-  }
-  
-select option[value=""][disabled] {
-color: #848484; 
+  background-color: #ffffff;
+  /* Suppression de la flèche */
+  -webkit-appearance: none; /* Pour Chrome et Safari */
+  -moz-appearance: none; /* Pour Firefox */
+  appearance: none; /* Standard */
 }
+
+select option[value=""][disabled] {
+  color: #848484; 
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 95%; 
+    padding: 10px; 
+  }
+
+  .header {
+    flex-direction: column; 
+    align-items: flex-start; /* Alignement à gauche pour la flèche */
+  }
+
+  .back-button {
+    font-size: 40px; 
+    padding-left: 0; 
+    margin-bottom: 10px; 
+    align-self: flex-start; /* Assure que la flèche reste à gauche */
+  }
+
+  h2 {
+    text-align: center; /* Centre le texte */
+    margin: 10px 0; /* Ajoute un peu d'espace au-dessus et en dessous */
+    width: 100%; /* Prend toute la largeur */
+  }
+}
+
+

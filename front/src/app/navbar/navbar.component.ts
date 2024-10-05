@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
             .subscribe(() => {
                 this.checkIfLoginPage();
                 this.checkIfRegisterPage();
-                this.checkIfArticlesPage();
+                this.checkIfArticlesPage(); // Vérification des pages d'articles
                 this.checkIfThemesPage();
             });
     }
@@ -68,7 +68,8 @@ export class NavbarComponent implements OnInit {
 
     private checkIfArticlesPage() {
         const currentUrl = this.router.url;
-        this.isArticlesPage = currentUrl === '/article';
+        // Vérifiez si l'URL correspond à une page d'articles
+        this.isArticlesPage = currentUrl.startsWith('/article') && currentUrl !== '/article'; // Assurez-vous de ne pas inclure la liste des articles
         console.log('URL actuelle:', currentUrl);
         console.log('isArticlesPage:', this.isArticlesPage);
     }

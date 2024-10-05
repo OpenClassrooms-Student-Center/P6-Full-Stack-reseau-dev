@@ -1,13 +1,11 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-    <h2>Profile utilisateur</h2>
-    <div class="form-group">
-      <label for="username">Username</label>
+  <h2 class="profile-title">Profil utilisateur</h2>
+      <div class="form-group">
       <input type="text" class="form-control" id="username" placeholder="Changer votre pseudo : {{user.username}}" [(ngModel)]="updatedUser.username">
     </div>
     <div class="form-group">
-      <label for="email">Email</label>
       <input type="text" class="form-control" id="email" placeholder="Changer votre Email : {{user.email}}" [(ngModel)]="updatedUser.email" >
     </div>
     <button class="btn btn-primary" (click)="saveChanges()">Sauvergarder</button>
