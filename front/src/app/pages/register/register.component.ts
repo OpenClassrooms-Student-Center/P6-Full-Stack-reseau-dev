@@ -52,4 +52,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
     return passwordRegex.test(password);
   }
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
 }

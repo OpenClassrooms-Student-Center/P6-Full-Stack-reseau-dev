@@ -41,4 +41,7 @@ export class LoginComponent implements OnDestroy {
       this.loginSubscription.unsubscribe();
     }
   }
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
 }

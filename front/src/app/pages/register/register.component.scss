@@ -7,6 +7,21 @@
     align-items: center;
   }
   
+
+.back-button {
+  font-size: 50px; 
+  cursor: pointer;
+  color: black;
+  margin: 20px 0; 
+  text-align: left; 
+  width: 100%;
+  padding-left: 30px;
+}
+
+.back-button:hover {
+  text-decoration: none; 
+  opacity: 0.8; 
+}
   img {
     width: 100px; /* Ajustez la taille de l'image selon vos préférences */
     height: auto; /* Pour conserver les proportions de l'image */

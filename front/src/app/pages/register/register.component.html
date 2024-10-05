@@ -1,4 +1,7 @@
 <!-- register.component.html -->
+<app-navbar></app-navbar>
+<div class="back-button" (click)="goBack()">&#8592;</div> 
+
 <div class="register-container">
     <img src="/assets/logo_p6.png" alt="logo" />
     <h2>Inscription</h2>
@@ -12,7 +15,7 @@
     </div>
     <div class="form-group">
         <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="password" [(ngModel)]="formData.password" >
+        <input type="password" id="password" name="password"  >
     </div>
     <button mat-raised-button color="primary" (click)="register()">S'inscrire</button>
 </div>
