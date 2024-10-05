@@ -7,25 +7,38 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.menu a.active-link {
+  color:  #5f0497;; /* Couleur du lien actif */
+}
+
+/* Autres styles */
+
+
 .logo img {
   height: 50px;
 }
+
 .hidden {
   display: none; /* Masquer les éléments lorsque la classe 'hidden' est appliquée */
 }
+
 .menu {
   display: flex;
   align-items: center;
 }
+
 .menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
 }
+
 .menu li {
   margin-right: 20px;
 }
+
 .menu a {
   text-decoration: none;
   color: black; /* Couleur du texte noir */
@@ -35,52 +48,56 @@
   height: 50px;
   border-radius: 50%; /* Rendre l'avatar rond */
 }
+
 /* Styles pour le bouton du menu burger */
 .burger-menu {
   display: none; /* Masquer le menu burger par défaut */
 }
+
 /* Afficher le menu burger uniquement sur les écrans de petite taille */
 @media screen and (max-width: 768px) {
   .burger-menu {
-    display: block; /* Afficher le menu burger sur les petits écrans */
-    font-size: 24px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    margin-left: auto; /* Placer le burger à droite */
+      display: block; /* Afficher le menu burger sur les petits écrans */
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      margin-left: auto; /* Placer le burger à droite */
   }
   
   .menu {
-    position: fixed;
-    top: 0;
-    right: -300px; /* Le menu est initialement en dehors de la vue */
-    width: 300px;
-    height: 100%;
-    z-index: 1000;
-    display: block;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: right 0.3s ease; /* Animation de transition */
+      position: fixed;
+      top: 0;
+      right: -300px; /* Le menu est initialement en dehors de la vue */
+      width: 300px;
+      height: 100%;
+      z-index: 1000;
+      display: block;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease; /* Animation de transition */
   }
   
   .menu.active {
-    right: 0; /* Déplacer le menu vers la gauche lorsque activé */
+      right: 0; /* Déplacer le menu vers la gauche lorsque activé */
   }
   
   .menu ul {
-    flex-direction: column;
-    padding:20px;
+      flex-direction: column;
+      padding:20px;
   }
+
   .avatar {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
   }
+
   .top-right {
-    text-align: right; 
+      text-align: right; 
   }
+
   .menu li {
-    margin: 10px 0;
+      margin: 10px 0;
   }
 }
-  

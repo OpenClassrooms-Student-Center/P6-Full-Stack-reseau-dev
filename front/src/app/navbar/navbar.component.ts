@@ -14,18 +14,21 @@ export class NavbarComponent implements OnInit {
     isResponsiveView: boolean = false; 
     isLoginPage: boolean = false; 
     isRegisterPage: boolean = false;
+    isArticlesPage: boolean = false; 
+    isThemesPage: boolean = false; 
 
     constructor(private authService: AuthService, private router: Router) {}
 
     ngOnInit(): void {
         this.isLoggedIn = this.authService.isLoggedIn();
 
-        // Vérifiez l'état de la route
         this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(() => {
                 this.checkIfLoginPage();
                 this.checkIfRegisterPage();
+                this.checkIfArticlesPage();
+                this.checkIfThemesPage();
             });
     }
 
@@ -44,5 +47,16 @@ export class NavbarComponent implements OnInit {
 
     private checkIfRegisterPage() {
         this.isRegisterPage = this.router.url === '/register';
+    }
+
+    private checkIfArticlesPage() {
+        const currentUrl = this.router.url;
+        this.isArticlesPage = currentUrl === '/article'; // Vérifie si la route actuelle est /article
+        console.log('URL actuelle:', currentUrl); // Affiche l'URL actuelle
+        console.log('isArticlesPage:', this.isArticlesPage); // Vérifie la valeur de isArticlesPage
+    }
+
+    private checkIfThemesPage() {
+        this.isThemesPage = this.router.url === '/themes';
     }
 }
