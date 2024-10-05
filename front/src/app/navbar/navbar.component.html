@@ -5,15 +5,15 @@
     </div>
     <button class="burger-menu" (click)="toggleMenu()" *ngIf="isResponsiveView">☰</button>
     <div class="menu" [ngClass]="{'active': isMenuOpen}">
-        <ul>
-            <li class="top-right" *ngIf="isLoggedIn && !isLoginPage">
-                <a routerLink="/article" (click)="toggleMenu()">Articles</a>
+        <ul *ngIf="!isLoginPage && !isRegisterPage"> <!-- Affiche le menu uniquement si on n'est pas sur la page de login ou d'inscription -->
+            <li class="top-right" *ngIf="isLoggedIn">
+                <a routerLink="/article" (click)="toggleMenu()">Accueil</a>
             </li>
-            <li class="top-right" *ngIf="isLoggedIn && !isLoginPage">
+            <li class="top-right" *ngIf="isLoggedIn">
                 <a routerLink="/themes" (click)="toggleMenu()">Themes</a>
             </li>
         </ul>
-        <div class="avatar" *ngIf="isLoggedIn && !isLoginPage"> 
+        <div class="avatar" *ngIf="isLoggedIn"> 
             <img src="/assets/user.png" (click)="toggleMenu()" routerLink="/profile" alt="avatar" width="50"/>
         </div>
     </div>

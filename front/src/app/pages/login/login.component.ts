@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { LoginForm } from 'src/app/interfaces/login.interface';
 import { SnackbarService } from 'src/app/services/snackbar.service';

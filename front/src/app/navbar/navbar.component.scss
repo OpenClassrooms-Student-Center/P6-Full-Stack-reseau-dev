@@ -10,6 +10,9 @@
 .logo img {
   height: 50px;
 }
+.hidden {
+  display: none; /* Masquer les éléments lorsque la classe 'hidden' est appliquée */
+}
 .menu {
   display: flex;
   align-items: center;

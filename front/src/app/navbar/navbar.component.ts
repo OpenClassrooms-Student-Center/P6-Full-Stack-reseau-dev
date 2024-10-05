@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../app/services/auth.service'; // Assurez-vous que le chemin est correct
-import { Router } from '@angular/router'; // Importer Router pour vérifier la route actuelle
+import { AuthService } from '../../app/services/auth.service'; 
+import { Router, NavigationEnd } from '@angular/router'; 
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-navbar',
@@ -8,30 +9,40 @@ import { Router } from '@angular/router'; // Importer Router pour vérifier la r
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-    isLoggedIn: boolean = false; // Initialiser à false
-    isMenuOpen: boolean = false; // Pour la gestion du menu
-    isResponsiveView: boolean = false; // À définir selon votre logique
-    isLoginPage: boolean = false; // Variable pour savoir si on est sur la page de login
+    isLoggedIn: boolean = false; 
+    isMenuOpen: boolean = false; 
+    isResponsiveView: boolean = false; 
+    isLoginPage: boolean = false; 
+    isRegisterPage: boolean = false;
 
     constructor(private authService: AuthService, private router: Router) {}
 
     ngOnInit(): void {
-        // Vérifier l'état de connexion au démarrage
         this.isLoggedIn = this.authService.isLoggedIn();
-        this.checkIfLoginPage();
+
+        // Vérifiez l'état de la route
+        this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe(() => {
+                this.checkIfLoginPage();
+                this.checkIfRegisterPage();
+            });
     }
 
     toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen; // Changer l'état du menu
+        this.isMenuOpen = !this.isMenuOpen; 
     }
 
     logout() {
-        this.authService.logout(); // Appelle la méthode de déconnexion
-        this.isLoggedIn = false; // Met à jour l'état de connexion
+        this.authService.logout(); 
+        this.isLoggedIn = false; 
     }
 
     private checkIfLoginPage() {
-        // Vérifiez si la route actuelle est la page de login
         this.isLoginPage = this.router.url === '/login';
+    }
+
+    private checkIfRegisterPage() {
+        this.isRegisterPage = this.router.url === '/register';
     }
 }

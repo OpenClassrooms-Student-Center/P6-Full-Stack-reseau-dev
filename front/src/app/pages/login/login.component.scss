@@ -18,6 +18,8 @@
     text-align: left; 
     width: 100%;
     padding-left: 30px;
+    padding-top: 20px;
+    font-weight: 100;
 }
 
 .back-button:hover {
@@ -26,6 +28,7 @@
 }
   .form-group {
     margin-bottom: 20px;
+    margin-top:20px;
     width: 100%; 
   }
   
@@ -49,7 +52,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 70%;
+    width: 50%;
   }
   
   button:hover {
@@ -60,25 +63,34 @@
     max-width: 100%; 
     margin-bottom: 20px; 
   }
-  
+  /* Masquer la navbar sur les petits écrans (mobile) */
 @media screen and (max-width: 600px) {
-    .login-container {
-      width: 80%;
-    }
-  
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-    }
-  
-    button {
-      width: 100%; 
-    }
+  .navbar {
+    display: none; /* Masquer la navbar sur mobile */
   }
-  
-  @media screen and (min-width: 601px) and (max-width: 1024px) {
-    .login-container {
-      width: 60%; 
-    }
+
+  /* Rendre l'image visible uniquement sur mobile */
+  .logo-mobile {
+    display: block; 
   }
-  
+
+  .login-container {
+    width: 80%; 
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%; 
+  }
+}
+
+/* Masquer l'image sur desktop */
+@media screen and (min-width: 601px) {
+  .logo-mobile {
+    display: none !important; /* Forcer le masquage de l'image sur desktop */
+  }
+
+  .login-container {
+    width: 60%; /* Ajuster la largeur du conteneur pour desktop */
+  }
+}
