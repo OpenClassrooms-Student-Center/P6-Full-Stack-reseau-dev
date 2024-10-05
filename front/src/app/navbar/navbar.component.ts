@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthService } from '../../app/services/auth.service'; 
 import { Router, NavigationEnd } from '@angular/router'; 
 import { filter } from 'rxjs/operators';
@@ -20,8 +20,13 @@ export class NavbarComponent implements OnInit {
     constructor(private authService: AuthService, private router: Router) {}
 
     ngOnInit(): void {
+        // Initialisation de l'état de connexion
         this.isLoggedIn = this.authService.isLoggedIn();
 
+        // Vérification initiale de la vue responsive lors du chargement
+        this.checkResponsiveView();
+
+        // Écouter les événements de changement de route
         this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(() => {
@@ -32,13 +37,25 @@ export class NavbarComponent implements OnInit {
             });
     }
 
+    // Écouter les changements de taille de la fenêtre
+    @HostListener('window:resize', ['$event'])
+    onResize(event: Event) {
+        this.checkResponsiveView();
+    }
+
+    // Méthode pour vérifier la taille de la fenêtre et activer le mode mobile si nécessaire
+    checkResponsiveView() {
+        this.isResponsiveView = window.innerWidth <= 768;
+        console.log('isResponsiveView:', this.isResponsiveView, 'Window width:', window.innerWidth);
+    }
+
     toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen; 
+        this.isMenuOpen = !this.isMenuOpen;
     }
 
     logout() {
-        this.authService.logout(); 
-        this.isLoggedIn = false; 
+        this.authService.logout();
+        this.isLoggedIn = false;
     }
 
     private checkIfLoginPage() {
@@ -51,9 +68,9 @@ export class NavbarComponent implements OnInit {
 
     private checkIfArticlesPage() {
         const currentUrl = this.router.url;
-        this.isArticlesPage = currentUrl === '/article'; // Vérifie si la route actuelle est /article
-        console.log('URL actuelle:', currentUrl); // Affiche l'URL actuelle
-        console.log('isArticlesPage:', this.isArticlesPage); // Vérifie la valeur de isArticlesPage
+        this.isArticlesPage = currentUrl === '/article';
+        console.log('URL actuelle:', currentUrl);
+        console.log('isArticlesPage:', this.isArticlesPage);
     }
 
     private checkIfThemesPage() {

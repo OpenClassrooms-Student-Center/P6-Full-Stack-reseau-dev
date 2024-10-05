@@ -9,18 +9,11 @@
 }
 
 .menu a.active-link {
-  color:  #5f0497;; /* Couleur du lien actif */
+  color: #5f0497;
 }
-
-/* Autres styles */
-
 
 .logo img {
   height: 50px;
-}
-
-.hidden {
-  display: none; /* Masquer les éléments lorsque la classe 'hidden' est appliquée */
 }
 
 .menu {
@@ -41,60 +34,61 @@
 
 .menu a {
   text-decoration: none;
-  color: black; /* Couleur du texte noir */
+  color: black;
 }
+
 .avatar img {
-  width: 50px; /* Ajuster la taille de l'avatar */
+  width: 50px;
   height: 50px;
-  border-radius: 50%; /* Rendre l'avatar rond */
+  border-radius: 50%;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Styles pour le bouton du menu burger */
 .burger-menu {
-  display: none; /* Masquer le menu burger par défaut */
+  display: none;
 }
 
 /* Afficher le menu burger uniquement sur les écrans de petite taille */
 @media screen and (max-width: 768px) {
   .burger-menu {
-      display: block; /* Afficher le menu burger sur les petits écrans */
+      display: block;
       font-size: 24px;
-      background-color: transparent;
+      background: transparent;
       border: none;
       cursor: pointer;
-      margin-left: auto; /* Placer le burger à droite */
+      margin-left: 20px;
   }
-  
+
   .menu {
       position: fixed;
       top: 0;
-      right: -300px; /* Le menu est initialement en dehors de la vue */
-      width: 300px;
-      height: 100%;
+      right: -300px;
+      width: 200px;
+      height: 90%;
       z-index: 1000;
       display: block;
       background-color: #fff;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: right 0.3s ease; /* Animation de transition */
+      transition: right 0.3s ease;
   }
-  
+
   .menu.active {
-      right: 0; /* Déplacer le menu vers la gauche lorsque activé */
+      right: 0;
   }
-  
+
   .menu ul {
       flex-direction: column;
-      padding:20px;
+      padding: 20px;
   }
 
   .avatar {
       position: absolute;
-      bottom: 20px;
-      right: 20px;
-  }
-
-  .top-right {
-      text-align: right; 
+      bottom: 10px;
+      right: 40px;
   }
 
   .menu li {

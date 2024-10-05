@@ -34,6 +34,7 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     this.articlesSubscription = this.http.get<ArticlePage[]>('/api/articles')
       .subscribe(
         (response) => {
+          console.log(response);  // Ajoutez ceci pour voir la réponse dans la console
           this.articles = response;
           this.sortArticles(); // Trier les articles à l'initialisation
         },
@@ -41,7 +42,8 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
           console.error('Erreur lors de la récupération des articles :', error);
         }
       );
-  }
+}
+
 
   redirectToArticleDetail(id: number): void {
     this.router.navigate(['/article', id]);

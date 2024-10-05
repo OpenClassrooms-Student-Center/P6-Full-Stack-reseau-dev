@@ -2,66 +2,107 @@
   padding: 2%;
   position: relative;
 }
+
 .button-container {
   display: flex;
-  align-items: center; 
-  justify-content: space-between; 
+  align-items: center;
+  justify-content: space-between;
 }
+
 .putArticleBtn {
   margin-bottom: 20px;
 }
+
 .sortBtn {
   position: absolute;
   top: 0;
   right: 0;
   margin-bottom: 20px;
 }
+
+.meta-info {
+  display: flex; /* Utiliser flexbox pour aligner les éléments */
+  justify-content: space-between; /* Utiliser space-between pour que les éléments soient espacés */
+  margin-bottom: 10px; /* Ajouter un peu d'espace entre la ligne de métadonnées et la description */
+  align-items: center; /* Aligner verticalement au centre */
+}
+
+.meta-info span {
+  flex: 1;
+}
+
+.meta-info span.date {
+  text-align: left;
+}
+
 .button-container {
   position: relative;
 }
+
 .navbar {
   // Autres styles de la barre de navigation
-
   .active-link {
-      color: #5f0497; // Couleur pour les liens "Articles" et "Thèmes" quand ils sont actifs
-      font-weight: bold; // Mettre en gras pour le lien actif
+    color: #5f0497;
+    font-weight: bold;
   }
 }
+
 .article-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 .row {
   width: 100%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-right: 40px;
+  margin-left: 20px;
 }
+
 .column {
-  width: calc(50% - 1%); /* 50% de la largeur avec une marge de 2% */
-  margin-bottom: 20px; /* Ajout de l'espace entre les colonnes */
+  width: calc(50% - 2%);
+  margin-bottom: 20px;
 }
+
 @media screen and (max-width: 768px) {
+  /* Sur les petits écrans, chaque article occupe toute la largeur */
   .column {
-    width: 100%; /* Sur les petits écrans, chaque article occupe toute la largeur */
+    width: 100%;
   }
   
-}
-  .article {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    height: 250px;
-    overflow: hidden;
-    width: 100%; /* Les articles occupent toute la largeur sur les petits écrans */
-    margin-bottom: 20px; /* Espacement entre les articles */
-  }
-  .description {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  /* Centre les boutons sur mobile */
+  .button-container {
+    flex-direction: column; /* Les boutons sont empilés en colonne */
+    align-items: center; /* Centrer les boutons horizontalement */
   }
 
-  
- 
+  .putArticleBtn {
+    width: 40%; /* Largeur du bouton à 100% pour bien occuper l'espace */
+    margin-bottom: 20px; /* Ajouter un espacement entre les boutons */
+    margin-top:20px;
+  }
+
+  .sort-btn {
+    position: static; /* Retire la position absolue pour le bouton de tri */
+    width: 100%; /* Largeur à 100% pour occuper toute la largeur disponible */
+  }
+}
+
+.article {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  height: 250px;
+  overflow: hidden;
+  width: 85%; /* Les articles occupent toute la largeur sur les petits écrans */
+  margin-bottom: 20px; /* Espacement entre les articles */
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
