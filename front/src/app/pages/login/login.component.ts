@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginForm } from 'src/app/interfaces/login.interface';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { responseLogin } from 'src/app/interfaces/login.interface';
+import { ResponseLogin } from 'src/app/interfaces/login.interface';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginComponent implements OnDestroy {
   constructor(private http: HttpClient, private router: Router, private snackbarService: SnackbarService ) {}
 
   login(): void {
-    this.loginSubscription = this.http.post<responseLogin>('/api/auth/login', this.formData)
+    this.loginSubscription = this.http.post<ResponseLogin>('/api/auth/login', this.formData)
       .subscribe(
         (response) => {
           if (response && response.token) {

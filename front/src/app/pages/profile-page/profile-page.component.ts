@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Subscription } from 'rxjs';
-import { Profile,updatedUser } from 'src/app/interfaces/profile.interface';
+import { Profile,UpdatedUser } from 'src/app/interfaces/profile.interface';
 import { Themes } from 'src/app/interfaces/themes.interface';
 
 
@@ -14,9 +14,9 @@ import { Themes } from 'src/app/interfaces/themes.interface';
   styleUrls: ['./profile-page.component.scss']
 })
 export class ProfilePageComponent implements OnInit, OnDestroy {
-  user: Profile = { id: 0, username: '', email: '', created_at: new Date(), updated_at: new Date()};
+  user: Profile = { id: 0, username: '', email: '', createdAt: new Date(), updatedAt: new Date()};
   userThemes: Themes[] = [];
-  updatedUser: updatedUser = { username: '', email: '' };
+  updatedUser: UpdatedUser = { username: '', email: '' };
   private meSubscription: Subscription | undefined;
   private themesSubscription: Subscription | undefined;
 

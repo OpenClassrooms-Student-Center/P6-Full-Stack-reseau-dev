@@ -1,28 +1,32 @@
 <app-navbar></app-navbar>
 
+<!-- Conteneur principal pour le back button et le title -->
+<div class="header-container" *ngIf="article">
+  <div class="back-button" (click)="goBack()">&#8592;</div> 
+  <h2 class="article-title">{{ article.title }}</h2>
+</div>
+
 <div class="container" *ngIf="article">
-  <h2>{{ article.title }}</h2>
   <div class="header">
     <p>Date: {{ article.created_at }}</p>
-    <p>Author: {{ article.username }}</p>
-    <p>Theme: {{ article.themes.title }}</p>
-    </div>
-    <p class="description">{{ article.description }}</p>
-    <hr>
-    <div *ngIf="article.messages && article.messages.length > 0" class="messages">
-      <h3>Commentaires:</h3>
-      <div *ngFor="let message of article.messages" class="message">
-        <div class="messageContainer">
-          <div class="user">{{ message.userUsername }}</div>
-          <div class="message-bubble">
-            <div class="content">{{ message.message }}</div>
-          </div>
+    <p>Auteur: {{ article.username }}</p>
+    <p>Thème: {{ article.username }}</p>
+  </div>
+  <p class="description">{{ article.description }}</p>
+  <hr>
+  <div *ngIf="article.messages && article.messages.length > 0" class="messages">
+    <h3>Commentaires:</h3>
+    <div *ngFor="let message of article.messages" class="message">
+      <div class="messageContainer">
+        <div class="message-bubble">
+          <div class="content">{{ message.message }}</div>
         </div>
-      
+        <div class="user">{{ message.userUsername }}</div>
       </div>
     </div>
-    <div class="postMessage">
-      <textarea [(ngModel)]="formData.message" placeholder="Write your message" rows="4"></textarea>
-      <i (click)="postMessage(article.id)" class="fa-sharp fa-solid fa-paper-plane"></i>
-    </div>
   </div>
+  <div class="postMessage">
+    <textarea [(ngModel)]="formData.message" placeholder="Écrivez ici votre commentaire" rows="4"></textarea>
+    <i (click)="postMessage(article.id)" class="fa-sharp fa-solid fa-paper-plane SendMsg"></i>
+  </div>
+</div>

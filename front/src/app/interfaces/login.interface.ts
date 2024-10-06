@@ -1,13 +1,14 @@
 export interface LoginForm {
-    email: string;
-    password: string;
-  }
-export interface responseLogin {
-    token: string;
+    email: string;              // Email de l'utilisateur
+    password: string;           // Mot de passe de l'utilisateur
+}
+
+export interface ResponseLogin {
+    token: string;              // Jeton d'authentification
     user: {
-        id: number;
-        username: string;
-        email: string;
-        role: string;
-    }
+        id: number;             // Identifiant de l'utilisateur
+        username: string;       // Nom d'utilisateur
+        email: string;          // Email de l'utilisateur
+        role: string;           // Rôle de l'utilisateur
+    };
 }

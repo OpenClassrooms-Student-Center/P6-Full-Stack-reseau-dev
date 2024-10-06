@@ -10,7 +10,7 @@ public class ArticleWithMessagesDTO {
     private String title;
     private String description;
     private String username;
-    private Themes Themes;
+    private Themes theme;
     private String created_at;
     private List<MessageDTO> messages;
 }

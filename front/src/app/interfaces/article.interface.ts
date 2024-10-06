@@ -23,7 +23,7 @@ export interface ArticlePage {
         userUsername: string;
         message: string;
     }[];
-    themes: Themes;
+    theme: Themes;
     created_at: string | null; 
     updatedAt: string | null; 
 }

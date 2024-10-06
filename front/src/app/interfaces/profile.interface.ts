@@ -1,11 +1,12 @@
 export interface Profile {
-    id: number;
-    username: string;
-    email: string;
-    created_at: Date;
-    updated_at: Date;
+    id: number;                 // Identifiant du profil
+    username: string;           // Nom d'utilisateur
+    email: string;              // Email de l'utilisateur
+    createdAt: Date;            // Date de création
+    updatedAt: Date;            // Date de mise à jour
 }
-export interface updatedUser {
-    username: string;
-    email: string;
+
+export interface UpdatedUser {
+    username: string;           // Nouveau nom d'utilisateur
+    email: string;              // Nouvel email
 }
