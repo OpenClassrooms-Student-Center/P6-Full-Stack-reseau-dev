@@ -39,6 +39,13 @@
   border-radius: 50%;
 }
 
+.profile-avatar  {
+  border: 2px solid #5f0497 !important; /* Contour en #5f0497 */
+  border-radius: 50%; /* Arrondit l'avatar */
+  padding: 2px; /* Ajoute un petit espace entre le contour et l'image */
+  box-sizing: border-box; /* S'assure que le padding ne change pas la taille totale */
+}
+
 .hidden {
   display: none;
 }

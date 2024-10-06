@@ -16,37 +16,32 @@ export class NavbarComponent implements OnInit {
     isRegisterPage: boolean = false;
     isArticlesPage: boolean = false; 
     isThemesPage: boolean = false; 
+    isProfilePage: boolean = false; 
 
     constructor(private authService: AuthService, private router: Router) {}
 
     ngOnInit(): void {
-        // Initialisation de l'état de connexion
         this.isLoggedIn = this.authService.isLoggedIn();
-
-        // Vérification initiale de la vue responsive lors du chargement
         this.checkResponsiveView();
 
-        // Écouter les événements de changement de route
         this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(() => {
                 this.checkIfLoginPage();
                 this.checkIfRegisterPage();
-                this.checkIfArticlesPage(); // Vérification des pages d'articles
-                this.checkIfThemesPage();
+                this.checkIfArticlesPage();
+                this.checkIfThemesPage(); // Vérifiez si vous êtes sur la page de thèmes
+                this.checkIfProfilePage();
             });
     }
 
-    // Écouter les changements de taille de la fenêtre
     @HostListener('window:resize', ['$event'])
     onResize(event: Event) {
         this.checkResponsiveView();
     }
 
-    // Méthode pour vérifier la taille de la fenêtre et activer le mode mobile si nécessaire
     checkResponsiveView() {
         this.isResponsiveView = window.innerWidth <= 768;
-        console.log('isResponsiveView:', this.isResponsiveView, 'Window width:', window.innerWidth);
     }
 
     toggleMenu() {
@@ -67,15 +62,17 @@ export class NavbarComponent implements OnInit {
     }
 
     private checkIfArticlesPage() {
-        const currentUrl = this.router.url;
-        // Vérifiez si l'URL correspond à une page d'articles
-        this.isArticlesPage = currentUrl.startsWith('/article') && currentUrl !== '/article'; // Assurez-vous de ne pas inclure la liste des articles
-        console.log('URL actuelle:', currentUrl);
+        this.isArticlesPage = this.router.url === '/article'; // Seulement pour '/article'
         console.log('isArticlesPage:', this.isArticlesPage);
     }
 
     private checkIfThemesPage() {
-        this.isThemesPage = this.router.url === '/themes';
+        this.isThemesPage = this.router.url === '/themes'; // Seulement pour '/themes'
+        console.log('isThemesPage:', this.isThemesPage);
     }
-    
+
+    private checkIfProfilePage() {
+        this.isProfilePage = this.router.url === '/profile';
+        console.log('isProfilePage:', this.isProfilePage, 'URL actuelle:', this.router.url);
+    }
 }

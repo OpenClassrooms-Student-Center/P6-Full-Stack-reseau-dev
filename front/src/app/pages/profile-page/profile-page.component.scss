@@ -1,8 +1,10 @@
 .theme-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 20px; 
-  }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Deux colonnes */
+  gap: 20px; /* Espacement entre les cartes */
+  width: 95%; /* Largeur de 90% de l'écran */
+  margin: 0 auto; /* Centrer la grille horizontalement */
+}
   .container{
     padding: 2%;
   }
@@ -14,7 +16,6 @@
   }
   .container {
     width: 100%;
-    max-width: 600px; 
     margin: 0 auto; 
     padding: 20px;
     box-sizing: border-box; 
@@ -32,6 +33,8 @@
   
   .form-group {
     margin-bottom: 20px; 
+    display: flex;
+    justify-content: center;
   }
   
   
@@ -55,14 +58,22 @@ select {
   border-radius: 5px;
   padding: 8px;
   box-sizing: border-box; 
+  width: 30%;
+
 }
 .Logout{
     color: #ff0000;
 }
+.theme-card h3 {
+  margin-bottom: 10px;
+  font-weight: 900;
+  font-size: 1.2em;
+
+}
 button {
   border: none; 
   border-radius: 5px;
-  padding: 10px 50px;
+  padding: 5px 50px;
   background-color: #5f0497;
   color: #fff;
   font-weight: bold;
@@ -85,4 +96,21 @@ color: #848484;
 }
 .Logout {
   cursor: pointer;
+}
+
+/* Styles pour la version mobile (largeur de l'écran inférieure à 768px) */
+@media screen and (max-width: 768px) {
+  .theme-title {
+    display: none; /* Masque le titre "Abonnements" sur les écrans mobiles */
+  }
+  .theme-grid {
+    grid-template-columns: 1fr; /* Sur mobile, une seule colonne */
+    width: 100%; /* Utiliser toute la largeur de l'écran sur mobile */
+  }
+  input[type="text"],
+  textarea,
+  select {
+    width: 90%;
+  
+}
 }

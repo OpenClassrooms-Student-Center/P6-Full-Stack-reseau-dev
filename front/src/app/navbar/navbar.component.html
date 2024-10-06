@@ -3,21 +3,39 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <img src="/assets/logo_p6.png" alt="logo" width="100" />
     </div>
-    <!-- Bouton burger visible seulement en version mobile -->
     <button class="burger-menu" (click)="toggleMenu()" *ngIf="isResponsiveView">☰</button>
     <div class="menu" [ngClass]="{'active': isMenuOpen}">
         <ul *ngIf="!isLoginPage && !isRegisterPage">
             <li class="top-right" *ngIf="isLoggedIn">
-                <a routerLink="/article" routerLinkActive="active-link" (click)="toggleMenu()">Articles</a>
+                <a 
+                    routerLink="/article" 
+                    routerLinkActive="active-link" 
+                    [routerLinkActiveOptions]="{ exact: true }" 
+                    (click)="toggleMenu()">
+                    Articles
+                </a>
             </li>
             <li class="top-right" *ngIf="isLoggedIn">
-                <a routerLink="/themes" routerLinkActive="active-link" (click)="toggleMenu()">Thèmes</a>
+                <a 
+                    routerLink="/themes" 
+                    routerLinkActive="active-link" 
+                    [routerLinkActiveOptions]="{ exact: true }" 
+                    (click)="toggleMenu()">
+                    Thèmes
+                </a>
             </li>
         </ul>
         <div class="avatar" *ngIf="isLoggedIn">
-            <img src="/assets/user.png" (click)="toggleMenu()" routerLink="/profile" alt="avatar" width="50" />
+            <img 
+                src="/assets/user.png" 
+                (click)="toggleMenu()" 
+                routerLink="/profile" 
+                alt="avatar" 
+                width="50" 
+                routerLinkActive="profile-avatar" 
+                [routerLinkActiveOptions]="{ exact: true }" 
+            />
         </div>
     </div>
     <div class="overlay" [ngClass]="{'show-overlay': isMenuOpen}" (click)="toggleMenu()"></div>
-
 </nav>
