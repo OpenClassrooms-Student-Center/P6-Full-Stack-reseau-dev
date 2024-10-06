@@ -51,7 +51,7 @@ export class NavbarComponent implements OnInit {
 
     toggleMenu() {
         this.isMenuOpen = !this.isMenuOpen;
-    }
+    }    
 
     logout() {
         this.authService.logout();
@@ -77,4 +77,5 @@ export class NavbarComponent implements OnInit {
     private checkIfThemesPage() {
         this.isThemesPage = this.router.url === '/themes';
     }
+    
 }

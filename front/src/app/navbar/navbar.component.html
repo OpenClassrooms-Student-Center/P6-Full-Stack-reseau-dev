@@ -18,4 +18,6 @@
             <img src="/assets/user.png" (click)="toggleMenu()" routerLink="/profile" alt="avatar" width="50" />
         </div>
     </div>
+    <div class="overlay" [ngClass]="{'show-overlay': isMenuOpen}" (click)="toggleMenu()"></div>
+
 </nav>
