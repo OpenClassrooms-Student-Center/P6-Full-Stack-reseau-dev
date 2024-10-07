@@ -2,6 +2,7 @@
   display: flex;
   align-items: center; /* Centrer verticalement */
   margin-bottom: 20px; /* Ajouter de l'espace en dessous du header */
+  margin-top: 5px;
 }
 
 .back-button {
@@ -29,12 +30,14 @@
 }
 
 .header p {
-  margin-right: 1%;
+  margin-right: 2%;
 }
 
 .messages {
   margin-top: 20px;
-  width: 100%;
+  width: 88%;
+  margin-left: 6%;
+  margin-right: 6%;
 }
 
 code
@@ -69,7 +72,9 @@ code
 .postMessage {
   display: flex;
   align-items: center; 
-  width: 100%;
+  width: 88%;
+  margin-left: 6%;
+  margin-right: 6%;
   margin-top: 20px;
 }
 .postMessage textarea {
@@ -112,18 +117,27 @@ code
 
 @media screen and (max-width: 768px) {
  
+  .header-container {
+    margin-top: 10px;
+  }
+  .header p {
+    margin-right: 10%;
+  }
   .container {
     padding-inline: 2%;
     padding-top: 2%;
   }
   .message-bubble {
     flex-direction: column; /* Aligne le contenu verticalement */
-    align-items: flex-end; /* Aligne le contenu à droite */
+    align-items: flex-start; /* Aligne le contenu à droite */
 }
 
 .messageContainer {
   flex-direction: column; /* Change la direction pour empiler les éléments */
   align-items: flex-start; /* Aligne à gauche */
+}
+.user {
+  margin-left: 80%; /* Ajoute un espacement à droite du nom d'utilisateur */
 }
 
 .message-bubble .user {
@@ -133,6 +147,9 @@ code
 }
 .postMessage{
   position: relative;
+  width: 100%;
+  margin-left: 0%;
+  margin-right: 0%;
 }
 .postMessage i {
  margin-left: 85%;
