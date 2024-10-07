@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 // Importation des classes nécessaires
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,8 @@ public class ArticleService {
             articleMessagesDTO.setDescription(article.getDescription());
             articleMessagesDTO.setArticleId(article.getId());
             articleMessagesDTO.setUsername(article.getAuthor().getUsername());
+            articleMessagesDTO.setCreatedAt(article.getCreatedAt() != null ? article.getCreatedAt().toString() : null);
+        articleMessagesDTO.setUpdatedAt(article.getUpdatedAt() != null ? article.getUpdatedAt().toString() : null);
             articleMessagesDTO.setMessages(article.getMessages().stream().map(message -> {
                 MessageDTO messageDTO = new MessageDTO(); 
                 messageDTO.setMessage(message.getMessage());
@@ -70,27 +73,31 @@ public class ArticleService {
 
     }
 
-    // Méthode pour mettre à jour un article existant
     public Article updateArticles(Article updatedRentals) {
         // Recherche de l'article existant par ID
-        Article existingArticles= articleRepository.findById(updatedRentals.getId()).orElse(null);
+        Article existingArticle = articleRepository.findById(updatedRentals.getId()).orElse(null);
         
         // Vérifie si l'article existe
-        if (existingArticles != null) {
+        if (existingArticle != null) {
             // Met à jour les attributs de l'article
-            existingArticles.setTitle(updatedRentals.getTitle());
-            existingArticles.setDescription(updatedRentals.getDescription());
-            existingArticles.setUpdatedAt(updatedRentals.getUpdatedAt());
-            existingArticles.setAuthor(updatedRentals.getAuthor());
-            existingArticles.setTheme(updatedRentals.getTheme());
+            existingArticle.setTitle(updatedRentals.getTitle());
+            existingArticle.setDescription(updatedRentals.getDescription());
+    
+            // Met à jour la date de mise à jour à maintenant
+            existingArticle.setUpdatedAt(LocalDateTime.now()); 
+    
+            existingArticle.setAuthor(updatedRentals.getAuthor());
+            existingArticle.setTheme(updatedRentals.getTheme());
+            
             // Sauvegarde les modifications
-            Article updatedRecord = articleRepository.save(existingArticles);
-            return updatedRecord; // Retourne l'article mis à jour
+            return articleRepository.save(existingArticle); // Retourne l'article mis à jour
         } else {
             // Lève une exception si l'article n'est pas trouvé
             throw new NotFoundException("Enregistrement introuvable");
         }
     }
+      
+    
 
     // Méthode pour supprimer un article
     public void deleteArticles(Long articleId) {

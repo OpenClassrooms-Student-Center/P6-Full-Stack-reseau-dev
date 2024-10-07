@@ -3,14 +3,15 @@ export interface Article {
     id: number;
     title: string;
     description: string;
-    username: string;
+    username: string | null;  // Peut être null si pas d'utilisateur associé
+    author: string | null;     // Assure-toi d'ajouter 'author'
+    themeTitle: string | null;      // Assure-toi d'ajouter 'theme'
     messages: {
         id: number;
         userUsername: string;
         message: string;
     }[];
-    themes: Themes;
-    created_at: string | null;
+    createdAt: string | null;
     updatedAt: Date | null;
 }
 export interface ArticlePage {
@@ -24,6 +25,6 @@ export interface ArticlePage {
         message: string;
     }[];
     theme: Themes;
-    created_at: string | null; 
+    createdAt: string | null; 
     updatedAt: string | null; 
 }

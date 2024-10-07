@@ -1,4 +1,5 @@
 package com.openclassrooms.mddapi.model;
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+
 @Data
 @Entity
 @Table(name = "Themes")
@@ -24,15 +26,10 @@ public class Themes {
     
     @NotNull
     private String description;
-   
 
     @Column(name = "created_at")
-        private LocalDateTime createdAt;
+    private LocalDateTime createdAt;
+
     @Column(name = "updated_at")
-        private LocalDateTime updatedAt;
-
-    
-    
-    
-
+    private LocalDateTime updatedAt;
 }

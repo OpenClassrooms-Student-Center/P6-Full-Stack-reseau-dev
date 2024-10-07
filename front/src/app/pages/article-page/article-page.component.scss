@@ -58,7 +58,6 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-right: 40px;
   margin-left: 20px;
 }
 
@@ -66,6 +65,25 @@
   width: calc(50% - 2%);
   margin-bottom: 20px;
 }
+
+
+.article {
+  background-color: #f0f0f0;
+  padding: 18px;
+  border-radius: 5px;
+  height: 250px;
+  overflow: hidden;
+  width: 85%; /* Les articles occupent toute la largeur sur les petits écrans */
+  margin-bottom: 20px; /* Espacement entre les articles */
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  text-align: justify;
+}
+
 
 @media screen and (max-width: 768px) {
   /* Sur les petits écrans, chaque article occupe toute la largeur */
@@ -89,20 +107,4 @@
     position: static; /* Retire la position absolue pour le bouton de tri */
     width: 100%; /* Largeur à 100% pour occuper toute la largeur disponible */
   }
-}
-
-.article {
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
-  height: 250px;
-  overflow: hidden;
-  width: 85%; /* Les articles occupent toute la largeur sur les petits écrans */
-  margin-bottom: 20px; /* Espacement entre les articles */
-}
-
-.description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }

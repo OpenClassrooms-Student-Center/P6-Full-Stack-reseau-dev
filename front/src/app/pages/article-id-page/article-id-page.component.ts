@@ -59,17 +59,23 @@ export class ArticleIdPageComponent implements OnInit, OnDestroy {
 
   fetchArticle(id: number) {
     this.articleSubscription = this.http.get<Article>(`/api/articles/${id}`)
-      .subscribe(
-        (response) => {
-          console.log("Article récupéré :", response);
-          this.article = response;
-        },
-        (error) => {
-          console.error("Erreur lors de la récupération des articles :", error);
-          this.snackbarService.openSnackBar('Erreur lors de la récupération des articles :', "fermer");
-        }
-      );
-  }
+        .subscribe(
+            (response) => {
+                console.log("Article récupéré :", response); // Vérifie ici ce qui est renvoyé
+                this.article = response; // Assigne la réponse à l'article
+                console.log("Article assigné :", this.article); // Vérifie l'article assigné
+            },
+            (error) => {
+                console.error("Erreur lors de la récupération des articles :", error);
+                this.snackbarService.openSnackBar('Erreur lors de la récupération des articles :', "fermer");
+            }
+        );
+}
+
+
+
+
+
 
   goBack(): void {
     this.router.navigate(['/article']);

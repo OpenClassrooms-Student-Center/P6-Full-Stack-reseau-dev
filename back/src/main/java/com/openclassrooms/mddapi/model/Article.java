@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,39 +26,44 @@ import lombok.Data;
 @Data
 @Table(name = "Article")
 public class Article {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@NotNull
-	private String title;
-	
-	@Size(max = 5000)
-    @NotNull
-	private String description;
-	 
 
-	@ManyToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    private String title;
+
+    @Size(max = 5000)
+    @NotNull
+    private String description;
+
+    @ManyToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
 	@JoinTable(name = "article_Messages", joinColumns = @JoinColumn(name = "Article_id"), inverseJoinColumns = @JoinColumn(name = "Messages_id"))
 	private Set<Messages> messages;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "theme_id", referencedColumnName = "id")
-	private Themes theme;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "theme_id", referencedColumnName = "id")
+    private Themes theme;
 
-	@Column(name = "created_at")
-	private LocalDateTime createdAt;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
-	
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-	
-	
-	
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

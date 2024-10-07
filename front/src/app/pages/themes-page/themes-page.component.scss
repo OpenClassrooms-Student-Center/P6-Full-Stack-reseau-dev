@@ -41,6 +41,14 @@
   align-self: center;
 }
 
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  text-align: justify;
+}
+
+
 @media (max-width: 767px) {
   .theme-grid {
     grid-template-columns: 1fr; /* Une seule colonne sur les écrans plus petits */

@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 // Importation des classes nécessaires
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,7 +72,6 @@ public class ArticleController {
         }
     }
     
-    // Méthode pour obtenir un article par son ID
     @GetMapping("articles/{id}")
     @ApiOperation(value = "Get Article by ID", notes = "Returns an Article by its ID.")
     public ResponseEntity<ArticleWithMessagesDTO> getArticleById(@PathVariable Long id) {
@@ -82,6 +82,19 @@ public class ArticleController {
             articleWithMessagesDTO.setId(article.getId());
             articleWithMessagesDTO.setTitle(article.getTitle());
             articleWithMessagesDTO.setDescription(article.getDescription());
+            articleWithMessagesDTO.setUsername(article.getAuthor().getUsername());
+            
+            // Assigner le nom du thème
+            if (article.getTheme() != null) {
+                articleWithMessagesDTO.setThemeTitle(article.getTheme().getTitle()); // Ceci est correct
+            } else {
+                articleWithMessagesDTO.setThemeTitle("Thème non défini"); // Valeur par défaut
+            }
+            
+            articleWithMessagesDTO.setCreatedAt(article.getCreatedAt().toString());
+            articleWithMessagesDTO.setUpdatedAt(article.getUpdatedAt().toString());
+    
+            // Récupération des messages
             List<MessageDTO> messageDTOs = article.getMessages().stream()
                     .map(message -> {
                         MessageDTO messageDTO = new MessageDTO();
@@ -92,30 +105,35 @@ public class ArticleController {
                     })
                     .collect(Collectors.toList());
             articleWithMessagesDTO.setMessages(messageDTOs);
-        
-        // Vérifie si l'article est présent
-        return new ResponseEntity<>(articleWithMessagesDTO, HttpStatus.OK);
-
+    
+            return new ResponseEntity<>(articleWithMessagesDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Retourne 404 Not Found si l'article n'existe pas
         }
     }
-        // Méthode pour obtenir tous les messages associés à un article via son articleId
-        @GetMapping("/articles/{articleId}/messages")
-        public ResponseEntity<ArticleWithMessagesDTO> getMessageByArticleId(@PathVariable Long articleId) {
-            Optional<Article> articleOptional = articleService.getArticleById(articleId);
-            if (articleOptional.isPresent()) {
-                Article article = articleOptional.get();
-                ArticleWithMessagesDTO articleWithMessagesDTO = new ArticleWithMessagesDTO();
-                articleWithMessagesDTO.setId(article.getId());
-                articleWithMessagesDTO.setTitle(article.getTitle());
-                articleWithMessagesDTO.setDescription(article.getDescription());
-                articleWithMessagesDTO.setThemes(article.getTheme());
-                articleWithMessagesDTO.setUsername(article.getAuthor().getUsername());
-                articleWithMessagesDTO.setCreated_at(article.getCreatedAt().toString());
-
-
-                List<MessageDTO> messageDTOs = article.getMessages().stream()
+    
+    @GetMapping("/articles/{articleId}/messages")
+    public ResponseEntity<ArticleWithMessagesDTO> getMessageByArticleId(@PathVariable Long articleId) {
+        Optional<Article> articleOptional = articleService.getArticleById(articleId);
+        if (articleOptional.isPresent()) {
+            Article article = articleOptional.get();
+            ArticleWithMessagesDTO articleWithMessagesDTO = new ArticleWithMessagesDTO();
+            articleWithMessagesDTO.setId(article.getId());
+            articleWithMessagesDTO.setTitle(article.getTitle());
+            articleWithMessagesDTO.setDescription(article.getDescription());
+    
+            // Récupérer le titre du thème au lieu de l'objet complet
+            if (article.getTheme() != null) {
+                articleWithMessagesDTO.setThemeTitle(article.getTheme().getTitle()); // Récupère le titre du thème
+            } else {
+                articleWithMessagesDTO.setThemeTitle("Thème non défini"); // Si aucun thème n'est défini
+            }
+    
+            articleWithMessagesDTO.setUsername(article.getAuthor().getUsername());
+            articleWithMessagesDTO.setCreatedAt(article.getCreatedAt().toString());
+            articleWithMessagesDTO.setUpdatedAt(article.getUpdatedAt().toString());
+    
+            List<MessageDTO> messageDTOs = article.getMessages().stream()
                 .map(message -> {
                     MessageDTO messageDTO = new MessageDTO();
                     messageDTO.setId(message.getId());
@@ -124,69 +142,80 @@ public class ArticleController {
                     return messageDTO;
                 })
                 .collect(Collectors.toList());
-                articleWithMessagesDTO.setMessages(messageDTOs);
-                return new ResponseEntity<>(articleWithMessagesDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        }
-
-        // post message by article_id
-        @PostMapping("/articles/{articleId}/messages")
-    public ResponseEntity<PostMessagesDto> saveMessages(@RequestHeader("Authorization") String authorizationHeader,
-                                                    @PathVariable Long articleId, 
-                                                @RequestBody RequestMessagesDTO message) {
-                        
-            String token = authorizationHeader.substring("Bearer ".length()).trim();
-            User user = userService.getUserByToken(token);
-            Article article = articleService.getArticleById(articleId).get();
-            System.err.println("article: " + article);
-            Messages newMessage = new Messages();
-            newMessage.setUser(user);
-            newMessage.setMessage(message.getMessage());
-            article.getMessages();
-            article.getMessages().add(newMessage);
-            articleService.saveArticles(article);
-            PostMessagesDto postMessagesDto = new PostMessagesDto();
-            postMessagesDto.setMessage(message.getMessage());
-            postMessagesDto.setArticle_id(article.getId());
-            postMessagesDto.setUser_id(user.getId());
-            
-                                                    
-            return new ResponseEntity<>(postMessagesDto, HttpStatus.OK);
-        }
-
-    // Méthode pour créer un nouvel article
-    @PostMapping(value = "/articles")
-    @ApiOperation(value = "Create a new Article", notes = "Creates a new Article.")
-    public Article saveRentals(@RequestHeader("Authorization") String authorizationHeader,
-                                 @RequestBody ArticleRequestDto articleDto) {
-        // Extraction du token d'authentification du header
-        String token = authorizationHeader.substring("Bearer ".length()).trim();
-        
-        // Récupération de l'utilisateur à partir du token
-        User user = userService.getUserByToken(token);
-        
-        // Création d'une nouvelle instance d'article
-        Long themeId = articleDto.getTheme();
-        Themes themeIdObject = themesService.getThemesById(themeId);   
-        Article article = new Article() ;
-        article.setTitle(articleDto.getTitle());
-        article.setDescription(articleDto.getDescription());
-        article.setAuthor(user); // Attribution de l'auteur à l'article
-        article.setTheme(themeIdObject);
-        System.err.println("article: " + article);
-
-
-        // Enregistrement de l'article via le service
-        Article savedRentals = articleService.saveArticles(article);
-                                
-        if (savedRentals != null) {
-            return new ResponseEntity<>(savedRentals, HttpStatus.OK).getBody();
+            articleWithMessagesDTO.setMessages(messageDTOs);
+            return new ResponseEntity<>(articleWithMessagesDTO, HttpStatus.OK);
         } else {
-            return null;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    
+        @PostMapping("/articles/{articleId}/messages")
+        public ResponseEntity<PostMessagesDto> saveMessages(@RequestHeader("Authorization") String authorizationHeader,
+                                                            @PathVariable Long articleId, 
+                                                            @RequestBody RequestMessagesDTO message) {
+            String token = authorizationHeader.substring("Bearer ".length()).trim();
+            User user = userService.getUserByToken(token);
+            
+            Optional<Article> articleOptional = articleService.getArticleById(articleId);
+            
+            if (articleOptional.isPresent()) {
+                Article article = articleOptional.get();
+        
+                // Initialiser la collection si elle est nulle
+                if (article.getMessages() == null) {
+                    article.setMessages(new HashSet<>()); // Assurez-vous que c'est un Set
+                }
+        
+                Messages newMessage = new Messages();
+                newMessage.setUser(user);
+                newMessage.setMessage(message.getMessage());
+                article.getMessages().add(newMessage); // Ajout du message
+        
+                articleService.saveArticles(article);
+        
+                PostMessagesDto postMessagesDto = new PostMessagesDto();
+                postMessagesDto.setMessage(message.getMessage());
+                postMessagesDto.setArticle_id(article.getId());
+                postMessagesDto.setUser_id(user.getId());
+                
+                return new ResponseEntity<>(postMessagesDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Article non trouvé
+            }
+        }
+        
+
+        @PostMapping(value = "/articles")
+        @ApiOperation(value = "Create a new Article", notes = "Creates a new Article.")
+        public ResponseEntity<Article> saveRentals(@RequestHeader("Authorization") String authorizationHeader,
+                                                    @RequestBody ArticleRequestDto articleDto) {
+            // Extraction du token d'authentification du header
+            String token = authorizationHeader.substring("Bearer ".length()).trim();
+        
+            // Récupération de l'utilisateur à partir du token
+            User user = userService.getUserByToken(token);
+        
+            // Création d'une nouvelle instance d'article
+            Long themeId = articleDto.getTheme();
+            Themes themeIdObject = themesService.getThemesById(themeId);   
+            Article article = new Article();
+            article.setTitle(articleDto.getTitle());
+            article.setDescription(articleDto.getDescription());
+            article.setAuthor(user); // Attribution de l'auteur à l'article
+            article.setTheme(themeIdObject);
+            System.err.println("article: " + article);
+        
+            // Enregistrement de l'article via le service
+            Article savedRentals = articleService.saveArticles(article);
+                                        
+            if (savedRentals != null) {
+                return new ResponseEntity<>(savedRentals, HttpStatus.CREATED); // Utilisez 201 Created
+            } else {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retournez un statut d'erreur approprié
+            }
+        }
+        
     
     // Méthode pour récupérer des articles par thème
     @GetMapping("/articles/theme/{themeId}")

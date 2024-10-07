@@ -63,16 +63,13 @@ export class NavbarComponent implements OnInit {
 
     private checkIfArticlesPage() {
         this.isArticlesPage = this.router.url === '/article'; // Seulement pour '/article'
-        console.log('isArticlesPage:', this.isArticlesPage);
     }
 
     private checkIfThemesPage() {
         this.isThemesPage = this.router.url === '/themes'; // Seulement pour '/themes'
-        console.log('isThemesPage:', this.isThemesPage);
     }
 
     private checkIfProfilePage() {
         this.isProfilePage = this.router.url === '/profile';
-        console.log('isProfilePage:', this.isProfilePage, 'URL actuelle:', this.router.url);
     }
 }

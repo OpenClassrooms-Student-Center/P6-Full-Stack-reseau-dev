@@ -10,4 +10,6 @@ public class ArticleMessagesDTO {
     private String title;
     private String description;
     private List<MessageDTO> messages;
+    private String createdAt;  // Ajouté pour la date de création
+    private String updatedAt;  // Ajouté pour la date de mise à jour
 }
