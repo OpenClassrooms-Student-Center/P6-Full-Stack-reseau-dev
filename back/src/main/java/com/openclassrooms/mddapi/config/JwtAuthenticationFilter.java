@@ -24,77 +24,77 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    // Injection de la clé secrète pour signer et valider les jetons JWT depuis les propriétés de configuration
+    // Injection de la clé secrète à partir des propriétés de configuration 
     @Value("${jwt}")
     private String jwtSecret;
 
-    // Méthode principale du filtre qui s'exécute à chaque requête HTTP
+    // Méthode principale du filtre qui s'exécute pour chaque requête HTTP
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            // Extraction du JWT depuis la requête HTTP
+            // Extraction du jeton JWT depuis la requête HTTP
             String jwtToken = extractJwtFromRequest(request);
-            
+
             // Validation du JWT si celui-ci est présent
             if (jwtToken != null && validateJwtToken(jwtToken)) {
-                // Si le JWT est valide, on obtient l'objet d'authentification à partir du JWT
+                // Si le JWT est valide, on obtient les informations d'authentification
                 Authentication authentication = getAuthentication(jwtToken);
-                
-                // Enregistrement de l'utilisateur authentifié dans le contexte de sécurité de Spring Security
+
+                // Ajout de l'authentification au contexte de sécurité de Spring
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            // Gestion des erreurs liées au JWT (invalidité, expiration, etc.)
-            System.err.println("Error processing JWT -> Message: " + e.getMessage());
+            // Gestion des erreurs liées au JWT (expiration, invalidité, etc.)
+            System.err.println("Erreur lors du traitement du JWT -> Message: " + e.getMessage());
         }
-        
-        // Passe la requête au filtre suivant dans la chaîne de filtres
+
+        // Passage de la requête au filtre suivant dans la chaîne de filtres
         filterChain.doFilter(request, response);
     }
 
-    // Méthode pour extraire le jeton JWT depuis les en-têtes de la requête HTTP
+    // Méthode pour extraire le jeton JWT depuis l'en-tête HTTP "Authorization"
     private String extractJwtFromRequest(HttpServletRequest request) {
-        // Récupère le header "Authorization" de la requête
+        // Récupère l'en-tête "Authorization"
         String bearerToken = request.getHeader("Authorization");
 
-        // Vérifie si le token est présent et commence par "Bearer "
+        // Vérifie si le token commence par "Bearer " et renvoie le token sans le préfixe
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            // Retourne le token sans le préfixe "Bearer "
-            return bearerToken.substring(7);
+            return bearerToken.substring(7);  // Retourne le JWT sans "Bearer "
         }
 
-        // Retourne null si aucun token n'est trouvé ou s'il n'a pas le bon format
+        // Si aucun token valide n'est trouvé, retourne null
         return null;
     }
 
-    // Méthode pour valider le jeton JWT
+    // Méthode pour valider le JWT à l'aide de la clé secrète
     private boolean validateJwtToken(String jwtToken) {
         try {
-            // Valide le jeton en utilisant la clé secrète pour vérifier la signature et extraire le corps du token
+            // Validation du token en utilisant la clé secrète (vérifie la signature)
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwtToken).getBody();
             return true;  // Si le token est valide, retourne true
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException e) {
-            // Si une erreur survient lors de la validation du token, on capture l'exception
-            System.err.println("JWT validation error -> Message: " + e.getMessage());
+            // Gestion des exceptions liées à un JWT invalide
+            System.err.println("Erreur de validation du JWT -> Message: " + e.getMessage());
             return false;  // Si le token est invalide, retourne false
         }
     }
 
-    // Méthode pour extraire les informations d'authentification à partir du jeton JWT
+    // Méthode pour extraire les informations d'authentification à partir du JWT
     private Authentication getAuthentication(String jwtToken) {
-        // Récupère les claims (données contenues dans le JWT) en utilisant la clé secrète
+        // Extraction des claims (données du JWT) avec la clé secrète
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwtToken).getBody();
-        
-        // Extrait l'email de l'utilisateur à partir des claims du JWT (le "subject" du JWT)
+
+        // Récupère le "subject" (souvent l'email ou l'identifiant de l'utilisateur) du JWT
         String email = claims.getSubject();
-        
-        // Si l'email est présent, on crée et retourne un objet d'authentification
+
+        // Si l'email est présent, crée et retourne un objet d'authentification
         if (email != null) {
+            // L'objet UsernamePasswordAuthenticationToken contient les informations d'authentification
             return new UsernamePasswordAuthenticationToken(email, null, null);
         }
-        
-        // Si aucune information d'authentification n'est trouvée, retourne null
+
+        // Retourne null si aucune authentification n'est trouvée
         return null;
     }
 }

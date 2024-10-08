@@ -22,29 +22,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Liste blanche des routes qui sont accessibles sans authentification
     private static final String[] AUTH_WHITELIST = {
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/api/auth/login",  // Route de connexion autorisée sans authentification
-            "/api/auth/register", // Route d'enregistrement autorisée sans authentification
-    };
+        "/v2/api-docs",
+        "/swagger-resources",
+        "/swagger-resources/**",
+        "/configuration/ui",
+        "/configuration/security",
+        "/swagger-ui.html",
+        "/webjars/**",
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/api/auth/login",
+        "/api/auth/register",};
 
     // Configuration de la sécurité HTTP
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS)  // Utilisation de sessions stateless (sans session persistante)
-            .and()
-            .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()  // Autorisation des routes dans la whitelist sans authentification
-                .anyRequest().authenticated().and()  // Toute autre requête nécessite une authentification
+                .csrf().disable() // Désactivation de la protection CSRF (utile pour les API stateless)
+                .sessionManagement().sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS) // Utilisation de sessions stateless (sans session persistante)
+                .and()
+                .authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll() // Autorisation des routes dans la whitelist sans authentification
+                .anyRequest().authenticated().and() // Toute autre requête nécessite une authentification
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler());  // Gestion des erreurs d'authentification pour les requêtes non autorisées
 
@@ -61,8 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Gestion des requêtes non autorisées en renvoyant un statut 401 (Unauthorized)
     @Bean
     public AuthenticationEntryPoint unauthorizedHandler() {
-        return (request, response, authException) -> 
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        return (request, response, authException)
+                -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
-
 }

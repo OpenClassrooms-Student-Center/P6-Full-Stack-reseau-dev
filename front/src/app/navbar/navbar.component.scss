@@ -105,12 +105,13 @@
   .menu ul {
     flex-direction: column;
     padding: 20px;
+    text-align: right;
   }
 
   .avatar {
     position: absolute;
     bottom: 10px;
-    right: 40px;
+    right: 20px;
   }
 
   .menu li {

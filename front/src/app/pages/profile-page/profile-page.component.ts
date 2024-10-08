@@ -39,7 +39,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
   logout() {
     localStorage.removeItem('token');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/home');
   }
   unSubscribeTheme(themeId: number) {
     const headers = { 'Access-Control-Allow-Origin': '*' };

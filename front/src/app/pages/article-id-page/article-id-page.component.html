@@ -2,19 +2,19 @@
 
 <!-- Conteneur principal pour le back button et le title -->
 <div class="header-container" *ngIf="article">
-  <div class="back-button" (click)="goBack()">&#8592;</div> 
+  <div class="back-button" (click)="goBack()">&#8592;</div>
   <h2 class="article-title">{{ article.title }}</h2>
 </div>
 
 <div class="container" *ngIf="article">
   <div class="header">
-    <p>Date : {{ article.createdAt | date: 'dd MMMM yyyy' }}</p>
-    <p>Auteur : {{ article.username || 'Auteur inconnu' }}</p>
-    <p>Thème : {{ article.themeTitle || 'Thème inconnu' }}</p>
-</div>
+    <p>Date : {{ article.createdAt | date : "dd MMMM yyyy" }}</p>
+    <p>Auteur : {{ article.username || "Auteur inconnu" }}</p>
+    <p>Thème : {{ article.themeTitle || "Thème inconnu" }}</p>
+  </div>
 
   <p class="description">{{ article.description }}</p>
-  <hr>
+  <hr />
   <h3>Commentaires:</h3>
   <div *ngIf="article.messages && article.messages.length > 0" class="messages">
     <div *ngFor="let message of article.messages" class="message">
@@ -22,12 +22,20 @@
         <div class="message-bubble">
           <div class="content">{{ message.message }}</div>
         </div>
-        <div class="user">{{ message.userUsername }}</div> <!-- Utilisateur du message -->
+        <div class="user">{{ message.userUsername }}</div>
+        <!-- Utilisateur du message -->
       </div>
     </div>
   </div>
   <div class="postMessage">
-    <textarea [(ngModel)]="formData.message" placeholder="Écrivez ici votre commentaire" rows="4"></textarea>
-    <i (click)="postMessage(article.id)" class="fa-sharp fa-solid fa-paper-plane SendMsg"></i>
+    <textarea
+      [(ngModel)]="formData.message"
+      placeholder="Écrivez ici votre commentaire"
+      rows="4"
+    ></textarea>
+    <i
+      (click)="postMessage(article.id)"
+      class="fa-sharp fa-solid fa-paper-plane SendMsg"
+    ></i>
   </div>
 </div>

@@ -13,12 +13,12 @@ interface FormData {
 @Component({
   selector: 'app-article-id-page',
   templateUrl: './article-id-page.component.html',
-  styleUrls: ['./article-id-page.component.scss']
+  styleUrls: ['./article-id-page.component.scss'],
 })
 export class ArticleIdPageComponent implements OnInit, OnDestroy {
   article: Article | undefined;
   formData: FormData = {
-    message: ''
+    message: '',
   };
   private articleSubscription: Subscription | undefined;
 
@@ -30,7 +30,7 @@ export class ArticleIdPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = params['id'];
       if (id) {
         this.fetchArticle(id);
@@ -45,37 +45,38 @@ export class ArticleIdPageComponent implements OnInit, OnDestroy {
   }
 
   postMessage(id: number) {
-    this.http.post(`/api/articles/${id}/messages`, this.formData)
-      .subscribe(
-        (response) => {
-          this.router.navigate([`/article/${id}`]);
-          location.reload();
-        },
-        (error) => {
-          this.snackbarService.openSnackBar("Erreur lors de l'inscription :", "fermer");
-        }
-      );
+    this.http.post(`/api/articles/${id}/messages`, this.formData).subscribe(
+      (response) => {
+        this.router.navigate([`/article/${id}`]);
+        location.reload();
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(
+          "Erreur lors de l'inscription :",
+          'fermer'
+        );
+      }
+    );
   }
 
   fetchArticle(id: number) {
-    this.articleSubscription = this.http.get<Article>(`/api/articles/${id}`)
-        .subscribe(
-            (response) => {
-                console.log("Article récupéré :", response); // Vérifie ici ce qui est renvoyé
-                this.article = response; // Assigne la réponse à l'article
-                console.log("Article assigné :", this.article); // Vérifie l'article assigné
-            },
-            (error) => {
-                console.error("Erreur lors de la récupération des articles :", error);
-                this.snackbarService.openSnackBar('Erreur lors de la récupération des articles :', "fermer");
-            }
-        );
-}
-
-
-
-
-
+    this.articleSubscription = this.http
+      .get<Article>(`/api/articles/${id}`)
+      .subscribe(
+        (response) => {
+          console.log('Article récupéré :', response); // Vérifie ici ce qui est renvoyé
+          this.article = response; // Assigne la réponse à l'article
+          console.log('Article assigné :', this.article); // Vérifie l'article assigné
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération des articles :', error);
+          this.snackbarService.openSnackBar(
+            'Erreur lors de la récupération des articles :',
+            'fermer'
+          );
+        }
+      );
+  }
 
   goBack(): void {
     this.router.navigate(['/article']);

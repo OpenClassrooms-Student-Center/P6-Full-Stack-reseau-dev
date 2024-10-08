@@ -5,9 +5,8 @@ describe('ArticleIdPageComponent', () => {
   let fixture: ComponentFixture<ArticleIdPageComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArticleIdPageComponent ]
-    })
-    .compileComponents();
+      declarations: [ArticleIdPageComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(ArticleIdPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

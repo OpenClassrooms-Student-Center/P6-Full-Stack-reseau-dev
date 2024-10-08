@@ -1,20 +1,20 @@
 .header-container {
   display: flex;
-  align-items: center; /* Centrer verticalement */
-  margin-bottom: 20px; /* Ajouter de l'espace en dessous du header */
+  align-items: center;
+  margin-bottom: 20px;
   margin-top: 5px;
 }
 
 .back-button {
-  font-size: 50px; 
+  font-size: 50px;
   cursor: pointer;
   color: black;
-  margin-right: 20px; /* Espace entre le bouton et le titre */
+  margin-right: 20px;
 }
 
 .article-title {
-  font-size: 2rem; /* Ajuster la taille de la police si nécessaire */
-  margin: 0; /* Supprimer la marge par défaut */
+  font-size: 2rem;
+  margin: 0;
   margin-left: 6%;
 }
 
@@ -25,7 +25,7 @@
 
 .header {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   width: 100%;
 }
 
@@ -40,38 +40,36 @@
   margin-right: 6%;
 }
 
-code
 .messageContainer {
   display: flex;
-  justify-content: space-between; /* Espace entre le commentaire et l'utilisateur */
-  align-items: center; /* Aligne les éléments verticalement au centre */
-  width: 100%; /* Utilise toute la largeur disponible */
-  margin-bottom: 10px; /* Ajoute un espacement entre les messages */
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .message-bubble {
+  flex-grow: 1;
   display: flex;
-  flex-direction: column; /* Permet au contenu de s'empiler */
-  align-items: flex-end; /* Aligne le commentaire à droite */
-  max-width: 100%; /* Limite la largeur du commentaire */
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 100%;
 }
 
 .message-bubble .content {
-  background-color: #f2f2f2; /* Couleur de fond pour le commentaire */
+  background-color: #f2f2f2;
   border-radius: 10px;
   padding: 10px;
-  margin-bottom: 5px; /* Ajoute un espacement sous le commentaire */
+  margin-bottom: 5px;
 }
 
-/* Style pour le nom d'utilisateur */
 .user {
-  margin-right: 10px; /* Ajoute un espacement à droite du nom d'utilisateur */
+  margin-right: 10px;
 }
-
 
 .postMessage {
   display: flex;
-  align-items: center; 
+  align-items: center;
   width: 88%;
   margin-left: 6%;
   margin-right: 6%;
@@ -80,8 +78,8 @@ code
 .postMessage textarea {
   width: 100%;
   padding: 10px;
-  box-sizing: border-box; 
-  resize: vertical; 
+  box-sizing: border-box;
+  resize: vertical;
   margin-bottom: 10px;
   border-radius: 10px;
   border: 1px solid #000000;
@@ -95,28 +93,25 @@ code
   color: #69048e;
 }
 .back-button {
-  font-size: 50px; 
+  font-size: 50px;
   cursor: pointer;
   color: black;
-  margin: 20px 0; 
-  padding-left: 10px; 
+  margin: 20px 0;
+  padding-left: 10px;
   font-weight: 100;
 }
 .back-button:hover {
-  text-decoration: none; 
-  opacity: 0.8; 
+  text-decoration: none;
+  opacity: 0.8;
 }
 
 .SendMsg {
-  color: #69048e; /* Définir la couleur ici */
-  cursor: pointer; /* Indiquer que c'est cliquable */
-  transition: color 0.3s; /* Ajoute une transition pour le changement de couleur */
+  color: #69048e;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-
-
 @media screen and (max-width: 768px) {
- 
   .header-container {
     margin-top: 10px;
   }
@@ -128,37 +123,34 @@ code
     padding-top: 2%;
   }
   .message-bubble {
-    flex-direction: column; /* Aligne le contenu verticalement */
-    align-items: flex-start; /* Aligne le contenu à droite */
-}
-
-.messageContainer {
-  flex-direction: column; /* Change la direction pour empiler les éléments */
-  align-items: flex-start; /* Aligne à gauche */
-}
-.user {
-  margin-left: 80%; /* Ajoute un espacement à droite du nom d'utilisateur */
-}
-
-.message-bubble .user {
-  align-self: flex-end; /* Aligne le nom d'utilisateur à droite */
-  text-align: right; /* Assure que le texte est à droite */
-  margin-top: 0; /* Supprime le margin-top pour aligner directement sous le commentaire */
-}
-.postMessage{
-  position: relative;
-  width: 100%;
-  margin-left: 0%;
-  margin-right: 0%;
-}
-.postMessage i {
- margin-left: 85%;
- padding-bottom: 3%;
-}
-.SendMsg{
-  position: absolute;
- 
-}
-
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
+
+  .messageContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .user {
+    margin-left: 80%;
+  }
+
+  .message-bubble .user {
+    align-self: flex-end;
+    text-align: right;
+    margin-top: 0;
+  }
+  .postMessage {
+    position: relative;
+    width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .postMessage i {
+    margin-left: 85%;
+    padding-bottom: 3%;
+  }
+  .SendMsg {
+    position: absolute;
+  }
+}

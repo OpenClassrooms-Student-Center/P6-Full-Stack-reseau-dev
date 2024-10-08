@@ -28,7 +28,7 @@ public class UserService {
     // Injecte la configuration JWT, probablement utilisée pour la gestion des tokens
     @Autowired
     private JwtConfig jwtConfig;
-    
+
     // Injecte le repository des thèmes pour manipuler les entités "Themes"
     @Autowired
     private ThemesRepository themeRepository;
@@ -39,6 +39,7 @@ public class UserService {
 
     // Exception personnalisée pour gérer les cas où un utilisateur n'est pas trouvé
     public class NotFoundException extends RuntimeException implements Serializable {
+
         private static final long serialVersionUID = 1L;  // ID de version pour la sérialisation
 
         public NotFoundException(String message) {
@@ -62,7 +63,6 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCreatedAt(java.time.LocalDateTime.now());  // Définit la date de création à la date actuelle
         return userRepository.save(user);
-
     }
 
     // Supprime un utilisateur en fonction de son ID
@@ -100,7 +100,6 @@ public class UserService {
             existingUser.setUsername(updatedUser.getUsername());
             existingUser.setEmail(updatedUser.getEmail());
             return userRepository.save(existingUser);
-
         } else {
             // Lance une exception si l'utilisateur n'est pas trouvé
             throw new NotFoundException("Enregistrement introuvable");
@@ -135,10 +134,10 @@ public class UserService {
     public String getEmailFromToken(String token) {
         // Décode le token et récupère le sujet (l'email)
         String email = Jwts.parser()
-            .setSigningKey(jwtConfig.getJwtSecret())
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
+                .setSigningKey(jwtConfig.getJwtSecret())
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
         return email;  // Retourne l'email extrait du token
     }
 
@@ -154,7 +153,7 @@ public class UserService {
         User user = getUserByEmail(email).orElseThrow(() -> new NotFoundException("Utilisateur introuvable"));
         return user;
     }
-    
+
     // Souscrit un utilisateur à un thème
     public User suscribeToTheme(Long userId, Long themeId) {
         // Cherche l'utilisateur et le thème par leurs ID respectifs
@@ -165,10 +164,12 @@ public class UserService {
         // Ajoute le thème à la liste des thèmes de l'utilisateur
         if (existingUser != null && existingTheme != null) {
             existingUser.getThemes().add(existingTheme);
-        }        // Sauvegarde l'utilisateur avec le nouveau thème ajouté
+        }
+        // Sauvegarde l'utilisateur avec le nouveau thème ajouté
         System.err.println("existingUser 2 : " + existingUser);
         return userRepository.save(existingUser);
     }
+
     // Désabonner l'utilisateur d'un thème
     public User unsubscribeFromTheme(Long userId, Long themeId) {
         User existingUser = userRepository.findById(userId).orElse(null);
@@ -178,15 +179,14 @@ public class UserService {
         }
         return userRepository.save(existingUser);
     }
+
     // Liste de tous les thèmes de l'utilisateur
     public Set<Themes> getThemesByUser(Long userId) {
-        
         User existingUser = userRepository.findById(userId).orElse(null);
         if (existingUser != null) {
-            return existingUser.getThemes();
+            return existingUser.getThemes();  // Retourne les thèmes de l'utilisateur
         } else {
             throw new NotFoundException("Utilisateur introuvable");
         }
-
-
-    } }
+    }
+}

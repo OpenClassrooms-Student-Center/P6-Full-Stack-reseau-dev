@@ -10,18 +10,18 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc
+@EnableWebMvc  // Active la prise en charge de MVC dans l'application
 public class WebConfig implements WebMvcConfigurer {
 
-    // Méthode pour ajouter des mappings CORS
+    // Méthode pour ajouter des mappings CORS (Cross-Origin Resource Sharing)
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")  // Autoriser toutes les URL
-            .allowedOrigins("*")  // Autoriser toutes les origines (domains) à faire des requêtes
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH","delete","put")
-            .allowedHeaders("*");  // Autoriser tous les en-têtes
+        registry.addMapping("/**") // Autoriser toutes les URL
+                .allowedOrigins("*") // Autoriser toutes les origines (domains) à faire des requêtes
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH", "DELETE", "PUT") // Méthodes HTTP autorisées
+                .allowedHeaders("*");  // Autoriser tous les en-têtes
     }
-    
+
     // Bean pour configurer un filtre CORS
     @Bean
     public CorsFilter corsFilter() {
@@ -31,5 +31,5 @@ public class WebConfig implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", config); // Enregistrer la configuration CORS pour toutes les URL
         return new CorsFilter(source); // Retourner un nouveau filtre CORS avec la configuration
     }
-    
+
 }

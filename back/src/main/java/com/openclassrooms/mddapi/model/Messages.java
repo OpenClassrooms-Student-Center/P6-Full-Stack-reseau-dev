@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.model;
 
-
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -16,33 +15,36 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+// Classe représentant un message dans le système
 
 @Data
-@Entity
-@Table(name = "Messages")
+@Entity // Annotation pour indiquer que cette classe est une entité JPA
+@Table(name = "Messages") // Spécifie le nom de la table dans la base de données
 public class Messages {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-@ManyToOne(fetch = FetchType.EAGER)
-@JoinColumn(name = "users_id")
-private User user;
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private Integer id; // Identifiant unique du message
 
-@ManyToOne(fetch = FetchType.EAGER)
-@JoinColumn(name = "article_id")
-private Article article;
-@Size(max = 5000)
-@NotNull
-private String message;
+    // Relation Many-to-One avec User (l'utilisateur qui a créé le message)
+    @ManyToOne(fetch = FetchType.EAGER) // Charge l'utilisateur de manière immédiate
+    @JoinColumn(name = "users_id") // Colonne référencée pour l'utilisateur
+    private User user; // Référence à l'utilisateur
 
-@Column(name = "created_at")
-private LocalDateTime createdAt;
+    // Relation Many-to-One avec Article (l'article auquel le message est associé)
+    @ManyToOne(fetch = FetchType.EAGER) // Charge l'article de manière immédiate
+    @JoinColumn(name = "article_id") // Colonne référencée pour l'article
+    private Article article; // Référence à l'article
 
-@Column(name = "updated_at")
-private LocalDateTime updatedAt;
+    // Contenu du message
+    @Size(max = 5000) 
+    @NotNull 
+    private String message;
 
+    @Column(name = "created_at") 
+    private LocalDateTime createdAt; 
 
-
+    @Column(name = "updated_at") 
+    private LocalDateTime updatedAt; 
 
 }
