@@ -1,8 +1,10 @@
+// Styles généraux pour le conteneur
 .container {
   padding: 2%;
   position: relative;
 }
 
+// Styles pour le conteneur des boutons
 .button-container {
   display: flex;
   align-items: center;
@@ -20,11 +22,12 @@
   margin-bottom: 20px;
 }
 
+// Styles pour les informations métadonnées
 .meta-info {
-  display: flex; /* Utiliser flexbox pour aligner les éléments */
-  justify-content: space-between; /* Utiliser space-between pour que les éléments soient espacés */
-  margin-bottom: 10px; /* Ajouter un peu d'espace entre la ligne de métadonnées et la description */
-  align-items: center; /* Aligner verticalement au centre */
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
 }
 
 .meta-info span {
@@ -39,14 +42,15 @@
   position: relative;
 }
 
+// Styles pour la barre de navigation
 .navbar {
-  // Autres styles de la barre de navigation
   .active-link {
     color: #5f0497;
     font-weight: bold;
   }
 }
 
+// Styles pour le conteneur des articles
 .article-container {
   display: flex;
   flex-wrap: wrap;
@@ -66,15 +70,15 @@
   margin-bottom: 20px;
 }
 
-
+// Styles pour les articles
 .article {
   background-color: #f0f0f0;
   padding: 18px;
   border-radius: 5px;
   height: 250px;
   overflow: hidden;
-  width: 85%; /* Les articles occupent toute la largeur sur les petits écrans */
-  margin-bottom: 20px; /* Espacement entre les articles */
+  width: 85%;
+  margin-bottom: 20px;
 }
 
 .description {
@@ -84,27 +88,25 @@
   text-align: justify;
 }
 
-
+// Styles pour les écrans de petite taille
 @media screen and (max-width: 768px) {
-  /* Sur les petits écrans, chaque article occupe toute la largeur */
   .column {
     width: 100%;
   }
-  
-  /* Centre les boutons sur mobile */
+
   .button-container {
-    flex-direction: column; /* Les boutons sont empilés en colonne */
-    align-items: center; /* Centrer les boutons horizontalement */
+    flex-direction: column;
+    align-items: center;
   }
 
   .putArticleBtn {
-    width: 40%; /* Largeur du bouton à 100% pour bien occuper l'espace */
-    margin-bottom: 20px; /* Ajouter un espacement entre les boutons */
-    margin-top:20px;
+    width: 40%;
+    margin-bottom: 20px;
+    margin-top: 20px;
   }
 
   .sort-btn {
-    position: static; /* Retire la position absolue pour le bouton de tri */
-    width: 100%; /* Largeur à 100% pour occuper toute la largeur disponible */
+    position: static;
+    width: 100%;
   }
 }

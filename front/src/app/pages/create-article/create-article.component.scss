@@ -1,38 +1,41 @@
+// Styles généraux pour le conteneur
 .container {
   width: 50%;
-  margin: 0 auto; 
+  margin: 0 auto;
   padding: 20px;
-  box-sizing: border-box; 
-
+  box-sizing: border-box;
 }
+
+// Styles pour l'en-tête
 .header {
-  display: flex; /* Utilisation de Flexbox */
-  align-items: center; /* Alignement vertical centré */
+  display: flex;
+  align-items: center;
 }
 
 h2 {
-  flex: 1; /* Permet au titre de prendre tout l'espace restant */
-  text-align: center; /* Centre le texte horizontalement */
+  flex: 1;
+  text-align: center;
   margin: 0% 8% 0% 0%;
 }
+
+// Styles pour le bouton de retour
 .back-button {
-  font-size: 50px; 
+  font-size: 50px;
   cursor: pointer;
   color: black;
-  margin: 20px 0; /* Ajout d'une marge verticale pour espacer le bouton */
-  padding-left: 30px; /* Ajout de remplissage à gauche */
+  margin: 20px 0;
+  padding-left: 30px;
   font-weight: 100;
 }
 
-
-
 .back-button:hover {
-  text-decoration: none; 
-  opacity: 0.8; 
+  text-decoration: none;
+  opacity: 0.8;
 }
 
+// Styles pour le groupe de formulaires
 .form-group {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 button {
@@ -45,7 +48,7 @@ button {
 }
 
 textarea {
-  min-height: 150px; 
+  min-height: 150px;
 }
 
 input[type="text"],
@@ -54,59 +57,58 @@ select {
   border: 1px solid #5f0497;
   border-radius: 5px;
   padding: 8px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 button {
-  border: none; 
+  border: none;
   border-radius: 5px;
   padding: 10px 50px;
   background-color: #5f0497;
   color: #fff;
   font-weight: bold;
-  cursor: pointer; 
-  transition: background-color 0.3s; 
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
 
+// Styles pour le select
 select {
   background-color: #ffffff;
-  /* Suppression de la flèche */
-  -webkit-appearance: none; /* Pour Chrome et Safari */
-  -moz-appearance: none; /* Pour Firefox */
-  appearance: none; /* Standard */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 select option[value=""][disabled] {
-  color: #848484; 
+  color: #848484;
 }
 
+// Styles pour les écrans de petite taille
 @media screen and (max-width: 768px) {
   .container {
-    width: 95%; 
-    padding: 10px; 
+    width: 95%;
+    padding: 10px;
   }
 
   .header {
-    flex-direction: column; 
-    align-items: flex-start; /* Alignement à gauche pour la flèche */
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .back-button {
-    font-size: 40px; 
-    padding-left: 10px; 
-    margin-bottom: 10px; 
-    align-self: flex-start; /* Assure que la flèche reste à gauche */
+    font-size: 40px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    align-self: flex-start;
   }
 
   h2 {
-    text-align: center; /* Centre le texte */
-    margin: 10px 0; /* Ajoute un peu d'espace au-dessus et en dessous */
-    width: 100%; /* Prend toute la largeur */
+    text-align: center;
+    margin: 10px 0;
+    width: 100%;
   }
 }
-
-

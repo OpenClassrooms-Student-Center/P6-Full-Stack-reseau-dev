@@ -1,3 +1,4 @@
+// Styles généraux pour la page d'article
 .header-container {
   display: flex;
   align-items: center;
@@ -5,24 +6,36 @@
   margin-top: 5px;
 }
 
+// Styles pour le bouton de retour
 .back-button {
   font-size: 50px;
   cursor: pointer;
   color: black;
   margin-right: 20px;
+  margin: 20px 0;
+  padding-left: 10px;
+  font-weight: 100;
 }
 
+.back-button:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+// Styles pour le titre de l'article
 .article-title {
   font-size: 2rem;
   margin: 0;
   margin-left: 6%;
 }
 
+// Styles pour le conteneur principal
 .container {
   padding-inline: 10%;
   padding-top: 1%;
 }
 
+// Styles pour l'en-tête
 .header {
   display: flex;
   flex-wrap: wrap;
@@ -33,6 +46,7 @@
   margin-right: 2%;
 }
 
+// Styles pour les messages
 .messages {
   margin-top: 20px;
   width: 88%;
@@ -48,11 +62,12 @@
   margin-bottom: 10px;
 }
 
+// Styles pour la bulle de message
 .message-bubble {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   max-width: 100%;
 }
 
@@ -63,10 +78,12 @@
   margin-bottom: 5px;
 }
 
+// Styles pour l'utilisateur
 .user {
   margin-right: 10px;
 }
 
+// Styles pour la zone de saisie de message
 .postMessage {
   display: flex;
   align-items: center;
@@ -75,6 +92,7 @@
   margin-right: 6%;
   margin-top: 20px;
 }
+
 .postMessage textarea {
   width: 100%;
   padding: 10px;
@@ -84,44 +102,40 @@
   border-radius: 10px;
   border: 1px solid #000000;
 }
+
+// Styles pour l'icône d'envoi
 .postMessage i {
   font-size: 2rem;
   margin: 1%;
 }
+
 .postMessage i:hover {
   cursor: pointer;
   color: #69048e;
 }
-.back-button {
-  font-size: 50px;
-  cursor: pointer;
-  color: black;
-  margin: 20px 0;
-  padding-left: 10px;
-  font-weight: 100;
-}
-.back-button:hover {
-  text-decoration: none;
-  opacity: 0.8;
-}
 
+// Styles pour le message d'envoi
 .SendMsg {
   color: #69048e;
   cursor: pointer;
   transition: color 0.3s;
 }
 
+// Styles pour les écrans de petite taille
 @media screen and (max-width: 768px) {
   .header-container {
     margin-top: 10px;
   }
+
   .header p {
     margin-right: 10%;
   }
+
   .container {
     padding-inline: 2%;
     padding-top: 2%;
   }
+
   .message-bubble {
     flex-direction: column;
     align-items: flex-start;
@@ -131,6 +145,7 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
   .user {
     margin-left: 80%;
   }
@@ -140,16 +155,19 @@
     text-align: right;
     margin-top: 0;
   }
+
   .postMessage {
     position: relative;
     width: 100%;
     margin-left: 0%;
     margin-right: 0%;
   }
+
   .postMessage i {
     margin-left: 85%;
     padding-bottom: 3%;
   }
+
   .SendMsg {
     position: absolute;
   }

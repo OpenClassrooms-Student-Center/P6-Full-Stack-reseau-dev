@@ -1,11 +1,24 @@
+<!-- Composant de la barre de navigation -->
 <app-navbar></app-navbar>
 
+<!-- Conteneur principal pour les thèmes -->
 <div class="container">
-    <div class="theme-grid">
-      <div class="theme-card" *ngFor="let theme of themes">
-        <h3>{{ theme.title }}</h3>
-        <p class="description">{{ theme.description }}</p>
-        <button mat-raised-button color="primary" (click)="subscribeToTheme(theme.id)">S'abonner</button>
-      </div>
+  <!-- Grille de thèmes affichant chaque thème sous forme de carte -->
+  <div class="theme-grid">
+    <!-- Boucle pour générer une carte pour chaque thème dans le tableau 'themes' -->
+    <div class="theme-card" *ngFor="let theme of themes">
+      <!-- Titre du thème -->
+      <h3>{{ theme.title }}</h3>
+      <!-- Description du thème -->
+      <p class="description">{{ theme.description }}</p>
+      <!-- Bouton pour s'abonner au thème, appelle la méthode 'subscribeToTheme' avec l'ID du thème -->
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="subscribeToTheme(theme.id)"
+      >
+        S'abonner
+      </button>
     </div>
   </div>
+</div>

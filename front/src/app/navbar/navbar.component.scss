@@ -12,6 +12,7 @@
   color: #5f0497;
 }
 
+/* Styles pour le menu */
 .menu {
   display: flex;
   align-items: center;
@@ -33,19 +34,22 @@
   color: black;
 }
 
+/* Styles pour l'avatar de l'utilisateur */
 .avatar img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 
-.profile-avatar  {
-  border: 2px solid #5f0497 !important; /* Contour en #5f0497 */
-  border-radius: 50%; /* Arrondit l'avatar */
-  padding: 2px; /* Ajoute un petit espace entre le contour et l'image */
-  box-sizing: border-box; /* S'assure que le padding ne change pas la taille totale */
+/* Styles pour l'avatar du profil */
+.profile-avatar {
+  border: 2px solid #5f0497 !important;
+  border-radius: 50%;
+  padding: 2px;
+  box-sizing: border-box;
 }
 
+/* Classe pour masquer des éléments */
 .hidden {
   display: none;
 }
@@ -55,14 +59,14 @@
   display: none;
 }
 
-/* Overlay to grey out the page */
+/* Styles pour l'overlay qui assombrit l'arrière-plan */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent grey */
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
   display: none;
   opacity: 0;
@@ -74,7 +78,7 @@
   opacity: 1;
 }
 
-/* Afficher le menu burger uniquement sur les écrans de petite taille */
+/* Styles spécifiques pour les écrans de petite taille */
 @media screen and (max-width: 768px) {
   .burger-menu {
     display: block;

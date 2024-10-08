@@ -1,11 +1,13 @@
 <app-navbar></app-navbar>
+<!-- Composant de la barre de navigation, placé en haut de la page -->
 
-<!-- Conteneur principal pour le back button et le title -->
+<!-- Conteneur principal pour le bouton de retour et le titre de l'article -->
 <div class="header-container" *ngIf="article">
   <div class="back-button" (click)="goBack()">&#8592;</div>
   <h2 class="article-title">{{ article.title }}</h2>
 </div>
 
+<!-- Conteneur pour afficher les détails de l'article si l'objet 'article' est disponible -->
 <div class="container" *ngIf="article">
   <div class="header">
     <p>Date : {{ article.createdAt | date : "dd MMMM yyyy" }}</p>
@@ -14,25 +16,36 @@
   </div>
 
   <p class="description">{{ article.description }}</p>
+  <!-- Description de l'article -->
   <hr />
   <h3>Commentaires:</h3>
+  <!-- Titre pour la section des commentaires -->
+
+  <!-- Section d'affichage des commentaires si des messages sont présents -->
   <div *ngIf="article.messages && article.messages.length > 0" class="messages">
     <div *ngFor="let message of article.messages" class="message">
+      <!-- Boucle pour afficher chaque commentaire -->
       <div class="messageContainer">
         <div class="message-bubble">
           <div class="content">{{ message.message }}</div>
+          <!-- Contenu du commentaire -->
         </div>
         <div class="user">{{ message.userUsername }}</div>
-        <!-- Utilisateur du message -->
+        <!-- Nom de l'utilisateur ayant posté le commentaire -->
       </div>
     </div>
   </div>
+
+  <!-- Zone de saisie pour permettre à l'utilisateur de poster un nouveau commentaire -->
   <div class="postMessage">
     <textarea
       [(ngModel)]="formData.message"
       placeholder="Écrivez ici votre commentaire"
       rows="4"
     ></textarea>
+    <!-- Champ de texte pour écrire un nouveau commentaire -->
+
+    <!-- Icône pour envoyer le message, actionnée au clic -->
     <i
       (click)="postMessage(article.id)"
       class="fa-sharp fa-solid fa-paper-plane SendMsg"

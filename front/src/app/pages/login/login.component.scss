@@ -1,99 +1,103 @@
-
-
+// Styles pour le conteneur de connexion
 .login-container {
-    max-width: 300px;
-    margin: auto;
-    text-align: center;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    margin-top: 40px; 
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
 
-  }
-  .back-button {
-    font-size: 50px; 
-    cursor: pointer;
-    color: black;
-    margin: 20px 0; 
-    text-align: left; 
-    width: 100%;
-    padding-left: 30px;
-    padding-top: 20px;
-    font-weight: 100;
+// Styles pour le bouton de retour
+.back-button {
+  font-size: 50px;
+  cursor: pointer;
+  color: black;
+  margin: 20px 0;
+  text-align: left;
+  width: 100%;
+  padding-left: 30px;
+  padding-top: 20px;
+  font-weight: 100;
 }
 
 .back-button:hover {
-    text-decoration: none; 
-    opacity: 0.8; 
+  text-decoration: none;
+  opacity: 0.8;
 }
-  .form-group {
-    margin-bottom: 20px;
-    margin-top:20px;
-    width: 100%; 
+
+// Styles pour les groupes de formulaires
+.form-group {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+label {
+  display: block;
+  text-align: left;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  color: white;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 50%;
+}
+
+button:hover {
+  background-color: #270153;
+}
+
+img {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+// Masquer la navbar sur les petits écrans (mobile)
+@media screen and (max-width: 600px) {
+  .navbar {
+    display: none;
   }
-  
-  label {
+
+  // Rendre l'image visible uniquement sur mobile
+  .logo-mobile {
     display: block;
-    text-align: left; 
   }
-  
+
+  .login-container {
+    width: 80%;
+  }
+
   input[type="email"],
   input[type="password"] {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
   }
-  
-  button {
-    color: white;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 50%;
-  }
-  
-  button:hover {
-    background-color: #270153;
-  }
-  
+
   img {
-    max-width: 100%; 
-    margin-bottom: 20px; 
-  }
-  /* Masquer la navbar sur les petits écrans (mobile) */
-@media screen and (max-width: 600px) {
-  .navbar {
-    display: none; /* Masquer la navbar sur mobile */
-  }
-
-  /* Rendre l'image visible uniquement sur mobile */
-  .logo-mobile {
-    display: block; 
-  }
-
-  .login-container {
-    width: 80%; 
-  }
-
-  input[type="email"],
-  input[type="password"] {
-    width: 100%; 
-  }
-  img {
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
   }
 }
 
-/* Masquer l'image sur desktop */
+// Masquer l'image sur desktop
 @media screen and (min-width: 601px) {
   .logo-mobile {
-    display: none !important; /* Forcer le masquage de l'image sur desktop */
+    display: none !important;
   }
 
   .login-container {
-    width: 60%; /* Ajuster la largeur du conteneur pour desktop */
+    width: 60%;
   }
 }

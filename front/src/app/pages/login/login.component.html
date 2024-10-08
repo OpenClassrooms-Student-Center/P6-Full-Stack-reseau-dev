@@ -1,17 +1,36 @@
+<!-- Barre de navigation -->
 <app-navbar class="navbar"></app-navbar>
 
-<div class="back-button" (click)="goBack()">&#8592;</div> 
+<!-- Bouton pour revenir à la page précédente -->
+<div class="back-button" (click)="goBack()">&#8592;</div>
 
+<!-- Conteneur principal pour le formulaire de connexion -->
 <div class="login-container">
-    <img src="/assets/logo_p6.png" alt="logo" class="logo-mobile" />
-    <h2>Se connecter</h2>
-    <div class="form-group">
-      <label for="email">E-mail ou nom d'utilisateur</label>
-      <input type="email" id="email" name="email"  [(ngModel)]="formData.email">
-    </div>
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" name="password"   [(ngModel)]="formData.password">
-    </div>
-    <button  mat-raised-button color="primary" (click)="login()">Se connecter</button>
+  <!-- Logo de l'application affiché sur mobile -->
+  <img src="/assets/logo_p6.png" alt="logo" class="logo-mobile" />
+
+  <!-- Titre de la page de connexion -->
+  <h2>Se connecter</h2>
+
+  <!-- Champ de saisie pour l'e-mail ou le nom d'utilisateur -->
+  <div class="form-group">
+    <label for="email">E-mail ou nom d'utilisateur</label>
+    <input type="email" id="email" name="email" [(ngModel)]="formData.email" />
+  </div>
+
+  <!-- Champ de saisie pour le mot de passe -->
+  <div class="form-group">
+    <label for="password">Mot de passe</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="formData.password"
+    />
+  </div>
+
+  <!-- Bouton pour soumettre le formulaire de connexion -->
+  <button mat-raised-button color="primary" (click)="login()">
+    Se connecter
+  </button>
 </div>
