@@ -65,12 +65,21 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     this.sortArticles(); // Appel de la méthode pour trier les articles selon le nouvel état
   }
 
-  // Méthode pour trier les articles par titre
+  // Méthode pour trier les articles par date de création
+  // Méthode pour trier les articles par date de création
   sortArticles(): void {
     if (this.sortAscending) {
-      this.articles.sort((a, b) => a.title.localeCompare(b.title)); // Tri ascendant des articles par titre
+      this.articles.sort((a, b) => {
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0; // Utiliser 0 si null
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0; // Utiliser 0 si null
+        return dateA - dateB; // Tri ascendant des articles par date
+      });
     } else {
-      this.articles.sort((a, b) => b.title.localeCompare(a.title)); // Tri descendant des articles par titre
+      this.articles.sort((a, b) => {
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0; // Utiliser 0 si null
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0; // Utiliser 0 si null
+        return dateB - dateA; // Tri descendant des articles par date
+      });
     }
   }
 }
