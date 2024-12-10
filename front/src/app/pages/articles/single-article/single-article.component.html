@@ -1,0 +1,23 @@
+<div class="w90auto">
+  <app-back></app-back>
+  <div>
+    <h1>{{article.title}}</h1>
+    <div class="d-flex info justify-content-between"><p>{{article.publishedDate | date}}</p> <p>{{article.author.username}}</p> <p>{{article.theme.name}}</p></div>
+    <p>{{article.content}}</p>
+  </div>
+  <hr/>
+  <h2>Commentaire</h2>
+  @for (comment of article.comments; track comment.id){
+    <div class="d-flex w-80 justify-content-between">
+      <p>{{comment.author.username}}</p>
+      <p class="content-comment">{{comment.content}}</p>
+    </div>
+  }
+  <div class="d-flex">
+    <textarea class="comment-textarea" [(ngModel)]="newComment" placeholder="Écrivez ici votre commentaire"></textarea>
+    <div class="d-flex justify-content-center flex-column">
+      <img (click)="sendComment()"  class="send-img" width="40px" height="40px" src="./assets/iconsend.png" alt="">
+    </div>
+  </div>
+
+</div>

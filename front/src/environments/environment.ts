@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  developpement:  "http://localhost:3001/api",
+  // microservice_user: "http://localhost:3001/auth/",
+  // microservice_article: "http://localhost:3003/article/"
 };
 
 /*

@@ -1,0 +1,32 @@
+<div class="w90auto">
+  <app-back></app-back>
+  <div class="center">
+    <h1 class="fw-bold">Créer un nouvel article</h1>
+    <form class="login-form" [formGroup]="form" (ngSubmit)="create()">
+      <div class="d-flex flex-column">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Sélectionner un thème" [formControl]="myControl" [matAutocomplete]="auto">
+        </div>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option">{{ option.name }}</mat-option>
+          }
+        </mat-autocomplete>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="title" placeholder="Titre de l'article" aria-label="Titre de l'article">
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="input-group mb-3">
+          <textarea type="text" class="form-control" rows="5" placeholder="Contenu de l'article" formControlName="content"
+                    aria-label="Contenu de l'article"></textarea>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button id="button-mdd" class="w-80" mat-flat-button>Créer</button>
+      </div>
+    </form>
+  </div>
+</div>

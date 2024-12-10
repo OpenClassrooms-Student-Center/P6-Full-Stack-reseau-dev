@@ -1,0 +1,35 @@
+<div class="parent-login">
+  <div class="center">
+    <h1 class="fw-bold">Profil utilisateur</h1>
+    <form class="login-form" [formGroup]="form" (ngSubmit)="save()">
+      <div class="d-flex flex-column">
+        <p class="mb-0">Nom d’utilisateur</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="username" aria-label="username">
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <p class="mb-0">E-mail</p>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="email" aria-label="password">
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="d-flex flex-column">
+          <button id="button-mdd" class="w-80" mat-flat-button>Sauvegarder</button>
+          <p class="text-danger mt-1 deconnection" (click)="sessionService.logOut()">Se déconnecter</p>
+        </div>
+      </div>
+    </form>
+  </div>
+  <hr/>
+</div>
+<div class="w-90">
+  <div class="container">
+    @for(theme of user.themes; track theme.id){
+      <app-card-theme [profile]="true" (change)="getProfile()" [theme]="theme" [themeUser]="user.themes"></app-card-theme>
+    }
+  </div>
+</div>
+
+

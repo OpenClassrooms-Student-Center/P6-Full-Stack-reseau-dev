@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {SessionService} from "./services/session.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'front';
+  private sessionService: SessionService = inject(SessionService);
+  ngOnInit(){
+    this.sessionService.initSession();
+    if (!this.sessionService.isAuthenticated()) {
+      this.sessionService.router.navigate(['/login']);
+    }
+  }
 }

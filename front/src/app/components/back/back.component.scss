@@ -1,0 +1,13 @@
+.cursor-pointer{
+  cursor: pointer;
+}
+.mb-80{
+  margin-bottom: -50px;
+  margin-left: -60px;
+}
+@media (max-width: 768px) {
+  .mb-80{
+    margin-bottom: 0;
+    margin-left: -10px;
+  }
+}

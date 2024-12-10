@@ -1,4 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mt--3{
+  margin-top: -1rem !important;
+}
+.center {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#button-mdd{
+  color: white !important;
+  background-color: #7763C5 !important;
+}
+.w90auto{
+  width: 90%;
+  margin: auto;
+}
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.w-90{
+  width: 90% !important;
+  margin: auto;
+}
+.div-button{
+  margin: 16px;
+}
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}

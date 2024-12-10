@@ -1,0 +1,9 @@
+<div class="w-90 mt-5">
+@if(themesUser){
+  <div class="container">
+    @for(theme of themes; track theme.id){
+      <app-card-theme [profile]="false" class="item" [themeUser]="themesUser" [theme]="theme" > </app-card-theme>
+    }
+  </div>
+}
+</div>

@@ -1,0 +1,9 @@
+<mat-card class="p-1">
+  @if(theme){
+    <h2>{{theme.name}}</h2>
+    <p>{{theme.content}}</p>
+      <div class="d-flex justify-content-center">
+        <button id="button-mdd" class="w-80" (click)="subscribeTheme()" mat-flat-button>{{this.theme.subscribed ? 'Se désinscrire' : 'S\'inscrire'}}</button>
+      </div>
+  }
+</mat-card>

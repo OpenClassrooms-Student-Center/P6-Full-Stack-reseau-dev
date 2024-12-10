@@ -1,0 +1,16 @@
+<div class="w-90">
+  <div class="div-button d-flex justify-content-between">
+    <button id="button-mdd" class="w-80" mat-flat-button routerLink="/create-article">Créer un article</button>
+    <button class="d-flex flex-row-reverse" (click)="toggleSortOrder()" mat-button>Trier par <mat-icon style="margin-right: 0">{{reverseOrder ? 'arrow_upward' :'arrow_downward'}}</mat-icon></button>
+  </div>
+
+  <div class="container">
+    @for(article of articles; track article.id){
+      @if(article){
+        <app-card-article class="item" routerLink="/single-article/{{article.id}}" [article]="article"> </app-card-article>
+      }
+    }
+  </div>
+</div>
+
+

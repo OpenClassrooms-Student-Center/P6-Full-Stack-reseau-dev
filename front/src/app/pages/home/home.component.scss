@@ -5,3 +5,23 @@
   align-items: center;
   flex-direction: column;
 }
+
+.width-contain {
+  width: 100%;
+  max-width: 600px;
+}
+
+.div-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1000px) {
+  .div-button {
+    flex-direction: column;
+
+    button {
+      margin: 20px;
+    }
+  }
+}
