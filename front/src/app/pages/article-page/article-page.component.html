@@ -1,0 +1,50 @@
+<!-- Composant de la barre de navigation affiché en haut de la page -->
+<app-navbar></app-navbar>
+
+<!-- Conteneur principal pour la page d'articles -->
+<div class="container article-page">
+  <!-- Section contenant les boutons d'actions -->
+  <div class="button-container">
+    <!-- Bouton pour rediriger l'utilisateur vers la création d'un nouvel article -->
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="redirectToCreateArticle()"
+      class="putArticleBtn"
+    >
+      Créer un article
+    </button>
+
+    <!-- Bouton de tri pour trier les articles par date dans un ordre croissant ou décroissant -->
+    <button mat-button (click)="toggleSort()" class="sort-btn">
+      Trier par <span class="arrow">{{ sortAscending ? "↓" : "↑" }}</span>
+    </button>
+  </div>
+</div>
+
+<!-- Conteneur pour afficher les articles disponibles -->
+<div class="article-container">
+  <div class="row">
+    <!-- Boucle pour afficher chaque article dans une colonne -->
+    <div class="column" *ngFor="let article of articles">
+      <!-- Carte cliquable pour chaque article, qui redirige vers les détails de l'article au clic -->
+      <div class="article" (click)="redirectToArticleDetail(article.articleId)">
+        <h2>{{ article.title }}</h2>
+        <!-- Titre de l'article -->
+
+        <!-- Informations sur l'article (date et auteur) -->
+        <div class="meta-info">
+          <span class="date"
+            >Date: {{ article.createdAt | date : "dd MMMM yyyy" }}</span
+          >
+          <!-- Date de création -->
+          <span class="author">Auteur: {{ article.username }}</span>
+          <!-- Nom de l'auteur -->
+        </div>
+
+        <!-- Description de l'article -->
+        <p class="description">{{ article.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

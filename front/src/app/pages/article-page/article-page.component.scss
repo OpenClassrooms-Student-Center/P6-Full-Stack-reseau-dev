@@ -1,0 +1,112 @@
+// Styles généraux pour le conteneur
+.container {
+  padding: 2%;
+  position: relative;
+}
+
+// Styles pour le conteneur des boutons
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.putArticleBtn {
+  margin-bottom: 20px;
+}
+
+.sortBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-bottom: 20px;
+}
+
+// Styles pour les informations métadonnées
+.meta-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.meta-info span {
+  flex: 1;
+}
+
+.meta-info span.date {
+  text-align: left;
+}
+
+.button-container {
+  position: relative;
+}
+
+// Styles pour la barre de navigation
+.navbar {
+  .active-link {
+    color: #5f0497;
+    font-weight: bold;
+  }
+}
+
+// Styles pour le conteneur des articles
+.article-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-left: 20px;
+}
+
+.column {
+  width: calc(50% - 2%);
+  margin-bottom: 20px;
+}
+
+// Styles pour les articles
+.article {
+  background-color: #f0f0f0;
+  padding: 18px;
+  border-radius: 5px;
+  height: 250px;
+  overflow: hidden;
+  width: 85%;
+  margin-bottom: 20px;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  text-align: justify;
+}
+
+// Styles pour les écrans de petite taille
+@media screen and (max-width: 768px) {
+  .column {
+    width: 100%;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .putArticleBtn {
+    width: 40%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .sort-btn {
+    position: static;
+    width: 100%;
+  }
+}

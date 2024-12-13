@@ -1,0 +1,114 @@
+// Styles généraux pour le conteneur
+.container {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+// Styles pour l'en-tête
+.header {
+  display: flex;
+  align-items: center;
+}
+
+h2 {
+  flex: 1;
+  text-align: center;
+  margin: 0% 8% 0% 0%;
+}
+
+// Styles pour le bouton de retour
+.back-button {
+  font-size: 50px;
+  cursor: pointer;
+  color: black;
+  margin: 20px 0;
+  padding-left: 30px;
+  font-weight: 100;
+}
+
+.back-button:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+// Styles pour le groupe de formulaires
+.form-group {
+  margin-bottom: 20px;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+}
+
+.form-control {
+  width: 100%;
+}
+
+textarea {
+  min-height: 150px;
+}
+
+input[type="text"],
+textarea,
+select {
+  border: 1px solid #5f0497;
+  border-radius: 5px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 50px;
+  background-color: #5f0497;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+// Styles pour le select
+select {
+  background-color: #ffffff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select option[value=""][disabled] {
+  color: #848484;
+}
+
+// Styles pour les écrans de petite taille
+@media screen and (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .back-button {
+    font-size: 40px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    align-self: flex-start;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    width: 100%;
+  }
+}

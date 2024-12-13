@@ -1,5 +1,22 @@
+<!-- Conteneur central pour le contenu de la page d'accueil -->
 <div class="center">
+  <!-- Image du logo affiché en haut de la page -->
   <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+
+  <!-- Conteneur pour les boutons de navigation -->
+  <div class="button-container">
+    <!-- Bouton pour rediriger vers la page de connexion -->
+    <button mat-stroked-button (click)="redirectToLogin()" class="btnHomePage">
+      Se connecter
+    </button>
+
+    <!-- Bouton pour rediriger vers la page d'inscription -->
+    <button
+      mat-stroked-button
+      (click)="redirectToRegister()"
+      class="btnHomePage"
+    >
+      S'inscrire
+    </button>
+  </div>
 </div>

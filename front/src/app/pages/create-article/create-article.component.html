@@ -1,0 +1,50 @@
+<!-- Composant de la barre de navigation affiché en haut de la page -->
+<app-navbar></app-navbar>
+
+<!-- En-tête de la page avec un bouton retour et un titre -->
+<div class="header">
+  <div class="back-button" (click)="goBack()">&#8592;</div>
+  <!-- Titre de la page "Créer un nouvel article" -->
+  <h2>Créer un nouvel article</h2>
+</div>
+
+<!-- Conteneur principal pour le formulaire de création d'article -->
+<div class="container">
+  <!-- Formulaire réactif pour créer un article, lié au modèle de formulaire 'articleForm' -->
+  <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
+    <!-- Sélection du thème de l'article -->
+    <div class="form-group">
+      <select class="form-control" id="theme" formControlName="theme">
+        <option value="" disabled selected>Sélectionner un thème</option>
+        <!-- Boucle pour afficher les options de thèmes disponibles -->
+        <option *ngFor="let theme of themes" [value]="theme.id">
+          {{ theme.title }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Champ pour le titre de l'article -->
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        formControlName="title"
+        placeholder="Titre de l'article"
+      />
+    </div>
+
+    <!-- Champ pour le contenu de l'article -->
+    <div class="form-group">
+      <textarea
+        class="form-control"
+        id="content"
+        formControlName="description"
+        placeholder="Contenu de l'article"
+      ></textarea>
+    </div>
+
+    <!-- Bouton pour soumettre le formulaire et créer l'article -->
+    <button type="submit" class="btn btn-primary">Créer</button>
+  </form>
+</div>

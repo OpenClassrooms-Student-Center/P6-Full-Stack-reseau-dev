@@ -1,0 +1,62 @@
+<nav class="navbar">
+  <!-- Logo de l'application -->
+  <div class="logo">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <img src="/assets/logo_p6.png" alt="logo" width="100" />
+  </div>
+
+  <!-- Bouton Menu Hamburger (visible en mode responsive) -->
+  <button class="burger-menu" (click)="toggleMenu()" *ngIf="isResponsiveView">
+    ☰
+  </button>
+
+  <!-- Menu de navigation principal -->
+  <div class="menu" [ngClass]="{ active: isMenuOpen }">
+    <!-- Liens du menu (affichés selon l'état de connexion) -->
+    <ul *ngIf="!isLoginPage && !isRegisterPage">
+      <li class="top-right" *ngIf="isLoggedIn">
+        <a
+          routerLink="/article"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggleMenu()"
+        >
+          Articles
+        </a>
+      </li>
+      <li class="top-right" *ngIf="isLoggedIn">
+        <a
+          routerLink="/themes"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggleMenu()"
+        >
+          Thèmes
+        </a>
+      </li>
+    </ul>
+
+    <!-- Affichage de l'avatar de l'utilisateur connecté -->
+    <div class="avatar" *ngIf="isLoggedIn">
+      <img
+        src="/assets/user.png"
+        (click)="toggleMenu()"
+        routerLink="/profile"
+        alt="avatar"
+        width="50"
+        routerLinkActive="profile-avatar"
+        [routerLinkActiveOptions]="{ exact: true }"
+      />
+    </div>
+  </div>
+
+  <!-- Overlay pour fermer le menu en dehors -->
+  <div
+    class="overlay"
+    [ngClass]="{ 'show-overlay': isMenuOpen }"
+    (click)="toggleMenu()"
+  ></div>
+</nav>

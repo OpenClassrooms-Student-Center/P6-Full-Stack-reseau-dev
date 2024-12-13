@@ -1,6 +1,6 @@
 # P6-Full-Stack-reseau-dev
 
-## Front
+## Front 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
 
@@ -23,3 +23,78 @@ This library is `@angular/material`, it's one of the most famous in the angular 
 Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
 
 Good luck!
+
+
+## ️ Settings
+
+### Step 1 - Prerequistes :
+
+Make sure the following softs are installed
+
+- Angular CLI version 14.1.0.
+- Java  17
+- Maven
+- MySQL >= 8
+
+### Step 2 - Database
+
+- Start MySql
+- Create the BDD by importing the SQL script located in ./resources/sql/script.sql
+- Add in your properties :
+  - spring.datasource.username: (username)
+  - spring.datasource.password: (password)
+  - spring.datasource.url : (url of database)
+
+By default they are two accounts:
+
+- login: devUser1@example.com
+- password: Password1*
+
+- login: devUser2@example.com
+- password: Password1*
+
+### Step 3 - Spring Security
+
+For use JWT and create token, add in your properties :
+jwt.secret= (secret code)
+
+## Run Locally
+
+### Instructions
+
+1.  Fork this repo
+2.  Clone the repo onto your computer
+3.  Open a terminal window in the cloned project
+4.  Run the following commands:
+
+**Back :**
+
+1.Install dependencies :
+
+```bash
+mvn clean install
+```
+
+3.Start the development mode:
+
+```bash
+mvn spring-boot:run 
+```
+
+**Front:**
+
+1.Install dependencies :
+
+```bash
+npm install
+```
+
+3.Start application:
+
+```bash
+ng serve --proxy-config proxy.config.json
+```
+
+## Version
+
+V 1.0.0

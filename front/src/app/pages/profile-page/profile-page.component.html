@@ -1,0 +1,61 @@
+<!-- Barre de navigation -->
+<app-navbar></app-navbar>
+
+<!-- Conteneur principal pour la page de profil utilisateur -->
+<div class="container">
+  <!-- Titre de la section de profil utilisateur -->
+  <h2 class="profile-title">Profil utilisateur</h2>
+
+  <!-- Champ de saisie pour changer le pseudo de l'utilisateur -->
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      placeholder="Changer votre pseudo : {{ user.username }}"
+      [(ngModel)]="updatedUser.username"
+    />
+  </div>
+
+  <!-- Champ de saisie pour changer l'e-mail de l'utilisateur -->
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      id="email"
+      placeholder="Changer votre Email : {{ user.email }}"
+      [(ngModel)]="updatedUser.email"
+    />
+  </div>
+
+  <!-- Bouton pour sauvegarder les changements effectués dans le profil -->
+  <button class="btn btn-primary" (click)="saveChanges()">Sauvegarder</button>
+
+  <!-- Lien pour déconnecter l'utilisateur -->
+  <div class="LogoutBtn">
+    <a class="Logout" (click)="logout()">Se déconnecter</a>
+  </div>
+
+  <hr />
+
+  <!-- Titre de la section des abonnements -->
+  <div class="LogoutBtn">
+    <h2 class="theme-title">Abonnements</h2>
+  </div>
+
+  <!-- Conteneur pour afficher les thèmes auxquels l'utilisateur est abonné -->
+  <div class="theme-grid">
+    <div class="theme-card" *ngFor="let theme of userThemes">
+      <h3>{{ theme.title }}</h3>
+      <p>{{ theme.description }}</p>
+      <!-- Bouton pour se désabonner d'un thème -->
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="unSubscribeTheme(theme.id)"
+      >
+        Se désabonner
+      </button>
+    </div>
+  </div>
+</div>

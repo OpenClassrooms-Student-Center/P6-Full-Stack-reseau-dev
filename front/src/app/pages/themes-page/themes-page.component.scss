@@ -1,0 +1,66 @@
+// Styles pour le conteneur principal
+.container {
+  padding: 2%;
+}
+
+// Styles pour la grille des thèmes
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    1fr
+  ); // Toujours deux colonnes sur les écrans larges
+  gap: 20px;
+}
+
+// Styles pour les cartes de thème
+.theme-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.theme-card h3,
+.theme-card p {
+  text-align: left;
+  margin: 0;
+}
+
+.theme-card h3 {
+  margin-bottom: 10px;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+
+.theme-card p {
+  margin-bottom: 20px;
+}
+
+.theme-card button {
+  margin-top: auto;
+  align-self: center;
+}
+
+// Styles pour la description
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  text-align: justify;
+}
+
+// Media query pour les écrans jusqu'à 767px de large
+@media (max-width: 767px) {
+  .theme-grid {
+    grid-template-columns: 1fr; // Une seule colonne sur les écrans plus petits
+  }
+
+  .theme-card {
+    width: 85%;
+  }
+}

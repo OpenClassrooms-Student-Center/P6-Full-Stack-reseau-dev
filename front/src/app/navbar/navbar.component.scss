@@ -1,0 +1,124 @@
+/* Styles pour la barre de navigation */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu a.active-link {
+  color: #5f0497;
+}
+
+/* Styles pour le menu */
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.menu li {
+  margin-right: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Styles pour l'avatar de l'utilisateur */
+.avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Styles pour l'avatar du profil */
+.profile-avatar {
+  border: 2px solid #5f0497 !important;
+  border-radius: 50%;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+/* Classe pour masquer des éléments */
+.hidden {
+  display: none;
+}
+
+/* Styles pour le bouton du menu burger */
+.burger-menu {
+  display: none;
+}
+
+/* Styles pour l'overlay qui assombrit l'arrière-plan */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.show-overlay {
+  display: block;
+  opacity: 1;
+}
+
+/* Styles spécifiques pour les écrans de petite taille */
+@media screen and (max-width: 768px) {
+  .burger-menu {
+    display: block;
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+
+  .menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 200px;
+    height: 100%;
+    z-index: 1000;
+    display: block;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+  }
+
+  .menu.active {
+    right: 0;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    padding: 20px;
+    text-align: right;
+  }
+
+  .avatar {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+  }
+
+  .menu li {
+    margin: 10px 0;
+  }
+}
