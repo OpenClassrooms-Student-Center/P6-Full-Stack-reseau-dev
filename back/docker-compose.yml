@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: mdd-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: mdd
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mdd-network
+
+  mdd-app:
+    image: maven:3.8.7-eclipse-temurin-17
+    container_name: mdd-app
+    environment:
+      DB_URL: jdbc:mysql://database:3306/mdd
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+    ports:
+      - "3001:3001"
+    depends_on:
+      - database
+    networks:
+      - mdd-network
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: mvn spring-boot:run -X
+
+volumes:
+  db_data:
+
+networks:
+  mdd-network:
+    driver: bridge
