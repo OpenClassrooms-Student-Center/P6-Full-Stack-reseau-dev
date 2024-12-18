@@ -56,8 +56,8 @@ CREATE TABLE comments (
 
 -- Ajout de quelques données de test
 INSERT INTO users (username, email, password) VALUES
-                                                  ('dev1', 'dev1@example.com', 'Password123!'),
-                                                  ('dev2', 'dev2@example.com', 'Password456!');
+                                                  ('Kevin', 'kevin@test.com', 'Password123!'),
+                                                  ('Astrid', 'astrid@test.com', 'Password456!');
 
 INSERT INTO subjects (name, description) VALUES
                                              ('Java', 'Articles autour du langage Java'),

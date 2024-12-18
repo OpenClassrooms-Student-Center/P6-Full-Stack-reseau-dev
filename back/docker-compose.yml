@@ -1,12 +1,15 @@
 version: '3.8'
 
 services:
+
   database:
     image: mysql:8.0
     container_name: mdd-db
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: mdd
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -18,9 +21,9 @@ services:
     image: maven:3.8.7-eclipse-temurin-17
     container_name: mdd-app
     environment:
-      DB_URL: jdbc:mysql://database:3306/mdd
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/mdd
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     ports:
       - "3001:3001"
@@ -31,7 +34,7 @@ services:
     volumes:
       - .:/usr/src/app
     working_dir: /usr/src/app
-    command: mvn spring-boot:run -X
+    command: mvn spring-boot:run
 
 volumes:
   db_data:
