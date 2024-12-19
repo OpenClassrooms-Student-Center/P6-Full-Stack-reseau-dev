@@ -1,0 +1,25 @@
+
+<div class="post-container">
+        <div class="back-arrow">
+      <button mat-icon-button  (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+    </div> 
+    
+    <div class="post-detail">
+      <h2>{{ post?.title }}</h2>
+    <div class="info-line">
+      <span class="date" *ngIf="post?.createdAt">{{post?.createdAt | dateFormat }}</span>
+      <span class="author">{{post?.authorUsername}}</span>
+      <span class="theme">{{ post?.topicSubject }}</span>
+    </div>
+    
+    <div class="content">{{ post?.content }}</div>
+ <div class="comments" *ngIf="post?.id">
+    <app-comment-list [postId]="post!.id"></app-comment-list>
+</div>
+    </div>
+
+  
+   </div>

@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column; /* Empile les enfants verticalement */
+  justify-content: center; /* Centre les enfants verticalement */
+  align-items: center; /* Centre les enfants horizontalement */
+  height: 100vh; /* Prend toute la hauteur de la fenêtre */
+  text-align: center; /* Centre le texte */
+}
+
+img {
+    max-width: 412px; /* Limite la largeur de l'image */
+    height: auto; /* Maintient le ratio */
+    margin: 40px;
+  }
+  
+  button {
+    width: 150px; /* Largeur uniforme pour les boutons */
+    height: 40px;
+    margin: 40px;
+    color: black;
+    border: 1px solid black;
+    background-color: white;
+
+  }
+  .container {
+    height: 100vh; /* Prend toute la hauteur de l'écran */
+  }
+  
+ 
+  
+  img {
+    max-width: 100%; /* Rend le logo responsive */
+    height: auto;
+  }
+  

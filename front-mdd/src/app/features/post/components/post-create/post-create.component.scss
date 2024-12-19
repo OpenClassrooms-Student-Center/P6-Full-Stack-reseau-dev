@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px; /* Largeur maximale pour le conteneur */
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .container-back-arrow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  
+  .back-arrow {
+    position: absolute;
+    left: 0;
+  }
+  
+  h2 {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .post-form {
+    width: 281px; /* Largeur spécifique pour le formulaire */
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Espacement entre les éléments */
+  }
+  
+  .form-field {
+    width: 100%;
+  }
+  
+  .submit-button {
+    width: 139px;
+    height: 40px;
+    align-self: center; /* Centrer horizontalement le bouton */
+  }
+  

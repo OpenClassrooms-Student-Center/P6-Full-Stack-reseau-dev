@@ -1,0 +1,95 @@
+.post-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px; /* Limiter la largeur de la grille si nécessaire */
+  margin: 0 auto; /* Centrer la grille */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-top: 20px;
+}
+
+.col-2 {
+  flex: 0 0 20%; /* Ajuste la largeur des colonnes */
+}
+.post-sorter{
+  text-align: right;
+}
+
+.col {
+  flex: 1; /* Laisser cette colonne remplir l'espace restant */
+}
+
+mat-grid-list {
+  width: 100%;
+  display: block; /* S'assurer que la grille occupe la largeur disponible */
+}
+
+mat-grid-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start !important;
+  background-color: #f5f5f5; /* Couleur de fond */
+  border: 1px solid #ddd; /* Optionnel : pour mieux visualiser les tuiles */
+  border-radius: 16px;  
+  align-items: flex-start !important;   
+
+}
+ mat-grid-tile h3{
+  text-align: left;
+ }
+ 
+.card-content {
+  text-align: left;           /* Aligne le texte à gauche */
+  width: 90%;                /* Utilise toute la largeur disponible */
+
+}
+
+
+
+ 
+::ng-deep .mat-grid-tile-content {
+  align-items: flex-start !important; /* Alignement vertical en haut */
+  justify-content: flex-start !important; /* Alignement horizontal à gauche */
+  padding: 20px !important;
+ 
+}
+::ng-deep .post-date-author{
+  display: flex !important;
+  flex-direction: row; /* Aligner les enfants en ligne */
+  justify-content: flex-start; /* Aligner à gauche */
+  gap: 8px; /* Espacement entre les éléments */
+margin-bottom: 20px;
+}
+::ng-deep .post-date-author div {
+  flex: 1; /* Laisser chaque élément prendre un espace égal */
+  text-align: left; /* S'assurer que le texte est aligné à gauche */
+}
+::ng-deep .post-content{
+  text-align: justify;
+}
+
+ /* Disposition pour les écrans mobiles */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column; /* Affiche les éléments verticalement */
+    align-items: center; /* Centre horizontalement */
+    gap: 16px; /* Ajoute de l'espacement entre les éléments */
+  }
+
+  .col-2,
+  .post-sorter {
+    width: 100%; /* Occupe toute la largeur */
+    text-align: center; /* Centre le contenu */
+  }
+
+  .post-sorter button {
+    display: block; /* S'assure que le bouton occupe une ligne entière */
+    margin: 0 auto; /* Centre le bouton */
+  }
+}

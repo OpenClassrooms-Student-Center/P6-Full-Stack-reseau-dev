@@ -1,0 +1,32 @@
+<div class="container">
+
+
+  <!-- Contenu principal -->
+  <div class="content">
+    <div class="header-form">
+      <button mat-icon-button class="back-arrow" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Se connecter</h2>
+    </div>
+
+    <!-- Formulaire -->
+    <mat-card class="form-card">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field class="form-field">
+          <mat-label>E-mail ou nom d'utilisateur</mat-label>
+          <input matInput type="text" formControlName="identifier" />
+        </mat-form-field>
+
+        <mat-form-field class="form-field" >
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" formControlName="password" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="submit-button" type="submit">
+          Se connecter
+        </button>
+      </form>
+    </mat-card>
+  </div>
+</div>

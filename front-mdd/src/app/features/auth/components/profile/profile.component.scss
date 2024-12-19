@@ -1,0 +1,28 @@
+.form-container {
+  display: flex;
+  flex-direction: column; /* Aligne les éléments verticalement */
+  gap: 16px; /* Espace entre les champs */
+  max-width: 281px; /* Largeur maximale des éléments */
+  margin: 0 auto; /* Centre le formulaire horizontalement */
+ 
+}
+.button-container{
+  width: 100%;
+  align-items: center; /* Centrage horizontal */
+  display: flex;
+  flex-direction: column;
+}
+button {
+  width: 167px;
+}
+h2{
+  text-align: center;
+}
+mat-form-field{
+  width: 281px ;
+  text-align: center;
+
+}
+.logout-button{
+  color: #A40F0F !important;
+}

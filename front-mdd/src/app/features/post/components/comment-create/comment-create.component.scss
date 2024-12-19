@@ -1,0 +1,19 @@
+.new-comment-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.new-comment-content{
+    flex: 6;
+    border: 1px solid #000; /* Optionnel : bordure pour la visibilité */
+    border-radius: 16px; /* Coins arrondis */
+    padding: 20px 0px 0px 20px;
+
+
+}
+
+.new-comment-sned{
+    flex: 1;
+    padding: 10px;
+}

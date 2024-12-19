@@ -1,0 +1,11 @@
+<div class="comments-container">
+
+<span class="global-comment-title">Commentaires</span>
+<div *ngFor="let comment of postComments" class="comment-item">
+    <div class="comment-item-username">{{comment.username}}</div>
+    <div class="comment-item-content">{{comment.content}} </div>
+</div>
+<div class="new-comment" *ngIf="postId">
+<app-comment-create  [postId]="postId"></app-comment-create>
+</div>
+</div>

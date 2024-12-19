@@ -1,0 +1,40 @@
+<div class="container">
+
+
+  <!-- Contenu principal -->
+  <div class="content">
+    <div class="container-back-arrow">
+      <button mat-icon-button class="back-arrow" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Inscription</h2>
+    </div>
+
+    <!--Formulaire-->
+    <div class="register-form-container">
+       <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <mat-form-field class="form-field">
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input matInput type="text" formControlName="username"/>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Adresse e-mail</mat-label>
+          <input matInput type="text" formControlName="email"/>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" formControlName="password"/>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="submit-button" type="submit">
+          S'inscrire
+        </button>
+  
+       </form>
+      </div>
+
+    </div>
+  </div>
+  

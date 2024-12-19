@@ -8,6 +8,7 @@ public class MddApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MddApiApplication.class, args);
+		System.out.println("MDD API Application Started");
 	}
 
 }

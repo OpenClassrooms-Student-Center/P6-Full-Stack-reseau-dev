@@ -1,0 +1,48 @@
+/* Styles spécifiques pour le header */
+.logo img {
+  max-width: 150px;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid black; /* Ligne noire en bas */
+
+}
+
+ 
+
+/* Menu complet visible uniquement sur grand écran */
+.menu-desktop {
+  display: flex;
+  gap: 15px; /* Espacement entre les boutons */
+}
+
+/* Masquer le menu complet sur mobile */
+.menu-desktop {
+  display: none;
+}
+
+.menu-mobile {
+  display: none;
+}
+
+/* Afficher le menu complet ou burger selon la taille de l'écran */
+@media (min-width: 769px) {
+  .menu-desktop {
+    display: flex;
+  }
+  .menu-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-desktop {
+    display: none;
+  }
+  .menu-mobile {
+    display: block;
+  }
+}

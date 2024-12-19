@@ -1,0 +1,36 @@
+<header>
+  <mat-toolbar color="white">
+    <!-- Logo à gauche -->
+    <div class="logo">
+      <a routerLink="/">
+        <img src="assets/logo_p6.png" alt="Logo MDD" width="150" />
+      </a>
+    </div>
+
+   
+     <div class="menu-desktop" *ngIf="showRightMenu && !isMobile" >
+      <button mat-menu-item routerLink="/post/list">Articles</button>
+      <button mat-menu-item routerLink="/subscription/topics">Thèmes</button>
+      <button mat-menu-item routerLink="/auth/profile">
+        <img src="assets/user-picto.png" alt="User" width="40" />
+      </button>
+    </div>
+ 
+      <!-- Menu burger (visible uniquement sur mobile) -->
+      <div class="menu-mobile" *ngIf="isMobile">
+        <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+  
+    <!-- Contenu du menu burger -->
+    <mat-menu #mobileMenu="matMenu">
+      <button mat-menu-item routerLink="/post/list">Articles</button>
+      <button mat-menu-item routerLink="/subscription/topics">Thèmes</button>
+      <button mat-menu-item routerLink="/auth/profile">
+        <img src="assets/user-picto.png" alt="User" width="40" />
+      </button>
+    </mat-menu>
+
+</header>

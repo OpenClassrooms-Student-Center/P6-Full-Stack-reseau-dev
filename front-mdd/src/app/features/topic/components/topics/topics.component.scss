@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+.topics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espacement entre les cartes */
+    justify-content: center; /* Centrer les cartes */
+    margin: 20px auto; /* Marge générale */
+
+  }
+  
+  .topic-card {
+    width: 392px; /* Largeur fixe des cartes */
+    height: 161px; 
+    background: #f9f9f9; /* Couleur d'arrière-plan */
+    padding: 16px;
+    border: 1px solid #E0E0E0; /* Bordure légère */
+    border-radius: 12px; /* Coins arrondis */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
+    text-align: left; /* Centrer le texte */
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+ 
+  }
+  
+  .topic-card h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #666; /* Couleur de texte secondaire */
+   }
+  
+  .topic-card p {
+    margin-top: -50px !important;
+    font-size: 0.9rem;
+    color: #666;
+   }
+  .button-container {
+    display: flex;
+    justify-content: center; /* Centrage horizontal */
+  }
+  button {
+    width: 167px;
+    height: 36px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background-color: #7763C5;
+    color: white;
+   }
+  
+  .unsubscribe-button {
+    background-color: #7A7A7A; /* Couleur grise pour désabonnement */
+  }

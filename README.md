@@ -21,5 +21,5 @@ As you may have seen if you already started the app, a simple home page containi
 This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
 
 Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
-
-Good luck!
+generate backend mvn package
+## launch backend java -jar mdd-api-0.0.1-SNAPSHOT.jar

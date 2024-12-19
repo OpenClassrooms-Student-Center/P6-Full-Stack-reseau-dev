@@ -1,0 +1,11 @@
+<div class="topics-container">
+  <div class="topic-card" *ngFor="let topic of topics">
+    <h3>{{ topic.subject }}</h3>
+    <p>{{ topic.description }}</p>
+    <div class="button-container">
+
+    <button *ngIf="!topic.userSubscribed" mat-raised-button color="primary" (click)="subscribe(topic.id)">S'abonner</button>
+    <button *ngIf="topic.userSubscribed && showUnsuscribe" mat-raised-button color="primary" (click)="unsubscribe(topic.id)">Se désabonner</button>
+</div>
+  </div>
+</div>

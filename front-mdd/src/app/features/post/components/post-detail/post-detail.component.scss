@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+.post-container {
+  width:100%;
+    display: flex;
+    justify-content:  flex-start; /* Centrer les cartes */
+    align-items: flex-start;
+    margin: 0 auto;
+    padding: 20px;
+
+  }
+   .back-arrow{
+ flex: 1;
+  }
+  .post-detail {
+ flex: 11;
+
+
+  }
+  
+  
+ 
+  .info-line{
+    width: 40%; /* Prend la moitié de la largeur disponible */
+    display: flex; /* Active Flexbox */
+    justify-content: space-between; /* Espace uniforme entre les éléments */
+    align-items: center; /* Centre verticalement les éléments */
+
+margin-bottom: 40px;
+  }
+
+  .content{
+    text-align: left;
+    border-bottom: 2px solid black; /* Ligne noire en bas */
+padding-bottom: 30px;
+  }
+
+  .comments{
+    padding-top: 30px;
+  }

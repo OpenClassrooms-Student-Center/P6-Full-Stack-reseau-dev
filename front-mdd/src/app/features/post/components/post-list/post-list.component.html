@@ -1,0 +1,41 @@
+
+
+<div class="post-container">
+
+  <!-- Barre supérieure -->
+  <div class="row">
+    <div class="col-2">  
+      <button mat-raised-button color="primary" [routerLink]="['../create']">Créer un article</button>
+    </div>
+    <div class="col-2 post-sorter">
+      <button mat-button (click)="toggleSortOrder()"> 
+        Trier par {{ sortOrder === 'asc' ? '&#x2191;' : '&#x2193;' }}
+
+      </button>
+    </div>
+  </div>
+
+  <!-- Grille des posts -->
+  <mat-grid-list [cols]="gridCols" rowHeight="2:1" gutterSize="30px">
+    <mat-grid-tile *ngFor="let post of posts" [routerLink]="['../detail', post.id]" class="post-card">
+      <div class="card-content">
+        <span class="post-title"><h2>{{ post.title }}</h2></span>
+        <div class="post-date-author">
+          <div class="post-creation-date" *ngIf="post?.createdAt">{{post?.createdAt | dateFormat }}
+          </div>
+          <div class="post-author">
+            {{post.authorUsername}}
+
+          </div>
+        </div>
+        <div class="post-content">
+          <p>{{ post.content }}</p>
+        </div>
+        
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+ 
+  
+</div>
